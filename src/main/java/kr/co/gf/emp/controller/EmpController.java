@@ -26,7 +26,7 @@ public class EmpController {
 		
 		logger.info("dto: " + dto.getEmp_no());
 		
-		service.join(dto);
+		service.tempJoin(dto);
 		
 		return new ModelAndView("loginPage");
 	}

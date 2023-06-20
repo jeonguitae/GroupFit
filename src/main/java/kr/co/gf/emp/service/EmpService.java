@@ -20,7 +20,7 @@ public class EmpService {
 	
 	@Autowired PasswordEncoder encoder;
 
-	public void join(EmpDTO dto) {
+	public void tempJoin(EmpDTO dto) {
 		logger.info("ID:"+dto.getEmp_no());
 		logger.info("PW:"+dto.getPw());
 		

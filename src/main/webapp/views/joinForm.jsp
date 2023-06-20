@@ -134,6 +134,9 @@
           </div>
           <div class="mb-4"></div>
           <button class="btn btn-primary btn-lg btn-block" type="submit">가입 신청</button>
+          	<div class="checkbox mb-3">
+				<input type="button" value="회원가입" onclick="location.href='join.go'"/>
+			</div>
         </form>
       </div>
     </div>
@@ -169,7 +172,7 @@
   
     window.addEventListener('load', () => {
       const forms = document.getElementsByClassName('validation-form');
-
+					
       Array.prototype.filter.call(forms, (form) => {
         form.addEventListener('submit', function (event) {
           if (form.checkValidity() === false) {
