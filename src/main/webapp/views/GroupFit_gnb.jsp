@@ -52,7 +52,7 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a href="#"
-					class="nav-link"> <img src="dist/img/wani.png"
+					class="nav-link"> <img src="img/wani.png"
 						style="width: 2.1rem; top: -5px; right: 5px; position: relative; vertical-align: top;"
 						class="brand-image img-circle elevation-2" alt="User Image">
 						<span style="font-weight: 800; color: #FFFFFF; display: inline">소수석</span>
@@ -138,7 +138,7 @@
 			<!-- Brand Logo -->
 			<a type="button" class="brand-link" data-bs-toggle="modal"
 				data-bs-target="#exampleModal"> <img
-				src="dist/img/GroupFit_2_Logo.png" alt="GroupFit Logo"
+				src="img/GroupFit_lg_2.png" alt="GroupFit Logo"
 				class="brand-image img-circle elevation-3"
 				style="background-color: transparent; transform: scale(1.1); opacity: .8">
 				<span class="brand-text font-weight-light">GroupFit</span>
@@ -174,7 +174,7 @@
 									일정 관리 <span class="badge badge-info right"></span>
 								</p>
 						</a></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="mlist.go" class="nav-link"> <i
 								class="nav-icon fas fa-dumbbell"></i>
 								<p>
 									기구 관리 <span class="badge badge-info right"></span>
