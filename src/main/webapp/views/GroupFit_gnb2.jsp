@@ -174,7 +174,7 @@
 									일정 관리 <span class="badge badge-info right"></span>
 								</p>
 						</a></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="mlist.go" class="nav-link"> <i
 								class="nav-icon fas fa-dumbbell"></i>
 								<p>
 									기구 관리 <span class="badge badge-info right"></span>
