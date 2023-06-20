@@ -1,5 +1,13 @@
 package kr.co.gf.emp.dao;
 
-public interface EmpDAO {
+import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.gf.emp.dto.EmpDTO;
+
+@Mapper
+public interface EmpDAO {
+	
+	int tempJoin(EmpDTO dto);
+	
+	String pwhash(String pw);
 }

@@ -61,17 +61,17 @@
 				<div class="modal-body" style="text-align: left">
 					<div style="text-align: center"><span style="color: red;font-weight: 700">
 					본 팝업창은 테스트를 위한 임시 용도입니다.</span></div><p/>
-					<form class="validation-form" action="join.do" method="post"
+					<form class="validation-form" action="tempJoin.do" method="post"
 						novalidate>
 						<div class="row">
 							<div class="col-md-6 mb-3">
-								<label for="name">사번</label> <input type="text" name="name"
+								<label for="name">사번</label> <input type="text" name="emp_no"
 									class="form-control" id="name" placeholder="" value="" required>
 								<div class="invalid-feedback">사번을 입력해주세요.</div>
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for="nickname">이름</label> <input type="text"
-									name="nickname" class="form-control" id="nickname"
+									name="name" class="form-control" id="nickname"
 									placeholder="" value="" required>
 								<div class="invalid-feedback">이름을 입력해주세요.</div>
 							</div>
