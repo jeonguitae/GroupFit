@@ -16,7 +16,7 @@ public class MainController {
 	// default context path로 요청 시 main으로 redirect
 	@GetMapping(value="/")
 	public ModelAndView index() {
-		return new ModelAndView("redirect:/main");
+		return new ModelAndView("main");
 	}
 	
 	@GetMapping(value="/join.go")
