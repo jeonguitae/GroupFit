@@ -152,7 +152,7 @@
 					<ul class="nav nav-pills nav-sidebar flex-column"
 						data-widget="treeview" role="menu" data-accordion="false">
 						<li class="nav-header">GroupFit Works</li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="memlist.go" class="nav-link"> <i
 								class="nav-icon fas fa-book"></i>
 								<p>
 									회원 관리 <i class="fas fa-angle-left right"></i>
