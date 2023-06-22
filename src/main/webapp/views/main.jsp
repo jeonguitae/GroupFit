@@ -17,11 +17,10 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body>
-	<jsp:include page="GroupFit_gnb2.jsp"></jsp:include>
+	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper" style="margin-top:57.08px">
 		테스트 페이지
-		
 	</div>
 </body>
 </html>

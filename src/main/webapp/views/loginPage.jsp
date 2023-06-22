@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -62,17 +61,17 @@
 				<div class="modal-body" style="text-align: left">
 					<div style="text-align: center"><span style="color: red;font-weight: 700">
 					본 팝업창은 테스트를 위한 임시 용도입니다.</span></div><p/>
-					<form class="validation-form" action="join.do" method="post"
+					<form class="validation-form" action="tempJoin.do" method="post"
 						novalidate>
 						<div class="row">
 							<div class="col-md-6 mb-3">
-								<label for="name">사번</label> <input type="text" name="name"
+								<label for="name">사번</label> <input type="text" name="emp_no"
 									class="form-control" id="name" placeholder="" value="" required>
 								<div class="invalid-feedback">사번을 입력해주세요.</div>
 							</div>
 							<div class="col-md-6 mb-3">
 								<label for="nickname">이름</label> <input type="text"
-									name="nickname" class="form-control" id="nickname"
+									name="name" class="form-control" id="nickname"
 									placeholder="" value="" required>
 								<div class="invalid-feedback">이름을 입력해주세요.</div>
 							</div>
@@ -169,6 +168,9 @@
 				<a href="#" type="button" data-bs-toggle="modal"
 					data-bs-target="#joinModal"> 계정이 없으십니까? </a>
 			</div>
+
+			<input type="button" value="회원가입" onclick="location.href='join.go'"/>
+
 			<button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
 			<p class="mt-5 mb-3 text-muted">&copy; 2023</p>
 		</form>

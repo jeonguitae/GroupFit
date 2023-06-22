@@ -20,14 +20,10 @@ public class MainController {
 		return new ModelAndView("redirect:/main");
 	}
 	
-	@GetMapping(value="/join.go")
-	public ModelAndView joinForm() {
-		return new ModelAndView("joinForm");
-	}
 	
 	// main 요청 처리
 	// 로그인 정보가 세션에 저장되어 있으면 index로 가고, 없으면 로그인 페이지로 보낸다.
-	@GetMapping(value="/main")
+	@GetMapping(value = "/main")
 	public ModelAndView main(HttpSession session) {
 		logger.info("loginId: " + session.getAttribute("loginId"));
 		if (session.getAttribute("loginId") != null && !session.getAttribute("loginId").equals("")) {
