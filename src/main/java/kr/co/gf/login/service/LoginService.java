@@ -1,5 +1,7 @@
 package kr.co.gf.login.service;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.login.dao.LoginDAO;
 
 @Service
@@ -30,6 +33,11 @@ public class LoginService {
 		}
 		
 		return success;
+	}
+
+	public EmpDTO getEmp(String id) {
+		// TODO Auto-generated method stub
+		return dao.getEmp(id);
 	}
 
 }

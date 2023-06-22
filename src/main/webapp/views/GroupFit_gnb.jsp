@@ -1,4 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
+<style>
+	.item-sub{
+		font-size: 14px;
+	}
+</style>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -55,11 +60,11 @@
 					class="nav-link"> <img src="img/wani.png"
 						style="width: 2.1rem; top: -5px; right: 5px; position: relative; vertical-align: top;"
 						class="brand-image img-circle elevation-2" alt="User Image">
-						<span style="font-weight: 800; color: #FFFFFF; display: inline">소수석</span>
+						<span style="font-weight: 800; color: #FFFFFF; display: inline">${sessionScope.loginEmp.name}</span>
 						님, 환영합니다!
 				</a></li>
 				<li><div style="margin-right: 15px;height:100%;display:flex;align-items: center">
-					<span>근무 시간 00:48:02</span>
+					<span></span>
 				</div></li>
 				<li>
 					<button type="button" class="btn btn-dark">퇴근</button>
@@ -159,11 +164,11 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="memlist.go" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="memlist.go" class="nav-link"> <i
 										class="fas fa-user nav-icon"></i>
 										<p>일반 회원</p>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
 										class="fas fa-running nav-icon"></i>
 										<p>PT 회원</p>
 								</a></li>
@@ -180,7 +185,7 @@
 									기구 관리 <span class="badge badge-info right"></span>
 								</p>
 						</a></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="ticket.go" class="nav-link"> <i
 								class="nav-icon fas fa-ticket-alt"></i>
 								<p>
 									이용권 관리 <span class="badge badge-info right"></span>
@@ -198,11 +203,11 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
 										class="fas fa-envelope nav-icon"></i>
 										<p>보낸 메일함</p>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
 										class="fas fa-envelope-open nav-icon"></i>
 										<p>받은 메일함</p>
 								</a></li>
@@ -236,15 +241,15 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="pages/charts/chartjs.move"
+								<li class="nav-item item-sub"><a href="pages/charts/chartjs.move"
 									class="nav-link"> <i class="fas fa-chart-line nav-icon"></i>
 										<p>개인 매출통계</p>
 								</a></li>
-								<li class="nav-item"><a href="pages/charts/flot.move"
+								<li class="nav-item item-sub"><a href="pages/charts/flot.move"
 									class="nav-link"> <i class="fas fa-sitemap nav-icon"></i>
 										<p>지점 매출통계</p>
 								</a></li>
-								<li class="nav-item"><a href="pages/charts/inline.move"
+								<li class="nav-item item-sub"><a href="pages/charts/inline.move"
 									class="nav-link"> <i
 										class="fas fa-project-diagram nav-icon"></i>
 										<p>전체 매출통계</p>
@@ -261,11 +266,11 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="pages/charts/chartjs.move"
+								<li class="nav-item item-sub"><a href="pages/charts/chartjs.move"
 									class="nav-link"> <i class="fas fa-user-check nav-icon"></i>
 										<p>나의 근태관리</p>
 								</a></li>
-								<li class="nav-item"><a href="pages/charts/flot.move"
+								<li class="nav-item item-sub"><a href="pages/charts/flot.move"
 									class="nav-link"> <i class="fas fa-check-double nav-icon"></i>
 										<p>지점 근태관리</p>
 								</a></li>
@@ -304,4 +309,6 @@
 	if(msg != ""){
 		alert(msg);
 	}
+	console.log("${sessionScope.loginEmp.name}");
+	console.log("${sessionScope.loginEmp.b_name}");
 </script>
