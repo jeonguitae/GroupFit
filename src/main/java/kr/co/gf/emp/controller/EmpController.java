@@ -19,28 +19,16 @@ public class EmpController {
 	
 	@Autowired EmpService service;
 	
-	//@Autowired PasswordEncoder encoder;
+	@Autowired PasswordEncoder encoder;
 	
-	/*
-	 * @PostMapping(value="/tempJoin.do") public ModelAndView tempJoin(EmpDTO dto) {
-	 * 
-	 * logger.info("dto: " + dto.getEmp_no());
-	 * 
-	 * service.tempJoin(dto);
-	 * 
-	 * return new ModelAndView("loginPage"); }
-	 */
-	
-	@GetMapping(value="/empJoin.go")
-	public ModelAndView empJoin() {
-		return new ModelAndView("empJoin");
+	@PostMapping(value="/tempJoin.do")
+	public ModelAndView tempJoin(EmpDTO dto) {
+		
+		logger.info("dto: " + dto.getEmp_no());
+		
+		service.tempJoin(dto);
+		
+		return new ModelAndView("loginPage");
 	}
-	
-	@PostMapping(value="/empJoin.do")
-	public ModelAndView empJoindo(EmpDTO dto) {
-		logger.info("dto:"+dto.getEmp_no());
-		return service.join(dto);
-	}
-	
 
 }
