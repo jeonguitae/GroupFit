@@ -18,7 +18,7 @@
         margin: 5px;
     }
     
-    table.first, table.second {
+    table.second {
         margin: 20px auto;
         border-collapse: collapse;
     }
@@ -56,15 +56,6 @@
         border-radius: 5px;
         cursor: pointer;
     }
-    table.first{
-        border-collapse: collapse;
-    }
-    table.first button {
-        margin-left: 10px;
-    }
-    table.first input[type="radio"], table.first input[type="checkbox"] {
-        margin-right: 10px;
-    }
     input[name="search"]{
         margin-left: 400px;
     }
@@ -72,26 +63,20 @@
 </head>
 <body>
 <jsp:include page="GroupFit_gnb.jsp"/>
-    <div class="nSort">
-      <form action="nsorting.do" method="get">
-    <table class="first">
-            <tr>
-             <td colspan="2">
-                <select name="big_hb" style="margin-left: 560px;">
-                   <c:forEach items="${big_hb}" var="b">
-                      <option value="${b.big_hb}">${b.big_hb}</option>      
-                   </c:forEach>
-                </select>
-                <select name="small_hb">
-                     <option>x</option>
-                </select>
-                <button class="nbutton">검색</button>
-               </td>
-            </tr>
-    </table>
-        
-     </form>
-   </div>
+ 	<!-- <table>
+        <tr>
+            <td class="nsearch">      
+                <form action="nsearch.do">
+                   <input type="text" name="search" value=""/>
+                      <select name="nsearch">
+                         <option value="title">제목</option>
+                         <option value="emp_no">작성자</option>
+                      </select>
+                   <input type="submit" value="검색"/>
+                     </form>
+                  </td>
+               </tr>
+    </table> -->
     <table class="second">
         <colgroup>
             <col width="10%"/>
@@ -122,35 +107,22 @@
                 <c:if test="${not empty sessionScope.loginId}">
                     <tr>
                         <td style="text-align: center;">${bbs.n_idx}</td>
-                        <td style="text-align: center;"><a href="ndetail.do?=${bbs.n_idx}" id="login">${bbs.title}</a></td>
-                        <td style="text-align: center;">${bbs.id}</td>
-                        <td style="text-align: center;">${bbs.fbTime}</td>
-                        <td style="text-align: center;">${bbs.bhit}</td>
+                        <td style="text-align: center;"><!--<a href="ndetail.do?=${bbs.n_idx}" id="login">  -->${bbs.title}</a></td>
+                        <td style="text-align: center;">${bbs.name}</td>
+                        <td style="text-align: center;">${bbs.reg_date}</td>
+                        <td style="text-align: center;">${bbs.hit}</td>
                     </tr>
                 </c:if>         
             </c:forEach>
         </tbody>
     </table>
-    <table>
-        <tr>
-            <td class="nsearch">      
-                <form action="nsearch.do">
-                   <input type="text" name="search" value=""/>
-                      <select name="nsearch">
-                         <option value="title">제목</option>
-                         <option value="emp_no">작성자</option>
-                      </select>
-                   <input type="submit" value="검색"/>
-                     </form>
-                  </td>
-               </tr>
-    </table>
+   
 <%--     <c:if test="${sessionScope.loginId.eqauls()}">
     <button onclick="location.href='fwrite.go'">글쓰기</button>
     </c:if> --%>
 </body>
 <script>
-var msg = "${msg}";
+/* var msg = "${msg}";
 if(msg != ""){
     alert(msg);
 }
@@ -167,7 +139,7 @@ if(msg != ""){
         }
     }) */
     
-    var loginId = "${sessionScope.loginId}";   
+  /*   var loginId = "${sessionScope.loginId}";   
    myHobbyList();
    function myHobbyList(){
       console.log("loginId : " + loginId);
@@ -240,6 +212,6 @@ if(msg != ""){
     $('select[name="small_hb"]').empty();
     $('select[name="small_hb"]').append(content);
    }
-
+ */ */
 </script>
 </html>
