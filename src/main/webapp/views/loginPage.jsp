@@ -169,7 +169,7 @@
 					data-bs-target="#joinModal"> 계정이 없으십니까? </a>
 			</div>
 
-			<input type="button" value="회원가입" onclick="location.href='join.go'"/>
+			<input hidden="1" type="button" value="회원가입" onclick="location.href='join.go'"/>
 
 			<button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
 			<p class="mt-5 mb-3 text-muted">&copy; 2023</p>

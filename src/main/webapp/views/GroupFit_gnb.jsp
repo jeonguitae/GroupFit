@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <style>
 	.item-sub{
 		font-size: 14px;
@@ -60,7 +60,7 @@
 					class="nav-link"> <img src="img/wani.png"
 						style="width: 2.1rem; top: -5px; right: 5px; position: relative; vertical-align: top;"
 						class="brand-image img-circle elevation-2" alt="User Image">
-						<span style="font-weight: 800; color: #FFFFFF; display: inline">소수석</span>
+						<span style="font-weight: 800; color: #FFFFFF; display: inline">${sessionScope.loginEmp.name}</span>
 						님, 환영합니다!
 				</a></li>
 				<li><div style="margin-right: 15px;height:100%;display:flex;align-items: center">
@@ -164,7 +164,7 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="memlist.go" class="nav-link"> <i
 										class="fas fa-user nav-icon"></i>
 										<p>일반 회원</p>
 								</a></li>
@@ -185,7 +185,7 @@
 									기구 관리 <span class="badge badge-info right"></span>
 								</p>
 						</a></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="ticket.go" class="nav-link"> <i
 								class="nav-icon fas fa-ticket-alt"></i>
 								<p>
 									이용권 관리 <span class="badge badge-info right"></span>
@@ -309,4 +309,5 @@
 	if(msg != ""){
 		alert(msg);
 	}
+	console.log("${sessionScope.loginEmp.name}");
 </script>
