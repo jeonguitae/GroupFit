@@ -4,9 +4,10 @@
    
 <mapper namespace="kr.co.gf.emp.dao.EmpDAO">
    
-   <insert id="tempJoin" parameterType="emp">
-		insert into emp(emp_no, pw, name, email, phone)
-		values(#{emp_no},#{pw},#{name},#{email}, #{phone})
+   <insert id="join" parameterType="emp">
+		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, conterm, status, join_year, b_dix)
+		values(#{emp_no},#{pw},#{name},#{gender}, #{birth},
+		#{phone},#{email},#{position},#{conterm},#{status},#{join_year},#{b_dix})
 	</insert>
    
 </mapper>

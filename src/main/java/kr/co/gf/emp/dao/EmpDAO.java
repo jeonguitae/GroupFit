@@ -6,7 +6,11 @@ import kr.co.gf.emp.dto.EmpDTO;
 @Mapper
 public interface EmpDAO {
 	
-	int tempJoin(EmpDTO dto);
+	//int tempJoin(EmpDTO dto);
 	
 	String pwhash(String pw);
+
+	int join(EmpDTO dto);
+	
+	
 }

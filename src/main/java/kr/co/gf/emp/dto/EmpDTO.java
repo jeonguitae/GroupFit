@@ -1,24 +1,24 @@
 package kr.co.gf.emp.dto;
 
+import java.sql.Date;
+
 import org.apache.ibatis.type.Alias;
 
 @Alias("emp")
 public class EmpDTO {
+	
 	private String emp_no;
 	private String pw;
 	private String name;
 	private String gender;
-	private String birth;
+	private Date birth;
 	private String phone;
 	private String email;
 	private String position;
-	private String job;
-	private String branch;
-	private String salary;
-	private String incentive;
-	private String conterm;
-	private String quit;
-	private String join_year;
+	private Date conterm;
+	private String status;
+	private Date join_year;
+	private int b_idx;
 	
 	public String getEmp_no() {
 		return emp_no;
@@ -44,10 +44,10 @@ public class EmpDTO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getBirth() {
+	public Date getBirth() {
 		return birth;
 	}
-	public void setBirth(String birth) {
+	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
 	public String getPhone() {
@@ -68,48 +68,30 @@ public class EmpDTO {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	public String getJob() {
-		return job;
-	}
-	public void setJob(String job) {
-		this.job = job;
-	}
-	public String getBranch() {
-		return branch;
-	}
-	public void setBranch(String branch) {
-		this.branch = branch;
-	}
-	public String getSalary() {
-		return salary;
-	}
-	public void setSalary(String salary) {
-		this.salary = salary;
-	}
-	public String getIncentive() {
-		return incentive;
-	}
-	public void setIncentive(String incentive) {
-		this.incentive = incentive;
-	}
-	public String getConterm() {
+	public Date getConterm() {
 		return conterm;
 	}
-	public void setConterm(String conterm) {
+	public void setConterm(Date conterm) {
 		this.conterm = conterm;
 	}
-	public String getQuit() {
-		return quit;
+	public String getStatus() {
+		return status;
 	}
-	public void setQuit(String quit) {
-		this.quit = quit;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	public String getJoin_year() {
+	public Date getJoin_year() {
 		return join_year;
 	}
-	public void setJoin_year(String join_year) {
+	public void setJoin_year(Date join_year) {
 		this.join_year = join_year;
 	}
+	public int getB_idx() {
+		return b_idx;
+	}
+	public void setB_idx(int b_idx) {
+		this.b_idx = b_idx;
+	}
 	
-	
+
 }
