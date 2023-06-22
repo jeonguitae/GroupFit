@@ -26,7 +26,7 @@ public class MemberController {
 		ArrayList<MemberDTO> list = service.memlist();
 		
 		model.addAttribute("list", list);
-		return "memberList";
+		return "memList";
 	}
 	
 	@GetMapping(value="/memjoin.do")
