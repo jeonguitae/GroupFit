@@ -103,25 +103,15 @@
 								class="form-control" id="pw" required>
 						</div>
 						
-						
-
-						<!-- <div class="mb-3">
-							<label for="address">주소</label>
-							<div style="display: flex;">
-								<input type="text" name="address" class="form-control"
-									id="address" placeholder="서울특별시 강남구" required>&nbsp;
-								<button class="btn btn-primary btn-lg btn-block" id="adrButton"
-									type="button" onclick="postCode()"
-									style="width: 100px; font-size: 8pt;">주소 찾기</button>
-							</div>
-							<div class="invalid-feedback">주소를 입력해주세요.</div>
-						</div>
-
 						<div class="mb-3">
-							<label for="address2">상세주소<span class="text-muted">&nbsp;</span></label>
-							<input type="text" name="addressDetail" class="form-control"
-								id="address2" placeholder="상세주소를 입력해주세요.">
-						</div> -->
+							<label for="position">직급</label> <select
+							class="form-select" name="position" id="position">
+							<option value="트레이너">트레이너</option>
+							<option value="FC">FC</option>
+							<option value="지점장">지점장</option>
+							<option value="대표">대표</option>
+						</select>
+						</div>
 
 						<hr class="mb-4"><div style="text-align: center">
 						<div class="custom-control custom-checkbox">
