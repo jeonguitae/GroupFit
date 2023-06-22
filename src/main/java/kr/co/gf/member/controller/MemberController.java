@@ -18,7 +18,7 @@ public class MemberController {
 	
 	@GetMapping(value="/join.go")
 	public ModelAndView joinForm() {
-		return new ModelAndView("memJoin");
+		return new ModelAndView("memJoin")	;
 	}
 	
 	
