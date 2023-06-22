@@ -187,7 +187,7 @@
 								</p>
 						</a></li>
 						<li class="nav-header">Group Works</li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="nlist.go" class="nav-link"> <i
 								class="nav-icon fas fa-bell"></i>
 								<p>공지사항</p>
 						</a></li>
