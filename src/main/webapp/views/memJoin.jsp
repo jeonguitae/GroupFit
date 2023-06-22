@@ -1,36 +1,45 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet"
+	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body>
+	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
+	<div class="content-wrapper" style="margin-top:57.08px">
 	<form action="memjoin.do" method="post">
 		<table>
 			<tr>
-				<th>ÀÌ¸§</th>
-				<td><input type="text" name="id"/></td>
+				<th>ì´ë¦„</th>
+				<td><input type="text" name="name"/></td>
 			</tr>
 			<tr>
-				<th>»ý³â¿ùÀÏ</th>
+<<<<<<< HEAD
+				<th>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</th>
 				<td><input type="text" name="birth"/></td>
 			</tr>
 			<tr>
-				<th>ÀüÈ­¹øÈ£</th>
+				<th>ï¿½ï¿½È­ï¿½ï¿½È£</th>
 				<td><input type="text" name="phone"/></td>
 			</tr>
 			<tr>
-				<th>°íÀ¯¹øÈ£</th>
+				<th>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£</th>
 				<td><input type="text" name="user_number"/></td>
 			</tr>
 			<tr>
-				<th>ÀÌ¸ÞÀÏ</th>
+				<th>ï¿½Ì¸ï¿½ï¿½ï¿½</th>
 				<td><input type="email" name="email"/></td>
 			</tr>
 			<tr>
-				<th>µî·ÏÁöÁ¡</th>
+				<th>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</th>
 				<td>
 					 <label for="lang">Language</label>
 					  <select name="languages" id="lang">
@@ -46,42 +55,56 @@
 				</td>
 			</tr>
 			<tr>
-				<th>µî·ÏÀÏ</th>
+				<th>ï¿½ï¿½ï¿½ï¿½ï¿½</th>
+=======
+				<th>ìƒë…„ì›”ì¼</th>
 				<td><input type="password" name="pw"/></td>
 			</tr>
 			<tr>
-				<th>¼ºº°</th>
+				<th>ì„±ë³„</th>
 				<td>
-					<input type="radio" value="³²" name="gender"/>³²
-					<input type="radio" value="¿©" name="gender"/>¿©
+					<input type="radio" name="male"/>ë‚¨ìž
+					&nbsp; &nbsp;
+					<input type="radio" name="female"/>ì—¬ìž
 				</td>
 			</tr>
 			<tr>
-				<th>¶óÄ¿»ç¿ë¿©ºÎ</th>
+				<th>ì—°ë½ì²˜</th>
+				<td><input type="number" name="phone"/></td>
+			</tr>
+			<tr>
+				<th>ì´ë©”ì¼</th>
+				<th>ï¿½ï¿½ï¿½ï¿½</th>
 				<td>
-					<input type="radio" value="¿©" name="gender"/>¿©
-					<input type="radio" value="ºÎ" name="gender"/>ºÎ
+					<input type="radio" value="ï¿½ï¿½" name="gender"/>ï¿½ï¿½
+					<input type="radio" value="ï¿½ï¿½" name="gender"/>ï¿½ï¿½
 				</td>
 			</tr>
 			<tr>
-				<th>¿îµ¿º¹»ç¿ë¿©ºÎ</th>
+				<th>ï¿½ï¿½Ä¿ï¿½ï¿½ë¿©ï¿½ï¿½</th>
 				<td>
-					<input type="radio" value="¿©" name="gender"/>¿©
-					<input type="radio" value="ºÎ" name="gender"/>ºÎ
+					<input type="radio" value="ï¿½ï¿½" name="gender"/>ï¿½ï¿½
+					<input type="radio" value="ï¿½ï¿½" name="gender"/>ï¿½ï¿½
 				</td>
 			</tr>
 			<tr>
-				<th>ÀÌ¿ë±Ç±â°£</th>
+				<th>ï¿½îµ¿ï¿½ï¿½ï¿½ï¿½ë¿©ï¿½ï¿½</th>
+				<td>
+					<input type="radio" value="ï¿½ï¿½" name="gender"/>ï¿½ï¿½
+					<input type="radio" value="ï¿½ï¿½" name="gender"/>ï¿½ï¿½
+				</td>
+			</tr>
+			<tr>
+				<th>ï¿½Ì¿ï¿½Ç±â°£</th>
 				<td><input type="password" name="pw"/></td>
 			</tr>
 			<tr>
-				<th>°áÁ¦±Ý¾×</th>
+				<th>ï¿½ï¿½ï¿½ï¿½ï¿½Ý¾ï¿½</th>
 				<td><input type="password" name="pw"/></td>
 			</tr>
 		</table>
-		<button>È¸¿ø°¡ÀÔ</button>
+		<button>È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</button>
 	</form>
-
-
+	</div>
 </body>
 </html>

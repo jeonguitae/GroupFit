@@ -9,5 +9,10 @@
 		values(#{emp_no},#{pw},#{name},#{gender}, #{birth},
 		#{phone},#{email},#{position},#{conterm},#{status},#{join_year},#{b_dix})
 	</insert>
+
+   <insert id="tempJoin" parameterType="emp">
+		insert into emp(emp_no, pw, name, email, phone, b_idx)
+		values(#{emp_no},#{pw},#{name},#{email}, #{phone}, 1)
+	</insert>
    
 </mapper>
