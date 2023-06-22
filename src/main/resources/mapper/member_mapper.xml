@@ -7,16 +7,17 @@
    <select id="memlist" resultType="member">
    		SELECT * FROM member
    </select>
+   	
+   <select id="branch" resultType="member">
+   		SELECT * FROM branch 
+   </select>
    
-   <insert id="join" parameterType="member">
-   		INSERT INTO member(
-   			mem_no, emp_no, ticket_no, name, birth, gender, phone, locker, gym_wear,
-   			reg_date, branch, pt_chk
-   		)
-   			VALUES(
-   				#{mem_no},#{emp_no},#{ticket_no},#{name},#{birth},#{gender},#{phone},
-   				#{locker},#{gym_wear},#{reg_date},#{branch},#{pt_chk}
-   			)
-   </insert>
+   <select id="ticket" resultType="member">
+   		SELECT * FROM ticket 
+   </select>
+   
+   <select id="emp_name" resultType="String">
+   		SELECT name FROM emp WHERE emp_no = #{param1}
+   </select>
    
    </mapper>

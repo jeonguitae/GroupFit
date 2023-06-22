@@ -12,15 +12,37 @@ public class MemberDTO {
 	private Date birth;
 	private String gender;
 	private String phone;
+	private String b_name;
 	
 	private int regt_idx;
 	private int emp_no;
 	private int ticket_no;
 	private int b_idx;
+	private String ticket_name;
+	private String ticket_time;
+	private int price;
 	private Date purch_date;
 	private Date start_date;
 	private Date end_date;
 	
+	public String getTicket_name() {
+		return ticket_name;
+	}
+	public void setTicket_name(String ticket_name) {
+		this.ticket_name = ticket_name;
+	}
+	public String getTicket_time() {
+		return ticket_time;
+	}
+	public void setTicket_time(String ticket_time) {
+		this.ticket_time = ticket_time;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	private float weight;
 	private String goal;
 	private String str;
@@ -121,6 +143,12 @@ public class MemberDTO {
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public String getB_name() {
+		return b_name;
+	}
+	public void setB_name(String b_name) {
+		this.b_name = b_name;
 	}
 	
 
