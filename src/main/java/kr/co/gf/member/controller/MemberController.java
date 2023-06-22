@@ -34,6 +34,12 @@ public class MemberController {
 		return new ModelAndView("memJoin");
 	}
 	
+	@GetMapping(value="memWrite.go")
+	public String memWrite() {
+		
+		return "memWrite";
+	}
+	
 	
 	
 }
