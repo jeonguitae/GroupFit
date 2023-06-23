@@ -11,5 +11,19 @@
 	<select id="ticketList" resultType="ticket">
 		select * from ticket natural join branch
 	</select>
+	
+	<update id="ticketModify" parameterType="ticket">
+		update ticket set 
+			ticket_name = #{ticket_name},
+			ticket_time = #{ticket_time},
+			b_idx = #{b_idx},
+			ticket_price = #{ticket_price},
+			ticket_type = #{ticket_type}
+		where ticket_no = #{ticket_no}
+	</update>
+	
+	<delete id="ticketDelete">
+		delete from ticket where ticket_no = #{param1}
+	</delete>
    
 </mapper>

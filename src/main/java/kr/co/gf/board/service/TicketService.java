@@ -1,6 +1,7 @@
 package kr.co.gf.board.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -25,6 +26,21 @@ public class TicketService {
 
 	public ArrayList<TicketDTO> ticketList() {
 		return dao.ticketList();
+	}
+
+	public int ticketModify(TicketDTO dto) {
+		// TODO Auto-generated method stub
+		return dao.ticketModify(dto);
+	}
+
+	public HashMap<String, Object> ticketDelete(ArrayList<String> delList) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int row = 0;
+		for(String id : delList) {
+			row += dao.ticketDelete(id);
+		}
+		map.put("success", true);
+		return map;
 	}
 
 }

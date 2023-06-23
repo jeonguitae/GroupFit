@@ -10,4 +10,8 @@ public interface TicketDAO {
 
 	ArrayList<TicketDTO> ticketList();
 
+	int ticketModify(TicketDTO dto);
+
+	int ticketDelete(String id);
+
 }
