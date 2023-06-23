@@ -32,19 +32,20 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
+				<form action="ticket.regist" method="post">
 				<div class="modal-body">
-					<form action="row g-3"></form>
 					<div class="mb-3">
 						<label for="ticket-name" class="form-label">이용권 명</label> <input
-							type="text" class="form-control" id="ticket-name">
+							type="text" class="form-control" id="ticket_name" name="ticket_name">
 					</div>
 					<div class="mb-3">
 						<label for="branch-name" class="form-label">지점</label> <input
-							type="text" class="form-control" id="branch-name" value="${sessionScope.loginEmp.b_name}" readonly="readonly">
+							type="text" class="form-control" id="branch_name" name="b_name" value="${sessionScope.loginEmp.b_name}" readonly="readonly"><input
+							type="text" class="form-control" id="branch_idx" name="b_idx" value="${sessionScope.loginEmp.b_idx}" readonly="readonly" hidden="1">
 					</div>
 					<div class="mb-3">
 						<label for="ticket-type" class="form-label">종류</label> <select
-							class="form-select" id="ticket-type">
+							class="form-select" id="ticket-type" name="ticket_type">
 							<option selected value="none">이용권 종류 선택</option>
 							<option value="1">일반 회원권</option>
 							<option value="2">PT 회원권</option>
@@ -53,7 +54,7 @@
 					<div class="mb-3">
 						<label for="ticket-count" class="col-form-label">이용횟수</label>
 						<div class="input-group mb-3">
-							<input type="number" id="ticket-count" class="form-control"
+							<input type="number" id="ticket-count" class="form-control" name="ticket_time"
 								placeholder="이용권의 이용기한 또는 PT횟수를 입력하세요"
 								aria-describedby="basic-addon2"> <span
 								class="input-group-text" id="basic-addon2">개월</span>
@@ -63,7 +64,7 @@
 						<label for="ticket-price" class="col-form-label">가격</label>
 						<div class="input-group mb-3">
 							<span class="input-group-text" id="basic-addon3">₩</span> <input
-								type="text" id="ticket-price" class="form-control"
+								type="text" id="ticket-price" class="form-control" name="ticket_price"
 								placeholder="이용권의 가격을 입력하세요" aria-describedby="basic-addon3">
 						</div>
 					</div>
@@ -73,6 +74,7 @@
 						data-bs-dismiss="modal">취소</button>
 					<button type="submit" class="btn btn-primary">등록</button>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -124,17 +126,25 @@
 										</tr>
 									</thead>
 									<tbody>
+										<c:forEach items="${ticketList}" var="ticket" varStatus="status">
 										<tr>
 											<td><input class="form-check-input"
-												style="margin-left: 0" type="checkbox" id="" value="option1">
+												style="margin-left: 0" type="checkbox" value="${ticket.ticket_no}">
 											</td>
-											<td>1</td>
-											<td>테스트</td>
-											<td>서울점</td>
-											<td>일반</td>
-											<td>6개월</td>
-											<td>160,000</td>
+											<td>${ticket.ticket_no}</td>
+											<td>${ticket.ticket_name}</td>
+											<td>${ticket.b_name}</td>
+											<td>
+												<c:if test="${ticket.ticket_type eq 1}">일반 회원권</c:if>
+												<c:if test="${ticket.ticket_type eq 2}">PT 회원권</c:if>
+											</td>
+											<td>${ticket.ticket_time}
+												<c:if test="${ticket.ticket_type eq 1}">개월</c:if>
+												<c:if test="${ticket.ticket_type eq 2}">회</c:if>
+											</td>
+											<td>${ticket.ticket_price}</td>
 										</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -145,6 +155,7 @@
 	</div>
 </body>
 <script type="text/javascript">
+console.log(${ticketList})
 $("#ticket-type").change(function () {
 	$val = $("#ticket-type").val()
 	console.log($val)
