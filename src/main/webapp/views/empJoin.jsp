@@ -8,10 +8,10 @@
 </head>
 <body>
 	<h3>신규직원 인적 정보 작성</h3>
-	<form action="empjoin.do" id="empjoin" method="post" enctype="multipart/form-data">
+	<form action="empJoin.do" method="post" enctype="multipart/form-data">
 		<table>
 			<tr>
-				<input type="file" id="empPhoto" name="empNum"/>
+				<input type="file" name="emp_photo"/>
 			</tr>
 			<tr>
 				<th>*사내번호</th>

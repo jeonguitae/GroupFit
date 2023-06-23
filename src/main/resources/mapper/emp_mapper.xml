@@ -7,12 +7,24 @@
    <insert id="join" parameterType="emp">
 		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, conterm, status, join_year, b_dix)
 		values(#{emp_no},#{pw},#{name},#{gender}, #{birth},
-		#{phone},#{email},#{position},#{conterm},#{status},#{join_year},#{b_dix})
+		#{phone},#{email},#{position},#{conterm},#{status},#{join_year},1)
 	</insert>
 
    <insert id="tempJoin" parameterType="emp">
 		insert into emp(emp_no, pw, name, email, phone, b_idx)
 		values(#{emp_no},#{pw},#{name},#{email}, #{phone}, 1)
 	</insert>
+	
+	<select id="list" resultType="emp" parameterType="emp">
+		SELECT emp_no
+			  ,name
+			  ,b_idx
+			  ,position
+		FROM emp
+	</select>
+	
+	<select id="detail" resultType="emp">
+		SELECT * FROM emp WHERE emp_no = #{param1}
+	</select>
    
 </mapper>
