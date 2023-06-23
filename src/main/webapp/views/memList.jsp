@@ -25,7 +25,7 @@
 		margin-top: 20px;
 	}
 	
-	div[class="table table-bordered"]{
+	div[class="table"]{
 		margin-left: 376px;
 	}
 </style>
@@ -62,11 +62,11 @@
 			</form>	
 					
 			<div class="btn1">		
-				<button onclick="location.href='/memWrite.move'">등록</button>
+				<button onclick="location.href='memWrite.move'">등록</button>
 				<button onclick="location.href='memDel.do'">삭제</button>
 			</div>
 			
-		<div class="table table-bordered">
+		<div class="table">
 			<table>
 				<colgroup>
 					<col width="15%"/>
