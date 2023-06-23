@@ -1,25 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet"
-	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-<link rel="stylesheet" href="dist/css/adminlte.min.css">
-</head>
+<title>여기에 페이지 이름 입력</title>
 <style>
-	table, th, td{
+/* table, th, td{
 		border: 1px solid white;
 		border-collapse: collapse;
-	}
+	} */
 	
 	div[class="btn1"]{
 		margin-left: 1108px;
@@ -37,14 +28,27 @@
 	div[class="table table-bordered"]{
 		margin-left: 376px;
 	}
-	
 </style>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link
+   href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+   rel="stylesheet"
+   integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+   crossorigin="anonymous">
+<link rel="stylesheet"
+   href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet"
+   href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<link rel="stylesheet" href="dist/css/adminlte.min.css">
+</head>
 <body>
-<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
-	<div class="content-wrapper" style="margin-top:57.08px">
-		
-			<h1 class="headline">일반 회원 리스트</h1>
-		
+   <jsp:include page="GroupFit_gnb.jsp" />
+   <div class="content-wrapper" style="margin-top: 57.08px">
+<!-- Main content -->
+      <section class="content">
+            <h1 class="headline">일반 회원 리스트</h1>
 			<form action="search.do" class="search">
 				<select name="sortting">
 					<option value="mem_no">회원번호</option>
@@ -58,8 +62,8 @@
 			</form>	
 					
 			<div class="btn1">		
-				<button onclick="location.href='memWrite.go'">등록</button>
-				<button onclick="location.href='memWrite.go'">삭제</button>
+				<button onclick="location.href='/memWrite.move'">등록</button>
+				<button onclick="location.href='memDel.do'">삭제</button>
 			</div>
 			
 		<div class="table table-bordered">
@@ -87,22 +91,19 @@
 			               </tr>
 		            </c:if>
 					<c:forEach items="${list}" var="bbs">
-						<c:if test="${not empty sessionScope.loginId}">
 							<tr>
-								<td style="text-align: center;">${bbs.mem_no}</td>
-								<td style="text-align: center;"><a href="memDetail.do?mem_no=${bbs.mem_no}">${bbs.name}</a></td>
-								<td style="text-align: center;">${bbs.start_date} ~ ${bbs.end_date}</td>
-								<td style="text-align: center;">${bbs.start_date}</td>
-								<td style="text-align: center;"><a href="memDel.do?mem_no=${bbs.mem_no}">삭제</a></td>
+								<td>${bbs.mem_no}</td>
+								<td><a href="memDetail.do?mem_no=${bbs.mem_no}">${bbs.name}</a></td>
+								<td>${bbs.start_date} ~ ${bbs.end_date}</td>
+								<td>${bbs.start_date}</td>
+								<td><a href="memDel.do?mem_no=${bbs.mem_no}">삭제</a></td>
 							</tr>
-						</c:if>
 					</c:forEach>
 				</tbody>
 			</table> 
-		</div>	
-	</div>
+         </div>
+         <!--/. container-fluid -->
+      </section>
+   </div>
 </body>
-<script>
-
-</script>
 </html>

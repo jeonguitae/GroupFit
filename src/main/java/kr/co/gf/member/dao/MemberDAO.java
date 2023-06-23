@@ -14,4 +14,10 @@ public interface MemberDAO {
 
 	ArrayList<MemberDTO> memlist();
 
+	ArrayList<MemberDTO> branch();
+
+	ArrayList<MemberDTO> ticket();
+
+	String emp_name(String loginId);
+
 }

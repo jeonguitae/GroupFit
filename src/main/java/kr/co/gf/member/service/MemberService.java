@@ -25,6 +25,21 @@ public class MemberService {
 		
 		return dao.memlist();
 	}
+
+	public ArrayList<MemberDTO> branch() {
+		
+		return dao.branch();
+	}
+
+	public ArrayList<MemberDTO> ticket() {
+		
+		return dao.ticket();
+	}
+
+	public String emp_name(String loginId) {
+		
+		return dao.emp_name(loginId);
+	}
 	
 	
 
