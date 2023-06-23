@@ -310,4 +310,5 @@
 		alert(msg);
 	}
 	console.log("${sessionScope.loginEmp.name}");
+	console.log("${sessionScope.loginEmp.b_name}");
 </script>

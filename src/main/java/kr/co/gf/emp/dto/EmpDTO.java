@@ -12,14 +12,27 @@ public class EmpDTO {
 	private String phone;
 	private String email;
 	private String position;
-	private String job;
 	private String branch;
 	private String salary;
 	private String incentive;
 	private String conterm;
 	private String quit;
 	private String join_year;
+	private String b_idx;
+	private String b_name;
 	
+	public String getB_idx() {
+		return b_idx;
+	}
+	public void setB_idx(String b_idx) {
+		this.b_idx = b_idx;
+	}
+	public String getB_name() {
+		return b_name;
+	}
+	public void setB_name(String b_name) {
+		this.b_name = b_name;
+	}
 	public String getEmp_no() {
 		return emp_no;
 	}
@@ -67,12 +80,6 @@ public class EmpDTO {
 	}
 	public void setPosition(String position) {
 		this.position = position;
-	}
-	public String getJob() {
-		return job;
-	}
-	public void setJob(String job) {
-		this.job = job;
 	}
 	public String getBranch() {
 		return branch;
