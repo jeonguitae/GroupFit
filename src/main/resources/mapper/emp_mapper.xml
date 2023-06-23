@@ -11,8 +11,8 @@
 	</insert>
 
    <insert id="tempJoin" parameterType="emp">
-		insert into emp(emp_no, pw, name, email, phone, b_idx)
-		values(#{emp_no},#{pw},#{name},#{email}, #{phone}, 1)
+		insert into emp(emp_no, pw, name, email, phone, b_idx, position)
+		values(#{emp_no},#{pw},#{name},#{email}, #{phone}, 1, #{position})
 	</insert>
 	
 	<select id="list" resultType="emp" parameterType="emp">

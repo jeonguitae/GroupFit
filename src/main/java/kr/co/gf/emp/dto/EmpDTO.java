@@ -15,11 +15,34 @@ public class EmpDTO {
 	private String phone;
 	private String email;
 	private String position;
+<<<<<<< HEAD
 	private Date conterm;
 	private String status;
 	private Date join_year;
 	private int b_idx;
+=======
+	private String branch;
+	private String salary;
+	private String incentive;
+	private String conterm;
+	private String quit;
+	private String join_year;
+	private String b_idx;
+	private String b_name;
+>>>>>>> origin/master
 	
+	public String getB_idx() {
+		return b_idx;
+	}
+	public void setB_idx(String b_idx) {
+		this.b_idx = b_idx;
+	}
+	public String getB_name() {
+		return b_name;
+	}
+	public void setB_name(String b_name) {
+		this.b_name = b_name;
+	}
 	public String getEmp_no() {
 		return emp_no;
 	}
@@ -68,7 +91,29 @@ public class EmpDTO {
 	public void setPosition(String position) {
 		this.position = position;
 	}
+<<<<<<< HEAD
 	public Date getConterm() {
+=======
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	public String getSalary() {
+		return salary;
+	}
+	public void setSalary(String salary) {
+		this.salary = salary;
+	}
+	public String getIncentive() {
+		return incentive;
+	}
+	public void setIncentive(String incentive) {
+		this.incentive = incentive;
+	}
+	public String getConterm() {
+>>>>>>> origin/master
 		return conterm;
 	}
 	public void setConterm(Date conterm) {
