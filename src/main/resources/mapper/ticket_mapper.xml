@@ -2,5 +2,28 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-   <mapper namespace="kr.co.gf.board.dao.TicketDAO">
-   </mapper>
+<mapper namespace="kr.co.gf.board.dao.TicketDAO">
+	<insert id="ticketRegist" parameterType="ticket">
+		insert into ticket(b_idx, ticket_name, ticket_time, ticket_price, ticket_type)
+			values(#{b_idx}, #{ticket_name}, #{ticket_time}, #{ticket_price}, #{ticket_type})
+	</insert>
+	
+	<select id="ticketList" resultType="ticket">
+		select * from ticket natural join branch
+	</select>
+	
+	<update id="ticketModify" parameterType="ticket">
+		update ticket set 
+			ticket_name = #{ticket_name},
+			ticket_time = #{ticket_time},
+			b_idx = #{b_idx},
+			ticket_price = #{ticket_price},
+			ticket_type = #{ticket_type}
+		where ticket_no = #{ticket_no}
+	</update>
+	
+	<delete id="ticketDelete">
+		delete from ticket where ticket_no = #{param1}
+	</delete>
+   
+</mapper>
