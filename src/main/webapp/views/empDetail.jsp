@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -8,75 +7,79 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>Á÷¿ø ÇÁ·ÎÇÊ »ó¼¼º¸±â</h3>
-	<form action="empUpdate.do" method="post" enctype="multipart/form-data">
+	<h3>ì§ì› í”„ë¡œí•„ ìƒì„¸ë³´ê¸°</h3>
 		<table>
 			<tr>
 				<input type="file" name="emp_photo"/>
 			</tr>
 			<tr>
-				<th>*»ç³»¹øÈ£</th>
+				<th>*ì‚¬ë‚´ë²ˆí˜¸</th>
 				<td><input type="text" name="emp_no" value="${emp.emp_no }" readonly/></td>
 			</tr>
 			<tr>
-				<th>*ºñ¹Ð¹øÈ£</th>
+				<th>*ë¹„ë°€ë²ˆí˜¸</th>
 				<td><input type="text" name="pw" value="${emp.pw}" readonly/></td>
 			</tr>
 			<tr>
-				<th>*ÀÌ¸§</th>
+				<th>*ì´ë¦„</th>
 				<td><input type="text" name="name" value="${emp.name}" readonly/></td>
 			</tr>
 			<tr>
-				<th>*¼ºº°</th>
+				<th>*ì„±ë³„</th>
 				<td>
-					<input type="radio" value="³²" name="gender"
-					<c:if test="${emp.gender eq '³²'}">checked</c:if>
-					 readonly/>³²
+					<input type="radio" value="ë‚¨" name="gender"
+					<c:if test="${emp.gender eq 'ë‚¨'}">checked</c:if>
+					 readonly/>ë‚¨
 					
-					<input type="radio" value="¿©" name="gender"
-					<c:if test="${emp.gender eq '¿©'}">checked</c:if>
-					 readonly/>¿©
+					<input type="radio" value="ì—¬" name="gender"
+					<c:if test="${emp.gender eq 'ì—¬'}">checked</c:if>
+					 readonly/>ì—¬
 				</td>
 			</tr>
 			<tr>
-				<th>*»ý³â¿ùÀÏ</th>
+				<th>*ìƒë…„ì›”ì¼</th>
 				<td><input type="text" name="birth" value="${emp.birth}" readonly/></td>
 			</tr>
 			<tr>
-				<th>*¿¬¶ôÃ³</th>
+				<th>*ì—°ë½ì²˜</th>
 				<td><input type="text" name="phone" value="${emp.phone}" readonly/></td>
 			</tr>
 			<tr>
-				<th>*ÀÌ¸ÞÀÏ</th>
+				<th>*ì´ë©”ì¼</th>
 				<td><input type="email" name="email" value="${emp.email}" readonly/></td>
 			</tr>
 			<tr>
-				<th>*ÁöÁ¡¹øÈ£</th>
+				<th>*ì§€ì ë²ˆí˜¸</th>
 				<td><input type="text" name="b_idx" value="${emp.b_idx}" readonly/></td>
 			</tr>
 			<tr>
-				<th>*Á÷±Þ</th>
+				<th>*ì§ê¸‰</th>
 				<td><input type="text" name="position" value="${emp.position}" readonly/></td>
 			</tr>
 			<tr>
-				<th>*°è¾à±â°£</th>
-				<td><input type="text" name="conterm" value="${emp.conterm}" readonly/></td>
+				<th>*ê³„ì•½ê¸°ê°„</th>
+				<td>
+					<input type="text" name="start_conterm" value="${emp.start_conterm}" readonly/>ë¶€í„°
+					<input type="text" name="end_conterm" value="${emp.end_conterm}" readonly/>ê¹Œì§€
+				</td>
 			</tr>
 			<tr>
-				<th>*ÀçÁ÷»óÅÂ</th>
+				<th>*ìž¬ì§ìƒíƒœ</th>
 				<td><input type="text" name="status" value="${emp.status}" readonly/></td>
 			</tr>
 			<tr>
-				<th>*ÀÔ»çÀÏÀÚ</th>
+				<th>*ìž…ì‚¬ì¼ìž</th>
 				<td><input type="text" name="join_year" value="${emp.join_year}" readonly/></td>
 			</tr>
-			<input type="submit" value="¼öÁ¤"/>
-			<button type="button" onclick="location.href='./list.do'">¸ñ·Ï</button>	
-			<button type="button" onclick="location.href='./boardList.do'">»èÁ¦</button>	
+			<button type="button" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">ìˆ˜ì •</button>
+			<button type="button" onclick="location.href='./list.do'">ëª©ë¡</button>	
+			<button type="button" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">ì‚­ì œ</button>	
 		</table>
-	</form>
 </body>
 <script>
-
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
 </script>
 </html>

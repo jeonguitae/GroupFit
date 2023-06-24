@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,84 +6,87 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>½Å±ÔÁ÷¿ø ÀÎÀû Á¤º¸ ÀÛ¼º</h3>
+	<h3>ì‹ ê·œì§ì› ì¸ì  ì •ë³´ ìž‘ì„±</h3>
 	<form action="empJoin.do" method="post" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<input type="file" name="emp_photo"/>
 			</tr>
 			<tr>
-				<th>*»ç³»¹øÈ£</th>
+				<th>*ì‚¬ë‚´ë²ˆí˜¸</th>
 				<td><input type="text" name="emp_no"/></td>
 			</tr>
 			<tr>
-				<th>*ºñ¹Ð¹øÈ£</th>
+				<th>*ë¹„ë°€ë²ˆí˜¸</th>
 				<td><input type="password" name="pw"/></td>
 			</tr>
 			<tr>
-				<th>*ÀÌ¸§</th>
+				<th>*ì´ë¦„</th>
 				<td><input type="text" name="name"/></td>
 			</tr>
 			<tr>
-				<th>*¼ºº°</th>
+				<th>*ì„±ë³„</th>
 				<td>
-					<input type="radio" value="³²" name="gender"/>³²
-					<input type="radio" value="¿©" name="gender"/>¿©
+					<input type="radio" value="ë‚¨" name="gender"/>ë‚¨
+					<input type="radio" value="ì—¬" name="gender"/>ì—¬
 				</td>
 			</tr>
 			<tr>
-				<th>*»ý³â¿ùÀÏ</th>
+				<th>*ìƒë…„ì›”ì¼</th>
 				<td><input type="date" name="birth"/></td>
 			</tr>
 			<tr>
-				<th>*¿¬¶ôÃ³</th>
+				<th>*ì—°ë½ì²˜</th>
 				<td><input type="text" name="phone"/></td>
 			</tr>
 			<tr>
-				<th>*ÀÌ¸ÞÀÏ</th>
+				<th>*ì´ë©”ì¼</th>
 				<td><input type="email" name="email"/></td>
 			</tr>
 			<tr>
-				<th>*ÁöÁ¡¹øÈ£</th>
+				<th>*ì§€ì </th>
 				<td>
 					<select name="b_idx">
-					    <option value="ÁöÁ¡1">ÁöÁ¡1</option>
-					    <option value="ÁöÁ¡2">ÁöÁ¡2</option>
-					    <option value="ÁöÁ¡3">ÁöÁ¡3</option>
-					    <option value="ÁöÁ¡4">ÁöÁ¡4</option>
+					    <option value="1">ì„œì´ˆ</option>
+					    <option value="2">ë°©ë°°</option>
+					    <option value="3">ì—­ì‚¼</option>
+					    <option value="4">ë…¼í˜„</option>
 					</select>			
 				</td>
 			</tr>
 			<tr>
-				<th>*Á÷±Þ</th>
+				<th>*ì§ê¸‰</th>
 				<td>
 					<select name="position">
-					    <option value="Á÷¿ø">Á÷¿ø</option>
-					    <option value="ÁöÁ¡Àå">ÁöÁ¡Àå</option>
-					    <option value="´ëÇ¥">´ëÇ¥</option>
+					    <option value="ì§ì›">ì§ì›</option>
+					    <option value="ì§€ì ìž¥">ì§€ì ìž¥</option>
+					    <option value="ëŒ€í‘œ">ëŒ€í‘œ</option>
 					</select>			
 				</td>
 			</tr>
 			<tr>
-				<th>*°è¾à±â°£</th>
-				<td><input type="date" name="conterm"/></td>
+				<th>*ê³„ì•½ê¸°ê°„</th>
+				<td>
+					<input type="date" name="start_conterm"/>ë¶€í„°
+					<input type="date" name="end_conterm"/>ê¹Œì§€
+				</td>
 			</tr>
 			<tr>
-				<th>*ÀçÁ÷»óÅÂ</th>
+				<th>*ìž¬ì§ìƒíƒœ</th>
 				<td>
 					<select name="status">
-					    <option value="ÀçÁ÷">ÀçÁ÷</option>
-					    <option value="ÈÞÁ÷">ÈÞÁ÷</option>
-					    <option value="ÅðÁ÷">ÅðÁ÷</option>
+					    <option value="ìž¬ì§">ìž¬ì§</option>
+					    <option value="íœ´ì§">íœ´ì§</option>
+					    <option value="í‡´ì§">í‡´ì§</option>
 					</select>			
 				</td>
 			</tr>
 			<tr>
-				<th>*ÀÔ»çÀÏÀÚ</th>
+				<th>*ìž…ì‚¬ì¼ìž</th>
 				<td><input type="date" name="join_year"/></td>
 			</tr>
-			<input type="submit" value="µî·Ï"/>
-			<button type="button" onclick="location.href='./boardList.do'">¸ñ·Ï</button>	
+			<input type="submit" value="ë“±ë¡"/>
+			<button type="button" onclick="location.href='./list.do'">ëª©ë¡</button>	
 		</table>
 	</form>
 </body>

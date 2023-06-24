@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.gf.member.dto.MemberDTO;
 import kr.co.gf.member.service.MemberService;
@@ -31,7 +32,6 @@ public class MemberController {
 		model.addAttribute("list", list);
 		return "memList";
 	}
-<<<<<<< HEAD
 	
 	@GetMapping(value="/memjoin.do")
 	public ModelAndView joinForm() {
@@ -40,7 +40,8 @@ public class MemberController {
 	
 	@GetMapping(value="memWrite.go")
 	public String memWrite() {
-=======
+		return "";
+	}
 
 	@GetMapping(value="/memWrite.move")
 	public String memWrite(Model model) {
@@ -50,7 +51,6 @@ public class MemberController {
 				
 		ArrayList<MemberDTO> list2 = service.ticket();
 		model.addAttribute("ticket", list2);
->>>>>>> origin/master
 		
 		return "memWrite";
 	}

@@ -51,7 +51,7 @@ public class EmpService {
 		
 		if(success > 0) {
 			msg="직원등록에 성공 했습니다.";
-			page="main";
+			page="redirect:/list.do";
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(page);
@@ -71,6 +71,47 @@ public class EmpService {
 	public EmpDTO detail(String detailid) {
 		
 		return dao.detail(detailid);
+	}
+
+	
+	public ModelAndView update(EmpDTO dto) {
+		int success = dao.update(dto);
+		logger.info("success: "+success);
+		String msg = "직원수정에 실패 했습니다";
+		String page = "empUpdate";
+		EmpDTO emp = null;
+		
+		
+		if(success > 0) {
+			msg="직원수정에 성공 했습니다.";
+			page="empDetail";
+			emp = dao.detail(dto.getEmp_no());
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(page);
+		mav.addObject("emp",emp);
+		mav.addObject("msg",msg);
+		
+		return mav;
+	}
+
+
+	public ModelAndView delete(String detailid) {
+		
+		int success = dao.delete(detailid);
+		logger.info("success: "+success);
+		String msg = "직원삭제에 실패 했습니다";
+		String page = "empUpdate";
+		
+		if(success > 0) {
+			msg = "직원삭제에 성공 했습니다.";
+			page = "redirect:/list.do";
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(page);
+		mav.addObject("msg",msg);
+		
+		return mav;
 	}
 
 }

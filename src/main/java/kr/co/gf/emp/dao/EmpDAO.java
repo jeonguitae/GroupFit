@@ -18,4 +18,8 @@ public interface EmpDAO {
 
 	EmpDTO detail(String detailid);
 
+	int update(EmpDTO dto);
+
+	int delete(String detailid);
+
 }

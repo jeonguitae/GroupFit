@@ -63,6 +63,7 @@ public class EmpController {
 		ArrayList<EmpDTO> list = service.list();
 		
 		String page = "empList";
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(page);
 		mav.addObject("list",list);
@@ -97,14 +98,33 @@ public class EmpController {
 		return mav;
 	}
 	
-//	@PostMapping(value="empUpdate.do")
-//	public ModelAndView update(@RequestParam HashMap<String, String>params)
-//		
-//		service.update(params);
-//		String page = "redirect:/detail.do?detailid="params.get("emp_no");
-//		ModelAndView mav = new ModelAndView();
-//		mav.setViewName(page);
-//		return mav;
-//		
-//}
+	@GetMapping(value="/empUpdate.go")
+	public ModelAndView update(@RequestParam String detailid) {
+		
+		EmpDTO dto = service.detail(detailid);
+		String page ="redirect:/list.do";
+		
+		if(dto!=null) {
+			page="empUpdate";
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(page);
+		mav.addObject("emp",dto);
+		
+		return mav;
+	}
+	
+	@PostMapping(value="/empUpdate.do")
+	public ModelAndView updateDo(EmpDTO dto) {
+		logger.info("dto: " + dto.getEmp_no());
+		return service.update(dto);
+	}
+	
+	@GetMapping(value="/empDelete.do")
+	public ModelAndView delete(@RequestParam String detailid) {
+		
+		return service.delete(detailid);
+	}
+	
+
 }

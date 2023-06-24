@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -15,19 +14,19 @@
 	}
 </style>
 <body>
-<h3>Á÷¿ø ¸®½ºÆ®</h3>
-<button onclick="location.href='empJoin.go'">Á÷¿ø µî·Ï</button>
-<button onclick="location.href='empJoin.go'">Á÷¿ø »èÁ¦</button>
-<button onclick="location.href='empJoin.go'">ÁöÁ¡º°</button>
-<button onclick="location.href='empJoin.go'">Åð»çÁ÷¿ø</button>
+<h3>ì§ì› ë¦¬ìŠ¤íŠ¸</h3>
+<button onclick="location.href='empJoin.go'">ì§ì› ë“±ë¡</button>
+<button onclick="location.href='empJoin.go'">ì§ì› ì‚­ì œ</button>
+<button onclick="location.href='empJoin.go'">ì§€ì ë³„</button>
+<button onclick="location.href='empJoin.go'">í‡´ì‚¬ì§ì›</button>
 <table>
 	<thead>
 		<tr>
-			<th>¼û±â±â</th>
-			<th>»ç¹ø</th>
-			<th>ÀÌ¸§</th>
-			<th>ÁöÁ¡</th>
-			<th>Á÷±Þ</th>
+			<th>ì‚­ì œ</th>
+			<th>ì‚¬ë²ˆ</th>
+			<th>ì´ë¦„</th>
+			<th>ì§€ì </th>
+			<th>ì§ê¸‰</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -36,7 +35,7 @@
 				<td><input type="checkbox" name="chk" value="'+emp.emp_no+'"/></td>
 				<td>${emp.emp_no}</td>
 				<td><a href="empDetail.do?detailid=${emp.emp_no}">${emp.name}</a></td>
-				<td>${emp.b_idx}</td>
+				<td>${emp.b_name}</td>
 				<td>${emp.position}</td>
 			</tr>
 		</c:forEach>
@@ -45,4 +44,10 @@
 
 
 </body>
+<script>
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
+</script>
 </html>
