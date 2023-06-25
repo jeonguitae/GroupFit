@@ -173,6 +173,28 @@
 										<p>PT 회원</p>
 								</a></li>
 							</ul></li>
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fas fa-book"></i>
+								<p>
+									직원 관리 <i class="fas fa-angle-left right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item item-sub">
+									<a href="empList.go" class="nav-link"> 
+										<i class="fas fa-user nav-icon"></i>
+										<p>직원 리스트</p>
+									</a>
+								</li>
+								<li class="nav-item item-sub">
+									<a href="#" class="nav-link">
+										<i class="fas fa-running nav-icon"></i>
+										<p>대표 직원 리스트</p>
+									</a>
+								</li>
+							</ul>
+						</li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-calendar-alt"></i>
 								<p>
