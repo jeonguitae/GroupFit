@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.emp.service.EmpService;
@@ -36,6 +37,16 @@ public class MemberController {
 		
 		model.addAttribute("list", list);
 		return "memList";
+	}
+	
+	@GetMapping(value="/memjoin.do")
+	public ModelAndView joinForm() {
+		return new ModelAndView("memJoin")	;
+	}
+	
+	@GetMapping(value="memWrite.go")
+	public String memWrite() {
+		return "";
 	}
 
 	@GetMapping(value="/memWrite.go")
