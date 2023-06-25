@@ -5,15 +5,16 @@
    <mapper namespace="kr.co.gf.member.dao.MemberDAO">
    
    <select id="memlist" resultType="member">
-   		SELECT m.mem_no, m.name, rt.start_date, rt.end_date  FROM member m JOIN registered_ticket rt WHERE m.mem_no = rt.mem_no;
+   		SELECT m.mem_no, m.name, rt.start_date, rt.end_date  
+   		FROM member m JOIN registered_ticket rt WHERE m.mem_no = rt.mem_no
    </select>
    	
    <select id="branch" resultType="member">
-   		SELECT * FROM branch 
+   		SELECT * FROM branch
    </select>
    
    <select id="ticket" resultType="member">
-   		SELECT * FROM ticket 
+   		SELECT * FROM ticket WHERE b_idx = #{param1}
    </select>
    
    <select id="emp_name" resultType="String">
@@ -30,11 +31,11 @@
    </select>
    
    <select id="ticket_time" resultType="int">
-   		SELECT ticket_time FROM ticket WHERE ticket_name = #{param1}
+   		SELECT ticket_time FROM ticket WHERE ticket_name = #{param1} AND b_idx = #{param2}
    </select>
    
     <select id="ticket_no" resultType="String">
-   		SELECT ticket_no FROM ticket WHERE ticket_name = #{param1}
+   		SELECT ticket_no FROM ticket WHERE ticket_name = #{param1} AND b_idx = #{param2}
    </select>
    
    <select id="cntDate" resultType="int">
@@ -58,5 +59,10 @@
    		INSERT INTO pt_mem(regt_idx, mem_no, weight, goal, str, count)
    		VALUES(#{ticket_no}, #{mem_no}, #{weight}, #{goal}, #{str}, #{ticket_time})
    </insert>
+   
+   <select id="ticket_type" resultType="String">
+   		SELECT ticket_type FROM ticket WHERE ticket_no = #{param1} AND b_idx = #{param2}
+   </select>
+ 
    
    </mapper>

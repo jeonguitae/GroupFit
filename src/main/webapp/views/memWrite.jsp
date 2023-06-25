@@ -216,12 +216,12 @@ function ticketjoin(){
 			if(data.success == 1){
 				alert('이용권 정보 등록이 완료 되었습니다.');
 				
-				if(data.ticket_no >= 1 && data.ticket_no <= 4){
+				if(data.ticket_type == ('일반')){
 					location.href = 'memlist.go';
 				}
 				
 				else{
-					location.href = 'ptmemJoin.go?mem_no='+data.mem_no+'&ticket_no='+data.ticket_no+'&ticket_time='+data.ticket_time;
+					location.href = 'ptmemJoin.go?mem_no='+data.mem_no+'&ticket_no='+data.ticket_no+'&ticket_time='+data.count;
 				}
 				
 			}else{

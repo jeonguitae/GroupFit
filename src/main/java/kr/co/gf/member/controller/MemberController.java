@@ -3,6 +3,8 @@ package kr.co.gf.member.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.gf.emp.dto.EmpDTO;
+import kr.co.gf.emp.service.EmpService;
+import kr.co.gf.login.service.LoginService;
 import kr.co.gf.member.dto.MemberDTO;
 import kr.co.gf.member.service.MemberService;
 
@@ -20,6 +25,7 @@ import kr.co.gf.member.service.MemberService;
 public class MemberController {
 	
 	@Autowired MemberService service;
+	@Autowired LoginService service2;
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -32,13 +38,19 @@ public class MemberController {
 		return "memList";
 	}
 
-	@GetMapping(value="/memWrite.move")
-	public String memWrite(Model model) {
+	@GetMapping(value="/memWrite.go")
+	public String memWrite(Model model, HttpSession session) {
+		
+		String loginId = (String) session.getAttribute("loginId");
+		
+		EmpDTO dto = service2.getEmp(loginId);
+		
+		String b_idx = dto.getB_idx();
 		
 		ArrayList<MemberDTO> list = service.branch();
 		model.addAttribute("branch", list);
 				
-		ArrayList<MemberDTO> list2 = service.ticket();
+		ArrayList<MemberDTO> list2 = service.ticket(b_idx);
 		model.addAttribute("ticket", list2);
 		
 		return "memWrite";
