@@ -63,6 +63,10 @@
    <select id="ticket_type" resultType="String">
    		SELECT ticket_type FROM ticket WHERE ticket_no = #{param1} AND b_idx = #{param2}
    </select>
+   
+   <delete id="memdelete">
+   		DELETE FROM member WHERE mem_no = #{param1}
+   </delete>
  
    
    </mapper>

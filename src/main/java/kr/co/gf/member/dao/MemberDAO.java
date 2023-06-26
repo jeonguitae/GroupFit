@@ -44,6 +44,8 @@ public interface MemberDAO {
 
 	String ticket_type(String ticket_no, String b_idx);
 
+	int memdelete(String mem_no);
+
 	/* int memjoin(HashMap<String, String> params); */
 
 }

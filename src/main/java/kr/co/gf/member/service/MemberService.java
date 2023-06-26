@@ -116,4 +116,17 @@ public class MemberService {
 		return map;
 	}
 
+	public HashMap<String, Object> memdelete(ArrayList<String> memdelList) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();		
+		int delSize = memdelList.size();
+		int successCnt = 0;
+		for (String mem_no : memdelList) {
+			successCnt += dao.memdelete(mem_no);
+		}		
+		map.put("msg", delSize+" 요청중 "+successCnt+" 개 삭제 했습니다.");		
+		map.put("success", true);
+		return map;
+	}
+
 }

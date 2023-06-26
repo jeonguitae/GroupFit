@@ -31,18 +31,33 @@ public class MemberController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@GetMapping(value="/memlist.go")
-	public String memlist(Model model) {
-		
-		ArrayList<MemberDTO> list = service.memlist();
-		
-		model.addAttribute("list", list);
+	public String memlistGo() {
+	
 		return "memList";
 	}
 	
-	@GetMapping(value="/memjoin.do")
-	public ModelAndView joinForm() {
-		return new ModelAndView("memJoin")	;
+	@GetMapping(value="memlist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> memlist(){
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<MemberDTO> list = service.memlist();
+		
+		map.put("list", list);
+		
+		return map;
 	}
+	
+	@RequestMapping(value="/memdel.ajax")
+	@ResponseBody
+	public HashMap<String, Object> delete(
+			@RequestParam(value="delList[]") ArrayList<String> memdelList){
+		//array 로 받을 경우 @RequestParam 에 value 를 반드시 명시해야함
+		logger.info("delList : "+memdelList);
+		return service.memdelete(memdelList);
+	}
+
 
 	@GetMapping(value="/memWrite.go")
 	public String memWrite(Model model, HttpSession session) {
