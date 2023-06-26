@@ -250,7 +250,7 @@
 										<p>전체 매출통계</p>
 								</a></li>
 							</ul></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="reference.go" class="nav-link"> <i
 								class="nav-icon fas fa-columns"></i>
 								<p>자료실</p>
 						</a></li>

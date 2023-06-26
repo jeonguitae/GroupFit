@@ -5,9 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자료실</title>
-
-
+<title>자료실 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -44,52 +42,44 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-			<button onclick="location.href='referenceWrite.go'">글쓰기</button>
-			<button>삭제</button>
-				<table class="table table-bordered table-hover dataTable dtr-inline">
-			<thead>
-				<tr>
-			 		<th>no</th>
-			 		<th>제목</th>
-			 		<th>작성자</th>
-			 		<th>작성일자</th>
-					<td><input type="checkbox" id="cbx_chkAll"/></td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${list}" var="reference">
-					<tr>
-						<td>${reference.r_idx}</td>
-						<td><a href="referenceDetail.do?idx=${reference.r_idx}">${reference.subject}</a></td>
-						<td>${reference.emp_no}</td>
-						<td>${reference.date}</td>
-						<td><input type="checkbox" name="chk"/></td>
-					</tr>			
-				</c:forEach>
-			</tbody>
-		</table>
+			<form action="referenceUpdate.do?r_idx=${dto.r_idx}">
+			<button>수정</button>
+			<button onclick="location.href='referenceDelete.do?r_idx=${dto.r_idx}'">삭제</button>
+	<table class="table table-bordered table-hover dataTable dtr-inline">
+		<tr>
+			<th>글번호</th>
+			<td><input type="text" name="r_idx" value="${dto.r_idx}" readonly="readonly"/></td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td><input type="text" name="emp_no" value="${dto.emp_no}" readonly="readonly"/></td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td><input type="text" name="subject" value="${dto.subject}"/></td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td><input type="text" name="date" value="${dto.date}" readonly="readonly"/></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td><textarea name="content" placeholder="${dto.content}"></textarea></td>
+		</tr>
+		<tr>
+			<th>첨부파일</th>
+			<td><a href="download.do?path=${dto.new_photo_name}">${dto.ori_photo_name}</a></td>
+		</tr>           
+		<tr>
+			<th colspan="2">
+				<button onclick="location.href='reference.do'">목록</button>
+			</th>
+		</tr>
+	</table>
+	</form>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#cbx_chkAll").click(function() {
-		if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
-		else $("input[name=chk]").prop("checked", false);
-	});
-	
-	$("input[name=chk]").click(function() {
-		var total = $("input[name=chk]").length;
-		var checked = $("input[name=chk]:checked").length;
-		
-		if(total != checked) $("#cbx_chkAll").prop("checked", false);
-		else $("#cbx_chkAll").prop("checked", true); 
-	});
-});
-</script>
 </html>
-
-
-
