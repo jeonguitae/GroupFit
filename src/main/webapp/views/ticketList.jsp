@@ -178,7 +178,7 @@
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a href="#">메인</a></li>
+							<li class="breadcrumb-item"><a href="main">메인</a></li>
 							<li class="breadcrumb-item active">이용권 관리</li>
 						</ol>
 					</div>
