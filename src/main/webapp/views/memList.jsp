@@ -62,7 +62,7 @@
 			</form>	
 					
 			<div class="btn1">		
-				<button onclick="location.href='memWrite.move'">등록</button>
+				<button onclick="location.href='memWrite.go'">등록</button>
 				<button onclick="location.href='memDel.do'">삭제</button>
 			</div>
 			
