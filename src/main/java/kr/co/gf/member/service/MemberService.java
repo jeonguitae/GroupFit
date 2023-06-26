@@ -32,9 +32,9 @@ public class MemberService {
 		return dao.branch();
 	}
 
-	public ArrayList<MemberDTO> ticket() {
+	public ArrayList<MemberDTO> ticket(String b_idx) {
 		
-		return dao.ticket();
+		return dao.ticket(b_idx);
 	}
 
 	public String emp_name(String loginId) {
@@ -67,16 +67,27 @@ public class MemberService {
 		String branch = params.get("branch");
 		String mem_no = params.get("mem_no");
 		
-		String ticket_no = dao.ticket_no(ticket_name);
 		String b_idx = dao.b_idx(branch);
+		String ticket_no = dao.ticket_no(ticket_name, b_idx);
 		params.put("ticket_no", ticket_no);
 		params.put("b_idx", b_idx);
+		
+		String ticket_type = dao.ticket_type(ticket_no, b_idx);
+		
+		logger.info("ticket_type : " + ticket_type);
 		
 		int cnt_start_date = dao.cntDate(start_date);
 		
 		logger.info("cnt_start_date : " + cnt_start_date);
 		
-		int ticket_time = dao.ticket_time(ticket_name);
+		int ticket_time = dao.ticket_time(ticket_name, b_idx);
+		int count = dao.ticket_time(ticket_name, b_idx);
+		
+		if(ticket_type.equals("pt")) {
+			
+			ticket_time = ticket_time * 7;
+		}
+		
 		int cnt_end_date = cnt_start_date + ticket_time;
 		
 		String end_date = dao.end_date(cnt_end_date);
@@ -89,7 +100,8 @@ public class MemberService {
 		
 		map.put("success", row);
 		map.put("ticket_no", ticket_no);
-		map.put("ticket_time", ticket_time);
+		map.put("count", count);
+		map.put("ticket_type", ticket_type);
 		map.put("mem_no", mem_no);
 		
 		return map;

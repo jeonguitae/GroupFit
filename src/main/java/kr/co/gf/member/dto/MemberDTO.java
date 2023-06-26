@@ -20,7 +20,8 @@ public class MemberDTO {
 	private int b_idx;
 	private String ticket_name;
 	private String ticket_time;
-	private int price;
+	private int ticket_price;
+	private String ticket_type;
 	private Date purch_date;
 	private Date start_date;
 	private Date end_date;
@@ -36,12 +37,6 @@ public class MemberDTO {
 	}
 	public void setTicket_time(String ticket_time) {
 		this.ticket_time = ticket_time;
-	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
 	}
 	private float weight;
 	private String goal;
@@ -149,6 +144,18 @@ public class MemberDTO {
 	}
 	public void setB_name(String b_name) {
 		this.b_name = b_name;
+	}
+	public int getTicket_price() {
+		return ticket_price;
+	}
+	public void setTicket_price(int ticket_price) {
+		this.ticket_price = ticket_price;
+	}
+	public String getTicket_type() {
+		return ticket_type;
+	}
+	public void setTicket_type(String ticket_type) {
+		this.ticket_type = ticket_type;
 	}
 	
 

@@ -4,9 +4,54 @@
    
 <mapper namespace="kr.co.gf.emp.dao.EmpDAO">
    
+   <insert id="join" parameterType="emp">
+		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, start_conterm, end_conterm, status, join_year, b_idx)
+		values(#{emp_no},#{pw},#{name},#{gender}, #{birth},
+		#{phone},#{email},#{position},#{start_conterm},#{end_conterm},#{status},#{join_year},#{b_idx})
+	</insert>
+
    <insert id="tempJoin" parameterType="emp">
 		insert into emp(emp_no, pw, name, email, phone, b_idx, position)
 		values(#{emp_no},#{pw},#{name},#{email}, #{phone}, 1, #{position})
 	</insert>
+	
+	<select id="list" resultType="emp" parameterType="emp">
+		SELECT e.emp_no
+			  ,e.name
+			  ,b.b_name 
+			  ,e.position
+		FROM emp e
+		LEFT JOIN branch b on e.b_idx = b.b_idx
+		<where>
+		AND is_delete=0;
+		</where>
+	</select>
+	
+	<select id="detail" resultType="emp">
+		SELECT * FROM emp WHERE emp_no = #{param1}
+	</select>
+	
+	<update id="update" parameterType="emp">
+		UPDATE emp SET 
+			  pw = #{pw}
+			, name = #{name}
+			, gender = #{gender}
+			, birth = #{birth}
+			, phone = #{phone}
+			, email = #{email}
+			, position = #{position}
+			, start_conterm = #{start_conterm}
+			, end_conterm = #{end_conterm}
+			, status = #{status}
+			, join_year = #{join_year}
+		WHERE emp_no = #{emp_no}
+	
+	</update>
+	
+	<delete id="delete" parameterType="emp">
+		UPDATE emp
+			SET is_delete = 1
+		WHERE emp_no = #{param1}
+	</delete>
    
 </mapper>
