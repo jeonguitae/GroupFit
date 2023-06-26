@@ -40,5 +40,9 @@
    		values(#{c_idx},#{new_photo_name},#{ori_photo_name},#{board_num})
    </insert>
    
+   <select id="selectName" resultType="String">
+   		select name from emp where emp_no = #{loginId};
+   </select>
+   
    
    </mapper>

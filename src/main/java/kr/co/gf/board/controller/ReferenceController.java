@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.gf.board.dto.ReferenceDTO;
 import kr.co.gf.board.service.ReferenceService;
@@ -53,13 +54,17 @@ public class ReferenceController {
 	// 자료실 글작성 페이지 이동
 	@RequestMapping(value="/referenceWrite.go")
 	public String referenceWriteForm(Model model, HttpSession session) {
+		
 		logger.info("글쓰기 이동");
+		String loginId = (String)session.getAttribute("loginId");
+		String loginName = service.selectName(loginId);
+		model.addAttribute("loginName",loginName);
 		return "referenceWrite";
 	}
 	
 	// 자료실 글작성 기능
 	@RequestMapping(value="/referenceWrite.do")
-	public String referenceWrite(@RequestParam HashMap<String,String> params, MultipartFile[] files) {
+	public String referenceWrite(@RequestParam HashMap<String,String> params, MultipartFile[] files, HttpSession session) {
 		logger.info("params 값 : "+params+files);
 		service.write(params,files);
 		logger.info("success :");

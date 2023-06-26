@@ -21,6 +21,8 @@ public interface ReferenceDAO {
 
 	void write(ReferenceDTO dto);
 
+	String selectName(String loginId);
+
 
 	
 

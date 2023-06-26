@@ -112,6 +112,11 @@ public void upload(MultipartFile uploadFile,int board_num) {
 		}
 }
 
+public String selectName(String loginId) {
+	return dao.selectName(loginId);
+	
+}
+
 
 	}
 

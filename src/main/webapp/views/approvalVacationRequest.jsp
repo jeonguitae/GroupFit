@@ -5,9 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자료실</title>
-
-
+<title>여기에 페이지 이름 입력</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -28,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>자료실</h1>
+						<h1>새 결재 진행</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -44,55 +42,23 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-			<button onclick="location.href='referenceWrite.go'">글쓰기</button>
-			<button>삭제</button>
-				<table class="table table-bordered table-hover dataTable dtr-inline">
-			<thead>
-				<tr>
-			 		<th>no</th>
-			 		<th>제목</th>
-			 		<th>작성자</th>
-			 		<th>작성일자</th>
-					<td><input type="checkbox" id="cbx_chkAll"/></td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:if test="${list.size() == 0}">
-					<tr><th colspan="5">게시글이 없습니다.</th></tr>
-				</c:if>
-				<c:forEach items="${list}" var="reference">
+				<a href="#">휴가신청</a>&nbsp;&nbsp;&nbsp;
+				<a href="#">지출결의서</a>&nbsp;&nbsp;&nbsp;
+				<a href="#">이벤트결재</a>
+				
+				<table id="table1" >
 					<tr>
-						<td>${reference.r_idx}</td>
-						<td><a href="referenceDetail.do?idx=${reference.r_idx}">${reference.subject}</a></td>
-						<td>${reference.emp_no}</td>
-						<td>${reference.date}</td>
-						<td><input type="checkbox" name="chk"/></td>
-					</tr>			
-				</c:forEach>
-			</tbody>
-		</table>
+						<th>기안자</th>
+						<td>정택범</td>
+					</tr>
+					<tr>
+						<th>기안일</th>
+						<td>2023-06-26</td>
+					</tr>
+				</table>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
-<script type="text/javascript">
-$(document).ready(function() {
-	$("#cbx_chkAll").click(function() {
-		if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
-		else $("input[name=chk]").prop("checked", false);
-	});
-	
-	$("input[name=chk]").click(function() {
-		var total = $("input[name=chk]").length;
-		var checked = $("input[name=chk]:checked").length;
-		
-		if(total != checked) $("#cbx_chkAll").prop("checked", false);
-		else $("#cbx_chkAll").prop("checked", true); 
-	});
-});
-</script>
 </html>
-
-
-
