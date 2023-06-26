@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 	.item-sub{
 		font-size: 14px;
+	}
+	
+	.header-sub{
+	    padding-top: 0px;
+	    padding-bottom: 0px;
+	    padding-left: 16px;
+								
 	}
 </style>
 <script
@@ -57,9 +65,19 @@
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
 					href="#" role="button"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a href="#"
-					class="nav-link"> <img src="img/wani.png"
+					class="nav-link"> 
+						<c:choose>
+						<c:when test="${empty sessionScope.loginEmp.new_photo_name}">
+							<img src="img/wani.png"
 						style="width: 2.1rem; top: -5px; right: 5px; position: relative; vertical-align: top;"
 						class="brand-image img-circle elevation-2" alt="User Image">
+						</c:when>
+						<c:otherwise>
+							<img src="photo/${sessionScope.loginEmp.new_photo_name}"
+						style="width: 2.1rem; top: -5px; right: 5px; position: relative; vertical-align: top;"
+						class="brand-image img-circle elevation-2" alt="User Image">
+						</c:otherwise>
+					</c:choose>
 						<span style="font-weight: 800; color: #FFFFFF; display: inline">${sessionScope.loginEmp.name}</span>
 						님, 환영합니다!
 				</a></li>
@@ -172,7 +190,35 @@
 										class="fas fa-running nav-icon"></i>
 										<p>PT 회원</p>
 								</a></li>
+								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+										class="fas fa-edit nav-icon"></i>
+										<p>PT 회원일지</p>
+								</a></li>
 							</ul></li>
+						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fas fa-users"></i>
+								<p>
+									직원 관리 <i class="fas fa-angle-left right"></i>
+								</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item item-sub">
+									<a href="empList.go" class="nav-link"> 
+										<i class="fas fa-user nav-icon"></i>
+										<p>직원 리스트</p>
+									</a>
+								</li>
+								<li class="nav-item item-sub">
+									<a href="#" class="nav-link">
+										<i class="fas fa-user-tie nav-icon"></i>
+										<p>대표 직원 리스트</p>
+									</a>
+								</li>
+							</ul>
+						</li>
+						</c:if>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-calendar-alt"></i>
 								<p>
@@ -212,28 +258,35 @@
 										<p>받은 메일함</p>
 								</a></li>
 							</ul></li>
-						<!-- <li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-copy"></i>
 								<p>
 									결재 관리 <i class="fas fa-angle-left right"></i>
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
+								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">결재하기</li>
 								<li class="nav-item"><a href="#" class="nav-link"> <i
 										class="fas fa-file nav-icon"></i>
-										<p>결재 예정 문서</p>
+										<p>결재 대기 문서</p>
 								</a></li>
 								<li class="nav-item"><a href="#" class="nav-link"> <i
 										class="fas fa-file-signature nav-icon"></i>
-										<p>결재 완료 문서</p>
+										<p>결재 예정 문서</p>
 								</a></li>
-							</ul></li> -->
-						<li class="nav-item"><a href="#" class="nav-link"> <i
-								class="nav-icon fas fa-copy"></i>
-								<p>
-									결재 관리
-								</p>
-						</a></li>
+								</c:if>
+								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">개인 문서함</li>
+								<li class="nav-item"><a href="#" class="nav-link"> <i
+										class="fas fa-file nav-icon"></i>
+										<p>결재 문서함</p>
+								</a></li>
+								<li class="nav-item"><a href="#" class="nav-link"> <i
+										class="fas fa-file-signature nav-icon"></i>
+										<p>임시 문서함</p>
+								</a></li>
+							</ul>
+						</li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-chart-pie"></i>
 								<p>
@@ -249,11 +302,13 @@
 									class="nav-link"> <i class="fas fa-sitemap nav-icon"></i>
 										<p>지점 매출통계</p>
 								</a></li>
+								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-item item-sub"><a href="pages/charts/inline.move"
 									class="nav-link"> <i
 										class="fas fa-project-diagram nav-icon"></i>
 										<p>전체 매출통계</p>
 								</a></li>
+								</c:if>
 							</ul></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-columns"></i>
@@ -270,10 +325,12 @@
 									class="nav-link"> <i class="fas fa-user-check nav-icon"></i>
 										<p>나의 근태관리</p>
 								</a></li>
+								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-item item-sub"><a href="pages/charts/flot.move"
 									class="nav-link"> <i class="fas fa-check-double nav-icon"></i>
 										<p>지점 근태관리</p>
 								</a></li>
+								</c:if>
 							</ul></li>
 
 					</ul>
