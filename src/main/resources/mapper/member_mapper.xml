@@ -5,18 +5,68 @@
    <mapper namespace="kr.co.gf.member.dao.MemberDAO">
    
    <select id="memlist" resultType="member">
-   		SELECT * FROM member
+   		SELECT m.mem_no, m.name, rt.start_date, rt.end_date  
+   		FROM member m JOIN registered_ticket rt WHERE m.mem_no = rt.mem_no
+   </select>
+   	
+   <select id="branch" resultType="member">
+   		SELECT * FROM branch
    </select>
    
-   <insert id="join" parameterType="member">
-   		INSERT INTO member(
-   			mem_no, emp_no, ticket_no, name, birth, gender, phone, locker, gym_wear,
-   			reg_date, branch, pt_chk
-   		)
-   			VALUES(
-   				#{mem_no},#{emp_no},#{ticket_no},#{name},#{birth},#{gender},#{phone},
-   				#{locker},#{gym_wear},#{reg_date},#{branch},#{pt_chk}
-   			)
+   <select id="ticket" resultType="member">
+   		SELECT * FROM ticket WHERE b_idx = #{param1}
+   </select>
+   
+   <select id="emp_name" resultType="String">
+   		SELECT name FROM emp WHERE emp_no = #{param1}
+   </select>
+   
+   <insert id="memjoin" parameterType="HashMap">
+   		INSERT INTO member(name, birth, gender, phone)
+   		VALUES(#{name}, #{birth}, #{gender}, #{phone})
    </insert>
+   
+   <select id="mem_no" resultType="int">
+   		SELECT mem_no FROM member WHERE name = #{param1} AND phone = #{param2}
+   </select>
+   
+   <select id="ticket_time" resultType="int">
+   		SELECT ticket_time FROM ticket WHERE ticket_name = #{param1} AND b_idx = #{param2}
+   </select>
+   
+    <select id="ticket_no" resultType="String">
+   		SELECT ticket_no FROM ticket WHERE ticket_name = #{param1} AND b_idx = #{param2}
+   </select>
+   
+   <select id="cntDate" resultType="int">
+   		SELECT TO_DAYS(#{param1})
+   </select>
+   
+   <select id="end_date" resultType="String">
+   		SELECT FROM_DAYS(#{param1})
+   </select>
+   
+   <insert id="ticjoin" parameterType="HashMap">
+   		INSERT INTO registered_ticket(emp_no, mem_no, ticket_no, b_idx, start_date, end_date)
+   		VALUES(#{emp_no}, #{mem_no}, #{ticket_no}, #{b_idx}, #{start_date}, #{end_date})
+   </insert>
+   
+   <select id="b_idx" resultType="String">
+   		SELECT b_idx FROM branch WHERE b_name = #{param1}
+   </select>
+   
+   <insert id="ptmemjoin" parameterType="HashMap">
+   		INSERT INTO pt_mem(regt_idx, mem_no, weight, goal, str, count)
+   		VALUES(#{ticket_no}, #{mem_no}, #{weight}, #{goal}, #{str}, #{ticket_time})
+   </insert>
+   
+   <select id="ticket_type" resultType="String">
+   		SELECT ticket_type FROM ticket WHERE ticket_no = #{param1} AND b_idx = #{param2}
+   </select>
+   
+   <delete id="memdelete">
+   		DELETE FROM member WHERE mem_no = #{param1}
+   </delete>
+ 
    
    </mapper>
