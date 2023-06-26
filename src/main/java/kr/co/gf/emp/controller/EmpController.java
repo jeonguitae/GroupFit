@@ -58,7 +58,7 @@ public class EmpController {
 //		return "empList";
 //	}
 	
-	@GetMapping(value="/list.do")
+	@GetMapping(value="/empList.go")
 	public ModelAndView list() {
 		ArrayList<EmpDTO> list = service.list();
 		
@@ -86,7 +86,7 @@ public class EmpController {
 	public ModelAndView detail(@RequestParam String detailid) {
 		
 		EmpDTO dto = service.detail(detailid);
-		String page ="redirect:/list.do";
+		String page ="redirect:/empList.do";
 		
 		if(dto!=null) {
 			page="empDetail";

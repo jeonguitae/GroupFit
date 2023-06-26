@@ -51,12 +51,12 @@ public class EmpService {
 		
 		if(success > 0) {
 			msg="직원등록에 성공 했습니다.";
-			page="redirect:/list.do";
+			page="redirect:/empDetail.do";
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(page);
 		mav.addObject("msg",msg);
-		
+		mav.addObject("detailid",dto.getEmp_no());
 		return mav;
 		
 	}
@@ -105,7 +105,7 @@ public class EmpService {
 		
 		if(success > 0) {
 			msg = "직원삭제에 성공 했습니다.";
-			page = "redirect:/list.do";
+			page = "redirect:/empList.go";
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(page);
