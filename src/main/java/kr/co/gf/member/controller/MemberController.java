@@ -43,11 +43,6 @@ public class MemberController {
 	public ModelAndView joinForm() {
 		return new ModelAndView("memJoin")	;
 	}
-	
-	@GetMapping(value="memWrite.go")
-	public String memWrite() {
-		return "";
-	}
 
 	@GetMapping(value="/memWrite.go")
 	public String memWrite(Model model, HttpSession session) {
