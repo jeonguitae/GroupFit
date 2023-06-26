@@ -36,24 +36,24 @@
       <div class="modal-body">
         <!-- 여기에 일정 등록 폼을 추가하세요 -->
         <!-- 일정 등록 폼 -->
-<form>
-  <div class="form-group">
-    <label for="event-name">이름</label>
-    <input type="text" class="form-control" id="event-name" placeholder="이름을 입력하세요">
-  </div>
-  
-  <!-- 시작 시간 입력 필드 -->
-  <div class="form-group">
-    <label for="start-datetime">시작 시간</label>
-    <input id="start-datetime" type="datetime-local" class="form-control" value="<?php echo date('Y-m-d\TH:i'); ?>">
-  </div>
-  
-  <!-- 종료 시간 입력 필드 -->
-  <div class="form-group">
-    <label for="end-datetime">종료 시간</label>
-    <input id="end-datetime" type="datetime-local" class="form-control" value="<?php echo date('Y-m-d\TH:i'); ?>">
-  </div>
-</form>
+		<form>
+		  <div class="form-group">
+		    <label for="event-name">회원 이름</label>
+		    <input type="text" class="form-control" id="event-name" placeholder="이름을 입력하세요">
+		  </div>
+		  
+		  <!-- 시작 시간 입력 필드 -->
+		  <div class="form-group">
+		    <label for="start-datetime">시작 시간</label>
+		    <input id="start-datetime" type="datetime-local" class="form-control" value="<?php echo date('Y-m-d\TH:i'); ?>">
+		  </div>
+		  
+		  <!-- 종료 시간 입력 필드 -->
+		  <div class="form-group">
+		    <label for="end-datetime">종료 시간</label>
+		    <input id="end-datetime" type="datetime-local" class="form-control" value="<?php echo date('Y-m-d\TH:i'); ?>">
+		  </div>
+		</form>
         
         <!-- 예: 제목, 시작일, 종료일 등의 입력 필드 -->
       </div>
