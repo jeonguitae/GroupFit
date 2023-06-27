@@ -73,7 +73,7 @@
          		</div>
          		
          		<div class="table">
-         			<c:if test="${pdto.new_photo_name eq null}">
+         			<c:if test="${dto.new_photo_name eq null}">
 	         			<form action="memprofile.do?mem_no=${dto.mem_no}" method="post" enctype="multipart/form-data">
 		         			<table>
 			         			<tr>
@@ -87,12 +87,12 @@
 						</form>
 					</c:if>
 					
-					<c:if test="${pdto.new_photo_name ne null}">
+					<c:if test="${dto.new_photo_name ne null}">
 						<table>
 		         			<tr>
 								<th>프로필 사진</th>
 								<td>
-									<img width="500" src="/photo/${pdto.new_photo_name}"/>
+									<img width="500" src="/photo/${dto.new_photo_name}"/>
 								</td>
 							</tr>
 							</table>

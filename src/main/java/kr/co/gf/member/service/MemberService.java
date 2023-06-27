@@ -165,11 +165,11 @@ public class MemberService {
 		
 		try {
 			byte[] bytes = photo.getBytes();//1-4. 바이트 추출
-			Path path = Paths.get("C:/img/upload/"+new_photo_name);
+			Path path = Paths.get("C:/upload/"+new_photo_name);
 			Files.write(path, bytes);
-			logger.info(new_photo_name+" save OK");
+			logger.info(new_photo_name + "save OK");
 			
-			row = dao.memprofile(mem_no,ori_photo_name,new_photo_name);
+			row = dao.memprofile(mem_no, ori_photo_name, new_photo_name);
 						
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -178,7 +178,7 @@ public class MemberService {
 		return row;
 	}
 
-	public MemberDTO photomem(String mem_no) {
+	public String photomem(String mem_no) {
 		
 		return dao.photomem(mem_no);
 	}

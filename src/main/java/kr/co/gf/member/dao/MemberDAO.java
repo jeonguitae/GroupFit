@@ -52,9 +52,9 @@ public interface MemberDAO {
 
 	String mem_b_name(int b_idx);
 
-	int memprofile(String mem_no, String oriFileName, String newFileName);
+	int memprofile(String mem_no, String ori_photo_name, String new_photo_name);
 
-	MemberDTO photomem(String mem_no);
+	String photomem(String mem_no);
 
 	/* int memjoin(HashMap<String, String> params); */
 

@@ -87,7 +87,7 @@
    		VALUES(2, #{new_photo_name}, #{ori_photo_name}, #{mem_no})
    </insert>
    
-   <select id="photomem" resultType="member">
+   <select id="photomem" resultType="String">
    		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 2
    </select>
    

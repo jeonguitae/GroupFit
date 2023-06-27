@@ -137,7 +137,11 @@ public class MemberController {
 		logger.info("mem_no" + mem_no);
 		
 		MemberDTO dto = service.memdetail(mem_no);
-		MemberDTO pdto = service.photomem(mem_no);
+		String new_photo_name = service.photomem(mem_no);
+		
+		logger.info("new_photo_name : " + new_photo_name);
+		
+		dto.setNew_photo_name(new_photo_name);
 		
 		String emp_name = service.mem_emp_name(dto.getEmp_no());
 		String b_name = service.mem_b_name(dto.getB_idx());
@@ -149,8 +153,6 @@ public class MemberController {
 		logger.info("b_name : " + b_name);
 
 		model.addAttribute("dto", dto);
-		model.addAttribute("pdto", pdto);
-		
 		return "memdetail";
 	}
 	
