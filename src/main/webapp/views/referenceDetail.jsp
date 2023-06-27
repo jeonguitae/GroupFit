@@ -52,7 +52,7 @@
 		</tr>
 		<tr>
 			<th>작성자</th>
-			<td><input type="text" name="emp_no" value="${dto.emp_no}" readonly="readonly"/></td>
+			<td><input type="text" name="emp_no" value="${loginName}" readonly="readonly"/></td>
 		</tr>
 		<tr>
 			<th>제목</th>
@@ -64,11 +64,11 @@
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td><textarea name="content" placeholder="${dto.content}"></textarea></td>
+			<td><textarea name="content">${dto.content}</textarea></td>
 		</tr>
 		<tr>
 			<th>첨부파일</th>
-			<td><a href="download.do?path=${dto.new_photo_name}">${dto.ori_photo_name}</a></td>
+			<td><a href="download.do?path=${dto.new_photo_name}&idx=${dto.r_idx}">${dto.ori_photo_name}</a></td>
 		</tr>           
 		<tr>
 			<th colspan="2">

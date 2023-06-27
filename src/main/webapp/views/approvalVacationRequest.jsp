@@ -46,7 +46,7 @@
 				<a href="#">지출결의서</a>&nbsp;&nbsp;&nbsp;
 				<a href="#">이벤트결재</a>
 				
-				<table id="table1" >
+				<table id="table1">
 					<tr>
 						<th>기안자</th>
 						<td>정택범</td>
@@ -54,6 +54,34 @@
 					<tr>
 						<th>기안일</th>
 						<td>2023-06-26</td>
+					</tr>
+				</table>
+				
+				<table id="table2" class="table table-bordered table-hover dataTable dtr-inline">
+					<tr>
+						<th>기간</th>
+						<td><input/></td>
+					</tr>
+					<tr>
+						<th>사유</th>
+						<td>2023-06-26</td>
+					</tr>
+					<tr>
+						<th>기타사항</th>
+						<td>2023-06-26</td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td>2023-06-26</td>
+					</tr>
+				</table>
+				
+				<table id="table3">
+					<tr>
+						<th>신청</th>
+						<th>직원</th>
+						<th>지점장</th>
+						<th>대표</th>
 					</tr>
 				</table>
 			</div>

@@ -44,5 +44,9 @@
    		select name from emp where emp_no = #{loginId};
    </select>
    
+   <select id="selectFile" resultType="String">
+   		select ori_photo_name from wphoto w where new_photo_name = #{param1};
+   </select>
+   
    
    </mapper>

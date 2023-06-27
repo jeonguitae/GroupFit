@@ -23,6 +23,8 @@ public interface ReferenceDAO {
 
 	String selectName(String loginId);
 
+	String selectFile(String path);
+
 
 	
 
