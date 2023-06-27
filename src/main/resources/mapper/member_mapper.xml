@@ -21,7 +21,7 @@
    		SELECT name FROM emp WHERE emp_no = #{param1}
    </select>
    
-   <insert id="memjoin" parameterType="HashMap">
+   <insert id="memjoin" parameterType="member"> 
    		INSERT INTO member(name, birth, gender, phone)
    		VALUES(#{name}, #{birth}, #{gender}, #{phone})
    </insert>
@@ -67,6 +67,28 @@
    <delete id="memdelete">
    		DELETE FROM member WHERE mem_no = #{param1}
    </delete>
- 
+ 	
+   <select id="memdetail" resultType="member">
+   		SELECT m.mem_no, m.name, m.birth, m.gender, m.phone, rt.start_date, rt.end_date, rt.emp_no, rt.b_idx, rt.ticket_no
+   		FROM member m JOIN registered_ticket rt
+   		WHERE m.mem_no = rt.mem_no AND m.mem_no = #{param1}
+   </select>
+   
+   <select id="mem_emp_name" resultType="String">
+   		SELECT name FROM emp WHERE emp_no = #{param1}
+   </select>
+   
+   <select id="mem_b_name" resultType="String">
+   		SELECT b_name FROM branch WHERE b_idx = #{param1}
+   </select>
+   
+   <insert id="memprofile" parameterType="String">
+   		INSERT INTO wphoto(c_idx, new_photo_name, ori_photo_name, board_num)
+   		VALUES(2, #{new_photo_name}, #{ori_photo_name}, #{mem_no})
+   </insert>
+   
+   <select id="photomem" resultType="member">
+   		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 2
+   </select>
    
    </mapper>

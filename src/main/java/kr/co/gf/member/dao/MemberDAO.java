@@ -46,6 +46,16 @@ public interface MemberDAO {
 
 	int memdelete(String mem_no);
 
+	MemberDTO memdetail(String mem_no);
+
+	String mem_emp_name(int emp_no);
+
+	String mem_b_name(int b_idx);
+
+	int memprofile(String mem_no, String oriFileName, String newFileName);
+
+	MemberDTO photomem(String mem_no);
+
 	/* int memjoin(HashMap<String, String> params); */
 
 }
