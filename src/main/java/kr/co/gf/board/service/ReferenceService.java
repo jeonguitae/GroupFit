@@ -64,8 +64,8 @@ public class ReferenceService {
 		
 		ReferenceDTO dto = new ReferenceDTO();
 		
-		dto.setEmp_no(params.get("emp_no"));
 		dto.setSubject(params.get("subject"));
+		dto.setEmp_no(params.get("emp_no"));
 		dto.setContent(params.get("content"));
 		// dto.setR_idx(Integer.parseInt(params.get("r_idx")));
 		
@@ -114,6 +114,11 @@ public void upload(MultipartFile uploadFile,int board_num) {
 
 public String selectName(String loginId) {
 	return dao.selectName(loginId);
+	
+}
+
+public String selectFile(String path) {
+	return dao.selectFile(path);
 	
 }
 

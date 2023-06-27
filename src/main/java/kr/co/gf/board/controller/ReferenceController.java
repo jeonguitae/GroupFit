@@ -46,8 +46,11 @@ public class ReferenceController {
 	
 	// 자료실 상세보기
 	@RequestMapping(value="/referenceDetail.do")
-	public ModelAndView referenceDetail(String idx) {
+	public ModelAndView referenceDetail(String idx, HttpSession session, Model model) {
 		logger.info("자료실 상세보기 번호 : "+idx);
+		String loginId = (String)session.getAttribute("loginId");
+		String loginName = service.selectName(loginId);
+		model.addAttribute("loginName",loginName);
 		return service.detail(idx);
 	}
 	
@@ -87,18 +90,19 @@ public class ReferenceController {
 	}
 	
 	@GetMapping(value="/download.do")
-	public ResponseEntity<Resource> download(String path) {
-		
+	public ResponseEntity<Resource> download(String path,String idx) {
+		String newFileName = service.selectFile(path);
 		Resource body = new FileSystemResource(root+"/"+path);//BODY		
 		HttpHeaders header = new HttpHeaders();//Header
 		try {						
-			String fileName = path+path.substring(path.lastIndexOf("."));
+			String fileName = newFileName+newFileName.substring(newFileName.lastIndexOf("."));
+			logger.info(newFileName+path+fileName);
 			// 한글 파일명은 깨질수 있으므로 인코딩을 한번 해 준다.
-			fileName = URLEncoder.encode(fileName, "UTF-8");
+			newFileName = URLEncoder.encode(newFileName, "UTF-8");
 			// text/... 은 문자열, image/... 이미지, application/octet-stream 은 바이너리 데이터
 			header.add("Content-type", "application/octet-stream");
 			// content-Disposition 은 내려보낼 내용이 문자열(inline)인지 파일(attatchment)인지 알려준다. 
-			header.add("content-Disposition", "attatchment;fileName=\""+fileName+"\"");
+			header.add("content-Disposition", "attatchment;fileName=\""+newFileName+"\"");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
