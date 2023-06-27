@@ -3,4 +3,46 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
    <mapper namespace="kr.co.gf.board.dao.ReferenceDAO">
+   
+   <select id="list" resultType="ReferenceDTO">
+   		select * from reference
+   </select>
+   
+   <select id="detail" resultType="ReferenceDTO" >
+   		select * from reference r
+	left join wphoto w 
+	on r.r_idx = w.board_num
+	where r.r_idx = #{r_idx}
+   </select>
+   
+   <insert 
+   		useGeneratedKeys="true"
+      	keyColumn="r_idx"
+      	keyProperty="board_num"
+      	
+   		id="write">
+   		insert into reference (emp_no,subject,content,date) values(#{emp_no},#{subject},#{content},now())
+   </insert>
+   
+   <delete id="delete" parameterType="String" >
+   		delete from reference where r_idx = #{r_idx}
+   </delete>
+   
+   <update id="update" parameterType="hashmap">
+   		update reference set 
+   			subject = #{subject}
+			,content = #{content} 
+			WHERE r_idx = #{r_idx}
+   </update>
+   
+   <insert id="fileWrite">
+   		insert into wphoto (c_idx,new_photo_name,ori_photo_name,board_num) 
+   		values(#{c_idx},#{new_photo_name},#{ori_photo_name},#{board_num})
+   </insert>
+   
+   <select id="selectName" resultType="String">
+   		select name from emp where emp_no = #{loginId};
+   </select>
+   
+   
    </mapper>
