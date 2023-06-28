@@ -52,11 +52,13 @@ public class MemberService {
 		
 		String name = params.get("name");
 		String phone = params.get("phone");
+		String loc_num = params.get("loc_num");
 		
 		int row = dao.memjoin(params);
 		
 		if(row == 1) {
-				
+			
+			dao.loc_status(loc_num);
 			int mem_no = dao.mem_no(name, phone);
 			map.put("mem_no", mem_no);
 		}
@@ -178,6 +180,22 @@ public class MemberService {
 	public String photomem(String mem_no) {
 		
 		return dao.photomem(mem_no);
+	}
+
+	public HashMap<String, Object> ptmemlist(String loginId) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<MemberDTO> list = dao.ptmemlist(loginId);
+		
+		map.put("list", list);
+		
+		return map;
+	}
+
+	public ArrayList<MemberDTO> locker() {
+		
+		return dao.locker();
 	}
 
 }

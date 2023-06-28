@@ -24,6 +24,7 @@ import kr.co.gf.emp.service.EmpService;
 import kr.co.gf.login.service.LoginService;
 import kr.co.gf.member.dto.MemberDTO;
 import kr.co.gf.member.service.MemberService;
+import kr.co.gf.member.service.PtMemberService;
 
 @Controller
 public class MemberController {
@@ -77,6 +78,9 @@ public class MemberController {
 				
 		ArrayList<MemberDTO> list2 = service.ticket(b_idx);
 		model.addAttribute("ticket", list2);
+		
+		ArrayList<MemberDTO> list3 = service.locker();
+		model.addAttribute("locker", list3);
 		
 		return "memWrite";
 	}
@@ -163,5 +167,21 @@ public class MemberController {
 		
 		return "redirect:/memdetail.go?mem_no="+mem_no;
 	}
+	
+	@GetMapping(value="ptmemlist.go")
+	public String ptmemlist(Model model) {
+		
+		return "ptmemlist";
+	}
+	
+	@RequestMapping(value="ptmemlist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> ptmemlista(HttpSession session){
+		
+		String loginId = (String) session.getAttribute("loginId");
+		
+		return service.ptmemlist(loginId);
+	}
+	
 	
 }
