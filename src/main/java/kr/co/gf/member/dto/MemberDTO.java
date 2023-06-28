@@ -41,6 +41,10 @@ public class MemberDTO {
 	private String emp_name;
 	private int emp_no;
 	
+	// locker
+	private String loc_num;
+	private String status;
+	
 	public String getTicket_name() {
 		return ticket_name;
 	}
@@ -184,6 +188,18 @@ public class MemberDTO {
 	}
 	public void setEmp_name(String emp_name) {
 		this.emp_name = emp_name;
+	}
+	public String getLoc_num() {
+		return loc_num;
+	}
+	public void setLoc_num(String loc_num) {
+		this.loc_num = loc_num;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 

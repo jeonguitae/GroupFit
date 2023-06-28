@@ -5,8 +5,12 @@
    <mapper namespace="kr.co.gf.member.dao.MemberDAO">
    
    <select id="memlist" resultType="member">
-   		SELECT m.mem_no, m.name, rt.start_date, rt.end_date  
-   		FROM member m JOIN registered_ticket rt WHERE m.mem_no = rt.mem_no
+   		SELECT m.mem_no, m.name,
+        t.ticket_type,
+        rt.start_date, rt.end_date
+	    FROM member m
+        JOIN registered_ticket rt ON m.mem_no = rt.mem_no
+        JOIN ticket t ON t.ticket_no = rt.ticket_no;
    </select>
    	
    <select id="branch" resultType="member">
@@ -17,14 +21,22 @@
    		SELECT * FROM ticket WHERE b_idx = #{param1}
    </select>
    
+   <select id="locker" resultType="member">
+   		SELECT * FROM locker WHERE status = '미사용'
+   </select>
+   
    <select id="emp_name" resultType="String">
    		SELECT name FROM emp WHERE emp_no = #{param1}
    </select>
    
    <insert id="memjoin" parameterType="member"> 
-   		INSERT INTO member(name, birth, gender, phone)
-   		VALUES(#{name}, #{birth}, #{gender}, #{phone})
+   		INSERT INTO member(name, birth, gender, phone, loc_num)
+   		VALUES(#{name}, #{birth}, #{gender}, #{phone}, #{loc_num})
    </insert>
+   
+   <update id="loc_status">
+   		UPDATE locker SET status = '사용중' WHERE loc_num = #{param1}
+   </update>
    
    <select id="mem_no" resultType="int">
    		SELECT mem_no FROM member WHERE name = #{param1} AND phone = #{param2}
@@ -89,6 +101,18 @@
    
    <select id="photomem" resultType="String">
    		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 2
+   </select>
+   
+   <select id="ptmemlist" resultType="member">
+   		SELECT m.mem_no, m.name, m.gender,
+       	t.ticket_time,
+       	rt.emp_no,
+       	pm.count
+		FROM member m
+		JOIN registered_ticket rt ON m.mem_no = rt.mem_no
+		JOIN ticket t ON t.ticket_no = rt.ticket_no
+		LEFT JOIN pt_mem pm ON pm.regt_idx = rt.regt_idx
+		WHERE rt.emp_no = #{param1} AND t.ticket_type = 'pt'
    </select>
    
    </mapper>

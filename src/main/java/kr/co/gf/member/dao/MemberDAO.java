@@ -56,6 +56,12 @@ public interface MemberDAO {
 
 	String photomem(String mem_no);
 
+	ArrayList<MemberDTO> ptmemlist(String loginId);
+
+	ArrayList<MemberDTO> locker();
+
+	int loc_status(String loc_num);
+
 	/* int memjoin(HashMap<String, String> params); */
 
 }

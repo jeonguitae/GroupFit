@@ -61,33 +61,44 @@
 			         	<table>
 			         		<tr>
 			         			<th>이름</th>
-			         				<td>
-			         					<input type="text" name="name" value=""/>
-			         				</td>
+		         				<td>
+		         					<input type="text" name="name" value=""/>
+		         				</td>
 			         		</tr>
 			         		
 			         		<tr>
 			         			<th>생년월일</th>
-			         				<td>
-			         					<input type="date" name="birth">
-			         				</td>
+		         				<td>
+		         					<input type="date" name="birth">
+		         				</td>
 			         		</tr>
 			         		
 			         		<tr>
 			         			<th>성별</th>
-			         				<td>
-			         					<input type="radio" name="gender" value="남자"/>남자
-			         					&nbsp; &nbsp; &nbsp; &nbsp;
-			         					<input type="radio" name="gender" value="여자"/>여자
-			         				</td>
+		         				<td>
+		         					<input type="radio" name="gender" value="남자"/>남자
+		         					&nbsp; &nbsp; &nbsp; &nbsp;
+		         					<input type="radio" name="gender" value="여자"/>여자
+		         				</td>
 			         		</tr>
 			         		
 			         		<tr>
 			         			<th>연락처</th>
-			         				<td>
-			         					<input type="text" name="phone" value=""/>
-			         				</td>
+		         				<td>
+		         					<input type="text" name="phone" value=""/>
+		         				</td>
 			         		</tr>
+			         		
+			         		<tr>
+								<th>라커 번호</th>
+								<td>
+									<select name="loc_num">
+										<c:forEach items="${locker}" var="name">
+											<option value="${name.loc_num}">${name.loc_num}
+										</c:forEach>
+									</select>
+								</td>
+							</tr>
 			         	</table>
 			        </div>
 		         	<button onclick="memjoin()">등록</button>
@@ -160,6 +171,7 @@ function memjoin(){
 	var $birth = $('input[name="birth"]');
 	var $gender = $('input[name="gender"]:checked');
 	var $phone = $('input[name="phone"]');
+	var $loc_num = $('select[name="loc_num"]');
 	
 	var param = {};
 	
@@ -167,6 +179,7 @@ function memjoin(){
 	param.birth = $birth.val();
 	param.gender = $gender.val();
 	param.phone = $phone.val();
+	param.loc_num = $loc_num.val();
 	
 	$.ajax({
 		type:'post',
