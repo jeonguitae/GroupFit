@@ -29,7 +29,7 @@
 	}
 	
 	button.del{
-		background-color: red;
+		background-color: #e74c3c;
 	}
 </style>
 
