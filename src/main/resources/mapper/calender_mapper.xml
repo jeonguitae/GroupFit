@@ -3,8 +3,18 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
    <mapper namespace="kr.co.gf.calender.dao.CalenderDAO">
-   
-   
+   	  
+   	<insert id="createEvent" parameterType="cal">
+		INSERT INTO calendar(emp_no, b_idx, event_name, start_time, end_time)
+		VALUES(#{emp_no},#{b_idx},#{event_name},#{start_time},#{end_time})
+	</insert>
+	
+	<!-- getEvents 메서드에 대한 select 쿼리문 작성 -->
+    <select id="calendarlist" resultType="kr.co.gf.calender.dto.CalenderDTO">
+        <!-- 여기에 실제로 데이터베이스에서 일정 데이터를 조회하는 SQL 쿼리문 작성 -->
+        SELECT * FROM calendar;
+    </select>
+
    
    
    </mapper>
