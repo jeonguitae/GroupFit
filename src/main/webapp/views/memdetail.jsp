@@ -5,7 +5,9 @@
 <html>
 <head>
 <style>
-
+	div.meminfo. div.memprofile{
+		float: center;
+	}
 </style>
 <meta charset="UTF-8">
 <title>여기에 페이지 이름 입력</title>
@@ -28,75 +30,79 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<div class="table">
-					<table>
-						<tr>
-							<th>회원번호</th>
-							<td>${dto.mem_no}</td>
-						</tr>
-						
-						<tr>
-							<th>판매자</th>
-							<td>${dto.emp_name}</td>
-						</tr>
-						
-						<tr>
-							<th>회원이름</th>
-							<td>${dto.name}</td>
-						</tr>
-						
-						<tr>
-							<th>성별</th>
-							<td>${dto.gender}</td>
-						</tr>
-						
-						<tr>
-							<th>생년월일</th>
-							<td>${dto.birth}</td>
-						</tr>
-						
-						<tr>
-							<th>연락처</th>
-							<td>${dto.phone}</td>
-						</tr>
-						
-						<tr>
-							<th>등록지점</th>
-							<td>${dto.b_name}</td>
-						</tr>
-						
-						<tr>
-							<th>등록기간</th>
-							<td>${dto.start_date} ~ ${dto.end_date}</td>
-						</tr>
-					</table> 
+				<div class="meminfo">
+					<div class="table">
+						<table>
+							<tr>
+								<th>회원번호</th>
+								<td>${dto.mem_no}</td>
+							</tr>
+							
+							<tr>
+								<th>판매자</th>
+								<td>${dto.emp_name}</td>
+							</tr>
+							
+							<tr>
+								<th>회원이름</th>
+								<td>${dto.name}</td>
+							</tr>
+							
+							<tr>
+								<th>성별</th>
+								<td>${dto.gender}</td>
+							</tr>
+							
+							<tr>
+								<th>생년월일</th>
+								<td>${dto.birth}</td>
+							</tr>
+							
+							<tr>
+								<th>연락처</th>
+								<td>${dto.phone}</td>
+							</tr>
+							
+							<tr>
+								<th>등록지점</th>
+								<td>${dto.b_name}</td>
+							</tr>
+							
+							<tr>
+								<th>등록기간</th>
+								<td>${dto.start_date} ~ ${dto.end_date}</td>
+							</tr>
+						</table> 
+	         		</div>
          		</div>
          		
-         		<div class="table">
-         			<c:if test="${dto.new_photo_name eq null}">
-	         			<form action="memprofile.do?mem_no=${dto.mem_no}" method="post" enctype="multipart/form-data">
-		         			<table>
+         		<div class="memprofile">
+	         		<div class="table">
+	         			<c:if test="${dto.new_photo_name eq null}">
+		         			<form action="memprofile.do?mem_no=${dto.mem_no}" method="post" enctype="multipart/form-data">
+			         			<table>
+				         			<tr>
+										<th>프로필 사진</th>
+										<td>
+											<input type="file" name="photo"/>
+											<button>전송</button>
+										</td>
+									</tr>
+								</table>
+							</form>
+						</c:if>
+						
+						<c:if test="${dto.new_photo_name ne null}">
+							<table>
 			         			<tr>
 									<th>프로필 사진</th>
 									<td>
-										<input type="file" name="photo"/>
-										<button>전송</button>
+										<img width="100" height="100" src="/photo/${dto.new_photo_name}"/>
 									</td>
 								</tr>
-							</table>
-						</form>
-					</c:if>
-					
-					<c:if test="${dto.new_photo_name ne null}">
-						<table>
-		         			<tr>
-								<th>프로필 사진</th>
-								<td>
-									<img width="100" height="100" src="/photo/${dto.new_photo_name}"/>
-								</td>
-							</tr>
-							</table>
-					</c:if>
+								</table>
+						</c:if>
+	         		</div>
          		</div>
 			</div>
 			<!--/. container-fluid -->

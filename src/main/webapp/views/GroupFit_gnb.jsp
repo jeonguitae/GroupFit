@@ -184,9 +184,9 @@
 							<ul class="nav nav-treeview">
 								<li class="nav-item item-sub"><a href="memlist.go" class="nav-link"> <i
 										class="fas fa-user nav-icon"></i>
-										<p>일반 회원</p>
+										<p>전체 회원</p>
 								</a></li>
-								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="ptmemlist.go" class="nav-link"> <i
 										class="fas fa-running nav-icon"></i>
 										<p>PT 회원</p>
 								</a></li>
