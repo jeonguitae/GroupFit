@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,15 +58,15 @@
 							<label for="ticket-type" class="form-label">구분</label> <select
 								class="form-select" id="annual_type" name="annual_kind">
 								<option selected value="none">연차/휴가 종류 선택</option>
-								<option value="1">연차</option>
-								<option value="2">휴가</option>
+								<option value="연차">연차</option>
+								<option value="휴가">휴가</option>
 							</select>
 						</div>
 						<div class="mb-3">
 							<label for="ticket-count" class="col-form-label">생성일수</label>
 							<div class="input-group mb-3">
-								<input type="number" id="mticket_count" class="form-control"
-									name="ticket_time" placeholder="부여할 연차/휴가 일 수를 입력하세요"
+								<input type="number" id="annual_time" class="form-control"
+									name="annual_time" placeholder="부여할 연차/휴가 일 수를 입력하세요"
 									aria-describedby="basic-addon22"> <span
 									class="input-group-text" id="basic-addon22">일</span>
 							</div>
@@ -74,7 +75,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary">생성</button>
+						<button type="button" class="btn btn-primary" onclick="annualAdd()">생성</button>
 					</div>
 				</form>
 			</div>
@@ -143,7 +144,7 @@
 
 							<div class="float-right">
 								<a class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#annualAddModal" data-shuffle> 연차/휴가 생성 </a>&nbsp;<a
+									data-bs-target="#annualAddModal" data-shuffle onclick="annualAddModal(event)"> 연차/휴가 생성 </a>&nbsp;<a
 									class="btn btn-secondary" data-bs-toggle="modal"
 									data-bs-target="#annualDelModal" data-shuffle> 연차/휴가 소진 </a>
 							</div>
@@ -169,7 +170,6 @@
 												<th>차감휴가</th>
 												<th>잔여휴가</th>
 												<th>조회<th>
-											
 											</tr>
 										</thead>
 										<tbody>
@@ -180,16 +180,21 @@
 														value="${dto.emp_no}"></td>
 													<td>${dto.emp_no}</td>
 													<td>${dto.name}</td>
+													<td>${dto.position}</td>
+													<td>${dto.join_year}</td>
+													<td><fmt:formatNumber value="${dto.work_year/365}" pattern="0.000"/></td>
 													<td></td>
 													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
+													<td>
+														<c:if test="${empty dto.annualAdd}">0</c:if>
+														<c:if test="${not empty dto.annualAdd}">${dto.annualAdd}</c:if>
+													</td>
+													<td>
+														<c:if test="${empty dto.annualSub}">0</c:if>
+														<c:if test="${not empty dto.annualSub}">${dto.annualSub}</c:if>
+													</td>
+													<td>${dto.annualAdd - dto.annualSub}</td>
+													<td><button type="button" class="btn btn-secondary btn-sm">조회</button></td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -207,9 +212,25 @@
 	</div>
 </body>
 <script type="text/javascript">
-	function del() {
-		$("#ticketDelModal").css("display", "none")
-		var checkArr = [];
+var checkArr = [];
+var evtCheck = 0;
+const myModalEl = document.getElementById('annualAddModal')
+myModalEl.addEventListener('shown.bs.modal', event => {
+	console.log("활성화");
+	if(checkArr.length == 0){
+		evtCheck += 1
+		failReload(evtCheck);
+	}
+})
+function failReload(arg){
+	if (arg==1){
+		alert("최소 한 명 이상의 직원을 선택해주세요.");
+		location.reload();
+	}
+}
+
+	function annualAddModal(e) {
+		checkArr = [];
 		$('input[type="checkbox"]:checked').each(function(idx, item) {
 			// each는 jquery에서 사용하는 foreach
 			// checkbox에 value를 지정하지 않으면 기본값을 on으로 스스로 지정한다
@@ -219,25 +240,43 @@
 			}
 		});
 		console.log(checkArr);
-
-		$.ajax({
-			type : 'get',
-			url : 'ticket.delete',
-			data : {
-				'delList' : checkArr
-			},
-			dataType : 'json',
-			success : function(data) {
-				console.log(data);
-				if (data.success) {
-					alert("이용권 삭제에 성공했습니다.");
-					location.reload();
-				}
-			},
-			error : function(e) {
-				alert("이용권 삭제에 실패했습니다.");
-			}
-		});
+		arrString = ""
+		for(var i in checkArr){
+			arrString = (i < checkArr.length-1) ? arrString + checkArr[i] + ", " : arrString + checkArr[i];
+		}
+		console.log(arrString);
+		$("#annual_emp_no").val(arrString)
 	}
-</script></
-												html>
+	
+	function annualAdd() {
+		var aType = $("#annual_type").val();
+		var aTime = $("#annual_time").val();
+	
+		if(aType != "" && aTime != ""){
+			$.ajax({
+				type : 'post',
+				url : 'annual.add',
+				data : {
+					'addList' : checkArr,
+					'annualType' : aType,
+					'annualTime' : aTime
+				},
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					if (data.success) {
+						alert("연차/휴가 부여에 성공했습니다.");
+						location.reload();
+					}
+				},
+				error : function(e) {
+					alert("연차/휴가 부여에 실패했습니다.");
+				}
+			});
+		} else {
+			alert("필요 항목을 모두 선택 및 입력해주세요.")
+		}
+		
+	}
+</script>
+</html>
