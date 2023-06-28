@@ -5,8 +5,12 @@
    <mapper namespace="kr.co.gf.member.dao.MemberDAO">
    
    <select id="memlist" resultType="member">
-   		SELECT m.mem_no, m.name, rt.start_date, rt.end_date  
-   		FROM member m JOIN registered_ticket rt WHERE m.mem_no = rt.mem_no
+   		SELECT m.mem_no, m.name,
+        t.ticket_type,
+        rt.start_date, rt.end_date
+	    FROM member m
+        JOIN registered_ticket rt ON m.mem_no = rt.mem_no
+        JOIN ticket t ON t.ticket_no = rt.ticket_no;
    </select>
    	
    <select id="branch" resultType="member">

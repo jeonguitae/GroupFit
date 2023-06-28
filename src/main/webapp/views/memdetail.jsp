@@ -92,7 +92,7 @@
 		         			<tr>
 								<th>프로필 사진</th>
 								<td>
-									<img width="500" src="/photo/${dto.new_photo_name}"/>
+									<img width="100" height="100" src="/photo/${dto.new_photo_name}"/>
 								</td>
 							</tr>
 							</table>

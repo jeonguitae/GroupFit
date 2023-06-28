@@ -129,12 +129,25 @@ function listDraw(memlist){
 	//console.log(list);
 	var content = '';
 	memlist.forEach(function(item,index){
+		
+		var chk_pt = '';
+		
+		if(item.ticket_type == 'pt'){
+			
+			chk_pt = 'O';
+		}
+		
+		else{
+			
+			chk_pt = 'X';
+		}
+		
 		content += '<tr>';
 		content += '<td><input type="checkbox" value="'+item.mem_no+'"/></td>';
 		content+='<td>'+item.mem_no+'</td>';
 		content+='<td><a href="memdetail.go?mem_no='+item.mem_no+'">'+item.name+'</a></td>';
 		content+='<td>'+item.start_date+'~'+item.end_date+'</td>';
-		content+='<td>'+item.start_date+'</td>';		
+		content+='<td>'+chk_pt+'</td>';		
 		content += '</tr>';
 	});
 	$('#memlist').empty();
