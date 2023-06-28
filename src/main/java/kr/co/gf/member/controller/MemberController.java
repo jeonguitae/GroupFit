@@ -8,12 +8,15 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.gf.emp.dto.EmpDTO;
@@ -29,6 +32,7 @@ public class MemberController {
 	@Autowired LoginService service2;
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
+	@Value("${spring.servlet.multipart.location}") private String root;
 	
 	@GetMapping(value="/memlist.go")
 	public String memlistGo() {
@@ -125,6 +129,39 @@ public class MemberController {
 		logger.info("params : {}",params);
 		
 		return service.ptmemjoin(params);
+	}
+	
+	@RequestMapping(value="memdetail.go")
+	public String memdetail(String mem_no, Model model) {
+		
+		logger.info("mem_no" + mem_no);
+		
+		MemberDTO dto = service.memdetail(mem_no);
+		String new_photo_name = service.photomem(mem_no);
+		
+		logger.info("new_photo_name : " + new_photo_name);
+		
+		dto.setNew_photo_name(new_photo_name);
+		
+		String emp_name = service.mem_emp_name(dto.getEmp_no());
+		String b_name = service.mem_b_name(dto.getB_idx());
+		
+		dto.setEmp_name(emp_name);
+		dto.setB_name(b_name);
+		
+		logger.info("emp_name : " + emp_name);
+		logger.info("b_name : " + b_name);
+
+		model.addAttribute("dto", dto);
+		return "memdetail";
+	}
+	
+	@RequestMapping(value="memprofile.do")
+	public String memprofile(String mem_no, MultipartFile photo) {
+	
+		int row = service.memprofile(mem_no, photo);
+		
+		return "redirect:/memdetail.go?mem_no="+mem_no;
 	}
 	
 }

@@ -158,7 +158,7 @@ function memjoin(){
 	
 	var $name = $('input[name="name"]');
 	var $birth = $('input[name="birth"]');
-	var $gender = $('input[name="gender"]');
+	var $gender = $('input[name="gender"]:checked');
 	var $phone = $('input[name="phone"]');
 	
 	var param = {};
