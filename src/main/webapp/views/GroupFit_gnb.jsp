@@ -332,7 +332,11 @@
 								</a></li>
 								</c:if>
 							</ul></li>
-
+						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+						<li class="nav-item"><a href="annualList.go" class="nav-link"> <i
+								class="nav-icon fas fa-warehouse"></i>
+								<p>직원 연차관리</p>
+						</a></li></c:if>
 					</ul>
 				</nav>
 			</div>
