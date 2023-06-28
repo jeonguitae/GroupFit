@@ -2,5 +2,22 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-   <mapper namespace="kr.co.gf.approval.daoApprovalDAO">
+   <mapper namespace="kr.co.gf.approval.dao.ApprovalDAO">
+   
+   <select id="loginIdName" resultType="String">
+   		select name from emp where emp_no = #{loginId}
+   </select>
+   
+   <select id="manager" resultType="String">
+   		select name from emp where position = '지점장';
+   </select>
+   
+   <select id="top_Manager" resultType="String">
+   		select name from emp where position = '대표';
+   </select>
+   
+   <select id="position">
+   		select position from emp where emp_no = #{loginId}
+   </select>
+   
    </mapper>
