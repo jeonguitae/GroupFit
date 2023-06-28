@@ -39,7 +39,7 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body" style="display:flex;align-items: center">
-					<img src="dist/img/GroupFit_2_Logo.png" alt="GroupFit Logo"
+				<img src="img/GroupFit_lg_2.png" alt="GroupFit Logo"
 						class="brand-image elevation-3"
 						style="background-color: transparent; transform: scale(0.8); opacity: 1">
 					<div>
