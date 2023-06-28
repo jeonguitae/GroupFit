@@ -164,7 +164,7 @@
 			<button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
 			<p class="mt-5 mb-3 text-muted">&copy; 2023</p>
 		</form>
-		<button onclick="location.href='entermem.jsp'">회원입장</button>
+		<button onclick="location.href='entermem.go'">회원입장</button>
 	</main>
 
 
