@@ -17,7 +17,7 @@
 	}
 	
 	form[class="search"]{
-		margin-left: 377px;
+		margin-left: 514px;
 	}
 	
 	h1.headline{
@@ -26,7 +26,7 @@
 	}
 	
 	div[class="table"]{
-		margin-left: 376px;
+		margin-left: 513px;
 	}
 </style>
 
@@ -49,11 +49,11 @@
 <!-- Main content -->
       <section class="content">
             <h1 class="headline">MY PT 회원 리스트</h1>
-			<form action="search.do" class="search">
+			<form action="ptmemsearch.do" class="search">
 				<select name="sortting">
 					<option value="mem_no">회원번호</option>
 					<option value="name">이름</option>
-					<option value="pt_chk">pt여부</option>
+					<option value="gender">성별</option>
 				</select>
 				
 				<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>

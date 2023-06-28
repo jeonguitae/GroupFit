@@ -62,6 +62,14 @@ public interface MemberDAO {
 
 	int loc_status(String loc_num);
 
+	ArrayList<MemberDTO> memsearch(String sortting, String txt);
+
+	String regt_idx(String mem_no);
+
+	String loc_num(String mem_no);
+	
+	void locker_update(String loc_num);
+
 	/* int memjoin(HashMap<String, String> params); */
 
 }

@@ -183,5 +183,13 @@ public class MemberController {
 		return service.ptmemlist(loginId);
 	}
 	
+	@RequestMapping(value="memsearch.ajax")
+	@ResponseBody
+	public HashMap<String, Object> memsearch(String sortting, String txt){
+	
+		logger.info("sortting / txt : " + sortting + " / " + txt);
+		
+		return service.memsearch(sortting, txt);
+	}
 	
 }

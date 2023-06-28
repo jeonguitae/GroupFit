@@ -119,6 +119,13 @@ public class MemberService {
 	public HashMap<String, Object> ptmemjoin(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<>();
 		
+		logger.info("params : " + params);
+		
+		String mem_no = params.get("mem_no");
+		
+		String regt_idx = dao.regt_idx(mem_no);
+		
+		params.put("regt_idx", regt_idx);
 		int row = dao.ptmemjoin(params);
 		
 		map.put("success", row);
@@ -131,6 +138,9 @@ public class MemberService {
 		int delSize = memdelList.size();
 		int successCnt = 0;
 		for (String mem_no : memdelList) {
+			String loc_num = dao.loc_num(mem_no);
+			logger.info("loc_num : " + loc_num);
+			dao.locker_update(loc_num);
 			successCnt += dao.memdelete(mem_no);
 		}		
 		map.put("msg", delSize+" 요청중 "+successCnt+" 개 삭제 했습니다.");		
@@ -196,6 +206,35 @@ public class MemberService {
 	public ArrayList<MemberDTO> locker() {
 		
 		return dao.locker();
+	}
+
+	public HashMap<String, Object> memsearch(String sortting, String txt) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		if(sortting.equals("name")) {
+			
+			txt = "%" + txt + "%";
+		}
+		
+		if(sortting.equals("pt_chk")) {
+			
+			if(txt.equals("O") || txt.equals("o")) {
+				
+				txt = "pt";			
+			}
+			
+			else if(txt.equals("X") || txt.equals("x")) {
+				
+				txt = "일반";
+			}
+		}
+		
+		ArrayList<MemberDTO> list = dao.memsearch(sortting, txt);
+		
+		map.put("list", list);
+		
+		return map;
 	}
 
 }

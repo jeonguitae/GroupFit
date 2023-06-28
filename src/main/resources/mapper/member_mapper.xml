@@ -69,7 +69,7 @@
    
    <insert id="ptmemjoin" parameterType="HashMap">
    		INSERT INTO pt_mem(regt_idx, mem_no, weight, goal, str, count)
-   		VALUES(#{ticket_no}, #{mem_no}, #{weight}, #{goal}, #{str}, #{ticket_time})
+   		VALUES(#{regt_idx}, #{mem_no}, #{weight}, #{goal}, #{str}, #{ticket_time})
    </insert>
    
    <select id="ticket_type" resultType="String">
@@ -114,5 +114,37 @@
 		LEFT JOIN pt_mem pm ON pm.regt_idx = rt.regt_idx
 		WHERE rt.emp_no = #{param1} AND t.ticket_type = 'pt'
    </select>
+   
+   <select id="memsearch" resultType="member" parameterType="String">
+   		SELECT m.mem_no, m.name,
+        t.ticket_type,
+        rt.start_date, rt.end_date
+	    FROM member m
+        JOIN registered_ticket rt ON m.mem_no = rt.mem_no
+        JOIN ticket t ON t.ticket_no = rt.ticket_no
+        <where>
+			<if test="txt != null and !txt.equals('') and sortting == 'mem_no'">
+				m.mem_no = #{txt}
+			</if>
+			<if test="txt != null and !txt.equals('') and sortting == 'name'">
+				m.name LIKE #{txt}
+			</if>
+			<if test="txt != null and !txt.equals('') and sortting == 'pt_chk'">
+				t.ticket_type = #{txt}
+			</if>					
+		</where>
+   </select>
+   
+   <select id="regt_idx" resultType="String">
+   		SELECT regt_idx FROM registered_ticket WHERE mem_no = #{param1}
+   </select>
+   
+   <select id="loc_num" resultType="String">
+   		SELECT loc_num FROM member WHERE mem_no = #{param1}
+   </select>
+   
+   <update id="locker_update">
+   		UPDATE locker SET status = '미사용' WHERE loc_num = #{param1}
+   </update>
    
    </mapper>
