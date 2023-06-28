@@ -1,6 +1,10 @@
 package kr.co.gf.member.service;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.gf.member.dao.MemberDAO;
 import kr.co.gf.member.dto.MemberDTO;
@@ -45,20 +50,24 @@ public class MemberService {
 	public HashMap<String, Object> memjoin(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<>();
 		
-		int row = dao.memjoin(params);
 		String name = params.get("name");
 		String phone = params.get("phone");
+		String loc_num = params.get("loc_num");
+		
+		int row = dao.memjoin(params);
 		
 		if(row == 1) {
-				
+			
+			dao.loc_status(loc_num);
 			int mem_no = dao.mem_no(name, phone);
 			map.put("mem_no", mem_no);
 		}
+		
 		map.put("success", row);
 		
 		return map;
 	}
-
+	
 	public HashMap<String, Object> ticjoin(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<>();
 		
@@ -127,6 +136,66 @@ public class MemberService {
 		map.put("msg", delSize+" 요청중 "+successCnt+" 개 삭제 했습니다.");		
 		map.put("success", true);
 		return map;
+	}
+
+	public MemberDTO memdetail(String mem_no) {
+		
+		return dao.memdetail(mem_no);
+	}
+
+	public String mem_emp_name(int emp_no) {
+		
+		return dao.mem_emp_name(emp_no);
+	}
+
+	public String mem_b_name(int b_idx) {
+		
+		return dao.mem_b_name(b_idx);
+	}
+
+	public int memprofile(String mem_no, MultipartFile photo) {
+		
+		int row = 0;
+		String ori_photo_name = photo.getOriginalFilename();
+		String ext = ori_photo_name.substring(ori_photo_name.lastIndexOf("."));
+		String new_photo_name = System.currentTimeMillis()+ext;
+		
+		logger.info(ori_photo_name+" => "+new_photo_name);
+		
+		try {
+			byte[] bytes = photo.getBytes();//1-4. 바이트 추출
+			Path path = Paths.get("C:/upload/"+new_photo_name);
+			Files.write(path, bytes);
+			logger.info(new_photo_name + "save OK");
+			
+			row = dao.memprofile(mem_no, ori_photo_name, new_photo_name);
+						
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return row;
+	}
+
+	public String photomem(String mem_no) {
+		
+		return dao.photomem(mem_no);
+	}
+
+	public HashMap<String, Object> ptmemlist(String loginId) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<MemberDTO> list = dao.ptmemlist(loginId);
+		
+		map.put("list", list);
+		
+		return map;
+	}
+
+	public ArrayList<MemberDTO> locker() {
+		
+		return dao.locker();
 	}
 
 }

@@ -39,7 +39,7 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body" style="display:flex;align-items: center">
-					<img src="dist/img/GroupFit_2_Logo.png" alt="GroupFit Logo"
+				<img src="img/GroupFit_lg_2.png" alt="GroupFit Logo"
 						class="brand-image elevation-3"
 						style="background-color: transparent; transform: scale(0.8); opacity: 1">
 					<div>
@@ -184,9 +184,9 @@
 							<ul class="nav nav-treeview">
 								<li class="nav-item item-sub"><a href="memlist.go" class="nav-link"> <i
 										class="fas fa-user nav-icon"></i>
-										<p>일반 회원</p>
+										<p>전체 회원</p>
 								</a></li>
-								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="ptmemlist.go" class="nav-link"> <i
 										class="fas fa-running nav-icon"></i>
 										<p>PT 회원</p>
 								</a></li>
@@ -310,7 +310,7 @@
 								</a></li>
 								</c:if>
 							</ul></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="reference.do" class="nav-link"> <i
 								class="nav-icon fas fa-columns"></i>
 								<p>자료실</p>
 						</a></li>
@@ -332,7 +332,11 @@
 								</a></li>
 								</c:if>
 							</ul></li>
-
+						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+						<li class="nav-item"><a href="annualList.go" class="nav-link"> <i
+								class="nav-icon fas fa-warehouse"></i>
+								<p>직원 연차관리</p>
+						</a></li></c:if>
 					</ul>
 				</nav>
 			</div>
