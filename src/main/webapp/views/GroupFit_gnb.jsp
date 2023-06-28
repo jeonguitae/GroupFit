@@ -310,7 +310,7 @@
 								</a></li>
 								</c:if>
 							</ul></li>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="reference.do" class="nav-link"> <i
 								class="nav-icon fas fa-columns"></i>
 								<p>자료실</p>
 						</a></li>
