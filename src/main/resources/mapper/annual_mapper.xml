@@ -2,5 +2,31 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-   <mapper namespace="kr.co.gf.holiday.dao.AnnualDAO">
-   </mapper>
+<mapper namespace="kr.co.gf.holiday.dao.AnnualDAO">
+	<select id="annualList" resultType="annual">
+	 	SELECT e.emp_no, e.name, e.position, e.join_year, DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) AS work_year, a.annualAdd, b.annualSub
+		FROM emp e
+		LEFT JOIN (
+		  SELECT emp_no, SUM(annual_time) AS annualAdd
+		  FROM annual
+		  WHERE YEAR(annual_date) = YEAR(CURDATE()) and annual_modifier = 1
+		  GROUP BY emp_no
+		) a ON e.emp_no = a.emp_no
+		LEFT JOIN (
+		  SELECT emp_no, SUM(annual_time) AS annualSub
+		  FROM annual
+		  WHERE YEAR(annual_date) = YEAR(CURDATE()) and annual_modifier = 2
+		  GROUP BY emp_no
+		) b ON e.emp_no = b.emp_no;
+	</select>
+	
+	<insert id="annualAdd" parameterType="annual">
+		insert into annual(emp_no, annual_modifier, annual_type, annual_time)
+			values(#{param1}, 1, #{param2}, #{param3})
+	</insert>
+	
+	<insert id="annualSub" parameterType="annual">
+		insert into annual(emp_no, annual_modifier, annual_type, annual_time)
+			values(#{param1}, 2, #{param2}, #{param3})
+	</insert>
+</mapper>
