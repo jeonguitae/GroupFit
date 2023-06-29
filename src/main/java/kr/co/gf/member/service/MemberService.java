@@ -28,9 +28,11 @@ public class MemberService {
 	
 	@Autowired MemberDAO dao;
 
-	public ArrayList<MemberDTO> memlist() {
+	public ArrayList<MemberDTO> memlist(String loginId) {
 		
-		return dao.memlist();
+		int b_idx = dao.emp_b_idx(loginId);
+		
+		return dao.memlist(b_idx);
 	}
 
 	public ArrayList<MemberDTO> branch() {
@@ -356,6 +358,20 @@ public class MemberService {
 		}
 		
 		map.put("msg", msg);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> entermemlist(String loginId) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		LocalDate now = LocalDate.now();
+
+		int b_idx = dao.emp_b_idx(loginId);
+		ArrayList<MemberDTO> list = dao.entermemlist(b_idx, now);
+		
+		map.put("list", list);
 		
 		return map;
 	}

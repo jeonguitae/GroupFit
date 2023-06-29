@@ -1,6 +1,7 @@
 package kr.co.gf.member.dto;
 
 import java.sql.Date;
+import java.sql.Time;
 
 import org.apache.ibatis.type.Alias;
 
@@ -44,6 +45,10 @@ public class MemberDTO {
 	// locker
 	private String loc_num;
 	private String status;
+	
+	// entry_mem
+	private Date enter_date;
+	private Time enter_time;
 	
 	public String getTicket_name() {
 		return ticket_name;
@@ -200,6 +205,18 @@ public class MemberDTO {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public Date getEnter_date() {
+		return enter_date;
+	}
+	public void setEnter_date(Date enter_date) {
+		this.enter_date = enter_date;
+	}
+	public Time getEnter_time() {
+		return enter_time;
+	}
+	public void setEnter_time(Time enter_time) {
+		this.enter_time = enter_time;
 	}
 	
 
