@@ -49,6 +49,9 @@
       left: 50%;
       transform: translateX(-50%);
     }
+    .fc-event {
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -91,7 +94,7 @@
 				        </div>
 				        <div class="modal-body">
 				          <!-- 일정 등록 폼 -->
-				          <form>
+				          <form id="event-form">
 				            <div class="form-group">
 				              <label for="event-name">회원 이름</label>
 				              <input type="text" class="form-control" id="event_name" name="event_name" placeholder="이름을 입력하세요">
@@ -139,7 +142,9 @@
 				        </div>
 				      </div>
 				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				       <button type="button" class="btn btn-primary" id="edit-event-btn">수정</button>
+        				<button type="button" class="btn btn-danger" id="delete-event-btn">삭제</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
 				      </div>
 				    </div>
 				  </div>
@@ -165,7 +170,7 @@
 				    	      var eventEnd = info.event.end;
 				
 				    	      // 모달 창에 클릭한 이벤트의 정보를 표시
-				    	      $('#event-detail-title').text('일정 이름: ' + eventTitle);
+				    	      $('#event-detail-title').text('회원 이름: ' + eventTitle);
 				    	      $('#event-detail-start').text('시작 시간: ' + eventStart);
 				    	      $('#event-detail-end').text('종료 시간: ' + eventEnd);
 				
@@ -175,6 +180,17 @@
 				    	  });
 				
 				    	  calendar.render();
+						 // 모달 닫기 버튼 클릭 시
+						    $(document).on('click', '#event-detail-modal .close, #event-detail-modal .modal-footer .btn-secondary', function() {
+						      $('#event-detail-modal').modal('hide');
+						    });
+						 
+						 // 등록 모달 닫기 버튼 클릭 시
+						    $(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
+						      $('#event-modal').modal('hide');
+						    });
+
+						  
 				    	});
 				    
 				
@@ -228,10 +244,7 @@
 				    });
 				    
 				    
-			
-				
-				    
-				    
+
 				    
 				    
 				    $(document).ready(function() {
@@ -265,18 +278,27 @@
 				        }
 				      });
 				    });
+
 				    
+				 // 수정 버튼 클릭 시
+				    $(document).on('click', '#edit-event-btn', function() {
+				      // 여기에 수정 버튼을 클릭했을 때 수행할 동작을 추가하세요.
+				      // 예: 수정 폼을 보여주거나, 수정 관련 작업을 수행합니다.
+				    });
+
+				    // 삭제 버튼 클릭 시
+				    $(document).on('click', '#delete-event-btn', function() {
+				      // 여기에 삭제 버튼을 클릭했을 때 수행할 동작을 추가하세요.
+				      // 예: 해당 이벤트를 삭제하거나, 삭제 관련 작업을 수행합니다.
+				    });
 				    
 				    
 				    $(document).ready(function() {
-				        // 모달 닫기 버튼 클릭 시
-				        $('.modal').on('hidden.bs.modal', function() {
-				          $(this).find('form')[0].reset(); // 모달 내의 폼 리셋
-				        });
-				      });
-				    
-				   
-				    
+				    	  // 등록 모달 창이 닫힐 때 입력 필드 초기화
+				    	  $('#event-modal').on('hidden.bs.modal', function() {
+				    	    $('#event-form')[0].reset();
+				    	  });
+				    	});
 				 
 				
 				    
