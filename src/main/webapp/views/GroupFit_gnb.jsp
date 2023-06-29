@@ -222,12 +222,8 @@
 								</li>
 							</ul>
 						</li>
-<<<<<<< HEAD
-						<li class="nav-item"><a href="calendar" class="nav-link"> <i
-=======
 						</c:if>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
->>>>>>> origin/master
 								class="nav-icon fas fa-calendar-alt"></i>
 								<p>
 									일정 관리 <span class="badge badge-info right"></span>
