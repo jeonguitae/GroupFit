@@ -66,4 +66,7 @@ public class CalenderController {
 		// 저장 후에는 원하는 페이지로 리다이렉트합니다.
 		return "redirect:/calendar";
 	}
+	
+	
+	
 }

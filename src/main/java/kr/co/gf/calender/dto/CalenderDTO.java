@@ -8,12 +8,22 @@ import org.apache.ibatis.type.Alias;
 @Alias("cal")
 public class CalenderDTO {
 	
+	private int calendar_no;
 	private String emp_no;
 	private int b_idx;
 	private String event_name;
     private String start_time;
     private String end_time;
     
+    
+
+	public int getCalendar_no() {
+		return calendar_no;
+	}
+
+	public void setCalendar_no(int calendar_no) {
+		this.calendar_no = calendar_no;
+	}
 
 	public String getEmp_no() {
 		return emp_no;

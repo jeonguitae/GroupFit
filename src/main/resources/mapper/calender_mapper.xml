@@ -5,8 +5,8 @@
    <mapper namespace="kr.co.gf.calender.dao.CalenderDAO">
    	  
    	<insert id="createEvent" parameterType="cal">
-		INSERT INTO calendar(emp_no, b_idx, event_name, start_time, end_time)
-		VALUES(#{emp_no},#{b_idx},#{event_name},#{start_time},#{end_time})
+		INSERT INTO calendar(calendar_no,emp_no, b_idx, event_name, start_time, end_time)
+		VALUES(#{calendar_no},#{emp_no},#{b_idx},#{event_name},#{start_time},#{end_time})
 	</insert>
 	
 	<!-- getEvents 메서드에 대한 select 쿼리문 작성 -->
