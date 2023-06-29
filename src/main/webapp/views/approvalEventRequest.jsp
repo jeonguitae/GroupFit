@@ -163,22 +163,23 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>&nbsp;&nbsp;
-				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>&nbsp;&nbsp;
+				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>
+				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
 				<h5 id="aAp" style="display: inline;"><a href="approvalEventRequest.go">이벤트결재</a></h5>
 				
+			
 				<div style="overflow: hidden;">
+					<form action="approvalEventRequest.do" method="post" enctype="multipart/form-data">
 					<table id="table1" style="float: left;">
 						<tr>
 							<th>기안자</th>
 							<td>
 								${loginIdName}
-								<input type="hidden" name="emp_no" value="${loginId}" readonly="readonly"/>
 							</td>
 						</tr>
 						<tr>
 							<th>기안일</th>
-							<td><span id="currentDate"></span></td>
+							<td>${write_date}</td>
 						</tr>
 					</table>
 					
@@ -196,11 +197,6 @@
 							<td>${manager}</td>
 							<td>${top_Manager }</td>
 						</tr>
-						<tr id="tr3">
-							<td>날짜</td>
-							<td>날짜</td>
-							<td>날짜</td>
-						</tr>
 					</table>
 					</c:if>	
 					
@@ -215,10 +211,6 @@
 						<tr id="tr2">
 							<td>${loginIdName}</td>
 							<td>${top_Manager }</td>
-						</tr>
-						<tr id="tr3">
-							<td>날짜</td>
-							<td>날짜</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -246,6 +238,14 @@
 					<button id="sin">신청하기</button>
 					<button id="mok" onclick="location.href='approvalList.do'">목록</button>
 				</div>
+				<input type="hidden" name="emp_no" value="${loginId}"/>
+				<input type="hidden" name="approval" value="이벤트신청"/>
+				<input type="hidden" name="subject" value="이벤트신청"/>
+				<input type="hidden" name="write_date" value="${write_date}"/>
+				<input type="hidden" name="state" value="대기"/>
+				<input type="hidden" name="manager" value="${manager}"/>
+				<input type="hidden" name="top_manager" value="${top_Manager}"/>
+				</form>
 			</div>
 		</div>	
 			<!--/. container-fluid -->
@@ -253,13 +253,5 @@
 	</div>
 </body>
 <script type="text/javascript">
-	var currentTime = new Date();
-	var year = currentTime.getFullYear();
-	var month = currentTime.getMonth() + 1;
-	var day = currentTime.getDate();
-	
-	var currentDate = year + "." + month + "." + day;
-	
-	document.getElementById("currentDate").innerText = currentDate;
 	</script>
 </html>

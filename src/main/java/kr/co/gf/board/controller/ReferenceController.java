@@ -72,7 +72,6 @@ public class ReferenceController {
 	public String referenceWrite(@RequestParam HashMap<String,String> params, MultipartFile[] files, HttpSession session) {
 		logger.info("params 값 : "+params+files);
 		service.write(params,files);
-		logger.info("success :");
 		return "redirect:/referenceList.do";
 	}
 	

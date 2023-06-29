@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트</title>	
+<title>지출결의서</title>	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 	
@@ -163,8 +163,8 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>&nbsp;&nbsp;
-				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>&nbsp;&nbsp;
+				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>
+				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
 				<h5 id="aAp" style="display: inline;"><a href="approvalEventRequest.go">이벤트결재</a></h5>
 				
 				<div style="overflow: hidden;">
@@ -196,11 +196,6 @@
 							<td>${manager}</td>
 							<td>${top_Manager }</td>
 						</tr>
-						<tr id="tr3">
-							<td>날짜</td>
-							<td>날짜</td>
-							<td>날짜</td>
-						</tr>
 					</table>
 					</c:if>	
 					
@@ -215,10 +210,6 @@
 						<tr id="tr2">
 							<td>${loginIdName}</td>
 							<td>${top_Manager }</td>
-						</tr>
-						<tr id="tr3">
-							<td>날짜</td>
-							<td>날짜</td>
 						</tr>
 					</table>
 					</c:if>	

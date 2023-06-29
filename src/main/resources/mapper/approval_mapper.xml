@@ -20,4 +20,22 @@
    		select position from emp where emp_no = #{loginId}
    </select>
    
+   <select id="approvalList" resultType="ApprovalDTO">
+   		select a_idx, approval, subject, write_date, state from payment p where emp_no = #{loginId}
+   </select>
+   
+   <insert 
+   		useGeneratedKeys="true"
+      	keyColumn="a_idx"
+      	keyProperty="board_num"
+   		id="eventRequestWrite">
+   		
+		insert into payment (emp_no, approval, subject, write_date, state, manager, top_manager)values(${emp_no},#{approval},#{subject},null,#{state},#{manager},#{top_manager})
+   </insert>
+   
+   <insert id="approvalFileWrite" >
+   		insert into wphoto (c_idx,new_photo_name,ori_photo_name,board_num) 
+   		values(#{c_idx},#{new_photo_name},#{ori_photo_name},#{board_num})
+   </insert>
+   
    </mapper>

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트</title>	
+<title>휴가신청</title>	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 	
@@ -196,11 +196,6 @@
 							<td>${manager}</td>
 							<td>${top_Manager }</td>
 						</tr>
-						<tr id="tr3">
-							<td>날짜</td>
-							<td>날짜</td>
-							<td>날짜</td>
-						</tr>
 					</table>
 					</c:if>	
 					
@@ -215,10 +210,6 @@
 						<tr id="tr2">
 							<td>${loginIdName}</td>
 							<td>${top_Manager }</td>
-						</tr>
-						<tr id="tr3">
-							<td>날짜</td>
-							<td>날짜</td>
 						</tr>
 					</table>
 					</c:if>	
