@@ -1,5 +1,6 @@
 package kr.co.gf.member.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -217,6 +218,12 @@ public class MemberController {
 	public HashMap<String, Object> dup_entry_mem(String entermem_no, String name){
 	
 		return service.dup_entermem(entermem_no, name);
+	}
+	
+	@GetMapping(value="entermemlist.go")
+	public String entermemList(Model model) {
+	
+		return "entermemlist";
 	}
 	
 }
