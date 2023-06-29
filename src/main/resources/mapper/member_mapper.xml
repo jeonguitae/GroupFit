@@ -147,4 +147,32 @@
    		UPDATE locker SET status = '미사용' WHERE loc_num = #{param1}
    </update>
    
+   <select id="entermem" resultType="int">
+  		SELECT COUNT(mem_no) FROM member WHERE phone LIKE #{param1} 
+   </select>
+   
+   <select id="enter_mem_no" resultType="String">
+   		SELECT mem_no FROM member WHERE phone LIKE #{param1}
+   </select>
+   
+   <select id="enter_b_idx" resultType="int">
+   		SELECT b_idx FROM registered_ticket WHERE mem_no = #{param1}
+   </select>
+   
+   <insert id="entry_mem">
+   		INSERT INTO entry_time(mem_no, b_idx) VALUES(#{param1}, #{param2})
+   </insert>
+   
+   <select id="entry_chk" resultType="int">
+  		SELECT COUNT(mem_no) FROM entry_time WHERE mem_no = #{param1} AND enter_date = #{param2} 
+   </select>
+   
+   <select id="member_cnt" resultType="member">
+   		SELECT mem_no, name FROM member WHERE phone LIKE #{param1}
+   </select>
+   
+   <select id="dup_entermem" resultType="String">
+   		SELECT mem_no FROM member WHERE phone LIKE #{param1} AND name = #{param2}
+   </select>
+   
    </mapper>

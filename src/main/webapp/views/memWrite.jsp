@@ -50,8 +50,8 @@
    href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<jsp:include page="GroupFit_gnb.jsp"/>
 <body>
-   <jsp:include page="GroupFit_gnb.jsp"/>
    <div class="content-wrapper" style="margin-top: 57.08px">
 <!-- Main content -->
       <section class="content">

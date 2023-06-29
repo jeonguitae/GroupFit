@@ -192,4 +192,31 @@ public class MemberController {
 		return service.memsearch(sortting, txt);
 	}
 	
+	@RequestMapping(value="entermem.go")
+	public String entermemform() {
+		
+		return "entermem";
+	}
+	
+	@RequestMapping(value="entermem.ajax")
+	@ResponseBody
+	public HashMap<String, Object> entermem(String entermem_no){
+	
+		return service.entermem(entermem_no);
+	}
+	
+	@RequestMapping(value="entry_mem.ajax")
+	@ResponseBody
+	public HashMap<String, Object> entry_mem(String mem_no, int b_idx){
+	
+		return service.entry_mem(mem_no, b_idx);
+	}
+	
+	@RequestMapping(value="dup_entermem.ajax")
+	@ResponseBody
+	public HashMap<String, Object> dup_entry_mem(String entermem_no, String name){
+	
+		return service.dup_entermem(entermem_no, name);
+	}
+	
 }

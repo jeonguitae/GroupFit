@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -233,6 +234,128 @@ public class MemberService {
 		ArrayList<MemberDTO> list = dao.memsearch(sortting, txt);
 		
 		map.put("list", list);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> entermem(String entermem_no) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		entermem_no = "%" + entermem_no;
+		
+		int row = dao.entermem(entermem_no);
+		
+		if(row == 1) {
+			
+			String enter_mem_no = dao.enter_mem_no(entermem_no);
+			int enter_b_idx = dao.enter_b_idx(enter_mem_no);
+			
+			logger.info("enter_mem_no : " + enter_mem_no);
+			logger.info("enter_b_idx : " + enter_b_idx);
+			
+			map.put("mem_no", enter_mem_no);
+			map.put("b_idx", enter_b_idx);
+		}
+		
+		if(row > 1) {
+			
+			ArrayList<MemberDTO> list = dao.member_cnt(entermem_no);
+			logger.info("list : " + list);
+			
+			map.put("list", list);
+		}
+		
+		map.put("row", row);
+		
+
+		return map;
+	}
+
+	public HashMap<String, Object> entry_mem(String mem_no, int b_idx) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String msg = "";
+		LocalDate now = LocalDate.now();
+		
+		int entry_chk = dao.entry_chk(mem_no, now);
+		
+		logger.info("entry_chk : " + entry_chk);
+		
+		if(entry_chk == 0) {
+			
+			int row = dao.entry_mem(mem_no, b_idx);
+			msg = "입장이 완료되었습니다";
+			
+			map.put("row", row);
+		}
+		
+		else {
+			
+			msg = "금일 이미 입장한 회원입니다";
+		}
+		
+		map.put("msg", msg);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> dup_entry_mem(String mem_no, int b_idx, String name) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String msg = "";
+		LocalDate now = LocalDate.now();
+		
+		int entry_chk = dao.entry_chk(mem_no, now);
+		
+		logger.info("entry_chk : " + entry_chk);
+		
+		if(entry_chk == 0) {
+			
+			int row = dao.entry_mem(mem_no, b_idx);
+			msg = "입장이 완료되었습니다";
+			
+			map.put("row", row);
+		}
+		
+		else {
+			
+			msg = "금일 이미 입장한 회원입니다";
+		}
+		
+		map.put("msg", msg);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> dup_entermem(String entermem_no, String name) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		entermem_no = "%" + entermem_no;
+		
+		String dup_enter_mem_no = dao.dup_entermem(entermem_no,name);
+		int dup_enter_b_idx = dao.enter_b_idx(dup_enter_mem_no);
+		
+		String msg = "";
+		LocalDate now = LocalDate.now();
+		
+		int entry_chk = dao.entry_chk(dup_enter_mem_no, now);
+		
+		if(entry_chk == 0) {
+			
+			int row = dao.entry_mem(dup_enter_mem_no, dup_enter_b_idx);
+			msg = "입장이 완료되었습니다";
+			
+			map.put("row", row);
+		}
+		
+		else {
+			
+			msg = "금일 이미 입장한 회원입니다";
+		}
+		
+		map.put("msg", msg);
 		
 		return map;
 	}

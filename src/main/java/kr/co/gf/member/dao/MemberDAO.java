@@ -1,5 +1,6 @@
 package kr.co.gf.member.dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -69,6 +70,20 @@ public interface MemberDAO {
 	String loc_num(String mem_no);
 	
 	void locker_update(String loc_num);
+
+	int entermem(String entermem_no);
+
+	String enter_mem_no(String entermem_no);
+
+	int enter_b_idx(String enter_mem_no);
+
+	int entry_mem(String mem_no, int b_idx);
+
+	int entry_chk(String mem_no, LocalDate now);
+
+	ArrayList<MemberDTO> member_cnt(String entermem_no);
+
+	String dup_entermem(String entermem_no, String name);
 
 	/* int memjoin(HashMap<String, String> params); */
 
