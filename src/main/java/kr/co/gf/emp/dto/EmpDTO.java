@@ -20,7 +20,15 @@ public class EmpDTO {
 	private String status;
 	private Date join_year;
 	private String b_idx;
+	private String new_photo_name;
 	
+	public String getNew_photo_name() {
+		return new_photo_name;
+	}
+	public void setNew_photo_name(String new_photo_name) {
+		this.new_photo_name = new_photo_name;
+	}
+
 	private String b_name;
 	public String getB_name() {
 		return b_name;

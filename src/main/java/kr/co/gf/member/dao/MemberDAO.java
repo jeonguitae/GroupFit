@@ -1,5 +1,6 @@
 package kr.co.gf.member.dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,6 +44,46 @@ public interface MemberDAO {
 	String ticket_type(String ticket_no);
 
 	String ticket_type(String ticket_no, String b_idx);
+
+	int memdelete(String mem_no);
+
+	MemberDTO memdetail(String mem_no);
+
+	String mem_emp_name(int emp_no);
+
+	String mem_b_name(int b_idx);
+
+	int memprofile(String mem_no, String ori_photo_name, String new_photo_name);
+
+	String photomem(String mem_no);
+
+	ArrayList<MemberDTO> ptmemlist(String loginId);
+
+	ArrayList<MemberDTO> locker();
+
+	int loc_status(String loc_num);
+
+	ArrayList<MemberDTO> memsearch(String sortting, String txt);
+
+	String regt_idx(String mem_no);
+
+	String loc_num(String mem_no);
+	
+	void locker_update(String loc_num);
+
+	int entermem(String entermem_no);
+
+	String enter_mem_no(String entermem_no);
+
+	int enter_b_idx(String enter_mem_no);
+
+	int entry_mem(String mem_no, int b_idx);
+
+	int entry_chk(String mem_no, LocalDate now);
+
+	ArrayList<MemberDTO> member_cnt(String entermem_no);
+
+	String dup_entermem(String entermem_no, String name);
 
 	/* int memjoin(HashMap<String, String> params); */
 

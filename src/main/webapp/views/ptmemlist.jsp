@@ -11,8 +11,13 @@
 		border: 1px solid white;
 		border-collapse: collapse;
 	} */
-	div[class="search"]{
-		margin-left: 377px;
+	
+	div[class="btn1"]{
+		margin-left: 1108px;
+	}
+	
+	form[class="search"]{
+		margin-left: 514px;
 	}
 	
 	h1.headline{
@@ -21,15 +26,7 @@
 	}
 	
 	div[class="table"]{
-		margin-left: 376px;
-	}
-	
-	button.reg{
-		margin-left: 385px;
-	}
-	
-	button.del{
-		background-color: #e74c3c;
+		margin-left: 513px;
 	}
 </style>
 
@@ -51,22 +48,19 @@
    <div class="content-wrapper" style="margin-top: 57.08px">
 <!-- Main content -->
       <section class="content">
-            <h1 class="headline">일반 회원 리스트</h1>
-            	<div class="search">
-					<select name="sortting">
-						<option value="mem_no">회원번호</option>
-						<option value="name">이름</option>
-						<option value="pt_chk">pt여부</option>
-					</select>
-					
-					<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
-					
-					<button onclick="memsearch()">검색</button>
-					
-					<button class="reg" onclick="location.href='memWrite.go'">등록</button>
-					<button class="del" onclick="memdel()">삭제</button>
-				</div>	
-	
+            <h1 class="headline">MY PT 회원 리스트</h1>
+			<form action="ptmemsearch.do" class="search">
+				<select name="sortting">
+					<option value="mem_no">회원번호</option>
+					<option value="name">이름</option>
+					<option value="gender">성별</option>
+				</select>
+				
+				<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
+				
+				<button>검색</button>
+			</form>	
+			
 		<div class="table">
 			<table>
 				<colgroup>
@@ -81,11 +75,11 @@
 						<th>삭제</th>
 						<th>회원번호</th>
 						<th>이름</th>
-						<th>등록기간</th>
-						<th>피티 등록여부</th>
+						<th>등록횟수 / 잔여횟수</th>
+						<th>성별</th>
 					</tr>
 				</thead>		
-				<tbody id="memlist">
+				<tbody id="ptmemlist">
 					<%-- <c:if test="${list.size() == 0}">
 			               <tr>
 			               		<th colspan="5">조건에 해당하는 게시물이 없습니다.</th>
@@ -109,12 +103,12 @@
 </body>
 <script>
 
-memlist();
+ptmemlist();
 
-function memlist(){
+function ptmemlist(){
 	$.ajax({
 		type:'get',
-		url:'memlist.ajax',
+		url:'ptmemlist.ajax',
 		data:{},
 		dataType:'json',
 		success:function(data){
@@ -126,34 +120,21 @@ function memlist(){
 	});	
 }
 
-function listDraw(memlist){
+function listDraw(ptmemlist){
 	//console.log(list);
 	var content = '';
-	
-		memlist.forEach(function(item,index){
-			
-			var chk_pt = '';
-			
-			if(item.ticket_type == 'pt'){
-				
-				chk_pt = 'O';
-			}
-			
-			else{
-				
-				chk_pt = 'X';
-			}
-			
-			content += '<tr>';
-			content += '<td><input type="checkbox" value="'+item.mem_no+'"/></td>';
-			content+='<td>'+item.mem_no+'</td>';
-			content+='<td><a href="memdetail.go?mem_no='+item.mem_no+'">'+item.name+'</a></td>';
-			content+='<td>'+item.start_date+'~'+item.end_date+'</td>';
-			content+='<td>'+chk_pt+'</td>';		
-			content += '</tr>';
-		});
-	$('#memlist').empty();
-	$('#memlist').append(content);
+	ptmemlist.forEach(function(item,index){
+		
+		content += '<tr>';
+		content += '<td><input type="checkbox" value="'+item.mem_no+'"/></td>';
+		content += '<td>'+item.mem_no+'</td>';
+		content += '<td><a href="memdetail.go?mem_no='+item.mem_no+'">'+item.name+'</a></td>';
+		content += '<td>'+item.ticket_time+' / '+item.count+'</td>';	
+		content += '<td>'+item.gender+'</td>';
+		content += '</tr>';
+	});
+	$('#ptmemlist').empty();
+	$('#ptmemlist').append(content);
 }
 
 $('#all').click(function(e){	
@@ -197,28 +178,6 @@ function memdel(){
 		}		
 	});
 	
-}
-
-function memsearch(){
-	
-	var sortting = $('select[name="sortting"]').val();
-	var txt = $('input[name="txt"]').val();
-	
-	$.ajax({
-		type:'get',
-		url:'memsearch.ajax',
-		data:{
-			'sortting' : sortting
-			, 'txt' : txt
-		},
-		dataType:'json',
-		success:function(data){
-			listDraw(data.list);
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});	
 }
 </script>
 </html>
