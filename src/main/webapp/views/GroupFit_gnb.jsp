@@ -194,6 +194,10 @@
 										class="fas fa-edit nav-icon"></i>
 										<p>PT 회원일지</p>
 								</a></li>
+								<li class="nav-item item-sub"><a href="entermemlist.go" class="nav-link"> <i
+										class="fas fa-edit nav-icon"></i>
+										<p>입장한 회원 리스트</p>
+								</a></li>
 							</ul></li>
 						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 						<li class="nav-item">
