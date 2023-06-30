@@ -367,8 +367,13 @@
 </body>
 <script>
 	var msg = "${msg}";
+	var loginId = "${sessionScope.loginId}";
 	if(msg != ""){
 		alert(msg);
+	}
+	if(loginId == ""){
+		alert("로그인이 필요한 기능입니다.");
+		location.href="/";
 	}
 	console.log("${sessionScope.loginEmp.name}");
 	console.log("${sessionScope.loginEmp.b_name}");
