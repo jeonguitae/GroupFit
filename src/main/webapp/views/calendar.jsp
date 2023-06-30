@@ -411,11 +411,11 @@
 				    });
 				 
 
-				    // 삭제 버튼 클릭 시
+				    /* // 삭제 버튼 클릭 시
 				    $(document).on('click', '#delete-event-btn', function() {
 				      // 여기에 삭제 버튼을 클릭했을 때 수행할 동작을 추가하세요.
 				      // 예: 해당 이벤트를 삭제하거나, 삭제 관련 작업을 수행합니다.
-				    });
+				    }); */
 				    
 				    
 				    $(document).ready(function() {
