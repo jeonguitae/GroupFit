@@ -5,67 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>여기에 페이지 이름 입력</title>
-<style>
-	#forblack{
-		color : black;
-	}
-	.forcenter{
-		text-align: center;
-	}
-    body {
-        font-family: 'Noto Sans KR', sans-serif;
-    }
-    
-    table, th, td{
-        /* border: 1px solid white;
-        border-collapse: collapse; */
-        padding: 5px 10px;
-        width: 800px;
-        margin: 5px;
-    }
-    
-    table.second {
-        margin: 20px auto;
-        border-collapse: collapse;
-    }
-    
-    table.second {
-        width: 1000px;
-    }
-    
-    /* table.second th {
-        background-color: #f0f0f0;
-        color: #222;
-    } */
-    
-    table.second tbody tr:nth-child(odd) {
-        background-color: #f9f9f9;
-    }
-    
-    table.second tbody tr:hover {
-      /*   background-color: #e9e9e9; */
-        cursor: pointer;
-    }
-    
-   /*  table.second a {
-        color: #222;
-        text-decoration: none;
-    } */
-    /* .fbutton{
-         background-color: #22c55e;
-    } */
-    table.second input[type="submit"], table.first button, table.first input[type="submit"] {
-        padding: 10px 20px;
-/*         background-color: #333;
-        color: #fff; */
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    input[name="search"]{
-        margin-left: 400px;
-    }
-</style>
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -106,7 +46,7 @@
 					<div class="forbutton">
 						<button onclick="location.href='nwrite.go'">작성</button>
 					</div>
-    <table class="second">
+    <table class="table second">
         <colgroup>
             <col width="15%"/>
             <col width="40%"/>
@@ -138,8 +78,8 @@
                 <c:if test="${not empty sessionScope.loginId}">
                     <tr>
                         <td style="text-align: center;">${bbs.n_idx}</td>
-                        <td style="text-align: center;"><!--<a href="ndetail.do?=${bbs.n_idx}" id="login">  -->${bbs.title}</a></td>
-                        <td style="text-align: center;">${bbs.name}</td>
+                        <td style="text-align: center;"><a href="ndetail.do?n_idx=${bbs.n_idx}&flag='detail'" id="detail">${bbs.title}</a></td>
+                        <td style="text-align: center;">${bbs.position}</td>
                         <td style="text-align: center;">${bbs.reg_date}</td>
                         <td style="text-align: center;">${bbs.hit}</td>
                     </tr>

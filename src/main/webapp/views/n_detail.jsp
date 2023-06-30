@@ -1,32 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-	.forsave{
-		margin-left: 700px;
-	}
-	.nwt{
-		color: white;
-	}
-	th{
-		text-align: center;
-	}
-	table, th, td{
-		border : 1px solid white;
-		border-collapse: collapse;
-		padding : 5px 10px;
-		width : 800px;
-		margin-left : 700px;
-		margin-top : 200px;
-	}
-	input.title, input.user, textarea.content{
-		width : 660px;
-	}
-</style>
+<title>공지사항 상세</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -41,10 +20,29 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body>
-		<jsp:include page="GroupFit_gnb.jsp" />
-		<h1 class="nwt">공지사항 작성</h1>
-	<form action="nwrite.do" method="post" enctype="multipart/form-data">
-	<div class="table table-bordered">
+	<jsp:include page="GroupFit_gnb.jsp" />
+	<div class="content-wrapper" style="margin-top: 57.08px">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>공지사항 상세</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">메인</a></li>
+							<li class="breadcrumb-item active">뎁스1</li>
+							<li class="breadcrumb-item active">뎁스2</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="table table-bordered">
 		<table>
 		<colgroup>
 			<col width="20%">
@@ -52,44 +50,79 @@
 		</colgroup>
 			<tr>
 				<th>제목</th>
-				<td><input class="title" type="text" name="title" required/></td>
+				<td>${dto.title}</td>
 			</tr>
 			<tr>
 				<th>작성자</th>
-				<!-- <td><input type="text" name="position" readonly/></td> -->
-				<td><input type="text" name="emp_no" value="${sessionScope.loginId}" readonly></td>
+				<td>${dto.position}</td>
+			</tr>
+			<tr>
+				<th>작성일시</th>
+				<td>${dto.reg_date}</td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea class="content" name="content" required></textarea></td>
+				<td>${dto.content}</td>
 			</tr>
 			<tr>
 				<th>사진 및 파일</th>
 				<td>
 					<input type="file" name="photo"/>
 				</td>
-			</tr>
-			
-<%-- 			<c:if test="${sessionScope.loginId}=="></c:if>
- --%>			<tr>
-				<th>고정 여부</th>
-				<td>
-					<input type="radio" name="fix" value="1" required>고정
-					<input type="radio" name="fix" value="0" required>고정 안 함
-				</td> 
-			</tr>
+			</tr>			
 		</table>
 		
 					<input type="button" onclick="location.href='nlist.go'" value="목록"/>
+					<input type="button" onclick="location.href='nupdate.go?n_idx=${dto.n_idx}'" value="수정"/>
 					<button class="forsave">저장</button>
 		</div>
-	</form>
+		<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+		
+		<h2>읽은 직원 목록</h2>
+		<table>
+			<thead>
+            <tr>
+                <th>이름</th>
+                <th>사내번호</th>
+                <th>조회일</th>              
+            </tr>
+        </thead>  
+        <tbody> 
+			<c:if test="${reader eq null }">
+				<tr> 
+					<td colspan="3" id="fornull" style="text-align:center">아직 읽은 직원이 없습니다.</td>			
+				</tr>
+			</c:if >
+			<c:if test="${reader.size()==0}">
+				<tr> 
+					<td colspan="3" id="forzero" style="text-align:center">아직 읽은 직원이 없습니다.</td>			
+				</tr>
+			</c:if >
+			<c:forEach items="${reader}" var="reader">
+				<tr>
+					 <td style="text-align: center;">${reader.name}</td>
+					 <td style="text-align: center;">${reader.emp_no}</td>
+					 <td style="text-align: center;">${reader.read_date}</td>
+				</tr>
+			</c:forEach>
+			</tbody>
+		</table>
+	</c:if>
+			</div>
+			<!--/. container-fluid -->
+		</section>
+	</div>
 </body>
-<script>
-/* 	$(".forsave").click(){
-		alert('수정하시겠습니까?');
-	} */
-</script>
+</html>
+
+
+
+
+		
+	
+	
+
+
 <%-- var loginId = "${sessionScope.loginId}";  
 myHobbyList();
 function myHobbyList(){
