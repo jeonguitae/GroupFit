@@ -14,6 +14,16 @@
         <!-- 여기에 실제로 데이터베이스에서 일정 데이터를 조회하는 SQL 쿼리문 작성 -->
         SELECT * FROM calendar;
     </select>
+    
+    <update id="updateEvent" parameterType="cal">
+    	UPDATE calendar
+		  SET
+		    event_name = #{event_name},
+		    start_time = #{start_time},
+		    end_time = #{end_time}
+		  WHERE
+		    calendar_no = #{calendar_no}
+    </update>
 
    
    

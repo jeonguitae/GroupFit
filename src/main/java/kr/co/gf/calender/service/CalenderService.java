@@ -33,6 +33,13 @@ public class CalenderService {
 		return dao.calendarlist();
 	}
 
+
+
+	public void updateEvent(CalenderDTO dto) {
+		dao.updateEvent(dto);
+		
+	}
+
 		
 	}
 	

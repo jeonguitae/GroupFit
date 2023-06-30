@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>여기에 페이지 이름 입력</title>
+  <title>calendar</title>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -30,13 +30,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src='/packages/list/main.js'></script>
   <script src='/packages/timegrid/main.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <style>
     body {
-      margin: 40px 10px;
-      padding: 0;
-      font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-      font-size: 14px;
-    }
+	  margin: 40px 10px;
+	  padding: 0;
+	  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+	  font-size: 14px;
+	}
+	.fc-day-header {
+	  background-color: black;
+	  color: white;
+	}
 
     #calendar {
       max-width: 900px;
@@ -134,28 +139,79 @@
 				      <div class="modal-body">
 				        <!-- 일정 상세 정보 -->
 				        <div id="event-detail-info">
-				          <p id="event-detail-title"></p> <!-- 제목 -->
-				          <p id="event-detail-start"></p> <!-- 시작 시간 -->
-				          <p id="event-detail-end"></p> <!-- 종료 시간 -->
-				          <!-- 추가 정보 요소 -->
-				          <p id="event-detail-description"></p> <!-- 설명 -->
+				          <div class="form-group">
+				            <label for="event-detail-title">회원 이름</label>
+				            <input type="text" class="form-control" id="event-detail-title" readonly>
+				          </div>
+				          <div class="form-group">
+				            <label for="event-detail-start">시작 시간</label>
+				            <input type="text" class="form-control" id="event-detail-start" readonly>
+				          </div>
+				          <div class="form-group">
+				            <label for="event-detail-end">종료 시간</label>
+				            <input type="text" class="form-control" id="event-detail-end" readonly>
+				          </div>
 				        </div>
 				      </div>
 				      <div class="modal-footer">
-				       <button type="button" class="btn btn-primary" id="edit-event-btn">수정</button>
-        				<button type="button" class="btn btn-danger" id="delete-event-btn">삭제</button>
+				        <button type="button" class="btn btn-primary" id="edit-event-btn">수정</button>
+				        <button type="button" class="btn btn-danger" id="delete-event-btn">삭제</button>
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
 				      </div>
 				    </div>
 				  </div>
 				</div>
 				
+				
+				
+				<!-- 수정 모달 -->
+				<div id="edit-event-modal" class="modal" tabindex="-1">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title">수정하기</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <!-- 수정 폼 -->
+				        <form id="edit-event-form">
+				          <!-- 수정할 이벤트 정보 입력 필드 -->
+				          <div class="form-group">
+				            <label for="edit-event-title">제목</label>
+				            <input type="text" class="form-control" id="edit-event-title" placeholder="제목 입력">
+				          </div>
+				          <div class="form-group">
+				            <label for="edit-event-start">시작 시간</label>
+				            <input type="datetime-local" class="form-control" id="edit-event-start" placeholder="시작 시간 입력">
+				          </div>
+				          <div class="form-group">
+				            <label for="edit-event-end">종료 시간</label>
+				            <input type="datetime-local" class="form-control" id="edit-event-end" placeholder="종료 시간 입력">
+				          </div>
+				        </form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" id="cancel-edit-event-btn" data-dismiss="modal">취소</button>
+				        <button type="button" class="btn btn-primary" id="submit-edit-event-btn">수정하기</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				
+				
+				
 				  <script>
 				    var calendar = null;
-				
+				    
+					// 상세보기랑 수정
 				    $(document).ready(function() {
 				    	  var calendarEl = document.getElementById('calendar');
-				
+				    	  var eventId; // eventId 변수를 상위 스코프에서 선언
+				    	  var eventStart;
+				    	  var eventEnd;
+				    	  
 				    	  calendar = new FullCalendar.Calendar(calendarEl, {
 				    	    plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
 				    	    defaultDate: new Date(),
@@ -164,36 +220,111 @@
 				    	    events: [],
 				    	    eventClick: function(info) {
 				    	      // 클릭한 이벤트의 정보를 변수에 저장
-				    	      var eventId = info.event.id;
+				    	      eventId = info.event.id;
 				    	      var eventTitle = info.event.title;
-				    	      var eventStart = info.event.start;
-				    	      var eventEnd = info.event.end;
-				
-				    	      // 모달 창에 클릭한 이벤트의 정보를 표시
-				    	      $('#event-detail-title').text('회원 이름: ' + eventTitle);
-				    	      $('#event-detail-start').text('시작 시간: ' + eventStart);
-				    	      $('#event-detail-end').text('종료 시간: ' + eventEnd);
-				
-				    	      // 모달 창 열기
+				    	      eventStart = info.event.start || new Date(); // 유효한 값을 가지도록 초기화, 같은 값을 가지면 null 값 들어가서 오류
+				    	      eventEnd = info.event.end || new Date(); // 유효한 값을 가지도록 초기화
+
+				    	      // 시간 형식 설정
+				    	      // 상세보기에 시, 분 만 보이도록
+				    	      var startTime = eventStart.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+				    	      var endTime = eventEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+				    	      // 이벤트 정보를 상세보기 모달에 표시
+				    	      $('#event-detail-title').val(eventTitle);
+				    	      $('#event-detail-start').val(startTime);
+				    	      $('#event-detail-end').val(endTime);
+
+				    	      // 상세보기 모달을 엽니다.
 				    	      $('#event-detail-modal').modal('show');
+
+				    	      // 수정하기 버튼 클릭 시
+				    	      $('#edit-event-btn').on('click', function() {
+				    	    	  
+				    	    	  
+				    	        // 수정 정보를 상세보기 모달에서 가져옵니다.
+				    	        // title.val 은 변경한거 없으니까 그냥 가져오고
+				    	        var editEventTitle = $('#event-detail-title').val();
+				    	        //var editEventStart = $('#event-detail-start').val();
+				    	        //var editEventEnd = $('#event-detail-end').val();
+
+				    	        /* // 수정 모달에 정보를 설정합니다.
+				    	        $('#edit-event-title').val(editEventTitle);
+				    	        $('#edit-event-start').val(eventStart);
+				    	        $('#edit-event-end').val(eventEnd); */
+				    	     // 기존 이벤트의 시작 시간과 종료 시간을 datetime-local 입력 필드에 설정합니다.
+				    	     	
+				    	     	// start는 캘린더에 맞게 변경하고
+				    	        var startTime = eventStart.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM 형식으로 변환
+				    	        var endTime = eventEnd.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM 형식으로 변환
+				    	        $('#edit-event-start').val(startTime);
+				    	        $('#edit-event-end').val(endTime);
+
+				    	        // 수정 모달에 정보를 설정합니다.
+				    	        $('#edit-event-title').val(editEventTitle);
+
+				    	        // 상세보기 모달을 닫습니다.
+				    	        $('#event-detail-modal').modal('hide');
+
+				    	        // 수정 모달을 엽니다.
+				    	        $('#edit-event-modal').modal('show');
+				    	        
+				    	     	// 수정하기 모달의 취소 버튼 클릭 시
+				    	        $('#cancel-edit-event-btn, #edit-event-modal .close').on('click', function() {
+				    	          // 수정 모달을 닫습니다.
+				    	          $('#edit-event-modal').modal('hide');
+				    	        });
+				    	      });
 				    	    }
 				    	  });
-				
-				    	  calendar.render();
-						 // 모달 닫기 버튼 클릭 시
-						    $(document).on('click', '#event-detail-modal .close, #event-detail-modal .modal-footer .btn-secondary', function() {
-						      $('#event-detail-modal').modal('hide');
-						    });
-						 
-						 // 등록 모달 닫기 버튼 클릭 시
-						    $(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
-						      $('#event-modal').modal('hide');
-						    });
 
-						  
+				    	  calendar.render();
+
+				    	  // 모달 닫기 버튼 클릭 시
+				    	  $(document).on('click', '#event-detail-modal .close, #event-detail-modal .modal-footer .btn-secondary', function() {
+				    	    $('#event-detail-modal').modal('hide');
+				    	  });
+
+				    	  // 등록 모달 닫기 버튼 클릭 시
+				    	  $(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
+				    	    $('#event-modal').modal('hide');
+				    	  });
+
+				    	  // 수정하기 버튼 클릭 시
+				    	  $('#submit-edit-event-btn').on('click', function() {
+				    		  
+
+				    	    // 수정 정보를 서버로 전송합니다.
+				    	    $.ajax({
+				    	      url: '/updatecalendar', // 수정 정보를 전송할 서버 엔드포인트 URL을 입력하세요.
+				    	      method: 'POST',
+				    	      data: {
+				    	        id: eventId,
+				    	        title: $('#edit-event-title').val(),
+				    	        start: $('#edit-event-start').val(),
+				    	        end: $('#edit-event-end').val()
+				    	      },
+				    	      success: function(response) {
+				    	        // 성공적으로 수정되었을 경우 수행할 동작을 추가하세요.
+				    	        console.log('Event updated successfully!');
+				    	        // 예: 모달 닫기, 캘린더 새로고침 등
+				    	        // 수정 모달을 닫습니다.
+				    	        $('#edit-event-modal').modal('hide');
+				    	        location.reload();
+
+				    	        
+					    	      },
+				    	      error: function(e) {
+				    	        // 수정 실패 시 수행할 동작을 추가하세요.
+				    	        console.error(e);
+				    	        // 예: 오류 메시지 표시 등
+				    	      }
+				    	      
+				    	    });
+				    	  });
 				    	});
-				    
-				
+				 
+
 				    function openModal() {
 				      $('#event-modal').modal('show');
 				    }
@@ -211,7 +342,7 @@
 				    
 				    
 				    
-				
+					// 일정 등록이요
 				    // 저장 버튼 클릭 시 이벤트 처리
 				    $(document).on('click', '#save-event-btn', function() {
 				      // 데이터 추출
@@ -246,7 +377,7 @@
 				    
 
 				    
-				    
+				    // 캘린더 일정 캘린더에 보여주기요
 				    $(document).ready(function() {
 				      // 서버에서 캘린더 데이터 가져오기
 				      $.ajax({
@@ -278,13 +409,7 @@
 				        }
 				      });
 				    });
-
-				    
-				 // 수정 버튼 클릭 시
-				    $(document).on('click', '#edit-event-btn', function() {
-				      // 여기에 수정 버튼을 클릭했을 때 수행할 동작을 추가하세요.
-				      // 예: 수정 폼을 보여주거나, 수정 관련 작업을 수행합니다.
-				    });
+				 
 
 				    // 삭제 버튼 클릭 시
 				    $(document).on('click', '#delete-event-btn', function() {
@@ -299,7 +424,8 @@
 				    	    $('#event-form')[0].reset();
 				    	  });
 				    	});
-				 
+				    
+
 				
 				    
 				    

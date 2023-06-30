@@ -13,6 +13,10 @@ public interface CalenderDAO {
 
 	List<CalenderDTO> calendarlist();
 
+
+
+	void updateEvent(CalenderDTO dto);
+
 	
 
 

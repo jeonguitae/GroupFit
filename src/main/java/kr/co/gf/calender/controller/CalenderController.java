@@ -69,4 +69,30 @@ public class CalenderController {
 	
 	
 	
+	
+	@PostMapping("/updatecalendar")
+	@ResponseBody
+	public String updatecalendar(@RequestParam String id, @RequestParam String title, @RequestParam String start, @RequestParam String end) {
+
+		try {
+	        // Calendardto 객체 생성
+	        CalenderDTO dto = new CalenderDTO();
+	        dto.setCalendar_no(Integer.parseInt(id));
+	        dto.setEvent_name(title);
+	        dto.setStart_time(start);
+	        dto.setEnd_time(end);
+
+	        // 서비스 계층을 통해 일정 수정
+	        service.updateEvent(dto);
+
+	        // 수정이 성공적으로 완료되었을 경우 응답 메시지 반환
+	        return "Event updated successfully!";
+	    } catch (Exception e) {
+	        // 수정 실패 시 예외 처리
+	        logger.error("Error updating event:", e);
+	        return "Failed to update event.";
+	    }
+	}
+	
+	
 }
