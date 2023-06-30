@@ -22,7 +22,14 @@ public class ApprovalDTO {
 	private String content;
 	private String etc;
 	private String vacation_type;
+	private int board_num;
 	
+	public int getBoard_num() {
+		return board_num;
+	}
+	public void setBoard_num(int board_num) {
+		this.board_num = board_num;
+	}
 	public int getA_idx() {
 		return a_idx;
 	}

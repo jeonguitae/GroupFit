@@ -60,7 +60,7 @@ public class ReferenceService {
 
 	public String write(HashMap<String, String> params, MultipartFile[] uploadFiles) {
 		
-		String page = "redirect:/reference.do";
+		String page = "redirect:/referenceList.do";
 		
 		ReferenceDTO dto = new ReferenceDTO();
 		

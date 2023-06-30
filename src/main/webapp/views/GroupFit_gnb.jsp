@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+>>>>>>> origin/master
 <style>
 	.item-sub{
 		font-size: 14px;
@@ -194,6 +195,10 @@
 										class="fas fa-edit nav-icon"></i>
 										<p>PT 회원일지</p>
 								</a></li>
+								<li class="nav-item item-sub"><a href="entermemlist.go" class="nav-link"> <i
+										class="fas fa-edit nav-icon"></i>
+										<p>입장한 회원 리스트</p>
+								</a></li>
 							</ul></li>
 						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 						<li class="nav-item">
@@ -210,27 +215,39 @@
 										<p>직원 리스트</p>
 									</a>
 								</li>
+								<c:if test="${sessionScope.loginEmp.position eq '대표'}">
 								<li class="nav-item item-sub">
-									<a href="#" class="nav-link">
-										<i class="fas fa-user-tie nav-icon"></i>
+									<a href="empRepList.do" class="nav-link">
+										<i class="fas fa-running nav-icon"></i>
 										<p>대표 직원 리스트</p>
 									</a>
 								</li>
+								</c:if>
 							</ul>
 						</li>
 						</c:if>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="calendar" class="nav-link"> <i
 								class="nav-icon fas fa-calendar-alt"></i>
 								<p>
 									일정 관리 <span class="badge badge-info right"></span>
 								</p>
 						</a></li>
-						<li class="nav-item"><a href="mlist.go" class="nav-link"> <i
+						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-dumbbell"></i>
 								<p>
-									기구 관리 <span class="badge badge-info right"></span>
+									시설 관리 <span class="badge badge-info right"></span>
 								</p>
-						</a></li>
+						</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item item-sub"><a href="maclist.go" class="nav-link"> <i
+										class="nav-icon fas fa-dumbbell"></i>
+										<p>머신 관리</p>
+								</a></li>
+								<li class="nav-item item-sub"><a href="loclist.go" class="nav-link"> <i
+										class="nav-icon fas fa-dumbbell"></i>
+										<p>라커 관리</p>			
+								</a></li>
+						</ul></li>
 						<li class="nav-item"><a href="ticket.go" class="nav-link"> <i
 								class="nav-icon fas fa-ticket-alt"></i>
 								<p>
@@ -249,13 +266,13 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="postSendList.go" class="nav-link"> <i
 										class="fas fa-envelope nav-icon"></i>
-										<p>보낸 메일함</p>
+										<p>보낸 쪽지함</p>
 								</a></li>
-								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="postGetList.go" class="nav-link"> <i
 										class="fas fa-envelope-open nav-icon"></i>
-										<p>받은 메일함</p>
+										<p>받은 쪽지함</p>
 								</a></li>
 							</ul></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
@@ -264,6 +281,7 @@
 									결재 관리 <i class="fas fa-angle-left right"></i>
 								</p>
 						</a>
+							
 							<ul class="nav nav-treeview">
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">결재하기</li>
@@ -277,11 +295,11 @@
 								</a></li>
 								</c:if>
 								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">개인 문서함</li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalAllList.do" class="nav-link"> <i
 										class="fas fa-file nav-icon"></i>
 										<p>결재 문서함</p>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalSaveList.do" class="nav-link"> <i
 										class="fas fa-file-signature nav-icon"></i>
 										<p>임시 문서함</p>
 								</a></li>
@@ -310,7 +328,7 @@
 								</a></li>
 								</c:if>
 							</ul></li>
-						<li class="nav-item"><a href="reference.do" class="nav-link"> <i
+						<li class="nav-item"><a href="referenceList.do" class="nav-link"> <i
 								class="nav-icon fas fa-columns"></i>
 								<p>자료실</p>
 						</a></li>

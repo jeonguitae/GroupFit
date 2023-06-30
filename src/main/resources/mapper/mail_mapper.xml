@@ -3,4 +3,20 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
    <mapper namespace="kr.co.gf.mail.dao.MailDAO">
+   
+   	<!-- 보낸쪽지 리스트 검색 -->
+	<select id="post_sendList" resultType="mail" 
+		parameterType="hashmap">
+		SELECT * FROM post
+	</select>
+	
+	<insert id="post_sendWrite" parameterType="mail">
+	  insert into post (send_empno, get_empno, subject, content)
+	  select e.emp_no, #{get_empno}, #{subject}, #{content}
+	  from emp e
+	  where e.emp_no = #{send_empno}
+	</insert>
+	
+   
+   
    </mapper>

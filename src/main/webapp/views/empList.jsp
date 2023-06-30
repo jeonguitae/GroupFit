@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>직원리스트</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -19,49 +19,104 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <style>
-	table, th, td{
+/* 	table, th, td{
 		border : 1px solid black;
 		border-collapse: collapse;
 		padding : 5px 10px;
-	}
+	} */
+div[class="btn1"]{
+	margin-left: 1108px;
+}
+
+form[class="search"]{
+	margin-left: 377px;
+}
+
+h1.headline{
+	margin-left: 640px;
+	margin-top: 20px;
+}
+
+div[class="table"]{
+	margin-left: 376px;
+}
 </style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
-		<h3>직원 리스트</h3>
-		<button onclick="location.href='empJoin.go'">직원 등록</button>
-		<button onclick="location.href='empJoin.go'">직원 삭제</button>
-		<button onclick="location.href='empJoin.go'">지점별</button>
-		<button onclick="location.href='empJoin.go'">퇴사직원</button>
-		<table>
-			<thead>
-				<tr>
-					<th>삭제</th>
-					<th>사번</th>
-					<th>이름</th>
-					<th>지점</th>
-					<th>직급</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${list}" var="emp">
+			<h1 class="headline">직원 리스트</h1>
+			
+		<fieldset>
+			<form action="empList.do" class="search">
+				<select name="opt">
+					<option value="name">이름</option>
+					<option value="b_name">지점</option>
+					<option value="position">직급</option>
+				</select>
+				<input type="text" name="keyword" value="" placeholder="검색어를 입력하세요"/>
+				<button>검색</button>
+			</form>
+		</fieldset>
+		
+		<div class="btn1">
+			<button onclick="location.href='empJoin.go'">직원 등록</button>
+			<button onclick="hide()">직원 삭제</button>
+			<c:if test="${sessionScope.loginEmp.position eq '대표'}">
+				<button onclick="location.href='empRepList.do'">지점별</button>
+				<button onclick="location.href='empRetire.go'">퇴사직원</button>
+			</c:if>
+		</div>
+		<div class="table">
+			<table>
+				<thead>
 					<tr>
-						<td><input type="checkbox" name="chk" value="'+emp.emp_no+'"/></td>
-						<td>${emp.emp_no}</td>
-						<td><a href="empDetail.do?detailid=${emp.emp_no}">${emp.name}</a></td>
-						<td>${emp.b_name}</td>
-						<td>${emp.position}</td>
+						<th>삭제</th>
+						<th>사번</th>
+						<th>이름</th>
+						<th>지점</th>
+						<th>직급</th>
+						<th>재직상태</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<c:forEach items="${list}" var="emp">
+						<tr>
+							<td><input type="checkbox" name="chk" value="${emp.emp_no}"/></td>
+							<td>${emp.emp_no}</td>
+							<td><a href="empDetail.do?detailid=${emp.emp_no}">${emp.name}</a></td>
+							<td>${emp.b_name}</td>
+							<td>${emp.position}</td>
+							<td>${emp.status}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </body>
 <script>
-var msg = "${msg}";
-if(msg != ""){
-	alert(msg);
-}
+function hide() {
+	   var hideList = new Array();
+	   $("input[name=chk]:checked").each(function() {
+	      hideList.push($(this).val());
+	   });
+	   $.ajax({
+	      type: 'post',
+	      url: 'hide.ajax',
+	      data: {
+	         'hideList' : hideList
+	      },
+	      dataType: 'text',
+	      success: function(data){
+	         
+	      },
+	      error: function(e){
+	         console.log(e);
+	      }
+	   });
+	}
+
+
 </script>
 </html>

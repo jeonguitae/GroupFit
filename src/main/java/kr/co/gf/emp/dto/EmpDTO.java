@@ -19,6 +19,7 @@ public class EmpDTO {
 	private Date end_conterm;
 	private String status;
 	private Date join_year;
+	private Date retire_year;
 	private String b_idx;
 	private String new_photo_name;
 	
@@ -120,6 +121,12 @@ public class EmpDTO {
 	}
 	public void setB_idx(String b_idx) {
 		this.b_idx = b_idx;
+	}
+	public Date getRetire_year() {
+		return retire_year;
+	}
+	public void setRetire_year(Date retire_year) {
+		this.retire_year = retire_year;
 	}
 	/* 사용 안하기로 함 */
 	public int getSalary() {
