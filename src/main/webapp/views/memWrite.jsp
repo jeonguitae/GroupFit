@@ -50,9 +50,26 @@
    href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<jsp:include page="GroupFit_gnb.jsp"/>
 <body>
-   <jsp:include page="GroupFit_gnb.jsp"/>
    <div class="content-wrapper" style="margin-top: 57.08px">
+  <!--  <section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>페이지 제목</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">메인</a></li>
+							<li class="breadcrumb-item active">뎁스1</li>
+							<li class="breadcrumb-item active">뎁스2</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			/.container-fluid
+			</section> -->
 <!-- Main content -->
       <section class="content">
          <div class="container-fluid">
@@ -61,33 +78,44 @@
 			         	<table>
 			         		<tr>
 			         			<th>이름</th>
-			         				<td>
-			         					<input type="text" name="name" value=""/>
-			         				</td>
+		         				<td>
+		         					<input type="text" name="name" value=""/>
+		         				</td>
 			         		</tr>
 			         		
 			         		<tr>
 			         			<th>생년월일</th>
-			         				<td>
-			         					<input type="date" name="birth">
-			         				</td>
+		         				<td>
+		         					<input type="date" name="birth">
+		         				</td>
 			         		</tr>
 			         		
 			         		<tr>
 			         			<th>성별</th>
-			         				<td>
-			         					<input type="radio" name="gender" value="남자"/>남자
-			         					&nbsp; &nbsp; &nbsp; &nbsp;
-			         					<input type="radio" name="gender" value="여자"/>여자
-			         				</td>
+		         				<td>
+		         					<input type="radio" name="gender" value="남자"/>남자
+		         					&nbsp; &nbsp; &nbsp; &nbsp;
+		         					<input type="radio" name="gender" value="여자"/>여자
+		         				</td>
 			         		</tr>
 			         		
 			         		<tr>
 			         			<th>연락처</th>
-			         				<td>
-			         					<input type="text" name="phone" value=""/>
-			         				</td>
+		         				<td>
+		         					<input type="text" name="phone" value=""/>
+		         				</td>
 			         		</tr>
+			         		
+			         		<tr>
+								<th>라커 번호</th>
+								<td>
+									<select name="loc_num">
+										<c:forEach items="${locker}" var="name">
+											<option value="${name.loc_no}">${name.loc_no}
+										</c:forEach>
+									</select>
+								</td>
+							</tr>
 			         	</table>
 			        </div>
 		         	<button onclick="memjoin()">등록</button>
@@ -158,8 +186,9 @@ function memjoin(){
 	
 	var $name = $('input[name="name"]');
 	var $birth = $('input[name="birth"]');
-	var $gender = $('input[name="gender"]');
+	var $gender = $('input[name="gender"]:checked');
 	var $phone = $('input[name="phone"]');
+	var $loc_num = $('select[name="loc_num"]');
 	
 	var param = {};
 	
@@ -167,6 +196,7 @@ function memjoin(){
 	param.birth = $birth.val();
 	param.gender = $gender.val();
 	param.phone = $phone.val();
+	param.loc_num = $loc_num.val();
 	
 	$.ajax({
 		type:'post',
