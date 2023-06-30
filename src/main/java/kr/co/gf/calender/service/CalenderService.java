@@ -40,6 +40,13 @@ public class CalenderService {
 		
 	}
 
+
+
+	public void deletecalendar(CalenderDTO dto) {
+		dao.deletecalendar(dto);
+		
+	}
+
 		
 	}
 	

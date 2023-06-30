@@ -95,4 +95,26 @@ public class CalenderController {
 	}
 	
 	
+	@PostMapping("/deletecalendar")
+	@ResponseBody
+	public String deletecalendar(@RequestParam String id) {
+
+		try {
+	        // Calendardto 객체 생성
+	        CalenderDTO dto = new CalenderDTO();
+	        dto.setCalendar_no(Integer.parseInt(id));
+
+	        // 서비스 계층을 통해 일정 수정
+	        service.deletecalendar(dto);
+
+	        // 수정이 성공적으로 완료되었을 경우 응답 메시지 반환
+	        return "Event updated successfully!";
+	    } catch (Exception e) {
+	        // 수정 실패 시 예외 처리
+	        logger.error("Error updating event:", e);
+	        return "Failed to update event.";
+	    }
+	}
+	
+	
 }

@@ -17,6 +17,10 @@ public interface CalenderDAO {
 
 	void updateEvent(CalenderDTO dto);
 
+
+
+	void deletecalendar(CalenderDTO dto);
+
 	
 
 

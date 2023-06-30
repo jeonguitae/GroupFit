@@ -306,7 +306,7 @@
 				    	      },
 				    	      success: function(response) {
 				    	        // 성공적으로 수정되었을 경우 수행할 동작을 추가하세요.
-				    	        console.log('Event updated successfully!');
+				    	        console.log('일정 수정 성공 ');
 				    	        // 예: 모달 닫기, 캘린더 새로고침 등
 				    	        // 수정 모달을 닫습니다.
 				    	        $('#edit-event-modal').modal('hide');
@@ -322,6 +322,33 @@
 				    	      
 				    	    });
 				    	  });
+				    	  
+				    	  $(document).on('click', '#delete-event-btn', function() {
+				    		  // 삭제할 이벤트의 ID를 가져옵니다.
+				    		  //var eventId = eventId;
+
+				    		  // 서버로 삭제 요청을 보냅니다.
+				    		  $.ajax({
+				    		    url: '/deletecalendar', // 삭제 요청을 전송할 서버 엔드포인트 URL을 입력하세요.
+				    		    method: 'POST',
+				    		    data: {
+				    		      id: eventId
+				    		    },
+				    		    success: function(response) {
+				    		      // 성공적으로 삭제되었을 경우 수행할 동작을 추가하세요.
+				    		      console.log('일정 삭제 완료');
+				    		      // 예: 모달 닫기, 캘린더 새로고침 등
+				    		      // 삭제 모달을 닫습니다.
+				    		      $('#delete-event-modal').modal('hide');
+				    		      location.reload();
+				    		    },
+				    		    error: function(e) {
+				    		      // 삭제 실패 시 수행할 동작을 추가하세요.
+				    		      console.error(e);
+				    		      // 예: 오류 메시지 표시 등
+				    		    }
+				    		  });
+				    		});
 				    	});
 				 
 

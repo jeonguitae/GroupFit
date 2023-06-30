@@ -24,7 +24,11 @@
 		  WHERE
 		    calendar_no = #{calendar_no}
     </update>
-
+	
+	<delete id="deletecalendar">
+	  DELETE FROM calendar
+	  WHERE calendar_no = #{calendar_no};
+	</delete>
    
    
    </mapper>
