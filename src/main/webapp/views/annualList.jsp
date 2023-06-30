@@ -67,8 +67,8 @@
 							<div class="input-group mb-3">
 								<input type="number" id="annual_time" class="form-control"
 									name="annual_time" placeholder="부여할 연차/휴가 일 수를 입력하세요"
-									aria-describedby="basic-addon22"> <span
-									class="input-group-text" id="basic-addon22">일</span>
+									aria-describedby="basic-addon"> <span
+									class="input-group-text" id="basic-addon">일</span>
 							</div>
 						</div>
 					</div>
@@ -83,7 +83,7 @@
 	</div>
 
 	<!-- Modal -->
-	<div class="modal fade" id="annualDelModal" data-bs-backdrop="static"
+	<div class="modal fade" id="annualSubModal" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -93,14 +93,122 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
+				<form action="ticket.regist" method="post">
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="ticket-name" class="form-label">사번</label> <input
+								type="text" class="form-control" id="annual_emp_no_sub"
+								name="emp_no_sub">
+						</div>
+						<!-- 
+						<div class="row">
+							<div class="col-md-6 mb-3">
+								<label for="name">직원명</label> <input
+								type="text" class="form-control" id="annual_name" name="name"
+								value="" readonly="readonly">
+							</div>
+							<div class="col-md-6 mb-3">
+								<label for="branch-name" class="form-label">직급</label> <input
+								type="text" class="form-control" id="annual_position"
+								name="position" value="" readonly="readonly">
+							</div>
+						</div>
+						 -->
+						<div class="mb-3">
+							<label for="ticket-type" class="form-label">구분</label> <select
+								class="form-select" id="annual_type_sub" name="annual_kind_sub">
+								<option selected value="none">연차/휴가 종류 선택</option>
+								<option value="연차">연차</option>
+								<option value="오전반차">오전반차</option>
+								<option value="오후반차">오후반차</option>
+								<option value="휴가">휴가</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label for="ticket-count" class="col-form-label">차감일수</label>
+							<div class="input-group mb-3">
+								<input type="number" id="annual_time_sub" class="form-control"
+									name="annual_time_sub" placeholder="부여할 연차/휴가 일 수를 입력하세요"
+									aria-describedby="basic-addon2"> <span
+									class="input-group-text" id="basic-addon2">일</span>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary" onclick="annualSub()">차감</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="annualDetailModal" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">연차/휴가 상세보기</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
 				<div class="modal-body">
-					이용권을 삭제하시겠습니까?<br> 삭제한 이용권은 복구할 수 없습니다.
+					<div class="row">
+						<div class="col-md-4 mb-3">
+							<label for="detail_emp_no">사번</label>
+							<input type="text" class="form-control" id="detail_emp_no" value="12345678" readonly="readonly">
+						</div>
+						<div class="col-md-4 mb-3">
+							<label for="detail_name">직원명</label>
+							<input type="text" class="form-control" id="detail_name" value="이근일" readonly="readonly">
+						</div>
+						<div class="col-md-4 mb-3">
+							<label for="detail_position">직급</label>
+							<input type="text" class="form-control" id="detail_position" value="트레이너" readonly="readonly">
+						</div>
+					</div>
+					<select class="form-select" aria-label="Default select example" id="detail_selected">
+						<option value="연차">연차</option>
+						<option value="휴가">휴가</option>
+					</select>
+					<table class="table">
+						<thead>
+							<tr style="text-align: center;" id="detail_list_header">
+								<th>생성연월차</th>
+								<th>사용연월차</th>
+								<th>잔여연월차</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr style="text-align: center; font-size: 16pt">
+								<td id="detail_annual_add">15</td>
+								<td id="detail_annual_sub">5</td>
+								<td id="detail_annual_sum">10</td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align: center; font-size: 18px; font-weight: 600">지급/사용 이력</div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>지급/사용</th>
+								<th>처리일</th>
+								<th>분류</th>
+								<th>일수</th>
+							</tr>
+						</thead>
+						<tbody id="detail_list">
+							<tr >
+								<td colspan="4">확인되는 이력이 없습니다.</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-danger" onclick="del()">차감</button>
-				</div>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+					</div>
 			</div>
 		</div>
 	</div>
@@ -128,13 +236,12 @@
 					<div class="col-12">
 						<div style="height: 50px">
 							<div class="float-left" style="display: flex">
-								<select class="form-select" aria-label="Default select example">
+								<select class="form-select" id="filter_work_year">
 									<option selected>근무 기간</option>
 									<option value="1">1년 미만</option>
 									<option value="2">1년 이상</option>
 									<option value="3">전체</option>
-								</select>&nbsp; <select class="form-select"
-									aria-label="Default select example">
+								</select>&nbsp; <select class="form-select" id="filter_attendance_rate">
 									<option selected>출석률</option>
 									<option value="1">지난달 근태 100%</option>
 									<option value="2">작년 근태 80% 이상</option>
@@ -146,7 +253,7 @@
 								<a class="btn btn-primary" data-bs-toggle="modal"
 									data-bs-target="#annualAddModal" data-shuffle onclick="annualAddModal(event)"> 연차/휴가 생성 </a>&nbsp;<a
 									class="btn btn-secondary" data-bs-toggle="modal"
-									data-bs-target="#annualDelModal" data-shuffle> 연차/휴가 소진 </a>
+									data-bs-target="#annualSubModal" data-shuffle onclick="annualSubModal(event)"> 연차/휴가 소진 </a>
 							</div>
 						</div>
 						<div class="card card-primary">
@@ -194,7 +301,9 @@
 														<c:if test="${not empty dto.annualSub}">${dto.annualSub}</c:if>
 													</td>
 													<td>${dto.annualAdd - dto.annualSub}</td>
-													<td><button type="button" class="btn btn-secondary btn-sm">조회</button></td>
+													<td><button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+																data-bs-target="#annualDetailModal" data-shuffle onclick="annualDetail('${dto.emp_no}', '${dto.name}', '${dto.position}')">조회</button>
+													</td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -212,23 +321,46 @@
 	</div>
 </body>
 <script type="text/javascript">
-var checkArr = [];
-var evtCheck = 0;
-const myModalEl = document.getElementById('annualAddModal')
-myModalEl.addEventListener('shown.bs.modal', event => {
-	console.log("활성화");
-	if(checkArr.length == 0){
-		evtCheck += 1
-		failReload(evtCheck);
+	var checkArr = [];
+	var evtCheck = 0;
+	const myModalEl = document.getElementById('annualAddModal')
+	const myModalEl2 = document.getElementById('annualSubModal')
+	myModalEl.addEventListener('shown.bs.modal', event => {
+		console.log("활성화");
+		if(checkArr.length == 0){
+			evtCheck += 1
+			failReload(evtCheck);
+		}
+	})
+	myModalEl2.addEventListener('shown.bs.modal', event => {
+		console.log("활성화");
+		if(checkArr.length == 0){
+			evtCheck += 1
+			failReload(evtCheck);
+		}
+	})
+	function failReload(arg){
+		if (arg==1){
+			alert("최소 한 명 이상의 직원을 선택해주세요.");
+			location.reload();
+		}
 	}
-})
-function failReload(arg){
-	if (arg==1){
-		alert("최소 한 명 이상의 직원을 선택해주세요.");
-		location.reload();
-	}
-}
-
+	$("#detail_selected").change(function() {
+		$val = $("#detail_selected").val();
+		console.log($val);
+		if ($val == "연차") {
+			$("#detail_list_header").html("<th>생성연월차</th><th>사용연월차</th><th>잔여연월차</th>");
+		}
+		if ($val == "휴가") {
+			$("#detail_list_header").html("<th>생성휴가</th><th>사용휴가</th><th>잔여휴가</th>");
+		}
+		annualDetailList();
+	});
+	
+	$("#filter_work_year").change(function() {
+		location.href = "/annualList.go?filter_work_year=" + $("#filter_work_year").val();
+	});
+	
 	function annualAddModal(e) {
 		checkArr = [];
 		$('input[type="checkbox"]:checked').each(function(idx, item) {
@@ -248,6 +380,25 @@ function failReload(arg){
 		$("#annual_emp_no").val(arrString)
 	}
 	
+	function annualSubModal(e) {
+		checkArr = [];
+		$('input[type="checkbox"]:checked').each(function(idx, item) {
+			// each는 jquery에서 사용하는 foreach
+			// checkbox에 value를 지정하지 않으면 기본값을 on으로 스스로 지정한다
+			if ($(this).val() != 'on') {
+				console.log(idx, $(this).val());
+				checkArr.push($(this).val());
+			}
+		});
+		console.log(checkArr);
+		arrString = ""
+		for(var i in checkArr){
+			arrString = (i < checkArr.length-1) ? arrString + checkArr[i] + ", " : arrString + checkArr[i];
+		}
+		console.log(arrString);
+		$("#annual_emp_no_sub").val(arrString)
+	}
+		
 	function annualAdd() {
 		var aType = $("#annual_type").val();
 		var aTime = $("#annual_time").val();
@@ -273,10 +424,95 @@ function failReload(arg){
 					alert("연차/휴가 부여에 실패했습니다.");
 				}
 			});
+		}
+	}
+	function annualSub() {
+		var aType = $("#annual_type_sub").val();
+		var aTime = $("#annual_time_sub").val();
+	
+		if(aType != "" && aTime != ""){
+			$.ajax({
+				type : 'post',
+				url : 'annual.sub',
+				data : {
+					'subList' : checkArr,
+					'annualType' : aType,
+					'annualTime' : aTime
+				},
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					if (data.success) {
+						alert("연차/휴가 차감에 성공했습니다.");
+						location.reload();
+					}
+				},
+				error : function(e) {
+					alert("연차/휴가 차감에 실패했습니다.");
+				}
+			});
 		} else {
 			alert("필요 항목을 모두 선택 및 입력해주세요.")
 		}
+	}
+	function annualDetail(emp_no, name, position) {
+		$("#detail_emp_no").val(emp_no);
+		$("#detail_name").val(name);
+		$("#detail_position").val(position);
 		
+		annualDetailList();
+	}
+	
+	function annualDetailList(){
+		console.log('annualDetailList');
+		$no = $("#detail_emp_no").val()
+		$type = $("#detail_selected").val();
+		
+		$.ajax({
+			type : 'post',
+			url : 'annual.detail',
+			data : {
+				'emp_no' : $no,
+				'annual_type' : $type
+			},
+			dataType : 'json',
+			success : function(data) {
+				var add = 0
+				var sub = 0
+				if(data.annualDetailMap){
+					var add = (data.annualDetailMap.annual_add) ? data.annualDetailMap.annual_add : 0;
+					var sub = (data.annualDetailMap.annual_sub) ? data.annualDetailMap.annual_sub : 0;
+					console.log(data.annualDetailMap);
+				}
+				$("#detail_annual_add").text(add);
+				$("#detail_annual_sub").text(sub);
+				$("#detail_annual_sum").text(add-sub);
+				
+				if(data.annualDetailList){
+					console.log(data.annualDetailList);
+					var content = "";
+					data.annualDetailList.forEach(function(item, index){
+						if(item.annual_modifier == 1){
+							content += "<tr><td>" + "<button type='button' class='btn btn-primary btn-sm' disabled>지급</button>" + "</td>";
+						}else{
+							content += "<tr><td>" + "<button type='button' class='btn btn-secondary btn-sm' disabled>사용</button>" + "</td>";
+						}
+						content += "<td>" + item.annual_date.substring(0,10) + "</td>";
+						content += "<td>" + item.annual_type + "</td>";
+						content += "<td>" + item.annual_time + "</td></tr>";
+					});
+					$("#detail_list").empty();
+					$("#detail_list").append(content);
+				} else {
+					$("#detail_list").empty();
+					$("#detail_list").append(content);
+				}
+			},
+			error : function(e) {
+				alert("데이터를 불러오는데 실패했습니다.");
+			}
+		});
 	}
 </script>
 </html>
+	
