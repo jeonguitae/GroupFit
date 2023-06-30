@@ -48,7 +48,26 @@
 </head>
 <body>
    <jsp:include page="GroupFit_gnb.jsp" />
+   
    <div class="content-wrapper" style="margin-top: 57.08px">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>페이지 제목</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">메인</a></li>
+							<li class="breadcrumb-item active">뎁스1</li>
+							<li class="breadcrumb-item active">뎁스2</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
 <!-- Main content -->
       <section class="content">
             <h1 class="headline">일반 회원 리스트</h1>

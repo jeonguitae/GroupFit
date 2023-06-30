@@ -12,4 +12,6 @@ public interface StatisDAO {
 
 	ArrayList<StatisDTO> branchList();
 
+	ArrayList<StatisDTO> branchTotalSales(String branchYear, String branch);
+
 }

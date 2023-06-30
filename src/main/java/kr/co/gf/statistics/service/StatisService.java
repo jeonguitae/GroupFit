@@ -27,4 +27,8 @@ public class StatisService {
 		return dao.branchList();
 	}
 
+	public ArrayList<StatisDTO> branchTotalSales(String branchYear, String branch) {
+		return dao.branchTotalSales(branchYear,branch);
+	}
+
 }

@@ -13,7 +13,7 @@ public interface MemberDAO {
 	
 	int memjoin(HashMap<String, String> params);
 
-	ArrayList<MemberDTO> memlist();
+	ArrayList<MemberDTO> memlist(int b_idx);
 
 	ArrayList<MemberDTO> branch();
 
@@ -22,7 +22,9 @@ public interface MemberDAO {
 	String emp_name(String loginId);
 
 	int mem_no(String name, String phone);
-
+	
+// 기본정보 등록
+	
 	int ticjoin(HashMap<String, String> params);
 
 	String ticket_no(String ticket_name, String b_idx);
@@ -34,7 +36,9 @@ public interface MemberDAO {
 	int ticket_time(String ticket_name);
 
 	String b_idx(String branch);
-
+	
+// 이용권 등록
+	
 	int ptmemjoin(HashMap<String, String> params);
 
 	int b_name(String loginId);
@@ -45,6 +49,8 @@ public interface MemberDAO {
 
 	String ticket_type(String ticket_no, String b_idx);
 
+// pt 정보 등록	
+	
 	int memdelete(String mem_no);
 
 	MemberDTO memdetail(String mem_no);
@@ -59,7 +65,7 @@ public interface MemberDAO {
 
 	ArrayList<MemberDTO> ptmemlist(String loginId);
 
-	ArrayList<MemberDTO> locker();
+	ArrayList<MemberDTO> locker(String b_idx);
 
 	int loc_status(String loc_num);
 
@@ -84,6 +90,10 @@ public interface MemberDAO {
 	ArrayList<MemberDTO> member_cnt(String entermem_no);
 
 	String dup_entermem(String entermem_no, String name);
+
+	int emp_b_idx(String loginId);
+
+	ArrayList<MemberDTO> entermemlist(int b_idx, LocalDate now);
 
 	/* int memjoin(HashMap<String, String> params); */
 

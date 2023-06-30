@@ -229,12 +229,22 @@
 									일정 관리 <span class="badge badge-info right"></span>
 								</p>
 						</a></li>
-						<li class="nav-item"><a href="mlist.go" class="nav-link"> <i
+						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-dumbbell"></i>
 								<p>
-									기구 관리 <span class="badge badge-info right"></span>
+									시설 관리 <span class="badge badge-info right"></span>
 								</p>
-						</a></li>
+						</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item item-sub"><a href="maclist.go" class="nav-link"> <i
+										class="nav-icon fas fa-dumbbell"></i>
+										<p>머신 관리</p>
+								</a></li>
+								<li class="nav-item item-sub"><a href="loclist.go" class="nav-link"> <i
+										class="nav-icon fas fa-dumbbell"></i>
+										<p>라커 관리</p>			
+								</a></li>
+						</ul></li>
 						<li class="nav-item"><a href="ticket.go" class="nav-link"> <i
 								class="nav-icon fas fa-ticket-alt"></i>
 								<p>

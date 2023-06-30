@@ -41,5 +41,36 @@ public class StatisController {
 		map.put("list",list);
 		return map;
 	}
+	
+	@RequestMapping(value="/branchTotalSales.ajax")
+	@ResponseBody
+	public HashMap<String, Object> branchTotalSales(@RequestParam String branchYear,@RequestParam String branch){
+		logger.info("지점별 출력할 연도"+branchYear);
+		logger.info("지점 번호"+branch);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+		list = service.branchTotalSales(branchYear,branch);
+		map.put("list", list);
+		return map;
+	}
+	
+	@RequestMapping(value="/branchChart")
+	public String branchChart() {
+		return "branchChart";
+	}
+	
+	@RequestMapping(value="/branchSales.ajax")
+	@ResponseBody
+	public HashMap<String, Object> branchSales(@RequestParam String year,@RequestParam String b_idx){
+		logger.info("지점별 출력할 연도"+year);
+		logger.info("지점 번호"+b_idx);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+		list=service.branchTotalSales(year,b_idx);
+		map.put("list", list);
+		return map;
+	}
+	
+	
 
 }

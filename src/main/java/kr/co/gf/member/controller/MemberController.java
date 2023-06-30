@@ -1,6 +1,5 @@
 package kr.co.gf.member.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,20 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.gf.emp.dto.EmpDTO;
-import kr.co.gf.emp.service.EmpService;
 import kr.co.gf.login.service.LoginService;
 import kr.co.gf.member.dto.MemberDTO;
 import kr.co.gf.member.service.MemberService;
-import kr.co.gf.member.service.PtMemberService;
 
 @Controller
 public class MemberController {
@@ -44,11 +39,13 @@ public class MemberController {
 	
 	@GetMapping(value="memlist.ajax")
 	@ResponseBody
-	public HashMap<String, Object> memlist(){
+	public HashMap<String, Object> memlist(HttpSession session){
+		
+		String loginId = (String) session.getAttribute("loginId");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		ArrayList<MemberDTO> list = service.memlist();
+		ArrayList<MemberDTO> list = service.memlist(loginId);
 		
 		map.put("list", list);
 		
@@ -80,7 +77,7 @@ public class MemberController {
 		ArrayList<MemberDTO> list2 = service.ticket(b_idx);
 		model.addAttribute("ticket", list2);
 		
-		ArrayList<MemberDTO> list3 = service.locker();
+		ArrayList<MemberDTO> list3 = service.locker(b_idx);
 		model.addAttribute("locker", list3);
 		
 		return "memWrite";
@@ -221,9 +218,18 @@ public class MemberController {
 	}
 	
 	@GetMapping(value="entermemlist.go")
-	public String entermemList(Model model) {
+	public String entermemListgo(Model model) {
 	
 		return "entermemlist";
+	}
+	
+	@RequestMapping(value="entermemlist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> entermemlist(HttpSession session){
+		
+		String loginId = (String) session.getAttribute("loginId");
+		
+		return service.entermemlist(loginId);
 	}
 	
 }

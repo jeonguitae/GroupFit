@@ -46,10 +46,27 @@
 <body>
    <jsp:include page="GroupFit_gnb.jsp" />
    <div class="content-wrapper" style="margin-top: 57.08px">
+   <section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>페이지 제목</h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">메인</a></li>
+							<li class="breadcrumb-item active">뎁스1</li>
+							<li class="breadcrumb-item active">뎁스2</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+			</section>
 <!-- Main content -->
       <section class="content">
-            <h1 class="headline">${today} 입장한 회원</h1>
-
+            <h1 class="headline"></h1>
+				<h2 class="headline">입장한 회원</h2>
 				<select name="esortting">
 					<option value="mem_no">회원번호</option>
 					<option value="name">이름</option>
@@ -57,7 +74,7 @@
 				
 				<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
 				
-				<button>검색</button>
+				<button onclick="entermemsearch()">검색</button>
 			
 		<div class="table">
 			<table>
@@ -72,9 +89,9 @@
 					<tr>
 						<th>회원번호</th>
 						<th>이름</th>
+						<th>연락처</th>
 						<th>입장 일</th>
 						<th>입장 시간</th>
-						<th>연락처</th>
 					</tr>
 				</thead>		
 				<tbody id="entermemlist">
@@ -110,6 +127,7 @@ function entermemlist(){
 		data:{},
 		dataType:'json',
 		success:function(data){
+			console.log(data.list);
 			listDraw(data.list);
 		},
 		error:function(e){
@@ -121,14 +139,14 @@ function entermemlist(){
 function listDraw(entermemlist){
 	//console.log(list);
 	var content = '';
-	ptmemlist.forEach(function(item,index){
+	entermemlist.forEach(function(item,index){
 		
 		content += '<tr>';
-		content += '<td><input type="checkbox" value="'+item.mem_no+'"/></td>';
 		content += '<td>'+item.mem_no+'</td>';
 		content += '<td><a href="memdetail.go?mem_no='+item.mem_no+'">'+item.name+'</a></td>';
-		content += '<td>'+item.ticket_time+' / '+item.count+'</td>';	
-		content += '<td>'+item.gender+'</td>';
+		content += '<td>'+item.phone+'</td>';
+		content += '<td>'+item.enter_date+'</td>';	
+		content += '<td>'+item.enter_time+'</td>';
 		content += '</tr>';
 	});
 	$('#entermemlist').empty();
