@@ -367,11 +367,10 @@
 </body>
 <script>
 	var msg = "${msg}";
-	var loginId = "${sessionScope.loginId}";
 	if(msg != ""){
 		alert(msg);
 	}
-	if(loginId == ""){
+	if("${sessionScope.loginId} == ""){
 		alert("로그인이 필요한 기능입니다.");
 		location.href="/";
 	}

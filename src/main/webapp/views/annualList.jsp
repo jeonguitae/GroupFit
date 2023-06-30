@@ -488,7 +488,7 @@
 				$("#detail_annual_sub").text(sub);
 				$("#detail_annual_sum").text(add-sub);
 				
-				if(data.annualDetailList){
+				if(data.annualDetailList.length > 0){
 					console.log(data.annualDetailList);
 					var content = "";
 					data.annualDetailList.forEach(function(item, index){
@@ -505,7 +505,7 @@
 					$("#detail_list").append(content);
 				} else {
 					$("#detail_list").empty();
-					$("#detail_list").append(content);
+					$("#detail_list").append("<tr><td colspan='4' style='text-align:center'>조회되는 이력이 없습니다.</td></tr>");
 				}
 			},
 			error : function(e) {
