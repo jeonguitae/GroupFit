@@ -39,7 +39,7 @@
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body" style="display:flex;align-items: center">
-					<img src="dist/img/GroupFit_2_Logo.png" alt="GroupFit Logo"
+				<img src="img/GroupFit_lg_2.png" alt="GroupFit Logo"
 						class="brand-image elevation-3"
 						style="background-color: transparent; transform: scale(0.8); opacity: 1">
 					<div>
@@ -194,6 +194,10 @@
 										class="fas fa-edit nav-icon"></i>
 										<p>PT 회원일지</p>
 								</a></li>
+								<li class="nav-item item-sub"><a href="entermemlist.go" class="nav-link"> <i
+										class="fas fa-edit nav-icon"></i>
+										<p>입장한 회원 리스트</p>
+								</a></li>
 							</ul></li>
 						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 						<li class="nav-item">
@@ -219,18 +223,28 @@
 							</ul>
 						</li>
 						</c:if>
-						<li class="nav-item"><a href="#" class="nav-link"> <i
+						<li class="nav-item"><a href="calendar" class="nav-link"> <i
 								class="nav-icon fas fa-calendar-alt"></i>
 								<p>
 									일정 관리 <span class="badge badge-info right"></span>
 								</p>
 						</a></li>
-						<li class="nav-item"><a href="mlist.go" class="nav-link"> <i
+						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-dumbbell"></i>
 								<p>
-									기구 관리 <span class="badge badge-info right"></span>
+									시설 관리 <span class="badge badge-info right"></span>
 								</p>
-						</a></li>
+						</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item item-sub"><a href="maclist.go" class="nav-link"> <i
+										class="nav-icon fas fa-dumbbell"></i>
+										<p>머신 관리</p>
+								</a></li>
+								<li class="nav-item item-sub"><a href="loclist.go" class="nav-link"> <i
+										class="nav-icon fas fa-dumbbell"></i>
+										<p>라커 관리</p>			
+								</a></li>
+						</ul></li>
 						<li class="nav-item"><a href="ticket.go" class="nav-link"> <i
 								class="nav-icon fas fa-ticket-alt"></i>
 								<p>
@@ -333,7 +347,11 @@
 								</a></li>
 								</c:if>
 							</ul></li>
-
+						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+						<li class="nav-item"><a href="annualList.go" class="nav-link"> <i
+								class="nav-icon fas fa-warehouse"></i>
+								<p>직원 연차관리</p>
+						</a></li></c:if>
 					</ul>
 				</nav>
 			</div>
