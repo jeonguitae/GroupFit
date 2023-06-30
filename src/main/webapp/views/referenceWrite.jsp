@@ -64,7 +64,7 @@
 						<tr>
 							<th colspan="2">
 								<button>작성</button>
-								<button type="button" onclick="location.href='reference.do'">취소</button>
+								<button type="button" onclick="location.href='referenceList.do'">취소</button>
 							</th>
 						</tr>
 					</table>

@@ -72,7 +72,7 @@
 		</tr>           
 		<tr>
 			<th colspan="2">
-				<button onclick="location.href='reference.do'">목록</button>
+				<button onclick="location.href='referenceList.do'">목록</button>
 			</th>
 		</tr>
 	</table>
