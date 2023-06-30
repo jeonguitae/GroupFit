@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자료실</title>
+<title>임시저장 문서함</title>
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -28,7 +28,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>자료실</h1>
+						<h1>임시저장 문서함</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -62,7 +62,7 @@
 					<tr>
 						<td>${approval.a_idx}</td>
 						<td>${approval.approval}</td>
-						<td><a href="approvalDetail.do?idx=${approval.r_idx}">${approval.subject}</a></td>
+						<td>${approval.subject}</td>
 						<td>${approval.write_date}</td>
 						<td>${approval.state}</td>
 					</tr>			

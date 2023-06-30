@@ -278,11 +278,11 @@
 								</a></li>
 								</c:if>
 								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">개인 문서함</li>
-								<li class="nav-item"><a href="approvalList.do" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalAllList.do" class="nav-link"> <i
 										class="fas fa-file nav-icon"></i>
 										<p>결재 문서함</p>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalSaveList.do" class="nav-link"> <i
 										class="fas fa-file-signature nav-icon"></i>
 										<p>임시 문서함</p>
 								</a></li>

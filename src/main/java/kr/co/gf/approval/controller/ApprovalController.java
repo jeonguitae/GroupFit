@@ -22,8 +22,12 @@ public class ApprovalController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
+	Calendar calendar = Calendar.getInstance();
+	
 	@Autowired ApprovalService service;
 	
+	
+	// 휴가신청
 	@RequestMapping(value="/approvalVacationRequest.go")
 	public String vacation(HttpSession session, Model model) {
 		
@@ -49,9 +53,18 @@ public class ApprovalController {
 		logger.info(position);
 		model.addAttribute("position",position);
 		
+		int year = calendar.get(Calendar.YEAR);
+	    int month = calendar.get(Calendar.MONTH) + 1;
+	    int day = calendar.get(Calendar.DAY_OF_MONTH);
+	    String write_date =  year + "." + month + "." + day;
+	    logger.info(write_date);
+	    model.addAttribute("write_date", write_date);
+		
 		return "approvalVacationRequest";
 	}
 	
+	
+	// 이벤트신청
 	@RequestMapping(value="/approvalEventRequest.go")
 	public String event(HttpSession session, Model model) {
 
@@ -77,8 +90,6 @@ public class ApprovalController {
 		logger.info(position);
 		model.addAttribute("position",position);
 		
-		Calendar calendar = Calendar.getInstance();
-	    
 	    // 현재 날짜 정보를 변수에 할당
 	    int year = calendar.get(Calendar.YEAR);
 	    int month = calendar.get(Calendar.MONTH) + 1;
@@ -90,6 +101,7 @@ public class ApprovalController {
 		return "approvalEventRequest";
 	}
 	
+	// 이벤트신청하기
 	@RequestMapping(value="approvalEventRequest.do")
 	public String eventRequest(@RequestParam HashMap<String,String> params, MultipartFile[] files, HttpSession session) {
 		
@@ -107,16 +119,26 @@ public class ApprovalController {
 		
 		service.eventRequestWrite(params,files);
 		
-		return "redirect:/approvalList.do";
+		return "redirect:/approvalAllList.do";
 	}
 	
-	@RequestMapping(value="/approvalList.do")
-	public ModelAndView approvalList(HttpSession session) {
+	// 개인 문서함 리스트
+	@RequestMapping(value="/approvalAllList.do")
+	public ModelAndView approvalAllList(HttpSession session) {
 		String loginId = (String) session.getAttribute("loginId");
 		logger.info("페이지 이동 : "+loginId );
-		return service.approvalList(loginId);
+		return service.approvalAllList(loginId);
 	}
 	
+	// 임시저장 문서함
+	@RequestMapping(value="/approvalSaveList.do")
+	public ModelAndView approvalSaveList(HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		logger.info("임시저장 문서함" + loginId);
+		return service.approvalSaveList(loginId);
+	}
+	
+	// 지출결의서
 	@RequestMapping(value="/approvalExpenseReport.go")
 	public String expenseReport(HttpSession session, Model model) {
 
@@ -141,6 +163,13 @@ public class ApprovalController {
 		String position = service.position(loginId);
 		logger.info(position);
 		model.addAttribute("position",position);
+		
+		int year = calendar.get(Calendar.YEAR);
+	    int month = calendar.get(Calendar.MONTH) + 1;
+	    int day = calendar.get(Calendar.DAY_OF_MONTH);
+	    String write_date =  year + "." + month + "." + day;
+	    logger.info(write_date);
+	    model.addAttribute("write_date", write_date);
 		
 		return "approvalExpenseReport";
 	}

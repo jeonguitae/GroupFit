@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.gf.approval.dao.ApprovalDAO;
 import kr.co.gf.approval.dto.ApprovalDTO;
-import kr.co.gf.board.dto.ReferenceDTO;
 
 @Service
 @MapperScan("kr.co.gf.approval.dao")
@@ -47,28 +50,48 @@ public class ApprovalService {
 		return dao.position(loginId);
 	}
 
-	public ModelAndView approvalList(String loginId) {
+	public ModelAndView approvalAllList(String loginId) {
 		logger.info("결재 리스트 이동 : " + loginId);
-		ModelAndView mav = new ModelAndView("approvalList");
-		ArrayList<ApprovalDTO> list = dao.approvalList(loginId);
+		ModelAndView mav = new ModelAndView("approvalAllList");
+		ArrayList<ApprovalDTO> list = dao.approvalAllList(loginId);
 		mav.addObject("list", list);
 		return mav;
 	}
 
 	public String eventRequestWrite(HashMap<String, String> params, MultipartFile[] uploadFiles) {
-String page = "redirect:/referenceList.do";
-		
+String page = "redirect:/approvalAllList.do";
+
+		logger.info("params"+params);
 
 		ApprovalDTO dto = new ApprovalDTO();
 		
 		dto.setEmp_no(Integer.parseInt(params.get("emp_no")));
 		dto.setApproval(params.get("approval"));
 		dto.setSubject(params.get("subject"));
-		// dto.setWrite_date(params.get("write_date"));
+
+		String write_dateString = params.get("write_date"); // 문자열로 된 날짜 값 가져오기
+		// 날짜 포맷 지정 (예: "yyyy.MM.dd")
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+		try {
+		    LocalDate localDate = LocalDate.parse(write_dateString, formatter);
+		    java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
+		    dto.setWrite_date(sqlDate);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 		dto.setState(params.get("state"));		
 		dto.setManager(params.get("manager"));
 		dto.setTop_manager(params.get("top_manager"));
-		dao.eventRequestWrite(dto);
+		
+		int success = dao.eventRequestWrite(dto);
+		
+		if(success == 1) {
+			//dto.setStart_day(params.get("start_day"));
+			//dto.setFinish_day(params.get("finish_day"));
+			//dto.setReason(params.get("reason");
+			//dto.setEtc(params.get("etc");
+			//dao.eventRequestWrite2(dto);
+		}
 		
 		for (MultipartFile file : uploadFiles) {
 			logger.info("photo 있으면 false, 없으면 true :"+file.isEmpty());
@@ -110,6 +133,13 @@ public void upload(MultipartFile uploadFile,int board_num) {
 			e.printStackTrace();
 		}
 }
+
+	public ModelAndView approvalSaveList(String loginId) {
+		ModelAndView mav = new ModelAndView("approvalSaveList");
+		ArrayList<ApprovalDTO> list = dao.approvalSaveList(loginId);
+		mav.addObject("list",list);
+		return mav;
+	}
 
 
 

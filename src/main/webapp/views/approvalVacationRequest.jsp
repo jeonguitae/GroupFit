@@ -8,38 +8,60 @@
 <title>휴가신청</title>	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
-	
+
 	#aAp{
 		margin-left: 70px;
 		margin-top: 20px;
-	}
+	}	
 
-	#table1{
+	#table1 {
 		border: 1px solid black;
 		border-collapse: collapse;
-		padding: 10px 10px;
-		margin-left: 70px;
-   		margin-top: 30px;
+		float: left;
+		margin-top: 5%;
+		margin-left: 5%;
+		position:absolute;
 	}
 	#table1 th{
 		border: 1px solid black;
-		border-collapse: collapse;
-		padding: 15px 10px;
+	    padding: 10px;
+		
 	}
 	#table1 td{
 		border: 1px solid black;
-		border-collapse: collapse;
-		padding: 5px 10px;
+	    padding: 10px;
 	}
+	
+	
+	
+	#table2{
+		border: 1px solid black;
+	    border-collapse: collapse;
+	    margin-top: 15%;
+	    margin-left: 5%;
+	    position: absolute;
+	    width: 70%;
+	}
+	#table2 th{
+		border: 1px solid black;
+		padding: 10px;
+	}
+	#table2 td{
+		border: 1px solid black;
+		padding: 10px;
+	}
+	
+	
 	
 	#table3{
 		border: 1px solid black;
-		border-collapse: collapse;
-		padding: 5px 10px;
-		text-align: center;
-		width: 350px;
-		float: right;
-		margin-right: 90px;
+	    border-collapse: collapse;
+	    padding: 5px 10px;
+	    text-align: center;
+	    width: 30%;
+	    float: right;
+	    margin-right: 9%;
+	    margin-top: 2%;
 	}
 	
 	#table3 th {
@@ -56,32 +78,6 @@
 	    width: 100px;
 	    text-align: center;
 	}
-	
-	#table3_1{
-		border: 1px solid black;
-		border-collapse: collapse;
-		padding: 5px 10px;
-		text-align: center;
-		width: 20%;
-		float: right;
-		margin-right: 10%;
-	}
-	
-	#table3_1 th {
-	    border: 1px solid black;
-	    border-collapse: collapse;
-	    padding: 5px;
-	    text-align: center;
-	}
-	
-	#table3_1 td {
-	    border: 1px solid black;
-	    border-collapse: collapse;
-	    padding: 5px 10px;
-	    width: 100px;
-	    text-align: center;
-	}
-	
 	#tr2{
 		height: 100px;
 		vertical-align: bottom;
@@ -90,43 +86,17 @@
 		vertical-align: middle;
 	}
 	
-	#table2{
-		border: 1px solid black;
-	    border-collapse: collapse;
-	    padding: 10px 10px;
-	    margin-left: 6%;
-    	margin-top: 20%;
+	#button_sin_mok_mm {
+	    margin-top: 40%;
+	    position: absolute;
+	    margin-left: 30%;
 	}
-	
-	#table2 th{
-		border: 1px solid black;
-	    border-collapse: collapse;
-	    padding: 5px 10px;
-	    width: 270px;
-	    align-content: center;
-	}
-	
-	#table2 td{
-		border: 1px solid black;
-	    border-collapse: collapse;
-	    padding: 10px 10px;
-	    width: 825px;
-	}
-
-	#button_sin_mok {
-    text-align: center;
-    margin-top:30px;
-}
-
-	.content-header {
-	    margin-bottom: 30px;
-}
 
 	textarea {
-   		width: 600px;
-   		height: 30px;
-}
-	
+   		width: 60%;
+   		height: 30%;
+	}
+
 </style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -163,22 +133,23 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>&nbsp;&nbsp;
-				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>&nbsp;&nbsp;
+				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>
+				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
 				<h5 id="aAp" style="display: inline;"><a href="approvalEventRequest.go">이벤트결재</a></h5>
 				
-				<div style="overflow: hidden;">
-					<table id="table1" style="float: left;">
+			
+				<div id="table1_div">
+					<form action="approvalEventRequest.do" method="post" enctype="multipart/form-data">
+					<table id="table1">
 						<tr>
 							<th>기안자</th>
 							<td>
 								${loginIdName}
-								<input type="hidden" name="emp_no" value="${loginId}" readonly="readonly"/>
 							</td>
 						</tr>
 						<tr>
 							<th>기안일</th>
-							<td><span id="currentDate"></span></td>
+							<td>${write_date}</td>
 						</tr>
 					</table>
 					
@@ -201,7 +172,7 @@
 					
 					<c:if test="${position eq '지점장'}">
 					<table id="table3_1">
-						<tr id="tr1">
+						<tr id="tr1" style="height: 100px;">
 							<th rowspan="3">신청</th>
 							<th>지점장</th>
 							<th rowspan="3">결재</th>
@@ -217,26 +188,41 @@
 				
 				<table id="table2">
 					<tr>
+						<th colspan="2">아래와 같은 사유로 휴가 하고자 하오니 재가하여 주시기 바랍니다.</th>
+					</tr>
+					<tr>
 						<th>기간</th>
 						<td><input type="date" name="start_day"/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="finish_day"/></td>
 					</tr>
 					<tr>
 						<th>사유</th>
-						<td><textarea name="reason"></textarea></td>
+						<td><textarea id="sa" name="reason"></textarea></td>
 					</tr>
 					<tr>
 						<th>기타사항</th>
-						<td><textarea name="etc"></textarea></td>
+						<td><textarea id="sa" name="etc"></textarea></td>
 					</tr>
 					<tr>
 						<th>첨부파일</th>
 						<td><input type="file" name="files" multiple="multiple"/></td>
 					</tr>
+					<tr>
+						<th colspan="2">* 공가의 경우, 예비군 소집 통지서 등 관련 증빙 서류를 첨부하여 함께 제출합니다.</th>
+					</tr>
 				</table>
-				<div id="button_sin_mok">
+				<div id="button_sin_mok_mm">
 					<button id="sin">신청하기</button>
+					<button id="mm" onclick="location.href='approvalList.do'">임시저장</button>
 					<button id="mok" onclick="location.href='approvalList.do'">목록</button>
 				</div>
+				<input type="hidden" name="emp_no" value="${loginId}"/>
+				<input type="hidden" name="approval" value="이벤트신청"/>
+				<input type="hidden" name="subject" value="이벤트신청"/>
+				<input type="hidden" name="write_date" value="${write_date}"/>
+				<input type="hidden" name="state" value="대기"/>
+				<input type="hidden" name="manager" value="${manager}"/>
+				<input type="hidden" name="top_manager" value="${top_Manager}"/>
+				</form>
 			</div>
 		</div>	
 			<!--/. container-fluid -->
@@ -244,13 +230,5 @@
 	</div>
 </body>
 <script type="text/javascript">
-	var currentTime = new Date();
-	var year = currentTime.getFullYear();
-	var month = currentTime.getMonth() + 1;
-	var day = currentTime.getDate();
-	
-	var currentDate = year + "." + month + "." + day;
-	
-	document.getElementById("currentDate").innerText = currentDate;
 	</script>
 </html>

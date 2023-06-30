@@ -16,11 +16,13 @@ public interface ApprovalDAO {
 
 	String position(String loginId);
 
-	ArrayList<ApprovalDTO> approvalList(String loginId);
+	ArrayList<ApprovalDTO> approvalAllList(String loginId);
 
-	void eventRequestWrite(ApprovalDTO dto);
+	int eventRequestWrite(ApprovalDTO dto);
 
 	void approvalFileWrite(int c_idx, String ori_photo_name, String new_photo_name, int board_num);
+
+	ArrayList<ApprovalDTO> approvalSaveList(String loginId);
 
 	
 
