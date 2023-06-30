@@ -53,7 +53,7 @@
 <jsp:include page="GroupFit_gnb.jsp"/>
 <body>
    <div class="content-wrapper" style="margin-top: 57.08px">
-   <section class="content-header">
+  <!--  <section class="content-header">
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
@@ -68,8 +68,8 @@
 					</div>
 				</div>
 			</div>
-			<!-- /.container-fluid -->
-			</section>
+			/.container-fluid
+			</section> -->
 <!-- Main content -->
       <section class="content">
          <div class="container-fluid">
@@ -111,7 +111,7 @@
 								<td>
 									<select name="loc_num">
 										<c:forEach items="${locker}" var="name">
-											<option value="${name.loc_num}">${name.loc_num}
+											<option value="${name.loc_no}">${name.loc_no}
 										</c:forEach>
 									</select>
 								</td>

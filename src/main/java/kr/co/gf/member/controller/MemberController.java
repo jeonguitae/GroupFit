@@ -77,7 +77,7 @@ public class MemberController {
 		ArrayList<MemberDTO> list2 = service.ticket(b_idx);
 		model.addAttribute("ticket", list2);
 		
-		ArrayList<MemberDTO> list3 = service.locker();
+		ArrayList<MemberDTO> list3 = service.locker(b_idx);
 		model.addAttribute("locker", list3);
 		
 		return "memWrite";

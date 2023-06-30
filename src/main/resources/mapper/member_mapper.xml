@@ -23,7 +23,7 @@
    </select>
    
    <select id="locker" resultType="member">
-   		SELECT * FROM locker WHERE status = '미사용'
+   		SELECT * FROM locker WHERE status = '미사용' AND b_idx = #{param1}
    </select>
    
    <select id="emp_name" resultType="String">
@@ -36,7 +36,7 @@
    </insert>
    
    <update id="loc_status">
-   		UPDATE locker SET status = '사용중' WHERE loc_num = #{param1}
+   		UPDATE locker SET status = '사용중' WHERE loc_no = #{param1}
    </update>
    
    <select id="mem_no" resultType="int">

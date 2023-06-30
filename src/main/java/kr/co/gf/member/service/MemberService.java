@@ -206,9 +206,9 @@ public class MemberService {
 		return map;
 	}
 
-	public ArrayList<MemberDTO> locker() {
+	public ArrayList<MemberDTO> locker(String b_idx) {
 		
-		return dao.locker();
+		return dao.locker(b_idx);
 	}
 
 	public HashMap<String, Object> memsearch(String sortting, String txt) {

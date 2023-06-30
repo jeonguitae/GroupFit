@@ -65,7 +65,7 @@ public interface MemberDAO {
 
 	ArrayList<MemberDTO> ptmemlist(String loginId);
 
-	ArrayList<MemberDTO> locker();
+	ArrayList<MemberDTO> locker(String b_idx);
 
 	int loc_status(String loc_num);
 
