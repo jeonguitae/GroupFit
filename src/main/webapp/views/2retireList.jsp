@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -24,6 +23,7 @@
 		border-collapse: collapse;
 		padding : 5px 10px;
 	} */
+
 div[class="btn1"]{
 	margin-left: 1108px;
 }
@@ -45,10 +45,10 @@ div[class="table"]{
 	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
-			<h1 class="headline">직원 리스트</h1>
+			<h1 class="headline">퇴사 직원 리스트</h1>
 			
 		<fieldset>
-			<form action="empList.do" class="search">
+			<form action="empRetireList.do" class="search">
 				<select name="opt">
 					<option value="name">이름</option>
 					<option value="b_name">지점</option>
@@ -64,30 +64,28 @@ div[class="table"]{
 			<button onclick="hide()">직원 삭제</button>
 			<c:if test="${sessionScope.loginEmp.position eq '대표'}">
 				<button onclick="location.href='empRepList.do'">지점별</button>
-				<button onclick="location.href='empRetire.go'">퇴사직원</button>
+				<button onclick="location.href='empJoin.go'">퇴사직원</button>
 			</c:if>
 		</div>
 		<div class="table">
 			<table>
 				<thead>
 					<tr>
-						<th>삭제</th>
 						<th>사번</th>
 						<th>이름</th>
 						<th>지점</th>
 						<th>직급</th>
-						<th>재직상태</th>
+						<th>퇴사일</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${list}" var="emp">
 						<tr>
-							<td><input type="checkbox" name="chk" value="${emp.emp_no}"/></td>
 							<td>${emp.emp_no}</td>
 							<td><a href="empDetail.do?detailid=${emp.emp_no}">${emp.name}</a></td>
 							<td>${emp.b_name}</td>
 							<td>${emp.position}</td>
-							<td>${emp.status}</td>
+							<td>${emp.retire_year}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -96,27 +94,6 @@ div[class="table"]{
 	</div>
 </body>
 <script>
-function hide() {
-	   var hideList = new Array();
-	   $("input[name=chk]:checked").each(function() {
-	      hideList.push($(this).val());
-	   });
-	   $.ajax({
-	      type: 'post',
-	      url: 'hide.ajax',
-	      data: {
-	         'hideList' : hideList
-	      },
-	      dataType: 'text',
-	      success: function(data){
-	         
-	      },
-	      error: function(e){
-	         console.log(e);
-	      }
-	   });
-	}
-
 
 </script>
 </html>

@@ -100,6 +100,10 @@
 					<th>*입사일자</th>
 					<td><input type="date" id="join_year" name="join_year"/></td>
 				</tr>
+				<tr>
+					<th>*퇴사일자</th>
+					<td><input type="date" id="retire_year" name="retire_year"/></td>
+				</tr>
 				<input type="submit" value="등록"/>
 				<button type="button" onclick="location.href='./empList.go'">목록</button>	
 			</table>

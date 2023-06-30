@@ -86,6 +86,12 @@
 					<th>*입사일자</th>
 					<td><input type="text" name="join_year" value="${emp.join_year}" readonly/></td>
 				</tr>
+				<c:if test="${emp.status eq '퇴직'}">
+				<tr>
+					<th>*퇴사일자</th>
+					<td><input type="text" name="retire_year" value="${emp.retire_year}" readonly/></td>
+				</tr>
+				</c:if>
 				<button type="button" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">수정</button>
 				<button type="button" onclick="location.href='./empList.go'">목록</button>	
 				<button type="button" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>	
@@ -93,9 +99,5 @@
 		</div>
 </body>
 <script>
-var msg = "${msg}";
-if(msg != ""){
-	alert(msg);
-}
 </script>
 </html>
