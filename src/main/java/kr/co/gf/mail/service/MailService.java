@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,9 +28,9 @@ public class MailService {
 	@Autowired
 	PasswordEncoder encoder;
 
-	public ModelAndView post_sendList() {
+	public ModelAndView post_sendList(String send_empno) {
 		
-		ArrayList<MailDTO> list = dao.post_sendList();
+		ArrayList<MailDTO> list = dao.post_sendList(send_empno);
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -41,12 +42,17 @@ public class MailService {
 		return mav;
 	}
 
-	public ModelAndView post_sendWrite(HashMap<String, Object> params, RedirectAttributes rAttr) {
+	public ModelAndView post_sendWrite(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
 		
 		MailDTO dto = new MailDTO();
-		//dto.setSend_empno(params.get("send_empno"));
-		
+		dto.setSend_empno((String) params.get("send_empno"));
+		dto.setGet_empno((String) params.get("get_empno"));
+		dto.setSubject((String) params.get("subject"));
+		dto.setContent((String) params.get("content"));
+	
 		int success = dao.post_sendWrite(dto);
+		
+		int idx = dto.getEmail_num();
 		logger.info("success:"+success);
 		String msg = "쪽지 전송에 실패 했습니다!";
 		String page = "postSendWrite";

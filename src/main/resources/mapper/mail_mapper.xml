@@ -6,15 +6,19 @@
    
    	<!-- 보낸쪽지 리스트 검색 -->
 	<select id="post_sendList" resultType="mail" 
-		parameterType="hashmap">
+		parameterType="String">
 		SELECT * FROM post
+		where send_empno = #{send_empno}
 	</select>
-	
-	<insert id="post_sendWrite" parameterType="mail">
+
+	<insert id="post_sendWrite" parameterType="mail"
+      useGeneratedKeys="true"  
+      keyColumn="idx" 
+      keyProperty="email_num">
 	  insert into post (send_empno, get_empno, subject, content)
-	  select e.emp_no, #{get_empno}, #{subject}, #{content}
+	  select #{send_empno}, e.emp_no, #{subject}, #{content}
 	  from emp e
-	  where e.emp_no = #{send_empno}
+	  where e.name = #{get_empno}
 	</insert>
 	
    

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -36,8 +37,9 @@ public class MailController {
 //	}
 	
 	@GetMapping(value="/postSendList.go")
-	public ModelAndView sendList() {
-		return service.post_sendList();
+	public ModelAndView sendList(HttpSession session) {
+		String send_empno = (String)session.getAttribute("loginId");
+		return service.post_sendList(send_empno);
 	}
 	
 	@GetMapping(value="/postSendWrite.go")
@@ -50,7 +52,7 @@ public class MailController {
 	}
 	
 	@PostMapping(value="/postSendWrite.do")
-	public ModelAndView postWrite(HashMap<String, Object> params, RedirectAttributes rAttr) {
+	public ModelAndView postWrite(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
 		logger.info("params: "+params);
 		
 		return service.post_sendWrite(params, rAttr);

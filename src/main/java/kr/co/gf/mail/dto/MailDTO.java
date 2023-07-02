@@ -12,6 +12,7 @@ public class MailDTO {
 	private String content;
 	private String send_time;
 	private String get_chk;
+	
 	public int getEmail_num() {
 		return email_num;
 	}

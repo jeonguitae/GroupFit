@@ -10,7 +10,7 @@ import kr.co.gf.mail.dto.MailDTO;
 @Mapper
 public interface MailDAO {
 
-	ArrayList<MailDTO> post_sendList();
+	ArrayList<MailDTO> post_sendList(String send_empno);
 
 	int post_sendWrite(MailDTO dto);
 

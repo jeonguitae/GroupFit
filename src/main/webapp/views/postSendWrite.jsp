@@ -44,13 +44,14 @@
 			<div class="container-fluid">
 				<form action="postSendWrite.do" method="post" enctype="multipart/form-data">
 					<table>
+						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
 						<tr>
 							<th>*작성자</th>
-							<td><input type="text" name="send_empno" value="${emp.name}" readonly/></td>
+							<td><input type="text" value="${emp.name}" readonly/></td>
 						</tr>
 						<tr>
 							<th>*제목</th>
-							<td><input type="text" name="subject"/></	td>
+							<td><input type="text" name="subject"/></td>
 						</tr>
 						<tr>
 							<th>*받는사람 이름</th>
