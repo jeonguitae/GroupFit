@@ -65,6 +65,13 @@ public class CalenderService {
 		return dao.CalendarBranchList();
 	}
 
+
+
+	public ArrayList<CalenderDTO> selectedBranch(String b_idx, String branch) {
+		
+		return dao.selectedBranch(b_idx, branch);
+	}
+
 		
 	}
 	

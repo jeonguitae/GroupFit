@@ -38,18 +38,14 @@
     </select>
     
     
-    <select id="branchCalendar" resultType="kr.co.gf.calender.dto.CalenderDTO">
-             SELECT DATE_FORMAT(sd.year_month, '%Y-%m') AS `month`,COALESCE(SUM(t.ticket_price), 0) AS totalsales
-          FROM standard_date sd
-          LEFT JOIN registered_ticket rt ON DATE_FORMAT(rt.purch_date, '%Y-%m') = DATE_FORMAT(sd.year_month, '%Y-%m') AND rt.b_idx = #{param2}
-          LEFT JOIN ticket t ON rt.ticket_no = t.ticket_no
-          WHERE YEAR(sd.year_month) = #{param1}
-          GROUP BY DATE_FORMAT(sd.year_month, '%Y-%m');
-         </select>
-         
-         <select id="CalendarBranchList" resultType="kr.co.gf.calender.dto.CalenderDTO">
+    <select id="selectedBranch" resultType="kr.co.gf.calender.dto.CalenderDTO">
+             SELECT * From calendar WHERE b_idx = #{branch}
+    </select>
+  
+  
+    <select id="CalendarBranchList" resultType="kr.co.gf.calender.dto.CalenderDTO">
          	SELECT * FROM branch;
-         </select>
+    </select>
 	
 	
    

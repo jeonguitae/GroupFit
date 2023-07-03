@@ -134,14 +134,18 @@ public class CalenderController {
 	}
 	
 	
-		@RequestMapping(value="/branchCalendar")
+	
+	   @GetMapping(value="/selectedBranch")
 	   @ResponseBody
-	   public HashMap<String, Object> branchCalendar(@RequestParam String b_idx, @RequestParam String b_name){
+	   public HashMap<String, Object> selectedBranch(@RequestParam String b_idx, @RequestParam String branch){
+
 	      HashMap<String, Object> map = new HashMap<String, Object>();
 	      ArrayList<CalenderDTO> list = new ArrayList<CalenderDTO>();
+	      list = service.selectedBranch(b_idx, branch);
+	      map.put("calendarlist", list);
+	      logger.info("map : "+map);
 	      return map;
 	   }
-	
 	
 	
 }

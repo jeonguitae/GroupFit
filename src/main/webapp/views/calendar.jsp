@@ -86,13 +86,16 @@
 				  <button onclick="openModal()">일정 등록</button>
 			</c:if>
 			<!-- 필터링이요 -->
+		<div id="branchFilter">
 			<c:if test="${sessionScope.loginEmp.position eq '대표' }">
 				  <select name="branch" id="branch" style = "margin-left : 30px">
+				  	<option value="listAll">전체</option>
 		            <c:forEach items="${branchList}" var="item">
 		               <option value="${item.b_idx}">${item.b_name}</option>
 		            </c:forEach>
 		           </select>
 		    </c:if>
+		</div>
 				  <!-- <button onclick="ck()">이벤트 확인</button> -->
 				
 				  <div id='calendar'></div>
@@ -429,61 +432,120 @@
 
 				    
 				    // 캘린더 일정 캘린더에 보여주기요
-				    $(document).ready(function() {
-				      // 서버에서 캘린더 데이터 가져오기
+				   $(document).ready(function() {
+				  // 서버에서 전체 일정 데이터 가져오기
+				  $.ajax({
+				    url: "/calendarList",
+				    type: "GET",
+				    //list 에서 자기지점에 해당하는거 보여주기 랑 직급이 대표일때는 모두 보여줘야 하니까
+				    data : {b_idx, position},
+				    dataType: "json",
+				    success: function(data) {
+				      //console.log(data);
+				      $.each(data.calendarlist, function(index, item) {
+				        var dt_start = new Date(item.start_time);
+				        var dt_end = new Date(item.end_time);
+				
+				        var newEvent = {
+				          title: item.event_name,
+				          start: dt_start.toISOString(),
+				          end: dt_end.toISOString(),
+				          id: item.calendar_no // 각 이벤트의 고유 ID를 설정하여 식별합니다.
+				        };
+				        //console.log(newEvent);
+				        
+				        calendar.addEvent(newEvent);
+				      });
+				
+				      calendar.render();
+				    },
+				    error: function(e) {
+				      console.log(e);
+				    }
+				  });
+				
+				  
+				// 선택된 지점의 값이 변경될 때마다 실행되는 함수
+				  $("#branch").change(function() {
+				    // 선택된 지점의 값(b_idx)을 가져옴
+				    var selectedBranch = $(this).val();
+				    console.log(selectedBranch);
+
+				    if (selectedBranch === "listAll") {
+				      // 선택된 지점이 "전체"일 경우 전체 일정을 표시
 				      $.ajax({
 				        url: "/calendarList",
 				        type: "GET",
-				        //list 에서 자기지점에 해당하는거 보여주기 랑 직급이 대표일때는 모두 보여줘야 하니까
-				        data : {b_idx, position},
+				        data: { b_idx, position },
 				        dataType: "json",
 				        success: function(data) {
-				          console.log(data);
+
+				          // 캘린더 초기화
+				          calendar.removeAllEvents();
+
+				          // 전체 일정 리스트를 캘린더에 추가
 				          $.each(data.calendarlist, function(index, item) {
 				            var dt_start = new Date(item.start_time);
 				            var dt_end = new Date(item.end_time);
-				            console.log(dt_start, dt_end);
-				
+				            //console.log(dt_start, dt_end);
+
 				            var newEvent = {
 				              title: item.event_name,
 				              start: dt_start.toISOString(),
 				              end: dt_end.toISOString(),
-				              id: item.calendar_no // 각 이벤트의 고유 ID를 설정하여 식별합니다.
+				              id: item.calendar_no
 				            };
 				            console.log(newEvent);
-				            
+
 				            calendar.addEvent(newEvent);
 				          });
-				
+
 				          calendar.render();
 				        },
 				        error: function(e) {
 				          console.log(e);
 				        }
 				      });
-				    });
-				 
-					// 지점 필터링 아작스			    
-				    $('#branch').change(function(){
-				        branch = $(this).val();
-				        $.ajax({
-				            type:'get',
-				            url:'branchCalendar',
-				            data:{
-				               b_idx : b_idx,
-				               b_name : b_name
-				            },
-				            dataType:'json',
-				            success:function(data){
-				               console.log(data);
-				               branchChartPrint(data.list);
-				            },
-				            error:function(e){
-				               console.log(e);
-				            }
-				         });
-				        
-				     });
+				    } else {
+				      // 선택된 지점에 대한 필터링된 일정을 요청
+				      $.ajax({
+				        url: "/selectedBranch",
+				        type: "GET",
+				        data: { branch: selectedBranch, b_idx },
+				        dataType: "json",
+				        success: function(data) {
+				          //console.log(data);
+
+				          // 캘린더 초기화
+				          calendar.removeAllEvents();
+
+				          // 필터링된 일정 리스트를 캘린더에 추가
+				          $.each(data.calendarlist, function(index, item) {
+				            var dt_start = new Date(item.start_time);
+				            var dt_end = new Date(item.end_time);
+				            //console.log(dt_start, dt_end);
+
+				            var newEvent = {
+				              title: item.event_name,
+				              start: dt_start.toISOString(),
+				              end: dt_end.toISOString(),
+				              id: item.calendar_no
+				            };
+				            console.log(newEvent);
+
+				            calendar.addEvent(newEvent);
+				          });
+
+				          calendar.render();
+				        },
+				        error: function(e) {
+				          console.log(e);
+				        }
+				      });
+				    }
+				  });
+				});
+								 
 
 
 				    

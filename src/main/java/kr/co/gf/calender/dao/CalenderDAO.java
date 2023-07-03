@@ -33,6 +33,10 @@ public interface CalenderDAO {
 
 	ArrayList<CalenderDTO> CalendarBranchList();
 
+
+
+	ArrayList<CalenderDTO> selectedBranch(String b_idx, String branch);
+
 	
 
 
