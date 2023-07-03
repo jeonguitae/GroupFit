@@ -2,5 +2,45 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-   <mapper namespace="kr.co.gf.board.dao.ReferenceDAO">
+   <mapper namespace="kr.co.gf.board.dao.NoticeDAO">
+   
+   <insert useGeneratedKeys="true" keyColumn="n_idx" keyProperty="n_idx"
+   id="nwrite" parameterType="kr.co.gf.board.dto.NoticeDTO">
+   	INSERT INTO notice(emp_no, title, content, fix)
+   	VALUES(#{emp_no},#{title},#{content},#{fix})
+   </insert>
+   
+   <select id="nlist" resultType="kr.co.gf.board.dto.NoticeDTO">
+   	SELECT n.n_idx, n.title, n.reg_date, n.hit, e.position 
+   	FROM notice n
+   	LEFT JOIN emp e on n.emp_no = e.emp_no ORDER BY n_idx DESC
+   </select>
+   
+   <select id="ndetail" resultType="hashmap">
+   	SELECT n.title, n.reg_date, n.content, e.position, e.emp_no
+   	FROM notice n LEFT JOIN emp e on n.emp_no = e.emp_no
+   	WHERE n_idx=#{param1} 
+   </select>
+   
+   <update id="hit">
+   	UPDATE notice SET hit = hit +1 WHERE n_idx = #{param1}
+   </update>
+   
+   <update id="nupdate" parameterType="hashmap">
+   	UPDATE notice SET title=#{title}, content=#{content}, fix=#{fix} WHERE n_idx=#{n_idx}
+   </update>
+   
+   <insert id="getinfo" parameterType="string">
+   	INSERT INTO read_list(emp_no, n_idx) values(#{emp_no},#{n_idx})
+   </insert>
+   
+   <select id="rlist" resultType="kr.co.gf.board.dto.NoticeDTO">
+    SELECT r.emp_no, r.read_date, e.name
+    FROM read_list r JOIN emp e on r.emp_no =e.emp_no
+    WHERE n_idx= #{n_idx}
+   </select>
+   
+   <select id="rcount" resultType="int">
+    SELECT COUNT(emp_no)FROM read_list WHERE n_idx=#{n_idx} AND emp_no=#{emp_no}
+   </select>
    </mapper>

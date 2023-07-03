@@ -18,7 +18,6 @@ public class MachineController {
 	
 	@Autowired MachineService service;
 	
-	
 	@GetMapping(value="mlist.go")
 	public String mlist() {
 		
