@@ -24,6 +24,18 @@ public interface ApprovalDAO {
 
 	ArrayList<ApprovalDTO> approvalSaveList(String loginId);
 
+	int ExpenseReportW(ApprovalDTO dto);
+
+	void eventRequestWriteDown(ApprovalDTO dto);
+
+	void expenseReportWDown(int a_idx, String briefs, String price, String note);
+
+	
+
+
+
+	
+
 	
 
 	
