@@ -19,7 +19,7 @@ public class PtMemberController {
 	@RequestMapping(value = "/dailypt")
 	public String calender(Model model) {
 		
-		return "dailypt";
+		return "dailyptForm";
 	}
 	
 	
