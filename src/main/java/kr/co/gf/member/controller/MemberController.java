@@ -51,7 +51,7 @@ public class MemberController {
 		
 		return map;
 	}
-	
+
 	@RequestMapping(value="/memdel.ajax")
 	@ResponseBody
 	public HashMap<String, Object> delete(
@@ -60,6 +60,7 @@ public class MemberController {
 		logger.info("delList : "+memdelList);
 		return service.memdelete(memdelList);
 	}
+
 
 
 	@GetMapping(value="/memWrite.go")

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.gf.holiday.dao.AnnualDAO;
 import kr.co.gf.holiday.dto.AnnualDTO;
+import kr.co.gf.holiday.dto.AnnualDTO2;
 
 @Service
 @MapperScan(value = {"kr.co.gf.holiday.dao"})
@@ -41,6 +42,21 @@ public class AnnualService {
 		
 		return dao.annualList();
 	}
+	
+	public ArrayList<AnnualDTO> annualList(String filter_work_year) {
+		logger.info("{}", filter_work_year);
+		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+		Date currentDate = new Date(currentTimestamp.getTime());
+		ArrayList<AnnualDTO> list = new ArrayList<AnnualDTO>();
+		if (filter_work_year.equals("1") || filter_work_year.equals("2")) {
+			logger.info("조건 검색 수행");
+			list = dao.annualList2(filter_work_year);
+		}
+		else {
+			list = dao.annualList();
+		}
+		return list;
+	}
 
 	public HashMap<String, Object> annualAdd(ArrayList<String> addList, String annualType, String annualTime) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -49,6 +65,27 @@ public class AnnualService {
 			row += dao.annualAdd(emp_no,annualType,annualTime);
 		}
 		map.put("success", true);
+		return map;
+	}
+
+	public HashMap<String, Object> annualSub(ArrayList<String> subList, String annualType, String annualTime) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int row = 0;
+		for(String emp_no : subList) {
+			row += dao.annualSub(emp_no,annualType,annualTime);
+		}
+		map.put("success", true);
+		return map;
+	}
+
+	public HashMap<String, Object> annualDetail(String emp_no, String annual_type) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, String> annualDetail = dao.annualDetail(emp_no, annual_type);
+		ArrayList<AnnualDTO2> annualDetailList = dao.annualDetailList(emp_no, annual_type);
+		map.put("annualDetailMap", annualDetail);
+		map.put("annualDetailList", annualDetailList);
 		return map;
 	}
 
