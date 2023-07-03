@@ -66,7 +66,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>calendar</h1>
+						<h1>일정 관리</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -82,7 +82,17 @@
 		<!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
+			<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
 				  <button onclick="openModal()">일정 등록</button>
+			</c:if>
+			<!-- 필터링이요 -->
+			<c:if test="${sessionScope.loginEmp.position eq '대표' }">
+				  <select name="branch" id="branch" style = "margin-left : 30px">
+		            <c:forEach items="${branchList}" var="item">
+		               <option value="${item.b_idx}">${item.b_name}</option>
+		            </c:forEach>
+		           </select>
+		    </c:if>
 				  <!-- <button onclick="ck()">이벤트 확인</button> -->
 				
 				  <div id='calendar'></div>
@@ -92,7 +102,7 @@
 				    <div class="modal-dialog" role="document">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <h5 class="modal-title" id="event-modal-label">일정 등록</h5>
+				          	<h5 class="modal-title" id="event-modal-label">일정 등록</h5>
 				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				            <span aria-hidden="true">&times;</span>
 				          </button>
@@ -154,8 +164,12 @@
 				        </div>
 				      </div>
 				      <div class="modal-footer">
+				      
+				      <c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
 				        <button type="button" class="btn btn-primary" id="edit-event-btn">수정</button>
 				        <button type="button" class="btn btn-danger" id="delete-event-btn">삭제</button>
+				      </c:if>
+				      
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
 				      </div>
 				    </div>
@@ -169,7 +183,7 @@
 				  <div class="modal-dialog">
 				    <div class="modal-content">
 				      <div class="modal-header">
-				        <h5 class="modal-title">수정하기</h5>
+				        <h5 class="modal-title">일정 수정하기</h5>
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
@@ -204,6 +218,9 @@
 				
 				  <script>
 				    var calendar = null;
+				    var emp_no = "${sessionScope.loginEmp.emp_no}";
+				    var b_idx = "${sessionScope.loginEmp.b_idx}";
+				    var position = "${sessionScope.loginEmp.position}";
 				    
 					// 상세보기랑 수정
 				    $(document).ready(function() {
@@ -252,7 +269,7 @@
 				    	        $('#edit-event-title').val(editEventTitle);
 				    	        $('#edit-event-start').val(eventStart);
 				    	        $('#edit-event-end').val(eventEnd); */
-				    	     // 기존 이벤트의 시작 시간과 종료 시간을 datetime-local 입력 필드에 설정합니다.
+				    	     	// 기존 이벤트의 시작 시간과 종료 시간을 datetime-local 입력 필드에 설정합니다.
 				    	     	
 				    	     	// start는 캘린더에 맞게 변경하고
 				    	        var startTime = eventStart.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM 형식으로 변환
@@ -302,7 +319,10 @@
 				    	        id: eventId,
 				    	        title: $('#edit-event-title').val(),
 				    	        start: $('#edit-event-start').val(),
-				    	        end: $('#edit-event-end').val()
+				    	        end: $('#edit-event-end').val(),
+				    	        emp_no : emp_no,
+				    	        b_idx : b_idx
+				    	     
 				    	      },
 				    	      success: function(response) {
 				    	        // 성공적으로 수정되었을 경우 수행할 동작을 추가하세요.
@@ -323,6 +343,7 @@
 				    	    });
 				    	  });
 				    	  
+				    	  // 일정 삭제요
 				    	  $(document).on('click', '#delete-event-btn', function() {
 				    		  // 삭제할 이벤트의 ID를 가져옵니다.
 				    		  //var eventId = eventId;
@@ -382,8 +403,11 @@
 				      var eventData = { 
 				        title: eventName,
 				        start: startDateTime,
-				        end: endDateTime
+				        end: endDateTime,
+				        b_idx : b_idx,
+				        emp_no : emp_no
 				      };
+				      console.log(eventData);
 				
 				      // AJAX 요청
 				      $.ajax({
@@ -410,6 +434,8 @@
 				      $.ajax({
 				        url: "/calendarList",
 				        type: "GET",
+				        //list 에서 자기지점에 해당하는거 보여주기 랑 직급이 대표일때는 모두 보여줘야 하니까
+				        data : {b_idx, position},
 				        dataType: "json",
 				        success: function(data) {
 				          console.log(data);
@@ -437,13 +463,29 @@
 				      });
 				    });
 				 
+					// 지점 필터링 아작스			    
+				    $('#branch').change(function(){
+				        branch = $(this).val();
+				        $.ajax({
+				            type:'get',
+				            url:'branchCalendar',
+				            data:{
+				               b_idx : b_idx,
+				               b_name : b_name
+				            },
+				            dataType:'json',
+				            success:function(data){
+				               console.log(data);
+				               branchChartPrint(data.list);
+				            },
+				            error:function(e){
+				               console.log(e);
+				            }
+				         });
+				        
+				     });
 
-				    /* // 삭제 버튼 클릭 시
-				    $(document).on('click', '#delete-event-btn', function() {
-				      // 여기에 삭제 버튼을 클릭했을 때 수행할 동작을 추가하세요.
-				      // 예: 해당 이벤트를 삭제하거나, 삭제 관련 작업을 수행합니다.
-				    }); */
-				    
+
 				    
 				    $(document).ready(function() {
 				    	  // 등록 모달 창이 닫힐 때 입력 필드 초기화
@@ -451,6 +493,8 @@
 				    	    $('#event-form')[0].reset();
 				    	  });
 				    	});
+				    
+				    console.log("${sessionScope.loginEmp.position}");
 				    
 
 				

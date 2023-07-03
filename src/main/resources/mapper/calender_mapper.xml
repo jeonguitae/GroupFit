@@ -29,6 +29,29 @@
 	  DELETE FROM calendar
 	  WHERE calendar_no = #{calendar_no};
 	</delete>
+	
+	
+	<select id="branchCalendarlist" resultType="kr.co.gf.calender.dto.CalenderDTO">
+        <!-- 여기에 실제로 데이터베이스에서 일정 데이터를 조회하는 SQL 쿼리문 작성 -->
+        SELECT * FROM calendar WHERE b_idx = #{param1};
+
+    </select>
+    
+    
+    <select id="branchCalendar" resultType="kr.co.gf.calender.dto.CalenderDTO">
+             SELECT DATE_FORMAT(sd.year_month, '%Y-%m') AS `month`,COALESCE(SUM(t.ticket_price), 0) AS totalsales
+          FROM standard_date sd
+          LEFT JOIN registered_ticket rt ON DATE_FORMAT(rt.purch_date, '%Y-%m') = DATE_FORMAT(sd.year_month, '%Y-%m') AND rt.b_idx = #{param2}
+          LEFT JOIN ticket t ON rt.ticket_no = t.ticket_no
+          WHERE YEAR(sd.year_month) = #{param1}
+          GROUP BY DATE_FORMAT(sd.year_month, '%Y-%m');
+         </select>
+         
+         <select id="CalendarBranchList" resultType="kr.co.gf.calender.dto.CalenderDTO">
+         	SELECT * FROM branch;
+         </select>
+	
+	
    
    
    </mapper>
