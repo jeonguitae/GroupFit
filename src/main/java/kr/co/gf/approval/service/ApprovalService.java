@@ -59,7 +59,7 @@ public class ApprovalService {
 	}
 
 	public String eventRequestWrite(HashMap<String, String> params, MultipartFile[] uploadFiles) {
-String page = "redirect:/approvalAllList.do";
+		String page = "redirect:/approvalAllList.do";
 
 		logger.info("params"+params);
 
@@ -68,17 +68,6 @@ String page = "redirect:/approvalAllList.do";
 		dto.setEmp_no(Integer.parseInt(params.get("emp_no")));
 		dto.setApproval(params.get("approval"));
 		dto.setSubject(params.get("subject"));
-
-		String write_dateString = params.get("write_date"); // 문자열로 된 날짜 값 가져오기
-		// 날짜 포맷 지정 (예: "yyyy.MM.dd")
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-		try {
-		    LocalDate localDate = LocalDate.parse(write_dateString, formatter);
-		    java.sql.Date sqlDate = java.sql.Date.valueOf(localDate);
-		    dto.setWrite_date(sqlDate);
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
 		dto.setState(params.get("state"));		
 		dto.setManager(params.get("manager"));
 		dto.setTop_manager(params.get("top_manager"));
@@ -86,11 +75,14 @@ String page = "redirect:/approvalAllList.do";
 		int success = dao.eventRequestWrite(dto);
 		
 		if(success == 1) {
-			//dto.setStart_day(params.get("start_day"));
-			//dto.setFinish_day(params.get("finish_day"));
-			//dto.setReason(params.get("reason");
-			//dto.setEtc(params.get("etc");
-			//dao.eventRequestWrite2(dto);
+			dto.setStart_day(params.get("start_day"));
+			dto.setFinish_day(params.get("finish_day"));
+			dto.setReason(params.get("reason"));
+			dto.setEtc(params.get("etc"));
+			int a_idx = dto.getBoard_num();
+			dto.setA_idx(a_idx);
+			logger.info(""+a_idx);
+			dao.eventRequestWriteDown(dto);
 		}
 		
 		for (MultipartFile file : uploadFiles) {
@@ -139,6 +131,60 @@ public void upload(MultipartFile uploadFile,int board_num) {
 		ArrayList<ApprovalDTO> list = dao.approvalSaveList(loginId);
 		mav.addObject("list",list);
 		return mav;
+	}
+
+	public String ExpenseReportW(HashMap<String, String> params, MultipartFile[] uploadFiles, ArrayList<String> briefs1, ArrayList<String> price1, ArrayList<String> note1) {
+		String page = "redirect:/";
+
+		logger.info("params"+params);
+		logger.info("적요 : "+briefs1);
+		logger.info("금액 : "+price1);
+		logger.info("비고 : "+note1);
+
+		ApprovalDTO dto = new ApprovalDTO();
+		
+		dto.setEmp_no(Integer.parseInt(params.get("emp_no")));
+		dto.setApproval(params.get("approval"));
+		dto.setSubject(params.get("subject"));
+		dto.setState(params.get("state"));		
+		dto.setManager(params.get("manager"));
+		dto.setTop_manager(params.get("top_manager"));
+		
+		int success = dao.ExpenseReportW(dto);
+		
+		if(success == 1) {
+			int a_idx = dto.getBoard_num();
+			dto.setA_idx(a_idx);
+			logger.info(""+a_idx);
+			for (int i = 0; i < briefs1.size(); i++) {
+				
+				logger.info(briefs1.get(i));
+				logger.info(price1.get(i));
+				logger.info(note1.get(i));
+				
+				String briefs = briefs1.get(i);
+				String price = price1.get(i);
+				String note = note1.get(i);
+				
+	            dao.expenseReportWDown(a_idx, briefs, price, note);
+	        }
+		}
+		
+		for (MultipartFile file : uploadFiles) {
+			logger.info("photo 있으면 false, 없으면 true :"+file.isEmpty());
+			if(file.isEmpty()==false) {
+				upload(file,dto.getBoard_num());
+				
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		} 
+		page = "redirect:/approvalAllList.do";
+		return page;
 	}
 
 
