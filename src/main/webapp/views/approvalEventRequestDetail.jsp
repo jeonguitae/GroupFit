@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>휴가신청</title>	
+<title>이벤트</title>	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 
@@ -86,8 +86,8 @@
 		vertical-align: middle;
 	}
 	
-	#button_sin_mok_mm {
-	    margin-top: 40%;
+	#button_sin_mok {
+	    margin-top: 35%;
 	    position: absolute;
 	    margin-left: 30%;
 	}
@@ -149,7 +149,7 @@
 						</tr>
 						<tr>
 							<th>기안일</th>
-							<td>${write_date}</td>
+							<td><span id="date"></span></td>
 						</tr>
 					</table>
 					
@@ -188,9 +188,6 @@
 				
 				<table id="table2">
 					<tr>
-						<th colspan="2">아래와 같은 사유로 휴가 하고자 하오니 재가하여 주시기 바랍니다.</th>
-					</tr>
-					<tr>
 						<th>기간</th>
 						<td><input type="date" name="start_day"/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="finish_day"/></td>
 					</tr>
@@ -206,11 +203,8 @@
 						<th>첨부파일</th>
 						<td><input type="file" name="files" multiple="multiple"/></td>
 					</tr>
-					<tr>
-						<th colspan="2">* 공가의 경우, 예비군 소집 통지서 등 관련 증빙 서류를 첨부하여 함께 제출합니다.</th>
-					</tr>
 				</table>
-				<div id="button_sin_mok_mm">
+				<div id="button_sin_mok">
 					<button id="sin">신청하기</button>
 					<button id="mm" onclick="location.href='approvalList.do'">임시저장</button>
 					<button id="mok" onclick="location.href='approvalList.do'">목록</button>
@@ -230,5 +224,12 @@
 	</div>
 </body>
 <script type="text/javascript">
-	</script>
+	var currentDate = new Date();
+	var year = currentDate.getFullYear();
+	var month = currentDate.getMonth() + 1;
+	var day = currentDate.getDate();
+	
+	var dateSpan = document.getElementById("date");
+	dateSpan.textContent = year + "." + month + "." + day;
+</script>
 </html>

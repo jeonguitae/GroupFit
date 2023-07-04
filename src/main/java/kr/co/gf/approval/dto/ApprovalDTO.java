@@ -14,15 +14,22 @@ public class ApprovalDTO {
 	private String top_manager;
 	private int e_idx;
 	private String briefs;
-	private int price;
+	private String price;
 	private String note;
-	private Date start_day;
-	private Date finish_day;
+	private String start_day;
+	private String finish_day;
 	private String reason;
 	private String content;
 	private String etc;
 	private String vacation_type;
+	private int board_num;
 	
+	public int getBoard_num() {
+		return board_num;
+	}
+	public void setBoard_num(int board_num) {
+		this.board_num = board_num;
+	}
 	public int getA_idx() {
 		return a_idx;
 	}
@@ -83,10 +90,10 @@ public class ApprovalDTO {
 	public void setBriefs(String briefs) {
 		this.briefs = briefs;
 	}
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	public String getNote() {
@@ -95,16 +102,16 @@ public class ApprovalDTO {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public Date getStart_day() {
+	public String getStart_day() {
 		return start_day;
 	}
-	public void setStart_day(Date start_day) {
+	public void setStart_day(String start_day) {
 		this.start_day = start_day;
 	}
-	public Date getFinish_day() {
+	public String getFinish_day() {
 		return finish_day;
 	}
-	public void setFinish_day(Date finish_day) {
+	public void setFinish_day(String finish_day) {
 		this.finish_day = finish_day;
 	}
 	public String getReason() {

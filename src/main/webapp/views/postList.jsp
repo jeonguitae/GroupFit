@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자료실 상세보기</title>
+<title>보낸 쪽지함</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -19,6 +19,24 @@
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+div[class="btn1"]{
+	margin-left: 1108px;
+}
+
+form[class="search"]{
+	margin-left: 377px;
+}
+
+h1.headline{
+	margin-left: 640px;
+	margin-top: 20px;
+}
+
+div[class="table"]{
+	margin-left: 376px;
+}
+</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
 	<div class="content-wrapper" style="margin-top: 57.08px">
@@ -26,7 +44,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>자료실</h1>
+						<h1>보낸 쪽지함</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -42,41 +60,48 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-			<form action="referenceUpdate.do?r_idx=${dto.r_idx}">
-			<button>수정</button>
-			<button onclick="location.href='referenceDelete.do?r_idx=${dto.r_idx}'">삭제</button>
-	<table class="table table-bordered table-hover dataTable dtr-inline">
-		<tr>
-			<th>글번호</th>
-			<td><input type="text" name="r_idx" value="${dto.r_idx}" readonly="readonly"/></td>
-		</tr>
-		<tr>
-			<th>작성자</th>
-			<td><input type="text" name="emp_no" value="${loginName}" readonly="readonly"/></td>
-		</tr>
-		<tr>
-			<th>제목</th>
-			<td><input type="text" name="subject" value="${dto.subject}"/></td>
-		</tr>
-		<tr>
-			<th>작성일</th>
-			<td><input type="text" name="date" value="${dto.date}" readonly="readonly"/></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td><textarea name="content">${dto.content}</textarea></td>
-		</tr>
-		<tr>
-			<th>첨부파일</th>
-			<td><a href="download.do?path=${dto.new_photo_name}&idx=${dto.r_idx}">${dto.ori_photo_name}</a></td>
-		</tr>           
-		<tr>
-			<th colspan="2">
-				<button onclick="location.href='referenceList.do'">목록</button>
-			</th>
-		</tr>
-	</table>
-	</form>
+				<fieldset>
+					<form action=".do" class="search">
+						<select name="opt">
+							<option value="send_empno">보낸사람</option>
+							<option value="subject">제목</option>
+							<option value="content">내용</option>
+						</select>
+						<input type="text" name="keyword" value="" placeholder="검색어를 입력하세요"/>
+						<button>검색</button>
+					</form>
+				</fieldset>
+		
+				<div class="btn1">
+					<button onclick="location.href='./postSendWrite.go'">쪽지 작성</button>
+					<button onclick="hide()">쪽지 삭제</button>
+				</div>
+				<div class="table">
+					<table>
+						<thead>
+							<tr>
+								<th>삭제</th>
+								<th>번호</th>
+								<th>제목</th>
+								<th>받은사람</th>
+								<th>송신일</th>
+								<th>상태</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${list}" var="letter">
+								<tr>
+									<td><input type="checkbox" name="chk" value="${letter.email_num}"/></td>
+									<td>${letter.email_num}</td>
+									<td><a href="letterDetail.do?detailid=${letter.email_num}">${letter.subject}</a></td>
+									<td>${letter.get_empno}</td>
+									<td>${letter.send_time}</td>
+									<td>${letter.get_chk}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>

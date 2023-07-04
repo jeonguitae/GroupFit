@@ -23,10 +23,14 @@ public class AnnualController {
 	@Autowired AnnualService service;
 	
 	@GetMapping(value="/annualList.go")
-	public ModelAndView ticketList() {
-		
+	public ModelAndView ticketList(String filter_work_year, String filter_attendance_rate) {
+		logger.info("{}", filter_work_year);
 		ModelAndView mav = new ModelAndView("annualList");
-		mav.addObject("annualList", service.annualList());
+		if (filter_work_year != null) {
+			mav.addObject("annualList", service.annualList(filter_work_year));
+		} else {
+			mav.addObject("annualList", service.annualList());
+		}
 		return mav;
 	}
 	
@@ -38,6 +42,21 @@ public class AnnualController {
 		logger.info("addList: " + addList);
 		return service.annualAdd(addList,annualType,annualTime);
 	}
-
+	
+	@PostMapping(value = "/annual.sub")
+	public HashMap<String, Object> annualSub(
+			@RequestParam(value="subList[]") ArrayList<String> subList,
+			String annualType, String annualTime){
+		// array로 받을 경우 @RequestParam에 value를 반드시 명시해야 함
+		logger.info("addList: " + subList);
+		return service.annualSub(subList,annualType,annualTime);
+	}
+	
+	@PostMapping(value = "/annual.detail")
+	public HashMap<String, Object> annualDetail(String emp_no, String annual_type){
+		logger.info("annual.detail: " + emp_no);
+		return service.annualDetail(emp_no, annual_type);
+	}
+	
 }
  

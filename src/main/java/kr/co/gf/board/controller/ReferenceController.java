@@ -2,6 +2,7 @@ package kr.co.gf.board.controller;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,10 +40,13 @@ public class ReferenceController {
 	@Value("${spring.servlet.multipart.location}") private String root;
 	
 	// 자료실 리스트 보기
-	@RequestMapping(value="/reference.do")
-	public ModelAndView referenceList() {
+	@RequestMapping(value="/referenceList.do")
+	public ModelAndView referenceList(HttpSession session) {
 		logger.info("리스트 보여줌");
-		return service.list();
+		if (session.getAttribute("loginId") != null && !session.getAttribute("loginId").equals("")) {
+			return service.list() ;
+		}
+		return new ModelAndView("redirect:/") ;
 	}
 	
 	// 자료실 상세보기
@@ -49,9 +54,14 @@ public class ReferenceController {
 	public ModelAndView referenceDetail(String idx, HttpSession session, Model model) {
 		logger.info("자료실 상세보기 번호 : "+idx);
 		String loginId = (String)session.getAttribute("loginId");
+		if (loginId != null && !session.getAttribute("loginId").equals("")) {
+			
 		String loginName = service.selectName(loginId);
 		model.addAttribute("loginName",loginName);
 		return service.detail(idx);
+		
+		}
+		return new ModelAndView("redirect:/");
 	}
 	
 	// 자료실 글작성 페이지 이동
@@ -60,9 +70,12 @@ public class ReferenceController {
 		
 		logger.info("글쓰기 이동");
 		String loginId = (String)session.getAttribute("loginId");
-		String loginName = service.selectName(loginId);
-		model.addAttribute("loginName",loginName);
-		return "referenceWrite";
+		if (loginId  != null && !session.getAttribute("loginId").equals("")) {
+			String loginName = service.selectName(loginId);
+			model.addAttribute("loginName",loginName);
+			return "referenceWrite";
+		}
+		return"redirect:/" ;
 	}
 	
 	// 자료실 글작성 기능
@@ -70,8 +83,7 @@ public class ReferenceController {
 	public String referenceWrite(@RequestParam HashMap<String,String> params, MultipartFile[] files, HttpSession session) {
 		logger.info("params 값 : "+params+files);
 		service.write(params,files);
-		logger.info("success :");
-		return "redirect:/reference.do";
+		return "redirect:/referenceList.do";
 	}
 	
 	@RequestMapping(value="/referenceDelete.do")
@@ -79,14 +91,14 @@ public class ReferenceController {
 		logger.info("delete idx 값 : "+r_idx);
 		int success = service.delete(r_idx);
 		logger.info("success : "+success);
-		return "redirect:/reference.do";
+		return "redirect:/referenceList.do";
 	}
 	
 	@RequestMapping(value="/referenceUpdate.do")
 	public String referenceUpdate(MultipartFile[] files , @RequestParam HashMap<String,String> params) {
 		logger.info("update된 params 값 : "+params+files);
 		service.update(params,files);
-		return "redirect:/reference.do";
+		return "redirect:/referenceList.do";
 	}
 	
 	@GetMapping(value="/download.do")
@@ -109,5 +121,14 @@ public class ReferenceController {
 			
 		//body, header, status
 		return new ResponseEntity<Resource>(body, header, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/checkDeleteAjax.do")
+	@ResponseBody
+	public HashMap<String, Object> checkDelete(@RequestParam ArrayList<Integer> list){
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("list안 값 : "+list);
+		return map;
 	}
 }

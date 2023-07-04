@@ -187,4 +187,10 @@
 		WHERE et.b_idx = #{param1} AND et.enter_date = #{param2}
    </select>
    
+   <select id="ptmemdetail" resultType="member">
+   		SELECT m.mem_no, m.name, m.birth, m.gender, m.phone, pt.goal, pt.str, pt.count
+   		FROM member m JOIN pt_mem pt
+   		WHERE m.mem_no = pt.mem_no AND m.mem_no = #{param1}
+   </select>
+   
    </mapper>

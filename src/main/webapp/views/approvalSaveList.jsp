@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자료실</title>
+<title>임시저장 문서함</title>
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -28,7 +28,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>자료실</h1>
+						<h1>임시저장 문서함</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -44,29 +44,27 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-			<button onclick="location.href='referenceWrite.go'">글쓰기</button>
-			<button>삭제</button>
 				<table class="table table-bordered table-hover dataTable dtr-inline">
 			<thead>
 				<tr>
 			 		<th>no</th>
+			 		<th>결재양식</th>
 			 		<th>제목</th>
-			 		<th>작성자</th>
-			 		<th>작성일자</th>
-					<td><input type="checkbox" id="cbx_chkAll"/></td>
+			 		<th>기안일</th>
+					<td>처리상태</td>
 				</tr>
 			</thead>
 			<tbody>
 				<c:if test="${list.size() == 0}">
 					<tr><th colspan="5">게시글이 없습니다.</th></tr>
 				</c:if>
-				<c:forEach items="${list}" var="reference">
+				<c:forEach items="${list}" var="approval">
 					<tr>
-						<td>${reference.r_idx}</td>
-						<td><a href="referenceDetail.do?idx=${reference.r_idx}">${reference.subject}</a></td>
-						<td>${reference.emp_no}</td>
-						<td>${reference.date}</td>
-						<td><input type="checkbox" name="chk"/></td>
+						<td>${approval.a_idx}</td>
+						<td>${approval.approval}</td>
+						<td>${approval.subject}</td>
+						<td>${approval.write_date}</td>
+						<td>${approval.state}</td>
 					</tr>			
 				</c:forEach>
 			</tbody>

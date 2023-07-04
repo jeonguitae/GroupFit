@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자료실 상세보기</title>
+<title>결재 문서함</title>
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -26,7 +28,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>자료실</h1>
+						<h1>결재 문서함</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -42,44 +44,41 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-			<form action="referenceUpdate.do?r_idx=${dto.r_idx}">
-			<button>수정</button>
-			<button onclick="location.href='referenceDelete.do?r_idx=${dto.r_idx}'">삭제</button>
-	<table class="table table-bordered table-hover dataTable dtr-inline">
-		<tr>
-			<th>글번호</th>
-			<td><input type="text" name="r_idx" value="${dto.r_idx}" readonly="readonly"/></td>
-		</tr>
-		<tr>
-			<th>작성자</th>
-			<td><input type="text" name="emp_no" value="${loginName}" readonly="readonly"/></td>
-		</tr>
-		<tr>
-			<th>제목</th>
-			<td><input type="text" name="subject" value="${dto.subject}"/></td>
-		</tr>
-		<tr>
-			<th>작성일</th>
-			<td><input type="text" name="date" value="${dto.date}" readonly="readonly"/></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td><textarea name="content">${dto.content}</textarea></td>
-		</tr>
-		<tr>
-			<th>첨부파일</th>
-			<td><a href="download.do?path=${dto.new_photo_name}&idx=${dto.r_idx}">${dto.ori_photo_name}</a></td>
-		</tr>           
-		<tr>
-			<th colspan="2">
-				<button onclick="location.href='referenceList.do'">목록</button>
-			</th>
-		</tr>
-	</table>
-	</form>
+				<table class="table table-bordered table-hover dataTable dtr-inline">
+			<thead>
+				<tr>
+			 		<th>no</th>
+			 		<th>결재양식</th>
+			 		<th>제목</th>
+			 		<th>기안일</th>
+					<td>처리상태</td>
+				</tr>
+			</thead>
+			<tbody>
+				<c:if test="${list.size() == 0}">
+					<tr><th colspan="5">게시글이 없습니다.</th></tr>
+				</c:if>
+				<c:forEach items="${list}" var="approval">
+					<tr>
+						<td>${approval.a_idx}</td>
+						<td>${approval.approval}</td>
+						<td><a href="eventDetail.do">${approval.subject}</a></td>
+						<td>${approval.write_date}</td>
+						<td>${approval.state}</td>
+					</tr>			
+				</c:forEach>
+			</tbody>
+		</table>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
+<script type="text/javascript">
+
+
+</script>
 </html>
+
+
+

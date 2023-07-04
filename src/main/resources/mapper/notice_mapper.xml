@@ -43,4 +43,9 @@
    <select id="rcount" resultType="int">
     SELECT COUNT(emp_no)FROM read_list WHERE n_idx=#{n_idx} AND emp_no=#{emp_no}
    </select>
+   
+   <insert id="photoSave">
+   	INSERT INTO wphoto(c_idx, new_photo_name, ori_photo_name, board_num)
+   	VALUES(#{c_idx},#{newName},#{oriName},#{n_idx})
+   </insert>
    </mapper>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+>>>>>>> origin/master
 <style>
 	.item-sub{
 		font-size: 14px;
@@ -214,12 +215,14 @@
 										<p>직원 리스트</p>
 									</a>
 								</li>
+								<c:if test="${sessionScope.loginEmp.position eq '대표'}">
 								<li class="nav-item item-sub">
-									<a href="#" class="nav-link">
-										<i class="fas fa-user-tie nav-icon"></i>
+									<a href="empRepList.do" class="nav-link">
+										<i class="fas fa-running nav-icon"></i>
 										<p>대표 직원 리스트</p>
 									</a>
 								</li>
+								</c:if>
 							</ul>
 						</li>
 						</c:if>
@@ -263,13 +266,13 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="postSendList.go" class="nav-link"> <i
 										class="fas fa-envelope nav-icon"></i>
-										<p>보낸 메일함</p>
+										<p>보낸 쪽지함</p>
 								</a></li>
-								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="postGetList.go" class="nav-link"> <i
 										class="fas fa-envelope-open nav-icon"></i>
-										<p>받은 메일함</p>
+										<p>받은 쪽지함</p>
 								</a></li>
 							</ul></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
@@ -278,6 +281,7 @@
 									결재 관리 <i class="fas fa-angle-left right"></i>
 								</p>
 						</a>
+							
 							<ul class="nav nav-treeview">
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">결재하기</li>
@@ -291,11 +295,11 @@
 								</a></li>
 								</c:if>
 								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">개인 문서함</li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalAllList.do" class="nav-link"> <i
 										class="fas fa-file nav-icon"></i>
 										<p>결재 문서함</p>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalSaveList.do" class="nav-link"> <i
 										class="fas fa-file-signature nav-icon"></i>
 										<p>임시 문서함</p>
 								</a></li>
@@ -324,7 +328,7 @@
 								</a></li>
 								</c:if>
 							</ul></li>
-						<li class="nav-item"><a href="reference.do" class="nav-link"> <i
+						<li class="nav-item"><a href="referenceList.do" class="nav-link"> <i
 								class="nav-icon fas fa-columns"></i>
 								<p>자료실</p>
 						</a></li>
@@ -346,11 +350,25 @@
 								</a></li>
 								</c:if>
 							</ul></li>
-						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
-						<li class="nav-item"><a href="annualList.go" class="nav-link"> <i
-								class="nav-icon fas fa-warehouse"></i>
-								<p>직원 연차관리</p>
-						</a></li></c:if>
+						
+						<li class="nav-item"><a href="#" class="nav-link"> <i
+								class="nav-icon far fa-calendar-check"></i>
+								<p>
+									휴가 관리 <i class="right fas fa-angle-left"></i>
+								</p>
+						</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item item-sub"><a href="pages/charts/chartjs.move"
+									class="nav-link"> <i class="fas fa-user-check nav-icon"></i>
+										<p>휴가 신청</p>
+								</a></li>
+								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+								<li class="nav-item item-sub"><a href="annualList.go" class="nav-link"> <i
+										class="nav-icon fas fa-warehouse"></i>
+										<p>직원 연차관리</p>
+								</a></li>
+								</c:if>
+							</ul></li>
 					</ul>
 				</nav>
 			</div>
@@ -383,6 +401,10 @@
 	var msg = "${msg}";
 	if(msg != ""){
 		alert(msg);
+	}
+	if("${sessionScope.loginId} == ""){
+		alert("로그인이 필요한 기능입니다.");
+		location.href="/";
 	}
 	console.log("${sessionScope.loginEmp.name}");
 	console.log("${sessionScope.loginEmp.b_name}");

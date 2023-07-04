@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자료실 상세보기</title>
+<title>쪽지 작성하기</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>자료실</h1>
+						<h1>쪽지 쓰기</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -42,41 +42,35 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-			<form action="referenceUpdate.do?r_idx=${dto.r_idx}">
-			<button>수정</button>
-			<button onclick="location.href='referenceDelete.do?r_idx=${dto.r_idx}'">삭제</button>
-	<table class="table table-bordered table-hover dataTable dtr-inline">
-		<tr>
-			<th>글번호</th>
-			<td><input type="text" name="r_idx" value="${dto.r_idx}" readonly="readonly"/></td>
-		</tr>
-		<tr>
-			<th>작성자</th>
-			<td><input type="text" name="emp_no" value="${loginName}" readonly="readonly"/></td>
-		</tr>
-		<tr>
-			<th>제목</th>
-			<td><input type="text" name="subject" value="${dto.subject}"/></td>
-		</tr>
-		<tr>
-			<th>작성일</th>
-			<td><input type="text" name="date" value="${dto.date}" readonly="readonly"/></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td><textarea name="content">${dto.content}</textarea></td>
-		</tr>
-		<tr>
-			<th>첨부파일</th>
-			<td><a href="download.do?path=${dto.new_photo_name}&idx=${dto.r_idx}">${dto.ori_photo_name}</a></td>
-		</tr>           
-		<tr>
-			<th colspan="2">
-				<button onclick="location.href='referenceList.do'">목록</button>
-			</th>
-		</tr>
-	</table>
-	</form>
+				<form action="postSendWrite.do" method="post" enctype="multipart/form-data">
+					<table>
+						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
+						<tr>
+							<th>*작성자</th>
+							<td><input type="text" value="${emp.name}" readonly/></td>
+						</tr>
+						<tr>
+							<th>*제목</th>
+							<td><input type="text" name="subject"/></td>
+						</tr>
+						<tr>
+							<th>*받는사람 이름</th>
+							<td><input type="text" name="get_empno"/></td>
+						</tr>
+						<tr>
+							<th>*첨부파일</th>
+							<td><input type="file" name="post_photo"/></td>
+						</tr>
+						<tr>
+							<th>*내용</th>
+							<td>
+								<textarea name="content"></textarea> 
+							</td>
+						</tr>
+						<input type="submit" value="보내기"/>
+						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
+					</table>
+				</form>
 			</div>
 			<!--/. container-fluid -->
 		</section>

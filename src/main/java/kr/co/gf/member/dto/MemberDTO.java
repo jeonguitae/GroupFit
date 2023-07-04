@@ -45,7 +45,14 @@ public class MemberDTO {
 	// locker
 	private String loc_num;
 	private String status;
+	private int loc_no;
 	
+	public int getLoc_no() {
+		return loc_no;
+	}
+	public void setLoc_no(int loc_no) {
+		this.loc_no = loc_no;
+	}
 	// entry_mem
 	private Date enter_date;
 	private Time enter_time;
