@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+   <mapper namespace="kr.co.gf.statistics.dao.StatisDAO">
+   		<select id="totalSales" resultType="statisDTO">
+   			   SELECT DATE_FORMAT(rt.purch_date, '%Y-%m') AS month, COALESCE(SUM(t.ticket_price), 0) AS totalsales
+			   FROM registered_ticket rt
+    		   JOIN ticket t ON rt.ticket_no = t.ticket_no
+    		   WHERE YEAR(rt.purch_date) = '2023'
+			   GROUP BY month
+		       ORDER BY month
+   		</select>
+   		
+   		<select id="totalYearSales" resultType="statisDTO">
+   			   SELECT DATE_FORMAT(sd.year_month, '%Y-%m') AS `month`,COALESCE(SUM(t.ticket_price), 0) AS totalsales
+			   FROM standard_date sd
+			   LEFT JOIN registered_ticket rt ON date_format(rt.purch_date,'%Y-%m')=date_format(sd.year_month,'%Y-%m')
+			   LEFT JOIN ticket t ON rt.ticket_no = t.ticket_no
+			   where YEAR(sd.year_month)=#{param1}
+			   GROUP BY DATE_FORMAT(sd.year_month, '%Y-%m')
+   		</select>
+   		
+   		<select id="branchList" resultType="statisDTO">
+   			SELECT * FROM branch
+   		</select>
+   		
+   		<select id="branchTotalSales" resultType="statisDTO">
+   			 SELECT DATE_FORMAT(sd.year_month, '%Y-%m') AS `month`,COALESCE(SUM(t.ticket_price), 0) AS totalsales
+			 FROM standard_date sd
+			 LEFT JOIN registered_ticket rt ON DATE_FORMAT(rt.purch_date, '%Y-%m') = DATE_FORMAT(sd.year_month, '%Y-%m') AND rt.b_idx = #{param2}
+			 LEFT JOIN ticket t ON rt.ticket_no = t.ticket_no
+			 WHERE YEAR(sd.year_month) = #{param1}
+			 GROUP BY DATE_FORMAT(sd.year_month, '%Y-%m');
+   		</select>
+   </mapper>

@@ -5,36 +5,50 @@
    <mapper namespace="kr.co.gf.member.dao.MemberDAO">
    
    <select id="memlist" resultType="member">
-   		SELECT m.mem_no, m.name, rt.start_date, rt.end_date  FROM member m JOIN registered_ticket rt WHERE m.mem_no = rt.mem_no;
+   		SELECT m.mem_no, m.name,
+        t.ticket_type,
+        rt.start_date, rt.end_date
+	    FROM member m
+        JOIN registered_ticket rt ON m.mem_no = rt.mem_no
+        JOIN ticket t ON t.ticket_no = rt.ticket_no
+        WHERE rt.b_idx = #{param1}
    </select>
    	
    <select id="branch" resultType="member">
-   		SELECT * FROM branch 
+   		SELECT * FROM branch
    </select>
    
    <select id="ticket" resultType="member">
-   		SELECT * FROM ticket 
+   		SELECT * FROM ticket WHERE b_idx = #{param1}
+   </select>
+   
+   <select id="locker" resultType="member">
+   		SELECT * FROM locker WHERE status = '미사용' AND b_idx = #{param1}
    </select>
    
    <select id="emp_name" resultType="String">
    		SELECT name FROM emp WHERE emp_no = #{param1}
    </select>
    
-   <insert id="memjoin" parameterType="HashMap">
-   		INSERT INTO member(name, birth, gender, phone)
-   		VALUES(#{name}, #{birth}, #{gender}, #{phone})
+   <insert id="memjoin" parameterType="member"> 
+   		INSERT INTO member(name, birth, gender, phone, loc_num)
+   		VALUES(#{name}, #{birth}, #{gender}, #{phone}, #{loc_num})
    </insert>
+   
+   <update id="loc_status">
+   		UPDATE locker SET status = '사용중' WHERE loc_no = #{param1}
+   </update>
    
    <select id="mem_no" resultType="int">
    		SELECT mem_no FROM member WHERE name = #{param1} AND phone = #{param2}
    </select>
    
    <select id="ticket_time" resultType="int">
-   		SELECT ticket_time FROM ticket WHERE ticket_name = #{param1}
+   		SELECT ticket_time FROM ticket WHERE ticket_name = #{param1} AND b_idx = #{param2}
    </select>
    
     <select id="ticket_no" resultType="String">
-   		SELECT ticket_no FROM ticket WHERE ticket_name = #{param1}
+   		SELECT ticket_no FROM ticket WHERE ticket_name = #{param1} AND b_idx = #{param2}
    </select>
    
    <select id="cntDate" resultType="int">
@@ -56,7 +70,127 @@
    
    <insert id="ptmemjoin" parameterType="HashMap">
    		INSERT INTO pt_mem(regt_idx, mem_no, weight, goal, str, count)
-   		VALUES(#{ticket_no}, #{mem_no}, #{weight}, #{goal}, #{str}, #{ticket_time})
+   		VALUES(#{regt_idx}, #{mem_no}, #{weight}, #{goal}, #{str}, #{ticket_time})
    </insert>
+   
+   <select id="ticket_type" resultType="String">
+   		SELECT ticket_type FROM ticket WHERE ticket_no = #{param1} AND b_idx = #{param2}
+   </select>
+   
+   <delete id="memdelete">
+   		DELETE FROM member WHERE mem_no = #{param1}
+   </delete>
+ 	
+   <select id="memdetail" resultType="member">
+   		SELECT m.mem_no, m.name, m.birth, m.gender, m.phone, rt.start_date, rt.end_date, rt.emp_no, rt.b_idx, rt.ticket_no
+   		FROM member m JOIN registered_ticket rt
+   		WHERE m.mem_no = rt.mem_no AND m.mem_no = #{param1}
+   </select>
+   
+   <select id="mem_emp_name" resultType="String">
+   		SELECT name FROM emp WHERE emp_no = #{param1}
+   </select>
+   
+   <select id="mem_b_name" resultType="String">
+   		SELECT b_name FROM branch WHERE b_idx = #{param1}
+   </select>
+   
+   <insert id="memprofile" parameterType="String">
+   		INSERT INTO wphoto(c_idx, new_photo_name, ori_photo_name, board_num)
+   		VALUES(2, #{new_photo_name}, #{ori_photo_name}, #{mem_no})
+   </insert>
+   
+   <select id="photomem" resultType="String">
+   		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 2
+   </select>
+   
+   <select id="ptmemlist" resultType="member">
+   		SELECT m.mem_no, m.name, m.gender,
+       	t.ticket_time,
+       	rt.emp_no,
+       	pm.count
+		FROM member m
+		JOIN registered_ticket rt ON m.mem_no = rt.mem_no
+		JOIN ticket t ON t.ticket_no = rt.ticket_no
+		LEFT JOIN pt_mem pm ON pm.regt_idx = rt.regt_idx
+		WHERE rt.emp_no = #{param1} AND t.ticket_type = 'pt'
+   </select>
+   
+   <select id="memsearch" resultType="member" parameterType="String">
+   		SELECT m.mem_no, m.name,
+        t.ticket_type,
+        rt.start_date, rt.end_date
+	    FROM member m
+        JOIN registered_ticket rt ON m.mem_no = rt.mem_no
+        JOIN ticket t ON t.ticket_no = rt.ticket_no
+        <where>
+			<if test="txt != null and !txt.equals('') and sortting == 'mem_no'">
+				m.mem_no = #{txt}
+			</if>
+			<if test="txt != null and !txt.equals('') and sortting == 'name'">
+				m.name LIKE #{txt}
+			</if>
+			<if test="txt != null and !txt.equals('') and sortting == 'pt_chk'">
+				t.ticket_type = #{txt}
+			</if>					
+		</where>
+   </select>
+   
+   <select id="regt_idx" resultType="String">
+   		SELECT regt_idx FROM registered_ticket WHERE mem_no = #{param1}
+   </select>
+   
+   <select id="loc_num" resultType="String">
+   		SELECT loc_num FROM member WHERE mem_no = #{param1}
+   </select>
+   
+   <update id="locker_update">
+   		UPDATE locker SET status = '미사용' WHERE loc_num = #{param1}
+   </update>
+   
+   <select id="entermem" resultType="int">
+  		SELECT COUNT(mem_no) FROM member WHERE phone LIKE #{param1} 
+   </select>
+   
+   <select id="enter_mem_no" resultType="String">
+   		SELECT mem_no FROM member WHERE phone LIKE #{param1}
+   </select>
+   
+   <select id="enter_b_idx" resultType="int">
+   		SELECT b_idx FROM registered_ticket WHERE mem_no = #{param1}
+   </select>
+   
+   <insert id="entry_mem">
+   		INSERT INTO entry_time(mem_no, b_idx) VALUES(#{param1}, #{param2})
+   </insert>
+   
+   <select id="entry_chk" resultType="int">
+  		SELECT COUNT(mem_no) FROM entry_time WHERE mem_no = #{param1} AND enter_date = #{param2} 
+   </select>
+   
+   <select id="member_cnt" resultType="member">
+   		SELECT mem_no, name FROM member WHERE phone LIKE #{param1}
+   </select>
+   
+   <select id="dup_entermem" resultType="String">
+   		SELECT mem_no FROM member WHERE phone LIKE #{param1} AND name = #{param2}
+   </select>
+   
+   <select id="emp_b_idx" resultType="int">
+   		SELECT b_idx FROM emp WHERE emp_no = #{param1}
+   </select>
+   
+   <select id="entermemlist" resultType="member">
+   		SELECT m.mem_no, m.name, m.phone, et.enter_time, et.enter_date
+		FROM member m
+		JOIN entry_time et ON m.mem_no = et.mem_no
+		WHERE et.b_idx = #{param1} AND et.enter_date = #{param2}
+   </select>
+   
+   <select id="ptmemdetail" resultType="member">
+   		SELECT m.mem_no, m.name, m.birth, m.gender, m.phone, pt.goal, pt.str, pt.count
+   		FROM member m JOIN pt_mem pt
+   		WHERE m.mem_no = pt.mem_no AND m.mem_no = #{param1}
+   </select>
    
    </mapper>

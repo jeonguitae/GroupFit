@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,8 +21,8 @@ public class MainController {
 	}
 	
 	
-	// main 요청 처리
-	// 로그인 정보가 세션에 저장되어 있으면 index로 가고, 없으면 로그인 페이지로 보낸다.
+//	 main 요청 처리
+//	 로그인 정보가 세션에 저장되어 있으면 index로 가고, 없으면 로그인 페이지로 보낸다.
 	@GetMapping(value = "/main")
 	public ModelAndView main(HttpSession session) {
 		logger.info("loginId: " + session.getAttribute("loginId"));
@@ -30,5 +31,6 @@ public class MainController {
 		}
 		return new ModelAndView("loginPage");
 	}
+
 	
 }
