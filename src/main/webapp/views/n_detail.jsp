@@ -67,11 +67,12 @@
 			<tr>
 				<th>사진 및 파일</th>
 				<td>
-					<input type="file" name="photo"/>
+					<td><img width="500" src="/photo/${dto.new_photo_name}"/>
+						<a href="ndownload.do?path=${dto.new_photo_name}"></a>
+					</td>
 				</td>
 			</tr>			
 		</table>
-		
 					<input type="button" onclick="location.href='nlist.go'" value="목록"/>
 					<input type="button" onclick="location.href='nupdate.go?n_idx=${dto.n_idx}'" value="수정"/>
 					<button class="forsave">저장</button>
