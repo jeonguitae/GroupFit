@@ -333,7 +333,7 @@
 								<p>자료실</p>
 						</a></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
-								class="nav-icon far fa-calendar-check"></i>
+								class="nav-icon fas fa-user-check"></i>
 								<p>
 									근태 관리 <i class="right fas fa-angle-left"></i>
 								</p>
@@ -358,13 +358,13 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="pages/charts/chartjs.move"
-									class="nav-link"> <i class="fas fa-user-check nav-icon"></i>
+								<li class="nav-item item-sub"><a href="#"
+									class="nav-link"> <i class="far fa-calendar-check nav-icon"></i>
 										<p>휴가 신청</p>
 								</a></li>
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-item item-sub"><a href="annualList.go" class="nav-link"> <i
-										class="nav-icon fas fa-warehouse"></i>
+										class="nav-icon far fa-calendar-check"></i>
 										<p>직원 연차관리</p>
 								</a></li>
 								</c:if>
