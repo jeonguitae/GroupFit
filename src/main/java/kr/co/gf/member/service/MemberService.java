@@ -376,4 +376,9 @@ public class MemberService {
 		return map;
 	}
 
+	public MemberDTO ptmemdetail(String mem_no) {
+		
+		return dao.ptmemdetail(mem_no);
+	}
+
 }

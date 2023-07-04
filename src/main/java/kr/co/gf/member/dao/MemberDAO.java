@@ -95,6 +95,8 @@ public interface MemberDAO {
 
 	ArrayList<MemberDTO> entermemlist(int b_idx, LocalDate now);
 
+	MemberDTO ptmemdetail(String mem_no);
+
 	/* int memjoin(HashMap<String, String> params); */
 
 }

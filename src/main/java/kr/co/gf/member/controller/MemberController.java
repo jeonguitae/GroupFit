@@ -233,4 +233,20 @@ public class MemberController {
 		return service.entermemlist(loginId);
 	}
 	
+	@GetMapping(value="ptmemdetail.go")
+	public String ptmemdetailgo(String mem_no, Model model) {
+		
+		logger.info("mem_no" + mem_no);
+		
+		MemberDTO dto = service.ptmemdetail(mem_no);
+		String new_photo_name = service.photomem(mem_no);
+		
+		logger.info("new_photo_name : " + new_photo_name);
+		
+		dto.setNew_photo_name(new_photo_name);
+
+		model.addAttribute("dto", dto);
+		
+		return "ptmemdetail";
+	}
 }
