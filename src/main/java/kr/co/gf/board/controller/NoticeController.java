@@ -79,7 +79,9 @@ public class NoticeController {
 		int row=nservice.rcount(emp_no, n_idx);
 		logger.info("row"+row);
 		
-		if (dto.get("emp_no")!= emp_no && row==0) {
+		logger.info("dto emp_no : " + dto.get("emp_no"));
+		
+		if (!dto.get("emp_no").equals(emp_no) && row==0) {
 			logger.info("emp_no + n_idx"+emp_no+n_idx);
 			nservice.getinfo(emp_no, n_idx);
 			
