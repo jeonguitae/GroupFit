@@ -260,7 +260,7 @@
 							<div class="card-header">
 								<h4 class="card-title">직원 연차/휴가 리스트</h4>
 							</div>
-							<div class="card-body">
+							<div class="card-body" id="annual-card-body">
 								<c:if test="${annualList.size() > 0}">
 									<table class="table">
 										<thead class="table-light">
@@ -279,7 +279,7 @@
 												<th>조회<th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="empAnnualList">
 											<c:forEach items="${annualList}" var="dto" varStatus="status">
 												<tr>
 													<td><input class="form-check-input"
@@ -358,7 +358,73 @@
 	});
 	
 	$("#filter_work_year").change(function() {
-		location.href = "/annualList.go?filter_work_year=" + $("#filter_work_year").val();
+		//location.href = "/annualList.go?filter_work_year=" + $("#filter_work_year").val();
+		$.ajax({
+			type : 'post',
+			url : 'annualList.filter',
+			data : {
+				'filter_work_year' : $("#filter_work_year").val(),
+				'filter_attendance_rate' : $("#filter_attendance_rate").val()
+			},
+			dataType : 'json',
+			success : function(data) {
+				var n = data.length;
+				console.log(n);
+				console.log("필터링 성공.");
+				var content = '';
+				if(n > 0){
+					data.forEach(function(dto, index){
+						console.log(index);
+						content += '<tr>' +
+							'<td><input class="form-check-input"' +
+								'style="margin-left: 0" type="checkbox"' +
+								'value="' + dto.emp_no + '"></td>';
+						content += '<td>' + dto.emp_no + '</td>';
+						content += '<td>' + dto.name + '</td>';
+						content += '<td>' + dto.position + '</td>';
+						content += '<td>' + dto.join_year + '</td>';
+						content += '<td>' + (dto.work_year/365).toFixed(3) + '</td>';
+						content += '<td></td><td></td><td>';
+						if(dto.annualAdd == null){
+							content += '0';
+						} else{
+							content += dto.annualAdd;
+						}
+						content += '</td>' +
+							'<td>';
+						if(dto.annualSub == null){
+							content += '0';
+						} else{
+							content += dto.annualSub;
+						}
+						content += '</td><td>';
+						if(dto.annualAdd != null){
+							if(dto.annualSub != null){
+								content += dto.annualAdd - dto.annualSub;
+							} else {
+								content += dto.annualAdd;
+							}
+						} else {
+							content += "0";
+						}
+						content += '</td><td><button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"' +
+										'data-bs-target="#annualDetailModal" data-shuffle onclick="annualDetail(\'' +dto.emp_no + '\', \'' +dto.name + '\', \'' + dto.position + '\')">조회</button>' +
+							'</td>' +
+						'</tr>';
+					});
+					$("#empAnnualList").empty();
+					$("#empAnnualList").append(content);
+				}
+				else {
+					$("#empAnnualList").empty();
+					$("#empAnnualList").html('<tr><td colspan="12" style="text-align:center">검색되는 직원이 없습니다.<td><tr>');
+				}
+				
+			},
+			error : function(e) {
+				alert("필터링 작업중 오류가 발생했습니다.");
+			}
+		});
 	});
 	
 	function annualAddModal(e) {
