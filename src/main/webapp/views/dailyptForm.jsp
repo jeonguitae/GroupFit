@@ -95,6 +95,11 @@
 					    <div style="display: flex; justify-content: space-between; align-items: center;">
 					        <h3 style="margin: 0;">회원pt일지</h3>
 					        
+					         <div style="display: flex; align-items: center; margin-left: 50px;">
+				                <input type="checkbox" id="absentCheckbox" name="absentCheckbox">
+				                <label for="absentCheckbox">결석</label>
+				            </div>
+					        
 					        <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
 					            <label for="date">날짜:</label>
 					            <input type="date" id="date" name="date">
@@ -178,7 +183,7 @@
 				</body>
 <script>
 // 웨이트 운동 추가 버튼 클릭 이벤트 처리
-document.getElementById('addWeightExercise').addEventListener('click', function() {
+function addWeightExercise() {
     var container = document.getElementById('weightExerciseContainer');
     var newExercise = document.createElement('div');
     newExercise.classList.add('form-group');
@@ -191,6 +196,78 @@ document.getElementById('addWeightExercise').addEventListener('click', function(
         <input type="number" id="repCount" name="repCount[]">
     `;
     container.appendChild(newExercise);
+}
+
+document.getElementById('addWeightExercise').addEventListener('click', function() {
+    addWeightExercise();
+});
+
+// 결석 체크박스 상태에 따라 입력 제한 설정
+var absentCheckbox = document.getElementById('absentCheckbox');
+var formInputs = document.querySelectorAll('form input:not(#absentCheckbox)');
+var formTextarea = document.querySelectorAll('form textarea');
+
+absentCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+        disableInputs();
+    } else {
+        enableInputs();
+    }
+});
+
+function disableInputs() {
+    formInputs.forEach(function(input) {
+        input.disabled = true;
+    });
+
+    formTextarea.forEach(function(textarea) {
+        textarea.disabled = true;
+    });
+}
+
+function enableInputs() {
+    formInputs.forEach(function(input) {
+        input.disabled = false;
+    });
+
+    formTextarea.forEach(function(textarea) {
+        textarea.disabled = false;
+    });
+}
+
+// Ajax 요청 보내기
+function sendAjaxRequest() {
+    // Ajax 요청을 보낼 URL을 지정합니다.
+    var url = 'submit.php'; // 실제로 사용하는 URL로 변경해야 합니다.
+
+    // Ajax 요청을 보내는 부분입니다.
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: $('form').serialize(), // form 데이터를 직렬화하여 전송합니다.
+        success: function(response) {
+            // 서버에서 반환된 결과를 이용하여 추가 작업을 수행합니다.
+            // 예: 결과에 따라 메시지를 표시하거나 페이지를 리로드합니다.
+            alert('일지가 제출되었습니다.');
+            window.location.reload(); // 페이지 리로드
+        },
+        error: function() {
+            alert('일지 제출에 실패했습니다.');
+        }
+    });
+}
+
+// 폼 제출 이벤트 처리
+$('form').on('submit', function(e) {
+    e.preventDefault(); // 폼 제출 기본 동작 취소
+
+    if (absentCheckbox.checked) {
+        // 결석 상태인 경우, Ajax 요청을 보내지 않고 바로 처리합니다.
+        alert('결석으로 인해 일지를 제출할 수 없습니다.');
+    } else {
+        // 결석이 아닌 경우, Ajax 요청을 보냅니다.
+        sendAjaxRequest();
+    }
 });
 
 </script>
