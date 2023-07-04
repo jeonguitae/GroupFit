@@ -1,177 +1,197 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<title>pt 회원 일지</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<link rel="stylesheet"
+	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
-
-</head>
 <style>
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
+  .form-group {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 10px;
+    }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 300px;
-}
+    .form-group label {
+        flex: 1;
+        white-space: nowrap;
+        margin-right: 10px;
+    }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="date"],
+    .form-group textarea {
+        flex: 2;
+    }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-</style>
-<body>
+    .add-exercise-container {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
 
-   <form action="insertMemberRecord" method="POST">
-  <fieldset>
-    <legend>회원 정보</legend>
+    .add-exercise-button {
+        margin-left: 10px;
+        margin-right: 0;
+    }
 
-    <label for="exerciseDate">운동일자:</label>
-    <input type="date" id="exerciseDate" name="exerciseDate" required>
-        
-    <label for="memberNumber">회원번호:</label>
-    <input type="text" id="memberNumber" name="memberNumber" placeholder="회원번호" required>
-        
-    <label for="memberName">회원이름:</label>
-    <input type="text" id="memberName" name="memberName" placeholder="회원이름" required>
-        
-    <label for="weight">몸무게:</label>
-    <input type="number" id="weight" name="weight" placeholder="몸무게" required>
-  </fieldset>
-
-  <hr>
-
-  <fieldset>
-    <legend>웨이트 운동</legend>
-
-    <div id="weightExerciseForm">
-      <input type="text" name="exerciseName[]" placeholder="운동명">
-      <input type="number" name="weight[]" placeholder="무게">
-      <input type="number" name="reps[]" placeholder="횟수">
-      <input type="number" name="sets[]" placeholder="셋트 수">
-    </div>
-
-    <button type="button" onclick="openModal()">운동 추가</button>
-  </fieldset>
-
-  <hr>
-
-  <fieldset>
-    <legend>유산소 운동</legend>
-
-    <label for="cardioExercise">유산소 운동:</label>
-    <div>
-      <input type="text" id="cardioExercise" name="cardioExercise" placeholder="유산소 운동명">
-    </div>
-  </fieldset>
-  
-   <hr>
-
-  <fieldset>
-    <legend>식단 일지</legend>
-
-    <label for="food">식단 일지:</label>
-    <div>
-      <input type="text" id="food" name="food" placeholder="식단 일지">
-    </div>
-  </fieldset>
-  
-   <hr>
-
-  <fieldset>
-    <legend>특이사항</legend>
-
-    <label for="etc">특이사항:</label>
-    <div>
-      <input type="text" id="etc" name="etc" placeholder="특이사항">
-    </div>
-  </fieldset>
-
-  <!-- 모달 창 -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <input type="text" id="exerciseNameModal" placeholder="운동명">
-      <input type="number" id="weightModal" placeholder="무게">
-      <input type="number" id="repsModal" placeholder="횟수">
-      <input type="number" id="setsModal" placeholder="셋트 수">
-      <button type="button" onclick="addWeightExercise()">추가</button>
-    </div>
-  </div>
-  
-   <hr>
-
-  <button type="submit">등록</button>
-</form>
+    .aerobic-exercise,
+    .diet-journal,
+    .remarks {
+        width: 100%;
+        min-height: 150px;
+    }
     
-</body>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+	<jsp:include page="GroupFit_gnb.jsp" />
+	<div class="content-wrapper" style="margin-top: 57.08px">
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1></h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">메인</a></li>
+							<li class="breadcrumb-item active">뎁스1</li>
+							<li class="breadcrumb-item active">뎁스2</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				
+   
+				    <div class="container">
+				    
+				    <form action="submit.php" method="post">
+					    <div style="display: flex; justify-content: space-between; align-items: center;">
+					        <h3 style="margin: 0;">회원pt일지</h3>
+					        
+					        <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
+					            <label for="date">날짜:</label>
+					            <input type="date" id="date" name="date">
+					        </div>
+					        
+					    </div>
+					           
+				            <hr>
+				            <!-- 회원 정보 -->
+				            <div class="form-group">
+
+				                <label for="memberNumber">회원 번호:</label>
+				                <input type="text" id="memberNumber" name="memberNumber">
+				                
+				                <label for="name">이름:</label>
+				                <input type="text" id="name" name="name">
+				                
+				                <label for="weight">몸무게:</label>
+				                <input type="number" id="weight" name="weight">
+				            </div>
+				
+				            <hr>
+				
+				             <h5>웨이트 운동</h5>
+						        <div id="weightExerciseContainer">
+							          <div class="form-group add-exercise-container">
+						                <button type="button" class="btn btn-primary add-exercise-button" id="addWeightExercise">운동 추가</button>
+						            </div>
+						            <div class="form-group">
+						                <label for="weightExerciseName">운동명:</label>
+						                <input type="text" id="weightExerciseName" name="weightExerciseName[]">
+						                <label for="setCount">세트 수:</label>
+						                <input type="number" id="setCount" name="setCount[]">
+						                <label for="repCount">반복 횟수:</label>
+						                <input type="number" id="repCount" name="repCount[]">
+						            </div>
+						
+						        </div>
+				
+				            <hr>
+				
+				            <!-- 유산소 운동 -->
+				            <h5>유산소 운동</h5>
+				            <div class="form-group">
+				                <label for="aerobicExercise">운동 내용:</label>
+				                <textarea id="aerobicExercise" name="aerobicExercise" class="aerobic-exercise"></textarea>
+				            </div>
+				
+				            <hr>
+				
+				            <!-- 식단 일지 -->
+				            <h5>식단 일지</h5>
+				            <div class="form-group">
+				                <label for="dietJournal">식단 내용:</label>
+				                <textarea id="dietJournal" name="dietJournal" class="diet-journal"></textarea>
+				            </div>
+				
+				            <hr>
+				
+				            <!-- 특이 사항 -->
+				            <h5>특이 사항</h5>
+				            <div class="form-group">
+				                <label for="remarks">내용:</label>
+				                <textarea id="remarks" name="remarks" class="remarks"></textarea>
+				            </div>
+				            
+				            <hr>
+				
+				            <button type="submit" class="btn btn-primary">등록</button>
+				            
+				            <br>
+				
+				        </form>
+				    </div>
+				
+				
+							</div>
+							<!--/. container-fluid -->
+						</section>
+					</div>
+				</body>
 <script>
-//모달 창 열기
-function openModal() {
-  var modal = document.getElementById("modal");
-  modal.style.display = "block";
-}
-
-// 모달 창 닫기
-function closeModal() {
-  var modal = document.getElementById("modal");
-  modal.style.display = "none";
-}
-
-// 웨이트 운동 폼에 운동 추가
-function addWeightExercise() {
-  var exerciseName = document.getElementById("exerciseNameModal").value;
-  var weight = document.getElementById("weightModal").value;
-  var reps = document.getElementById("repsModal").value;
-  var sets = document.getElementById("setsModal").value;
-  
-  var weightExerciseForm = document.getElementById("weightExerciseForm");
-  var exerciseDiv = document.createElement("div");
-  exerciseDiv.innerHTML =
-    '<input type="text" name="exerciseName[]" value="' +
-    exerciseName +
-    '">' +
-    '<input type="number" name="weight[]" value="' +
-    weight +
-    '">' +
-    '<input type="number" name="reps[]" value="' +
-    reps +
-    '">' +
-    '<input type="number" name="sets[]" value="' +
-    sets +
-    '">';
-  weightExerciseForm.appendChild(exerciseDiv);
-  
-  closeModal();
-}
-
-
+// 웨이트 운동 추가 버튼 클릭 이벤트 처리
+document.getElementById('addWeightExercise').addEventListener('click', function() {
+    var container = document.getElementById('weightExerciseContainer');
+    var newExercise = document.createElement('div');
+    newExercise.classList.add('form-group');
+    newExercise.innerHTML = `
+        <label for="weightExerciseName">운동명:</label>
+        <input type="text" id="weightExerciseName" name="weightExerciseName[]">
+        <label for="setCount">세트 수:</label>
+        <input type="number" id="setCount" name="setCount[]">
+        <label for="repCount">반복 횟수:</label>
+        <input type="number" id="repCount" name="repCount[]">
+    `;
+    container.appendChild(newExercise);
+});
 
 </script>
 </html>

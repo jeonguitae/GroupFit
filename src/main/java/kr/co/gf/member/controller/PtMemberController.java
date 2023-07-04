@@ -22,6 +22,14 @@ public class PtMemberController {
 		return "dailyptForm";
 	}
 	
+	@RequestMapping(value = "/dailyptMain")
+	public String dailyptMain(Model model) {
+		
+		return "dailyptMain";
+	}
+	
+	
+	
 	
 	
 }
