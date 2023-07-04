@@ -12,7 +12,7 @@
    		select name from emp where position = '지점장';
    </select>
    
-   <select id="top_Manager" resultType="String">
+   <select id="top_manager" resultType="String">
    		select name from emp where position = '대표';
    </select>
    
@@ -60,8 +60,37 @@
    		values(#{briefs},#{price},#{note},#{a_idx})
    </insert>
    
+   <select id="eventDetail" >
    
+	  	select e.name, p.write_date,p.manager,p.top_manager,p2.start_day,p2.finish_day,p2.reason,p2.etc, w.new_photo_name,w.ori_photo_name from payment p 
+			left join payment2 p2 
+			on p.a_idx = p2.a_idx
+			left join emp e 
+			on p.emp_no = e.emp_no
+			left join wphoto w 
+			on w.c_idx = 7
+		where p.a_idx = #{a_idx} and p.approval = #{approval};
    
+   </select>
    
+   <select id="expenseReportDetail">
+   		select e.name, p.write_date,p.manager,p.top_manager,w.new_photo_name,w.ori_photo_name from payment p 
+			left join emp e 
+			on p.emp_no = e.emp_no
+			left join wphoto w 
+			on w.c_idx = 7
+		where p.a_idx = #{a_idx} and p.approval = #{approval}
+   </select>
+   
+   <select id="expenseR" resultType="ApprovalDTO">
+   		select * from expense_report er where er.a_idx = #{a_idx}
+   </select>
+   
+   <select id="approvalStayList">
+   		select e.name,p.emp_no ,p.approval,p.subject,p.write_date,p.state from payment p 
+			left join emp e 
+			ON p.emp_no = e.emp_no
+		where state = '대기';
+   </select>
    
    </mapper>

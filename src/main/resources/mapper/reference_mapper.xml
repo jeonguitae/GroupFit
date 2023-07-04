@@ -5,14 +5,18 @@
    <mapper namespace="kr.co.gf.board.dao.ReferenceDAO">
    
    <select id="list" resultType="ReferenceDTO">
-   		select * from reference
+   		select r.r_idx, e.name, r.subject,r.content,r.`date`, r.emp_no from reference r
+			left join emp e 
+		on r.emp_no = e.emp_no;
    </select>
    
    <select id="detail" resultType="ReferenceDTO" >
-   		select * from reference r
-	left join wphoto w 
-	on r.r_idx = w.board_num
-	where r.r_idx = #{r_idx}
+	   	select * from reference r 
+	   		left join emp p
+	   		on r.emp_no = p.emp_no
+			left join wphoto w 
+			on w.c_idx = 4
+		where w.board_num = #{r_idx} and r.r_idx = #{r_idx}
    </select>
    
    <insert 
