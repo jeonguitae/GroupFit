@@ -127,13 +127,15 @@ public class NoticeController {
 		return "redirect:/ndetail.do?n_idx="+params.get("n_idx")+"&flag=update"; 
 		//지가 쓴 글만 수정 가능해야함 -대표 지점장 session값 갖고 오고 
 	}
+	@RequestMapping(value="/ndelete.do")
+	public String ndelete(@RequestParam String n_idx, Model model) {
+		int row=nservice.ndelete(n_idx);
+		logger.info("삭제되었으면 row="+row);
+		model.addAttribute("msg","글이 삭제되었습니다.");
+		String page="redirect:/nlist.go";
+		return page;
+	}
 	
 }
-	 
-/*
- * @RequestMapping(value="/nphoto.do") public ResponseEntity<resourc>
- * 
- * }
- */
-	 
+
 

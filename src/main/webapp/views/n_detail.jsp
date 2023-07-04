@@ -75,6 +75,7 @@
 		</table>
 					<input type="button" onclick="location.href='nlist.go'" value="목록"/>
 					<input type="button" onclick="location.href='nupdate.go?n_idx=${dto.n_idx}'" value="수정"/>
+					<input type="button" onclick="location.href='ndelete.do?n_idx=${dto.n_idx}'" value="삭제"/>
 					<button class="forsave">저장</button>
 		</div>
 		<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
