@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.gf.holiday.dto.AnnualDTO;
 import kr.co.gf.holiday.service.AnnualService;
 
 @RestController
@@ -32,6 +33,12 @@ public class AnnualController {
 			mav.addObject("annualList", service.annualList());
 		}
 		return mav;
+	}
+	
+	@PostMapping(value="/annualList.filter")
+	public ArrayList<AnnualDTO> ticketList_filter(String filter_work_year, String filter_attendance_rate) {
+		logger.info("{}", filter_work_year);
+		return service.annualList(filter_work_year);
 	}
 	
 	@PostMapping(value = "/annual.add")
