@@ -383,7 +383,7 @@
 						content += '<td>' + dto.name + '</td>';
 						content += '<td>' + dto.position + '</td>';
 						content += '<td>' + dto.join_year + '</td>';
-						content += '<td>' + dto.work_year + '</td>';
+						content += '<td>' + (dto.work_year/365).toFixed(3) + '</td>';
 						content += '<td></td><td></td><td>';
 						if(dto.annualAdd == null){
 							content += '0';

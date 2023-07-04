@@ -258,6 +258,33 @@
 	</div>
 </body>
 <script type="text/javascript">
+var checkArr = [];
+var evtCheck = 0;
+const myModalEl = document.getElementById('ticketDelModal')
+myModalEl.addEventListener('shown.bs.modal', event => {
+	checkArr = [];
+	$('input[type="checkbox"]:checked').each(function(idx, item) {
+		// each는 jquery에서 사용하는 foreach
+		// checkbox에 value를 지정하지 않으면 기본값을 on으로 스스로 지정한다
+		if ($(this).val() != 'on') {
+			console.log(idx, $(this).val());
+			checkArr.push($(this).val());
+		}
+	});
+	console.log(checkArr);
+	console.log("활성화: " + checkArr.length);
+	if(checkArr.length == 0){
+		evtCheck += 1
+		failReload(evtCheck);
+	}
+})
+function failReload(arg){
+	if (arg==1){
+		alert("최소 한 개 이상의 이용권을 선택해주세요.");
+		location.reload();
+	}
+}
+
 	$("#ticket-type").change(function() {
 		$val = $("#ticket-type").val();
 		console.log($val)
@@ -294,17 +321,6 @@
 
 	function del() {
 		$("#ticketDelModal").css("display","none")
-		var checkArr = [];
-		$('input[type="checkbox"]:checked').each(function(idx, item) {
-			// each는 jquery에서 사용하는 foreach
-			// checkbox에 value를 지정하지 않으면 기본값을 on으로 스스로 지정한다
-			if ($(this).val() != 'on') {
-				console.log(idx, $(this).val());
-				checkArr.push($(this).val());
-			}
-		});
-		console.log(checkArr);
-
 		$.ajax({
 			type : 'get',
 			url : 'ticket.delete',
