@@ -123,7 +123,7 @@ function ptmemjoin(){
 			console.log(data);
 			if(data.success == 1){
 				alert('pt정보 등록이 완료 되었습니다.');
-				location.href = '/memlist.go';
+				location.href = 'memlist.go';
 				
 			}else{
 				alert('pt정보 등록에 실패 했습니다.\r\n 다시 시도해 주세요!');
