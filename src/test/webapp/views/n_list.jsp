@@ -277,7 +277,7 @@ input[name="search"] {
 		$('select[name="small_hb"]').append(content);
 	}
 </script>
-		<section class="content-header">
+<%-- 		<section class="content-header">
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
@@ -345,6 +345,6 @@ input[name="search"] {
 			</div>
 			<!--/. container-fluid -->
 		</section>
-	</div>
+	</div> --%>
 </body>
 </html>
