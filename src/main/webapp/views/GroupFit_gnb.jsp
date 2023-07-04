@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
->>>>>>> origin/master
 <style>
 	.item-sub{
 		font-size: 14px;
@@ -9,8 +8,7 @@
 	.header-sub{
 	    padding-top: 0px;
 	    padding-bottom: 0px;
-	    padding-left: 16px;
-								
+	    padding-left: 16px;						
 	}
 </style>
 <script
@@ -402,7 +400,7 @@
 	if(msg != ""){
 		alert(msg);
 	}
-	if("${sessionScope.loginId} == ""){
+	if("${sessionScope.loginId}" == ""){
 		alert("로그인이 필요한 기능입니다.");
 		location.href="/";
 	}
