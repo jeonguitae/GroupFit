@@ -114,6 +114,11 @@ public class NoticeService {
 	public int rcount(String emp_no, String n_idx) {
 		return ndao.rcount(emp_no, n_idx);
 	}
+	public int ndelete(String n_idx) {
+		int row = ndao.rdelete(n_idx);
+		logger.info("reader 삭제됐으면 숫자 1 반환+"+row);
+		return ndao.ndelete(n_idx);
+	}
 
 	/*
 	 * public Object getinfo(String emp_no, String n_idx) { return

@@ -87,9 +87,9 @@ public class ApprovalController {
 			model.addAttribute("manager",manager);
 			
 			// 대표
-			String top_Manager = service.top_Manager();
-			logger.info(top_Manager);
-			model.addAttribute("top_Manager",top_Manager);
+			String top_manager = service.top_manager();
+			logger.info(top_manager);
+			model.addAttribute("top_manager",top_manager);
 			
 			// 직급
 			String position = service.position(loginId);
@@ -143,6 +143,16 @@ public class ApprovalController {
 		return new ModelAndView("redirect:/" );
 	}
 	
+	@RequestMapping(value="/approvalStayList.do")
+	public ModelAndView approvalStayList(HttpSession session) {
+		String loginId = (String)session.getAttribute("loginId");
+		String position = service.position(loginId);
+		if (loginId != null && !session.getAttribute("loginId").equals("") && position.equals("지점장") || position.equals("대표")) {
+			return service.approvalStayList(loginId);
+		}
+		return new ModelAndView("redirect:/" );
+	}
+	
 	// 임시저장 문서함
 	@RequestMapping(value="/approvalSaveList.do")
 	public ModelAndView approvalSaveList(HttpSession session) {
@@ -173,9 +183,9 @@ public class ApprovalController {
 			model.addAttribute("manager",manager);
 			
 			// 대표
-			String top_Manager = service.top_Manager();
-			logger.info(top_Manager);
-			model.addAttribute("top_Manager",top_Manager);
+			String top_manager = service.top_manager();
+			logger.info(top_manager);
+			model.addAttribute("top_Manager",top_manager);
 			
 			// 직급
 			String position = service.position(loginId);
@@ -214,6 +224,20 @@ public class ApprovalController {
 		return service.ExpenseReportW(params,files,briefs,price,note);
 	}
 	
+	@RequestMapping(value="eventDetail.do")
+	public ModelAndView eventDetail(String idx, String approval, HttpSession session, Model model) {
+	logger.info("이벤트 상세보기 : "+idx);
+	logger.info("결재 종류 : "+approval);
 	
+	String loginId = (String)session.getAttribute("loginId");
+	String position = service.position(loginId);
+	logger.info(position);
+	model.addAttribute("position",position);
+	if (loginId != null && !session.getAttribute("loginId").equals("")) {
+			logger.info("이벤트신청 상세보기");
+			return service.eventDetail(idx,approval);
+	}
+	return new ModelAndView("redirect:/");
+	}
 
 }

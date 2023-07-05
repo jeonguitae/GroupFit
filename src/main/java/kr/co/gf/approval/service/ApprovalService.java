@@ -42,8 +42,8 @@ public class ApprovalService {
 		return dao.manager();
 	}
 
-	public String top_Manager() {
-		return dao.top_Manager();
+	public String top_manager() {
+		return dao.top_manager();
 	}
 
 	public String position(String loginId) {
@@ -185,6 +185,31 @@ public void upload(MultipartFile uploadFile,int board_num) {
 		} 
 		page = "redirect:/approvalAllList.do";
 		return page;
+	}
+
+	public ModelAndView eventDetail(String a_idx, String approval) {
+		ModelAndView mav = null;
+		ApprovalDTO dto = null;
+		ArrayList<ApprovalDTO> list = null;
+		if(approval.equals("이벤트신청")) {
+			mav = new ModelAndView("approvalEventRequestDetail");	
+			dto = dao.eventDetail(a_idx,approval);
+		}else if(approval.equals("지출결의서")) {
+			mav = new ModelAndView("approvalExpenseReportDetail");
+			dto = dao.expenseReportDetail(a_idx, approval);
+			list = dao.expenseR(a_idx);
+		}
+		mav.addObject("dto",dto);
+		mav.addObject("list",list);
+		return mav;
+	}
+
+	public ModelAndView approvalStayList(String loginId) {
+		ModelAndView mav = new ModelAndView("approvalStayList");
+		ArrayList<String> list = dao.approvalStayList(loginId);
+		mav.addObject("list",list);
+		return mav;
+		
 	}
 
 

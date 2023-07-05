@@ -56,13 +56,13 @@
 			</thead>
 			<tbody>
 				<c:if test="${list.size() == 0}">
-					<tr><th colspan="5">게시글이 없습니다.</th></tr>
+					<tr><th colspan="5">결재신청이 없습니다.</th></tr>
 				</c:if>
 				<c:forEach items="${list}" var="approval">
 					<tr>
 						<td>${approval.a_idx}</td>
 						<td>${approval.approval}</td>
-						<td><a href="eventDetail.do">${approval.subject}</a></td>
+						<td><a href="eventDetail.do?idx=${approval.a_idx}&approval=${approval.approval}">${approval.subject}</a></td>
 						<td>${approval.write_date}</td>
 						<td>${approval.state}</td>
 					</tr>			

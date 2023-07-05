@@ -91,6 +91,7 @@ public void upload(MultipartFile uploadFile,int board_num) {
 		
 		// 1. 파일명 추출
 		String ori_photo_name = uploadFile.getOriginalFilename();
+		logger.info(ori_photo_name);
 		int c_idx = 4;
 		//ReferenceDTO dto = new ReferenceDTO();
 		//int board_num = dto.getBoard_num();
