@@ -32,8 +32,37 @@ public class ApprovalController {
 	@RequestMapping(value="/approvalVacationRequest.go")
 	public String vacation(HttpSession session, Model model) {
 		
-		logger.info("loginId: " + session.getAttribute("loginId"));
+		// 로그인한 아이디
+		String loginId = (String)session.getAttribute("loginId");
 		if (session.getAttribute("loginId") != null && !session.getAttribute("loginId").equals("")) {
+			logger.info(loginId);
+			String loginIdName = service.loginIdName(loginId);
+			logger.info(loginIdName);
+			model.addAttribute("loginIdName",loginIdName);
+			
+			// 지점장
+			String manager = service.manager();
+			logger.info(manager);
+			model.addAttribute("manager",manager);
+			
+			// 대표
+			String top_Manager = service.top_Manager();
+			logger.info(top_Manager);
+			model.addAttribute("top_Manager",top_Manager);
+			
+			// 직급
+			String position = service.position(loginId);
+			logger.info(position);
+			model.addAttribute("position",position);
+			
+			// 현재 날짜 정보를 변수에 할당
+		    int year = calendar.get(Calendar.YEAR);
+		    int month = calendar.get(Calendar.MONTH) + 1;
+		    int day = calendar.get(Calendar.DAY_OF_MONTH);
+		    String write_date =  year + "." + month + "." + day;
+		    logger.info(write_date);
+		    model.addAttribute("write_date", write_date);
+			
 			return"approvalVacationRequest" ;
 		}
 		return "redirect:/";
