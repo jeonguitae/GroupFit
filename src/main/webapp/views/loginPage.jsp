@@ -150,7 +150,7 @@
 			</div>
 
 			<div class="checkbox mb-3">
-				<label> <input type="checkbox" value="remember-me">
+				<label> <input type="checkbox" id="idRemember" name="idRemember">
 					Remember me
 				</label>
 			</div>
@@ -172,8 +172,14 @@
 </body>
 <script type="text/javascript">
 	var msg = "${msg}";
+	var cookieId = "${rememberedId}";
 	if (msg != "") {
 		alert(msg);
+	}
+	
+	if (cookieId  != ""){
+		$("#floatingInput").val(cookieId);
+		$("#idRemember").prop("checked", true);
 	}
 	
 	var pweq = false;
