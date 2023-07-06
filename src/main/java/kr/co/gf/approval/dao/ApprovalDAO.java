@@ -38,6 +38,10 @@ public interface ApprovalDAO {
 
 	ArrayList<String> approvalStayList(String loginId);
 
+	int vacationRequestWrite(ApprovalDTO dto);
+
+	void vacationRequestWriteDown(ApprovalDTO dto);
+
 	
 
 

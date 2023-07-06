@@ -183,7 +183,7 @@
 							<td>${top_Manager }</td>
 						</tr>
 					</table>
-					</c:if>	
+					</c:if>
 				
 				
 				<table id="table2">
@@ -216,8 +216,8 @@
 					<button id="mok" onclick="location.href='approvalList.do'">목록</button>
 				</div>
 				<input type="hidden" name="emp_no" value="${loginId}"/>
-				<input type="hidden" name="approval" value="이벤트신청"/>
-				<input type="hidden" name="subject" value="이벤트신청"/>
+				<input type="hidden" name="approval" value="휴가신청"/>
+				<input type="hidden" name="subject" value="휴가신청"/>
 				<input type="hidden" name="write_date" value="${write_date}"/>
 				<input type="hidden" name="state" value="대기"/>
 				<input type="hidden" name="manager" value="${manager}"/>

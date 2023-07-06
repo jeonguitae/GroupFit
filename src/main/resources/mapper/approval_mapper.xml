@@ -37,6 +37,19 @@
 		insert into payment (emp_no, approval, subject, state, manager, top_manager)values(${emp_no},#{approval},#{subject},#{state},#{manager},#{top_manager})
    </insert>
    
+   <insert 
+   		useGeneratedKeys="true"
+      	keyColumn="a_idx"
+      	keyProperty="board_num"
+   		id="vacationRequestWrite">
+   		
+		insert into payment (emp_no, approval, subject, state, manager, top_manager)values(${emp_no},#{approval},#{subject},#{state},#{manager},#{top_manager})
+   </insert>
+   
+   <insert id="vacationRequestWriteDown">
+   		insert into payment2 (a_idx, start_day, finish_day, reason, etc) values(#{a_idx},#{start_day},#{finish_day},#{reason},#{etc});
+   </insert>
+   
    <insert id="eventRequestWriteDown">
    		insert into payment2 (a_idx, start_day, finish_day, reason, etc) values(#{a_idx},#{start_day},#{finish_day},#{reason},#{etc});
    </insert>

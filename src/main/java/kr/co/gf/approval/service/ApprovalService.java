@@ -57,6 +57,35 @@ public class ApprovalService {
 		mav.addObject("list", list);
 		return mav;
 	}
+	
+	public void vacationRequestWrite(HashMap<String, String> params, MultipartFile[] uploadFiles) {
+		String page = "redirect:/approvalAllList.do";
+		
+		logger.info("params"+params);
+
+		ApprovalDTO dto = new ApprovalDTO();
+		
+		dto.setEmp_no(Integer.parseInt(params.get("emp_no")));
+		dto.setApproval(params.get("approval"));
+		dto.setSubject(params.get("subject"));
+		dto.setState(params.get("state"));		
+		dto.setManager(params.get("manager"));
+		dto.setTop_manager(params.get("top_manager"));
+		
+		int success = dao.vacationRequestWrite(dto);
+		
+		if(success == 1) {
+			dto.setStart_day(params.get("start_day"));
+			dto.setFinish_day(params.get("finish_day"));
+			dto.setReason(params.get("reason"));
+			dto.setEtc(params.get("etc"));
+			int a_idx = dto.getBoard_num();
+			dto.setA_idx(a_idx);
+			logger.info(""+a_idx);
+			dao.vacationRequestWriteDown(dto);
+		}
+
+	}
 
 	public String eventRequestWrite(HashMap<String, String> params, MultipartFile[] uploadFiles) {
 		String page = "redirect:/approvalAllList.do";
@@ -211,10 +240,5 @@ public void upload(MultipartFile uploadFile,int board_num) {
 		return mav;
 		
 	}
-
-
-
-	
-	
 
 }
