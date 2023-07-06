@@ -38,9 +38,8 @@
 		border: 1px solid black;
 	    border-collapse: collapse;
 	    margin-top: 15%;
-	    margin-left: 5%;
-	    position: absolute;
-	    width: 70%;
+	    margin-left: 6%;
+	    width: 85%;
 	}
 	#table2 th{
 		border: 1px solid black;
@@ -87,16 +86,23 @@
 	}
 	
 	#button_sin_mok {
-	    margin-top: 35%;
-	    position: absolute;
-	    margin-left: 30%;
+	    margin-top: 5%;
+	    margin-left: 35%;
 	}
 
 	textarea {
    		width: 60%;
    		height: 30%;
 	}
-
+	#td_inp{
+		width:100%;
+	}
+	#cols{
+		text-align: center;
+	}
+	#button_ch_sak{
+		
+	}
 </style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -139,7 +145,7 @@
 				
 			
 				<div id="table1_div">
-					<form action="approvalEventRequest.do" method="post" enctype="multipart/form-data">
+					<form action="approvalExpenseReport.do" method="post" enctype="multipart/form-data">
 					<table id="table1">
 						<tr>
 							<th>기안자</th>
@@ -149,7 +155,7 @@
 						</tr>
 						<tr>
 							<th>기안일</th>
-							<td>${write_date}</td>
+							<td><span id="date"></span></td>
 						</tr>
 					</table>
 					
@@ -185,29 +191,31 @@
 					</table>
 					</c:if>	
 				
-				
+				<div id="button_ch_sak">
+					<button type="button" onclick="add()">추가</button>
+					<button type="button" onclick="del()">삭제</button>
+				</div>
 				<table id="table2">
-					<button id="" onclick="add()">추가</button>
-					<button id="" onclick="del()">삭제</button>
 					<tr>
+						<th colspan="3">
+							<input type="file" name="files" multiple="multiple"/>
+						</th>
+					</tr>
+					<tr id="cols">
 						<th>적요</th>
 						<th>금액</th>
 						<th>비고</th>
 					</tr>
 					<tr>
-						<td><input/></td>
-						<td><input/></td>
-						<td><input/></td>
-					</tr>
-					<tr>
-						<th>첨부파일</th>
-						<td><input type="file" name="files" multiple="multiple"/></td>
+						<td><input type="text" name="briefs[]" id="td_inp"/></td>
+						<td><input type="text" name="price[]" id="td_inp"/></td>
+						<td><input type="text" name="note[]" id="td_inp"/></td>
 					</tr>
 				</table>
 				<div id="button_sin_mok">
 					<button id="sin">신청하기</button>
-					<button id="mm" onclick="location.href='approvalList.do'">임시저장</button>
-					<button id="mok" onclick="location.href='approvalAllList.do'">목록</button>
+					<button type="button" id="mm"  onclick="location.href='approvalAllList.do'">임시저장</button>
+					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>
 				<input type="hidden" name="emp_no" value="${loginId}"/>
 				<input type="hidden" name="approval" value="지출결의서"/>
@@ -224,6 +232,29 @@
 	</div>
 </body>
 <script type="text/javascript">
+
+	var currentDate = new Date();
+	var year = currentDate.getFullYear();
+	var month = currentDate.getMonth() + 1;
+	var day = currentDate.getDate();
 	
+	var dateSpan = document.getElementById("date");
+	dateSpan.textContent = year + "-" + month + "-" + day;
+
+function add() {
+	  var content = '';
+	  content += '<tr>';
+	  content += '<td><input type="text" name="briefs[]" id="td_inp" /></td>';
+	  content += '<td><input type="text" name="price[]" id="td_inp" /></td>';
+	  content += '<td><input otype="text" name="note[]" id="td_inp" /></td>';
+	  content += '</tr>';
+	  $('#table2').append(content);
+	}
+function del(){
+	console.log("click");
+	var lastRow = $('#table2 tr:last');
+	  // 마지막 행의 마지막 컬럼을 삭제합니다
+	  lastRow.remove();
+}
 </script>
 </html>

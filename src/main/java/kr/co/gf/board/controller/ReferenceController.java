@@ -41,9 +41,12 @@ public class ReferenceController {
 	
 	// 자료실 리스트 보기
 	@RequestMapping(value="/referenceList.do")
-	public ModelAndView referenceList() {
+	public ModelAndView referenceList(HttpSession session) {
 		logger.info("리스트 보여줌");
-		return service.list();
+		if (session.getAttribute("loginId") != null && !session.getAttribute("loginId").equals("")) {
+			return service.list() ;
+		}
+		return new ModelAndView("redirect:/") ;
 	}
 	
 	// 자료실 상세보기
@@ -51,9 +54,14 @@ public class ReferenceController {
 	public ModelAndView referenceDetail(String idx, HttpSession session, Model model) {
 		logger.info("자료실 상세보기 번호 : "+idx);
 		String loginId = (String)session.getAttribute("loginId");
+		if (loginId != null && !session.getAttribute("loginId").equals("")) {
+			
 		String loginName = service.selectName(loginId);
 		model.addAttribute("loginName",loginName);
 		return service.detail(idx);
+		
+		}
+		return new ModelAndView("redirect:/");
 	}
 	
 	// 자료실 글작성 페이지 이동
@@ -62,9 +70,12 @@ public class ReferenceController {
 		
 		logger.info("글쓰기 이동");
 		String loginId = (String)session.getAttribute("loginId");
-		String loginName = service.selectName(loginId);
-		model.addAttribute("loginName",loginName);
-		return "referenceWrite";
+		if (loginId  != null && !session.getAttribute("loginId").equals("")) {
+			String loginName = service.selectName(loginId);
+			model.addAttribute("loginName",loginName);
+			return "referenceWrite";
+		}
+		return"redirect:/" ;
 	}
 	
 	// 자료실 글작성 기능

@@ -56,13 +56,13 @@
 			</thead>
 			<tbody>
 				<c:if test="${list.size() == 0}">
-					<tr><th colspan="5">게시글이 없습니다.</th></tr>
+					<tr><th colspan="5">임시저장한 문서가 없습니다.</th></tr>
 				</c:if>
 				<c:forEach items="${list}" var="approval">
 					<tr>
 						<td>${approval.a_idx}</td>
 						<td>${approval.approval}</td>
-						<td>${approval.subject}</td>
+						<td><a>${approval.subject}</a></td>
 						<td>${approval.write_date}</td>
 						<td>${approval.state}</td>
 					</tr>			
@@ -76,49 +76,6 @@
 </body>
 <script type="text/javascript">
 
-$(document).ready(function() {
-	  $("#cbx_chkAll").click(function() {
-	    var isChecked = $(this).is(":checked");
-	    $("input[name=chk]").prop("checked", isChecked);
-	    if (isChecked) {
-	      getSelectedIndexes();
-	    }
-	  });
-
-	  $("input[name=chk]").click(function() {
-	    if ($(this).is(":checked")) {
-	      getSelectedIndexes();
-	    }
-	  });
-
-	  function getSelectedIndexes() {
-	    var selectedIndexes = [];
-	    $("input[name=chk]:checked").each(function() {
-	      if ($(this).attr("id") !== "cbx_chkAll") {
-	        var index = $("input[name=chk]").index(this);
-	        selectedIndexes.push(index);
-	      }
-	    });
-	    console.log("선택된 체크박스의 인덱스: " + selectedIndexes);
-	  }
-	});
-	
-function sendIndexesToController(indexes) {
-    $.ajax({
-      url: "checkDeleteAjax.do",
-      type: "POST",
-      data: { indexes: indexes },
-      success: function(response) {
-        // 요청 성공 시 수행할 동작
-        console.log("인덱스 전송이 완료되었습니다.");
-        
-      },
-      error: function(xhr, status, error) {
-        // 요청 실패 시 수행할 동작
-        console.error("인덱스 전송 중 오류가 발생했습니다.");
-      }
-    });
-  }
 </script>
 </html>
 

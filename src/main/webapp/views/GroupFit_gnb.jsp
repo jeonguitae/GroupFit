@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
->>>>>>> origin/master
+
 <style>
 	.item-sub{
 		font-size: 14px;
@@ -9,8 +9,7 @@
 	.header-sub{
 	    padding-top: 0px;
 	    padding-bottom: 0px;
-	    padding-left: 16px;
-								
+	    padding-left: 16px;						
 	}
 </style>
 <script
@@ -175,6 +174,9 @@
 				<nav class="mt-2">
 					<ul class="nav nav-pills nav-sidebar flex-column"
 						data-widget="treeview" role="menu" data-accordion="false">
+						<li class="nav-header"  style="text-align: center;margin: 0 auto">
+							<button class="btn btn-outline-info" style="margin: 0 auto" onclick="location.href='/approvalVacationRequest.go'">결재 문서 작성
+							</button></li>
 						<li class="nav-header">GroupFit Works</li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-book"></i>
@@ -285,7 +287,7 @@
 							<ul class="nav nav-treeview">
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">결재하기</li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalStayList.do" class="nav-link"> <i
 										class="fas fa-file nav-icon"></i>
 										<p>결재 대기 문서</p>
 								</a></li>
@@ -333,7 +335,7 @@
 								<p>자료실</p>
 						</a></li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
-								class="nav-icon far fa-calendar-check"></i>
+								class="nav-icon fas fa-user-check"></i>
 								<p>
 									근태 관리 <i class="right fas fa-angle-left"></i>
 								</p>
@@ -358,13 +360,13 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="pages/charts/chartjs.move"
-									class="nav-link"> <i class="fas fa-user-check nav-icon"></i>
+								<li class="nav-item item-sub"><a href="#"
+									class="nav-link"> <i class="far fa-calendar-check nav-icon"></i>
 										<p>휴가 신청</p>
 								</a></li>
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-item item-sub"><a href="annualList.go" class="nav-link"> <i
-										class="nav-icon fas fa-warehouse"></i>
+										class="nav-icon far fa-calendar-check"></i>
 										<p>직원 연차관리</p>
 								</a></li>
 								</c:if>
@@ -402,7 +404,7 @@
 	if(msg != ""){
 		alert(msg);
 	}
-	if("${sessionScope.loginId} == ""){
+	if("${sessionScope.loginId}" == ""){
 		alert("로그인이 필요한 기능입니다.");
 		location.href="/";
 	}

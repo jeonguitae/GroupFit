@@ -1,7 +1,5 @@
 package kr.co.gf.board.controller;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,13 +41,13 @@ public class NoticeController {
 	}
 	
 	@PostMapping(value="/nwrite.do")
-	public String nwrite(@RequestParam HashMap<String , String>params,MultipartFile photo, HttpSession session) {
+	public String nwrite(@RequestParam HashMap<String , String>params, HttpSession session, MultipartFile[] photos) {
 		/* logger.info("photo name"+photo.getOriginalFilename()); */
 		logger.info("params : " + params);
 		String emp_no=params.get("emp_no");
 		logger.info("작성자의 emp_no"+emp_no);
 		//session.setAttribute("writer", emp_no);
-		return nservice.nwrite(params, photo);		
+		return nservice.nwrite(params, photos);		
 	}
 	
 	@RequestMapping(value="/ndetail.do") 
@@ -82,13 +79,14 @@ public class NoticeController {
 		int row=nservice.rcount(emp_no, n_idx);
 		logger.info("row"+row);
 		
-		if (dto.get("emp_no")!= emp_no && row==0) {
+		logger.info("dto emp_no : " + dto.get("emp_no"));
+		
+		if (!dto.get("emp_no").equals(emp_no) && row==0) {
 			logger.info("emp_no + n_idx"+emp_no+n_idx);
 			nservice.getinfo(emp_no, n_idx);
 			
 		}
 
-		
 		/* 지금 당장 작성하지 않으면 writer null 뜸
 		 * if (session.getAttribute("writer").equals(dto.get("emp_no"))) { String
 		 * emp_no= dto.get("emp_no"); logger.info("리더 각임"+emp_no);
@@ -105,8 +103,6 @@ public class NoticeController {
 			 * logger.info("readdate"+readdate);
 			 */
 			
-		
-		
 			dto.put("n_idx", n_idx);
 			model.addAttribute("dto", dto);	
 			logger.info("emp_no 갖고 왔어?"+dto);
@@ -129,10 +125,17 @@ public class NoticeController {
 		logger.info("업뎃 icin params+ "+params); 
 		nservice.nupdate(params);  
 		return "redirect:/ndetail.do?n_idx="+params.get("n_idx")+"&flag=update"; 
+		//지가 쓴 글만 수정 가능해야함 -대표 지점장 session값 갖고 오고 
 	}
-	 
-	 
+	@RequestMapping(value="/ndelete.do")
+	public String ndelete(@RequestParam String n_idx, Model model) {
+		int row=nservice.ndelete(n_idx);
+		logger.info("삭제되었으면 row="+row);
+		model.addAttribute("msg","글이 삭제되었습니다.");
+		String page="redirect:/nlist.go";
+		return page;
+	}
 	
 }
-	 
+
 

@@ -14,16 +14,37 @@ public class ApprovalDTO {
 	private String top_manager;
 	private int e_idx;
 	private String briefs;
-	private int price;
+	private String price;
 	private String note;
-	private Date start_day;
-	private Date finish_day;
+	private String start_day;
+	private String finish_day;
 	private String reason;
 	private String content;
 	private String etc;
 	private String vacation_type;
 	private int board_num;
+	private String new_photo_name;
+	private String name;
+	private String ori_photo_name;
 	
+	public String getOri_photo_name() {
+		return ori_photo_name;
+	}
+	public void setOri_photo_name(String ori_photo_name) {
+		this.ori_photo_name = ori_photo_name;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getNew_photo_name() {
+		return new_photo_name;
+	}
+	public void setNew_photo_name(String new_photo_name) {
+		this.new_photo_name = new_photo_name;
+	}
 	public int getBoard_num() {
 		return board_num;
 	}
@@ -90,10 +111,10 @@ public class ApprovalDTO {
 	public void setBriefs(String briefs) {
 		this.briefs = briefs;
 	}
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	public String getNote() {
@@ -102,16 +123,16 @@ public class ApprovalDTO {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public Date getStart_day() {
+	public String getStart_day() {
 		return start_day;
 	}
-	public void setStart_day(Date start_day) {
+	public void setStart_day(String start_day) {
 		this.start_day = start_day;
 	}
-	public Date getFinish_day() {
+	public String getFinish_day() {
 		return finish_day;
 	}
-	public void setFinish_day(Date finish_day) {
+	public void setFinish_day(String finish_day) {
 		this.finish_day = finish_day;
 	}
 	public String getReason() {
