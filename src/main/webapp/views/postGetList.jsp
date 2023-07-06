@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쪽지 작성하기</title>
+<title>받은 쪽지함</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -19,6 +19,24 @@
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+div[class="btn1"]{
+	margin-left: 1108px;
+}
+
+form[class="search"]{
+	margin-left: 377px;
+}
+
+h1.headline{
+	margin-left: 640px;
+	margin-top: 20px;
+}
+
+div[class="table"]{
+	margin-left: 376px;
+}
+</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
 	<div class="content-wrapper" style="margin-top: 57.08px">
@@ -26,7 +44,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>쪽지 쓰기</h1>
+						<h1>받은 쪽지함</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -42,54 +60,49 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<form action="postSendWrite.do" method="post" enctype="multipart/form-data">
+				<fieldset>
+					<form action=".do" class="search">
+						<select name="opt">
+							<option value="send_empno">보낸사람</option>
+							<option value="subject">제목</option>
+							<option value="content">내용</option>
+						</select>
+						<input type="text" name="keyword" value="" placeholder="검색어를 입력하세요"/>
+						<button>검색</button>
+					</form>
+				</fieldset>
+		
+				<div class="btn1">
+					<button onclick="location.href='./postSendWrite.go'">쪽지 작성</button>
+					<button onclick="hide()">쪽지 삭제</button>
+				</div>
+				<div class="table">
 					<table>
-						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
-						<tr>
-							<th>*작성자</th>
-							<td><input type="text" value="${emp.name}" readonly/></td>
-						</tr>
-						<tr>
-							<th>*제목</th>
-							<td><input type="text" name="subject"/></td>
-						</tr>
-						<tr>
-							<th>*받는사람 이름</th>
-							<td>
-								<p>
-									<input type="text" name="get_empno"/>
-									<a class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#search" data-shuffle> 직원 찾기 </a>&nbsp;
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<th>*첨부파일</th>
-							<td><input type="file" name="post_photo"/></td>
-						</tr>
-						<tr>
-							<th>*내용</th>
-							<td>
-								<textarea name="content"></textarea> 
-							</td>
-						</tr>
-						<input type="submit" value="보내기"/>
-						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
+						<thead>
+							<tr>
+								<th>삭제</th>
+								<th>제목</th>
+								<th>보낸사람</th>
+								<th>받은시간</th>
+								<th>상태</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${list}" var="post">
+								<tr>
+									<td><input type="checkbox" name="chk" value="${post.email_num}"/></td>
+									<td><a href="postSendDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
+									<td>${post.send_empno}</td>
+									<td>${post.send_time}</td>
+									<td>${post.get_chk}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
 					</table>
-				</form>
+				</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
-<script>
-function new_window() {
-    window.open(
-      "empfind.html",
-      "EmpFind",
-      "width=400, height=300, top=50, left=50"
-    );
-  }
-
-</script>
 </html>

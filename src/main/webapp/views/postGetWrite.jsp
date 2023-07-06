@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쪽지 작성하기</title>
+<title>회신 보내기</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>쪽지 쓰기</h1>
+						<h1>회신 보내기</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -42,27 +42,26 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<form action="postSendWrite.do" method="post" enctype="multipart/form-data">
+				<form action="postGetWrite.do" method="post" enctype="multipart/form-data">
 					<table>
 						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
 						<tr>
-							<th>*작성자</th>
+							<th>*보내는사람</th>
 							<td><input type="text" value="${emp.name}" readonly/></td>
 						</tr>
 						<tr>
 							<th>*제목</th>
 							<td><input type="text" name="subject"/></td>
 						</tr>
+						<div id = "search_name">
 						<tr>
 							<th>*받는사람 이름</th>
 							<td>
-								<p>
-									<input type="text" name="get_empno"/>
-									<a class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#search" data-shuffle> 직원 찾기 </a>&nbsp;
-								</p>
+								<p><input type="text" name="get_empno" value="${post.get_empno}"/>
+								<input type="button" value="직원 찾기" onclick="new_window();"></p>
 							</td>
 						</tr>
+						</div>
 						<tr>
 							<th>*첨부파일</th>
 							<td><input type="file" name="post_photo"/></td>
@@ -70,10 +69,10 @@
 						<tr>
 							<th>*내용</th>
 							<td>
-								<textarea name="content"></textarea> 
+								<textarea name="content">${post.content}</textarea> 
 							</td>
 						</tr>
-						<input type="submit" value="보내기"/>
+						<input type="submit" value="회신보내기"/>
 						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
 					</table>
 				</form>
@@ -90,6 +89,5 @@ function new_window() {
       "width=400, height=300, top=50, left=50"
     );
   }
-
 </script>
 </html>

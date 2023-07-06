@@ -72,13 +72,6 @@
 					<td><input type="text" name="position" value="${emp.position}" readonly/></td>
 				</tr>
 				<tr>
-					<th>*계약기간</th>
-					<td>
-						<input type="text" name="start_conterm" value="${emp.start_conterm}" readonly/>부터
-						<input type="text" name="end_conterm" value="${emp.end_conterm}" readonly/>까지
-					</td>
-				</tr>
-				<tr>
 					<th>*재직상태</th>
 					<td><input type="text" name="status" value="${emp.status}" readonly/></td>
 				</tr>

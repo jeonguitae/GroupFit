@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -99,11 +100,13 @@ public class EmpController {
 	}
 	
 	@PostMapping(value="/empJoin.do")
-	public ModelAndView joinDo(EmpDTO dto, RedirectAttributes rAttr) {
+	public ModelAndView joinDo(@RequestParam EmpDTO dto, MultipartFile[] files, 
+								RedirectAttributes rAttr, @RequestParam HashMap<String, String> params) {
 		
 		logger.info("dto: " + dto.getEmp_no());
+		logger.info("params:"+params);
 		
-		return service.emp_join(dto, rAttr);
+		return service.emp_join(dto, files, rAttr, params);
 	}
 	
 
