@@ -17,6 +17,7 @@ public class ReferenceDTO {
 	
 	
 	
+	
 	public String getNew_photo_name() {
 		return new_photo_name;
 	}

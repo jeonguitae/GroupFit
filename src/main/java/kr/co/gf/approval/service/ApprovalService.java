@@ -42,8 +42,8 @@ public class ApprovalService {
 		return dao.manager();
 	}
 
-	public String top_Manager() {
-		return dao.top_Manager();
+	public String top_manager() {
+		return dao.top_manager();
 	}
 
 	public String position(String loginId) {
@@ -56,6 +56,35 @@ public class ApprovalService {
 		ArrayList<ApprovalDTO> list = dao.approvalAllList(loginId);
 		mav.addObject("list", list);
 		return mav;
+	}
+	
+	public void vacationRequestWrite(HashMap<String, String> params, MultipartFile[] uploadFiles) {
+		String page = "redirect:/approvalAllList.do";
+		
+		logger.info("params"+params);
+
+		ApprovalDTO dto = new ApprovalDTO();
+		
+		dto.setEmp_no(Integer.parseInt(params.get("emp_no")));
+		dto.setApproval(params.get("approval"));
+		dto.setSubject(params.get("subject"));
+		dto.setState(params.get("state"));		
+		dto.setManager(params.get("manager"));
+		dto.setTop_manager(params.get("top_manager"));
+		
+		int success = dao.vacationRequestWrite(dto);
+		
+		if(success == 1) {
+			dto.setStart_day(params.get("start_day"));
+			dto.setFinish_day(params.get("finish_day"));
+			dto.setReason(params.get("reason"));
+			dto.setEtc(params.get("etc"));
+			int a_idx = dto.getBoard_num();
+			dto.setA_idx(a_idx);
+			logger.info(""+a_idx);
+			dao.vacationRequestWriteDown(dto);
+		}
+
 	}
 
 	public String eventRequestWrite(HashMap<String, String> params, MultipartFile[] uploadFiles) {
@@ -187,9 +216,29 @@ public void upload(MultipartFile uploadFile,int board_num) {
 		return page;
 	}
 
+	public ModelAndView eventDetail(String a_idx, String approval) {
+		ModelAndView mav = null;
+		ApprovalDTO dto = null;
+		ArrayList<ApprovalDTO> list = null;
+		if(approval.equals("이벤트신청")) {
+			mav = new ModelAndView("approvalEventRequestDetail");	
+			dto = dao.eventDetail(a_idx,approval);
+		}else if(approval.equals("지출결의서")) {
+			mav = new ModelAndView("approvalExpenseReportDetail");
+			dto = dao.expenseReportDetail(a_idx, approval);
+			list = dao.expenseR(a_idx);
+		}
+		mav.addObject("dto",dto);
+		mav.addObject("list",list);
+		return mav;
+	}
 
-
-	
-	
+	public ModelAndView approvalStayList(String loginId) {
+		ModelAndView mav = new ModelAndView("approvalStayList");
+		ArrayList<String> list = dao.approvalStayList(loginId);
+		mav.addObject("list",list);
+		return mav;
+		
+	}
 
 }

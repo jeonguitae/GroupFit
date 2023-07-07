@@ -117,7 +117,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>새 결재 진행</h1>
+						<h1>결재 문서함</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -133,23 +133,16 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
-				<h5 id="aAp" style="display: inline;"><a href="approvalEventRequest.go">이벤트결재</a></h5>
-				
-			
 				<div id="table1_div">
 					<form action="approvalEventRequest.do" method="post" enctype="multipart/form-data">
 					<table id="table1">
 						<tr>
 							<th>기안자</th>
-							<td>
-								${loginIdName}
-							</td>
+							<td>${dto.name}</td>
 						</tr>
 						<tr>
 							<th>기안일</th>
-							<td><span id="date"></span></td>
+							<td>${dto.write_date }</td>
 						</tr>
 					</table>
 					
@@ -163,9 +156,9 @@
 							<th>대표</th>
 						</tr>
 						<tr id="tr2">
-							<td>${loginIdName}</td>
-							<td>${manager}</td>
-							<td>${top_Manager }</td>
+							<td>${dto.name}</td>
+							<td>${dto.manager}</td>
+							<td>${dto.top_manager }</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -179,8 +172,8 @@
 							<th>대표</th>
 						</tr>
 						<tr id="tr2">
-							<td>${loginIdName}</td>
-							<td>${top_Manager }</td>
+							<td>${dto.name}</td>
+							<td>${dto.top_manager }</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -189,33 +182,29 @@
 				<table id="table2">
 					<tr>
 						<th>기간</th>
-						<td><input type="date" name="start_day"/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="finish_day"/></td>
+						<td>${dto.start_day}~${dto.finish_day}</td>
 					</tr>
 					<tr>
 						<th>사유</th>
-						<td><textarea id="sa" name="reason"></textarea></td>
+						<td>${dto.reason}</td>
 					</tr>
 					<tr>
 						<th>기타사항</th>
-						<td><textarea id="sa" name="etc"></textarea></td>
+						<td>${dto.etc}</td>
 					</tr>
 					<tr>
 						<th>첨부파일</th>
-						<td><input type="file" name="files" multiple="multiple"/></td>
+						<c:if test="${dto.new_photo_name eq null}">
+							<td>첨부파일이 없습니다.</td>
+						</c:if>
+						<c:if test="${dto.new_photo_name ne null}">
+							<td>${dto.ori_photo_name}</td>
+						</c:if>
 					</tr>
 				</table>
 				<div id="button_sin_mok">
-					<button id="sin">신청하기</button>
-					<button id="mm" onclick="location.href='approvalList.do'">임시저장</button>
-					<button id="mok" onclick="location.href='approvalList.do'">목록</button>
+					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>
-				<input type="hidden" name="emp_no" value="${loginId}"/>
-				<input type="hidden" name="approval" value="이벤트신청"/>
-				<input type="hidden" name="subject" value="이벤트신청"/>
-				<input type="hidden" name="write_date" value="${write_date}"/>
-				<input type="hidden" name="state" value="대기"/>
-				<input type="hidden" name="manager" value="${manager}"/>
-				<input type="hidden" name="top_manager" value="${top_Manager}"/>
 				</form>
 			</div>
 		</div>	

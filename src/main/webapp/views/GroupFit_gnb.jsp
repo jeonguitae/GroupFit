@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style>
 	.item-sub{
 		font-size: 14px;
@@ -286,7 +287,7 @@
 							<ul class="nav nav-treeview">
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">결재하기</li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalStayList.do" class="nav-link"> <i
 										class="fas fa-file nav-icon"></i>
 										<p>결재 대기 문서</p>
 								</a></li>

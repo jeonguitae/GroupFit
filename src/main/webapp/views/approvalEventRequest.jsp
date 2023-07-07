@@ -133,6 +133,7 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
+			
 				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>
 				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
 				<h5 id="aAp" style="display: inline;"><a href="approvalEventRequest.go">이벤트결재</a></h5>
@@ -165,7 +166,7 @@
 						<tr id="tr2">
 							<td>${loginIdName}</td>
 							<td>${manager}</td>
-							<td>${top_Manager }</td>
+							<td>${top_manager }</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -206,8 +207,8 @@
 				</table>
 				<div id="button_sin_mok">
 					<button id="sin">신청하기</button>
-					<button id="mm" onclick="location.href='approvalList.do'">임시저장</button>
-					<button id="mok" onclick="location.href='approvalList.do'">목록</button>
+					<button type="button" id="mm" onclick="location.href='approvalList.do'">임시저장</button>
+					<button type="button" id="mok" onclick="location.href='approvalList.do'">목록</button>
 				</div>
 				<input type="hidden" name="emp_no" value="${loginId}"/>
 				<input type="hidden" name="approval" value="이벤트신청"/>
