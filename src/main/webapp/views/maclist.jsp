@@ -48,8 +48,8 @@
 		<section class="content">
 			<div class="container-fluid">
 			
-				<button class="cng" onclick="openModal2()">라커변경</button>
-				<button class="fix" onclick="openModal()">상태변경</button>
+				<button class="cng" onclick="openModal1()">기구등록</button>
+				<button class="fix" onclick="openModal2()">상태변경</button>
 			
 				<div class="first_row" style="display : flex;">
 					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>

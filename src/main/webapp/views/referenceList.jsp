@@ -64,7 +64,7 @@
 					<tr>
 						<td>${reference.r_idx}</td>
 						<td><a href="referenceDetail.do?idx=${reference.r_idx}">${reference.subject}</a></td>
-						<td>${reference.emp_no}</td>
+						<td>${reference.name}</td>
 						<td>${reference.date}</td>
 						<td><input type="checkbox" name="chk"/></td>
 					</tr>			

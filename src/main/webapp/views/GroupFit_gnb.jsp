@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style>
 	.item-sub{
 		font-size: 14px;
@@ -216,11 +217,11 @@
 										<p>직원 리스트</p>
 									</a>
 								</li>
-								<c:if test="${sessionScope.loginEmp.position eq '대표'}">
+								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-item item-sub">
 									<a href="empRepList.do" class="nav-link">
 										<i class="fas fa-running nav-icon"></i>
-										<p>대표 직원 리스트</p>
+										<p>퇴사 직원 리스트</p>
 									</a>
 								</li>
 								</c:if>
@@ -286,11 +287,11 @@
 							<ul class="nav nav-treeview">
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-header" style="padding-top: 2px;padding-bottom: 2px;padding-left: 16px">결재하기</li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalStayList.do" class="nav-link"> <i
 										class="fas fa-file nav-icon"></i>
 										<p>결재 대기 문서</p>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalExpectedList.do" class="nav-link"> <i
 										class="fas fa-file-signature nav-icon"></i>
 										<p>결재 예정 문서</p>
 								</a></li>

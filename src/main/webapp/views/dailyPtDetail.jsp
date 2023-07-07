@@ -121,7 +121,6 @@
    
 				    <div class="container">
 
-				    <form action="dailyptWrite.do" method="post">
 				    
 					    <div style="display: flex; justify-content: space-between; align-items: center;">
 					        <h3 style="margin: 0;">회원pt일지</h3>
@@ -143,7 +142,7 @@
 					        
 					        <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
 					            <label for="date">날짜 : </label>
-					            <input type="date" id="date" name="date">
+					            <input type="date" id="date" name="date" value="${dto.pt_date}" readonly> 
 					        </div>
 					        
 					    </div>
@@ -153,13 +152,13 @@
 				            <div class="form-group">
 
 				                <label for="memberNumber">회원 번호 : </label>
-				                <input type="text" id="mem_no" name="mem_no">
+				                <input type="text" id="mem_no" name="mem_no" value="${dto.mem_no}" readonly>
 				                
 				                <label for="name">이름 : </label>
-				                <input type="text" id="name" name="name">
+				                <input type="text" id="name" name="name" value="${dto.name}" readonly>
 				                
 				                <label for="weight">몸무게 : </label>
-				                <input type="number" id="af_weight" name="af_weight">
+				                <input type="number" id="af_weight" name="af_weight" value="${dto.weight}" readonly>
 				            </div>
 				
 				            <hr>
@@ -171,14 +170,29 @@
 						                <button type="button" class="btn btn-primary add-exercise-button" id="addWeightExercise">운동 추가</button>
 						            </div>
 						            <div class="form-group">
-						                <label for="weightExerciseName">운동명 : </label>
+						            		<table>
+
+						           			 <c:forEach items="${weightList}" var="daily_pt"
+												varStatus="status">
+												<tr>
+													<td>운동명 : ${daily_pt.pt_name}</td>
+													<td>무게 : ${daily_pt.pt_kg}</td>
+													<td>SET수 : ${daily_pt.pt_set}</td>
+												</tr>
+		
+												
+
+											</c:forEach>
+						            		
+						            		</table>
+						                <!-- <label for="weightExerciseName">운동명 : </label>
 						                <input type="text" id="pt_name" name="pt_name[]">
 						                
 						                <label for="setCount">무게 : </label>
 						                <input type="number" id="pt_kg" name="pt_kg[]">
 						                
 						                <label for="repCount">SET수 : </label>
-						                <input type="number" id="pt_set" name="pt_set[]">
+						                <input type="number" id="pt_set" name="pt_set[]"> -->
 						            </div>
 						
 						        </div>
@@ -220,7 +234,6 @@
 	                
 				    <br>
 				
-				        </form>
 				    </div>
 				
 				

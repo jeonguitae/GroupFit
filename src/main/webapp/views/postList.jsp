@@ -63,7 +63,7 @@ div[class="table"]{
 				<fieldset>
 					<form action=".do" class="search">
 						<select name="opt">
-							<option value="send_empno">보낸사람</option>
+							<option value="send_empno">받은사람</option>
 							<option value="subject">제목</option>
 							<option value="content">내용</option>
 						</select>
@@ -81,22 +81,25 @@ div[class="table"]{
 						<thead>
 							<tr>
 								<th>삭제</th>
-								<th>번호</th>
 								<th>제목</th>
 								<th>받은사람</th>
-								<th>송신일</th>
-								<th>상태</th>
+								<th>보낸시간</th>
+								<th>읽은시간</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${list}" var="letter">
+							<c:forEach items="${list}" var="post">
 								<tr>
-									<td><input type="checkbox" name="chk" value="${letter.email_num}"/></td>
-									<td>${letter.email_num}</td>
-									<td><a href="letterDetail.do?detailid=${letter.email_num}">${letter.subject}</a></td>
-									<td>${letter.get_empno}</td>
-									<td>${letter.send_time}</td>
-									<td>${letter.get_chk}</td>
+									<td><input type="checkbox" name="chk" value="${post.email_num}"/></td>
+									<td><a href="postSendDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
+									<td>${post.name}</td>
+									<td>${post.send_time}</td>
+									<c:if test="${post.get_chk eq '1'}">
+									<td>${post.chk_time}</td>
+									</c:if>
+									<c:if test="${post.get_chk ne '1'}">
+									<td>안읽음</td>
+									</c:if>
 								</tr>
 							</c:forEach>
 						</tbody>
