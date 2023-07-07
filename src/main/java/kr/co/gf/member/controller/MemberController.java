@@ -55,10 +55,13 @@ public class MemberController {
 	@RequestMapping(value="/memdel.ajax")
 	@ResponseBody
 	public HashMap<String, Object> delete(
-			@RequestParam(value="delList[]") ArrayList<String> memdelList){
-		//array 로 받을 경우 @RequestParam 에 value 를 반드시 명시해야함
+			@RequestParam(value="delList[]") ArrayList<String> memdelList, HttpSession session){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		
 		logger.info("delList : "+memdelList);
-		return service.memdelete(memdelList);
+		return service.memdelete(memdelList, b_idx);
 	}
 
 
@@ -101,7 +104,12 @@ public class MemberController {
 	@RequestMapping(value="/memjoin.ajax")
 	@ResponseBody
 	public HashMap<String, Object> memjoin(
-			@RequestParam HashMap<String, String> params){
+			@RequestParam HashMap<String, String> params, HttpSession session){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		
+		params.put("b_idx", b_idx);
 		logger.info("params : {}",params);
 		return service.memjoin(params);
 	}
@@ -235,9 +243,7 @@ public class MemberController {
 	
 	@GetMapping(value="ptmemdetail.go")
 	public String ptmemdetailgo(String mem_no, Model model) {
-		
-		logger.info("mem_no" + mem_no);
-		
+	
 		MemberDTO dto = service.ptmemdetail(mem_no);
 		String new_photo_name = service.photomem(mem_no);
 		

@@ -31,7 +31,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>페이지 제목</h1>
+						<h1>MY PT 회원 정보</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -48,6 +48,7 @@
 		<section class="content">
 			<div class="container-fluid">
 				<div class="ptmeminfo">
+					<button class="ptmemupdate" onclick="location.href='ptmemupdate.go'">수정</button>
 					<div class="table">
 						<table>
 							<tr>
