@@ -3,4 +3,32 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
    <mapper namespace="kr.co.gf.member.dao.PtMemberDAO">
+   
+   <insert 
+   		useGeneratedKeys="true"
+      	keyColumn="dailypt_no"
+      	keyProperty="dailypt_no"
+   		id="submitdailypt"
+   		parameterType="dailypt">
+   		
+   		insert into daily_pt (dailypt_no, emp_no, mem_no, aerobic,  diet, str, pt_date, af_weight)
+   		values(${dailypt_no},${emp_no},#{mem_no},#{aerobic},#{diet},#{str},#{pt_date},#{af_weight})
+   
+   </insert>
+   
+   <insert id="writeWeight">
+   insert into pt_weight (dailypt_no, pt_name, pt_kg, pt_set) 
+   		values(#{param1},#{param2},#{param3},#{param4})
+      
+   </insert>
+   
+   
+   <select id="dailyptlist" resultType="dailypt">
+		SELECT 
+			dailypt_no , mem_no , pt_date, emp_no
+		FROM daily_pt 
+	</select>
+   
+   
+   
    </mapper>
