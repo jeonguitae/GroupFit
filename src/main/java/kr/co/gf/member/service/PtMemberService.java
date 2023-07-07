@@ -62,13 +62,28 @@ public class PtMemberService {
 	        }
 		}
 		
-		// page = "redirect:/approvalAllList.do";
-		return "dailyptForm";
+		page = "redirect:/dailyptt";
+		return page;
 	}
 
 	public ArrayList<PtMemberDTO> dailyptlist() {
 
 		return dao.dailyptlist();
+	}
+
+	public ArrayList<PtMemberDTO> dailyptwritego(String loginId) {
+		
+		return dao.dailyptwritego(loginId);
+	}
+
+	public PtMemberDTO dailyPtDetail(String dailypt_no) {
+		
+		return dao.dailyPtDetail(dailypt_no);
+	}
+
+	public ArrayList<PtMemberDTO> weightList(String dailypt_no) {
+		// TODO Auto-generated method stub
+		return dao.weightList(dailypt_no);
 	}
 	
 }

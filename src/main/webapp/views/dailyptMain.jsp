@@ -84,6 +84,7 @@ tfoot td {
 										<thead class="table-light">
 											<tr>
 												<th>no</th>
+												<th>이름</th>
 												<th>회원번호</th>
 												<th>운동일자</th>
 												<th>트레이너</th>
@@ -96,7 +97,7 @@ tfoot td {
 
 												<tr>
 													<td>${daily_pt.dailypt_no}</td>
-													<%--  <td>${daily_pt.name}</td> --%>
+													<td><a href="dailyPtDetail.do?dailypt_no=${daily_pt.dailypt_no}">${daily_pt.name}</a></td>
 													<td>${daily_pt.mem_no}</td>
 													<td>${daily_pt.pt_date}</td>
 													<td>${daily_pt.emp_no}</td>

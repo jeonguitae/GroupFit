@@ -27,15 +27,7 @@ public class PtMemberController {
 	
 	@Autowired PtMemberService service;
 	
-	
-	
-	@RequestMapping(value = "/dailypt")
-	public String dailypt() {
-		
-		return "dailyptForm";
-	}
-	
-	
+	//리스트
 	@RequestMapping(value = "/dailyptt")
 	public String dailyptMain(Model model) {
 		
@@ -44,7 +36,7 @@ public class PtMemberController {
 		//logger.info("dailyptlist : "+dailyptlist);
 		for (PtMemberDTO dto : dailyptlist) {
 		    System.out.println(dto.getMem_no()); // mem_no 값 출력
-		    System.out.println(dto.getDailypt_no());// name 값 출력
+		    System.out.println(dto.getDailypt_no());
 		    // 나머지 필드에 대해서도 필요한 작업 수행
 		}
 
@@ -52,6 +44,21 @@ public class PtMemberController {
 		model.addAttribute("dailyptlist", dailyptlist);
 		
 		return "dailyptMain";
+	}
+	
+	//작성폼
+	@RequestMapping(value = "/dailypt.go")
+	public String dailypt(Model model, HttpSession session) {
+		
+		String loginId = (String)session.getAttribute("loginId");
+		
+		ArrayList<PtMemberDTO> dailypt = service.dailyptwritego(loginId);	
+		
+		
+		model.addAttribute("dailypt", dailypt);
+		
+		
+		return "dailyptForm";
 	}
 	
 	
@@ -74,7 +81,25 @@ public class PtMemberController {
 	}
 	
 	
+	@RequestMapping(value="/dailyPtDetail.do")
+	public String dailyPtDetail(@RequestParam String dailypt_no, Model model) {
+		String page = "redirect:/dailyptt";
 	
+		logger.info("dailypt_no : "+dailypt_no);
+		
+		PtMemberDTO dto = service.dailyPtDetail(dailypt_no);
+		
+		model.addAttribute("dto", dto);
+		
+		ArrayList<PtMemberDTO> list = new ArrayList<PtMemberDTO>();
+		list = service.weightList(dailypt_no);
+		model.addAttribute("weightList",list);
+		if(dto != null) {
+			page = "dailyPtDetail";
+		}
+		
+		return page;
+	}
 	
 	
 	

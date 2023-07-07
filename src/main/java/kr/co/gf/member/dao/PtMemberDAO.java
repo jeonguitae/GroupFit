@@ -16,6 +16,12 @@ public interface PtMemberDAO {
 
 	ArrayList<PtMemberDTO> dailyptlist();
 
+	ArrayList<PtMemberDTO> dailyptwritego(String loginId);
+
+	PtMemberDTO dailyPtDetail(String dailypt_no);
+
+	ArrayList<PtMemberDTO> weightList(String dailypt_no);
+
 
 
 }

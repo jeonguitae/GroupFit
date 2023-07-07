@@ -18,10 +18,14 @@ public class PtMemberDTO {
 	private String af_weight;
 	private String name;
 	
+	private int regt_idx;
+	
 	private int weight_no;
 	private String pt_name;
 	private String pt_kg;
 	private String pt_set;
+	
+	
 	
 	
 	public int getDailypt_no() {
@@ -107,6 +111,12 @@ public class PtMemberDTO {
 	}
 	public void setPt_set(String pt_set) {
 		this.pt_set = pt_set;
+	}
+	public int getRegt_idx() {
+		return regt_idx;
+	}
+	public void setRegt_idx(int regt_idx) {
+		this.regt_idx = regt_idx;
 	}
 	
 	

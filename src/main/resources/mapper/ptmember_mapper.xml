@@ -24,9 +24,37 @@
    
    
    <select id="dailyptlist" resultType="dailypt">
-		SELECT 
-			dailypt_no , mem_no , pt_date, emp_no
-		FROM daily_pt 
+		SELECT
+		    dp.dailypt_no, dp.mem_no, dp.pt_date, dp.emp_no, m.name
+		FROM
+		    daily_pt dp
+		JOIN
+		    member m ON dp.mem_no = m.mem_no
+		        
+	</select>
+	
+	
+	<select id="dailyptwritego" resultType="dailypt" >
+		
+		SELECT
+		    pt.regt_idx, pt.mem_no, m.name
+		FROM
+		    pt_mem pt
+		JOIN
+		    registered_ticket r ON pt.mem_no = r.mem_no
+		JOIN
+		    member m ON m.mem_no = r.mem_no
+		WHERE
+		    r.emp_no = #{loginId};
+	</select>
+	
+	
+	 <select id="weightList" resultType="dailypt">
+		SELECT
+		    pt_date, pt_kg, pt_set
+		FROM
+		    pt_weight
+		        
 	</select>
    
    
