@@ -34,10 +34,12 @@ public class MainController {
 			mav.setViewName("main");
 		}
 		Cookie[] cookieList = request.getCookies();
-		for(Cookie cookie : cookieList) {
-			if(cookie.getName().equals("idRemember")) {
-				logger.info("ID 쿠키 확인됨: {}", cookie.getValue());
-				mav.addObject("rememberedId", cookie.getValue());
+		if (cookieList != null) {
+			for(Cookie cookie : cookieList) {
+				if(cookie.getName().equals("idRemember")) {
+					logger.info("ID 쿠키 확인됨: {}", cookie.getValue());
+					mav.addObject("rememberedId", cookie.getValue());
+				}
 			}
 		}
 		return mav;
