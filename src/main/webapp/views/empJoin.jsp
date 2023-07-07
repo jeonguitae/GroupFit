@@ -25,8 +25,14 @@
 		<form action="empJoin.do" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
-					<th>직원사진</th>
-					<td><input type="file" name="files" multiple="multiple"/></td>
+					<th>
+						<img src="img/GroupFit_lg_2.png" alt="그룹핏"
+							 width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
+					</th>
+					<td>
+						<input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
+						<img id="preview" style="max-width: 200px; max-height: 200px;">
+					</td>
 				</tr>
 				<tr>
 					<th>*사내번호</th>
@@ -108,5 +114,14 @@
 var now = new Date();
 document.getElementById('join_year').valueAsDate = now;
 
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#preview').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 </script>
 </html>

@@ -25,9 +25,11 @@ public interface EmpDAO {
 	
 	int emp_join(EmpDTO dto);
 	
-	void emp_fileWrite(int c_idx, String ori_photo_name, String new_photo_name, int board_num);
+	void emp_fileWrite(int c_idx, String ori_photo_name, String new_photo_name, String emp_no);
 
 	EmpDTO emp_detail(String detailid);
+	
+	String emp_photo(String detailid);
 
 	int emp_update(EmpDTO dto);
 
@@ -35,6 +37,7 @@ public interface EmpDAO {
 
 	void emp_hide(List<String> hideList);
 
+	
 	
 
 	

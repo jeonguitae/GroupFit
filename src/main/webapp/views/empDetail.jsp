@@ -18,6 +18,9 @@
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+
+</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
 
@@ -25,7 +28,7 @@
 		<h3>직원 프로필 상세보기</h3>
 			<table>
 				<tr>
-					<input type="file" name="emp_photo"/>
+					<img width="500" height="500" src = "/photo/${emp.new_photo_name}" readonly/>
 				</tr>
 				<tr>
 					<th>*사내번호</th>
@@ -85,9 +88,10 @@
 					<td><input type="text" name="retire_year" value="${emp.retire_year}" readonly/></td>
 				</tr>
 				</c:if>
-				<button type="button" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">수정</button>
-				<button type="button" onclick="location.href='./empList.go'">목록</button>	
-				<button type="button" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>	
+				<button type="button" class="btn" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">수정</button>
+				<button type="button" class="btn" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
+				<br>
+				<button type="button" class="btn" onclick="location.href='./empList.go'">목록</button>	
 			</table>
 		</div>
 </body>
