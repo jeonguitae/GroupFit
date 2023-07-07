@@ -4,6 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+	div.meminfo. div.memprofile{
+		float: center;
+	}
+</style>
 <meta charset="UTF-8">
 <title>여기에 페이지 이름 입력</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -18,27 +23,6 @@
 <link rel="stylesheet"
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
-
-<style>
-
-	table, th, td{
-		border: 1px solid white;
-	}
-
-	th{
-		width: 80px;
-		height: 20px;
-	}
-	
-	td{
-		width: 80px;
-		height: 80px;
-	}
-	
-	div[class="first_row"], div[class="second_row"]{
-		display: inline;
-	}
-</style>
 </head>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
@@ -47,7 +31,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>페이지 제목</h1>
+						<h1>라커 관리</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -59,14 +43,250 @@
 				</div>
 			</div>
 			<!-- /.container-fluid -->
-		</section>
+			</section>
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
+			
+				<button class="cng" onclick="openModal2()">라커변경</button>
+				<button class="fix" onclick="openModal()">상태변경</button>
+			
+				<div class="first_row" style="display : flex;">
+					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">2</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">3</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">4</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">5</div> -->
+				</div>
 				
+				<br/>
+				
+				<div class="second_row" style="display : flex;">
+					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">2</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">3</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">4</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">5</div> -->
+				</div>
+				
+				<br/>
+				
+				<div class="third_row" style="display : flex;">
+					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">2</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">3</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">4</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">5</div> -->
+				</div>
+				
+				<br/>
+				
+				<div class="fourth_row" style="display : flex;">
+					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">2</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">3</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">4</div>
+					<div style="width: 150px; height: 150px; border: 1px solid white">5</div> -->
+				</div>
+				
+				 <div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h5 class="modal-title" id="event-modal-label">라커 상태변경</h5>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        <div class="modal-body">
+				          <form id="event-form">
+				            <div class="form-group">
+				              <label for="event-name">라커 번호</label>
+				              <input type="text" class="form-control" id="loc_no" name="loc_no" placeholder="라커번호를 입력하세요">
+				            </div>
+				
+				            <div class="form-group">
+				              <label for="start-datetime">상태 변경</label>
+				              <!-- <input id="start_time" type="datetime-local" class="form-control" name="start_time"> -->
+				              <select name="status">
+				              		<option value="미사용">미사용</option>
+				              		<option value="점검중">점검중</option>
+				              </select>
+				            </div>
+				          </form>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				          <button type="button" class="btn btn-primary" id="save-event-btn">저장</button>
+				        </div>
+				      </div>
+				   </div>
+				</div>
+				
+				<div class="modal fade" id="event-modal2" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h5 class="modal-title" id="event-modal-label">회원 라커 변경</h5>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        <div class="modal-body">
+				          <form id="event-form">
+				            <div class="form-group">
+				              <label for="event-name">회원 번호</label>
+				              <input type="text" class="form-control" id="mem_no" name="mem_no" placeholder="회원번호를 입력하세요">
+				            </div>
+				
+				            <div class="form-group">
+				              <label for="start-datetime">라커 번호</label>
+				              <!-- <input id="start_time" type="datetime-local" class="form-control" name="start_time"> -->
+				              <input type="text" class="form-control" id="loc_no2" name="loc_no" placeholder="라커번호를 입력하세요">
+				            </div>
+				          </form>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				          <button type="button" class="btn btn-primary" id="save-event-btn2">저장</button>
+				        </div>
+				      </div>
+				   </div>
+				</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
+<script>
+
+loclist();
+
+function loclist(){
+	$.ajax({
+		type:'get',
+		url:'loclist.ajax',
+		data:{},
+		dataType:'json',
+		success:function(data){
+			loclistDraw(data.list);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});	
+}
+
+function loclistDraw(loclist){
+	
+
+		loclist.forEach(function(item,index){
+				var content = '';
+				var name = '';
+				var mem_no = '';
+				
+				if(item.name != null){
+					
+					name = item.name;
+				}
+				
+				if(item.mem_no != 0){
+					
+					mem_no = '(' + item.mem_no + ')';
+				}
+
+				content += '<div style="text-align: center; width: 150px; height: 150px; border: 1px solid white; margin: 5px">' + '라커번호 : ' + item.loc_no + '<hr/>' + item.status + '<br/>' + name + mem_no + '</div>';
+				console.log(index);
+			if(index >= 0 && index <= 4){
+				
+				
+				//$('.first_row').empty();
+				$('.first_row').append(content);
+			}
+			
+			if(index >= 5 && index <= 9){
+				
+				//$('.second_row').empty();
+				$('.second_row').append(content);
+			}
+			
+			if(index >= 10 && index <= 14){
+				
+				//$('.third_row').empty();
+				$('.third_row').append(content);
+			}
+
+			if(index >= 15 && index <= 19){
+				
+				//$('.fourth_row').empty();
+				$('.fourth_row').append(content);
+			}
+		});
+}
+
+function openModal() {
+    $('#event-modal').modal('show');
+  }
+  
+function openModal2() {
+    $('#event-modal2').modal('show');
+  }
+  
+$(document).on('click', '#save-event-btn', function() {
+    // 데이터 추출
+    var loc_no = $('#loc_no').val();
+    var status = $('select[name="status"]').val();
+    
+    // AJAX 요청
+    $.ajax({
+      type: 'POST',
+      url: 'loc_status.ajax',
+      data: {
+    	  'loc_no' : loc_no,
+    	  'status' : status
+      },
+      success: function(data) {
+        alert(data.alert);
+        $('#event-modal').modal('hide');
+        location.href = 'loclist.go';
+      },
+      error: function(e) {
+        console.log(e);
+      }
+    });
+  });
+  
+$(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
+    $('#event-modal').modal('hide');
+  });
+  
+$(document).on('click', '#save-event-btn2', function() {
+    // 데이터 추출
+    var loc_no = $('#loc_no2').val();
+    var mem_no = $('#mem_no').val();
+    
+    // AJAX 요청
+    $.ajax({
+      type: 'POST',
+      url: 'loc_no_cng.ajax',
+      data: {
+    	  'loc_no' : loc_no,
+    	  'mem_no' : mem_no
+      },
+      success: function(data) {
+        alert(data.alert);
+        $('#event-modal2').modal('hide');
+        location.href = 'loclist.go';
+      },
+      error: function(e) {
+        console.log(e);
+      }
+    });
+  });
+  
+$(document).on('click', '#event-modal2 .close, #event-modal2 .modal-footer .btn-secondary', function() {
+    $('#event-modal2').modal('hide');
+  });
+
+</script>
 </html>
