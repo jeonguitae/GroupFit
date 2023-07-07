@@ -79,6 +79,7 @@
 			  ,b.b_name 
 			  ,e.position
 			  ,e.status
+			  ,e.join_year
 		FROM emp e
 		LEFT JOIN branch b on e.b_idx = b.b_idx
 		<where>
@@ -100,14 +101,22 @@
 	</select>
 
    <insert id="emp_join" parameterType="emp">
-		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, start_conterm, end_conterm, status, join_year, retire_year, b_idx)
+		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, status, join_year, retire_year, b_idx)
 		values(#{emp_no},#{pw},#{name},#{gender}, #{birth},
-		#{phone},#{email},#{position},#{start_conterm},#{end_conterm},#{status},#{join_year},#{retire_year},#{b_idx})
+		#{phone},#{email},#{position},#{status},#{join_year},#{retire_year},#{b_idx})
 	</insert>
 	
+	<insert id="emp_fileWrite">
+		insert into wphoto(c_idx,new_photo_name,ori_photo_name,board_num)
+		values(#{c_idx}, #{new_photo_name},#{ori_photo_name},#{emp_no})
+	</insert>
 	
 	<select id="emp_detail" resultType="emp">
 		SELECT * FROM emp WHERE emp_no = #{param1}
+	</select>
+	
+	<select id="emp_photo" resultType="emp">
+		SELECT * FROM wphoto WHERE board_num = #{param1} AND c_idx = 1
 	</select>
 	
 	<update id="emp_update" parameterType="emp">
@@ -119,12 +128,9 @@
 			, phone = #{phone}
 			, email = #{email}
 			, position = #{position}
-			, start_conterm = #{start_conterm}
-			, end_conterm = #{end_conterm}
 			, status = #{status}
 			, join_year = #{join_year}
 		WHERE emp_no = #{emp_no}
-	
 	</update>
 	
 	<!-- 상세에서 삭제 -->

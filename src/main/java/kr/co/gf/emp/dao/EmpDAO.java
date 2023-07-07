@@ -24,14 +24,21 @@ public interface EmpDAO {
 	ArrayList<EmpDTO> emp_retirelist();
 	
 	int emp_join(EmpDTO dto);
+	
+	void emp_fileWrite(int c_idx, String ori_photo_name, String new_photo_name, String emp_no);
 
 	EmpDTO emp_detail(String detailid);
+	
+	String emp_photo(String detailid);
 
 	int emp_update(EmpDTO dto);
 
 	int emp_delete(String detailid);
 
 	void emp_hide(List<String> hideList);
+
+	
+	
 
 	
 

@@ -3,6 +3,8 @@ package kr.co.gf.mail.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ public class MailService {
 	@Autowired
 	PasswordEncoder encoder;
 
+	//보낸 쪽지
 	public ModelAndView post_sendList(String send_empno) {
 		
 		ArrayList<MailDTO> list = dao.post_sendList(send_empno);
@@ -35,6 +38,23 @@ public class MailService {
 		ModelAndView mav = new ModelAndView();
 		
 		String page = "postList";
+
+		mav.addObject("list",list);
+		logger.info("list"+list);
+
+		mav.setViewName(page);
+		
+		return mav;
+	}
+	
+	//받은 쪽지
+	public ModelAndView post_getList(String get_empno) {
+		
+		ArrayList<MailDTO> list = dao.post_getList(get_empno);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String page = "postGetList";
 		
 		mav.addObject("list",list);
 		mav.setViewName(page);
@@ -67,6 +87,21 @@ public class MailService {
 		
 		return mav;
 	}
+
+	public MailDTO post_sendDetail(String emailid, String flag) {
+		
+		if(flag.equals("detail")) {
+			dao.post_upHit(emailid);
+		}
+		
+		return dao.post_sendDetail(emailid);
+	}
+
+	public MailDTO post_get(String emailid) {
+		
+		return dao.post_get(emailid);
+	}
+
 
 
 }

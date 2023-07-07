@@ -77,6 +77,7 @@ div[class="table"]{
 						<th>지점</th>
 						<th>직급</th>
 						<th>재직상태</th>
+						<th>입사일</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -88,6 +89,7 @@ div[class="table"]{
 							<td>${emp.b_name}</td>
 							<td>${emp.position}</td>
 							<td>${emp.status}</td>
+							<td>${emp.join_year}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -25,7 +25,14 @@
 		<form action="empJoin.do" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
-					<input type="file" name="emp_photo"/>
+					<th>
+						<img src="img/GroupFit_lg_2.png" alt="그룹핏"
+							 width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
+					</th>
+					<td>
+						<input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
+						<img id="preview" style="max-width: 200px; max-height: 200px;">
+					</td>
 				</tr>
 				<tr>
 					<th>*사내번호</th>
@@ -80,13 +87,6 @@
 					</td>
 				</tr>
 				<tr>
-					<th>*계약기간</th>
-					<td>
-						<input type="date" id="start_conterm" name="start_conterm"/>부터
-						<input type="date" id="end_conterm" name="end_conterm"/>까지
-					</td>
-				</tr>
-				<tr>
 					<th>*재직상태</th>
 					<td>
 						<select name="status">
@@ -112,10 +112,16 @@
 </body>
 <script>
 var now = new Date();
-
-document.getElementById('start_conterm').valueAsDate = now;
-document.getElementById('end_conterm').valueAsDate = new Date(now.setFullYear(now.getFullYear() + 1));
 document.getElementById('join_year').valueAsDate = now;
 
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#preview').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 </script>
 </html>

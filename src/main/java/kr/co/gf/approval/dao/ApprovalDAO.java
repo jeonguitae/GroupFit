@@ -48,6 +48,10 @@ public interface ApprovalDAO {
 
 	ArrayList<ApprovalDTO> detailFiles(String a_idx);
 
+	int vacationRequestWrite(ApprovalDTO dto);
+
+	void vacationRequestWriteDown(ApprovalDTO dto);
+
 	
 
 

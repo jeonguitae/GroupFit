@@ -28,18 +28,20 @@ public class MailController {
 	
 	@Autowired PasswordEncoder encoder;
 	
-//	// 보낸쪽지 검색
-//	@RequestMapping(value="/sendList.go")
-//	public ModelAndView sendList(
-//			@RequestParam HashMap<String, String> params) {
-//		logger.info("params : "+params);
-//		return service.letter_sendList(params);
-//	}
 	
+	// 보낸 쪽지
 	@GetMapping(value="/postSendList.go")
 	public ModelAndView sendList(HttpSession session) {
 		String send_empno = (String)session.getAttribute("loginId");
+
 		return service.post_sendList(send_empno);
+	}
+
+	// 받은 쪽지
+	@GetMapping(value="/postGetList.go")
+	public ModelAndView getList(HttpSession session) {
+		String get_empno = (String) session.getAttribute("loginId");
+		return service.post_getList(get_empno);
 	}
 	
 	@GetMapping(value="/postSendWrite.go")
@@ -56,6 +58,34 @@ public class MailController {
 		logger.info("params: "+params);
 		
 		return service.post_sendWrite(params, rAttr);
+	}
+	
+	@GetMapping(value="/postSendDetail.do")
+	public ModelAndView postSendDetail(@RequestParam String emailid) {
+		logger.info("emailid :"+emailid);
+		
+		MailDTO dto = service.post_sendDetail(emailid,"detail");
+		String page = "redirect:/postSendList.go";
+		
+		if(dto != null) {
+			page = "postSendDetail";
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(page);
+		mav.addObject("post",dto);
+		
+		return mav;
+	}
+	
+	@GetMapping(value="/postGetWrite.go")
+	public ModelAndView postGetWrite(HttpSession session, String emailid) {
+		
+		ModelAndView mav = new ModelAndView("postGetWrite");
+		session.setAttribute("post", service.post_get(emailid));
+		// 직원정보를 담고 있는 loginEmp (loginController)
+		mav.addObject("emp",session.getAttribute("loginEmp"));
+		return mav;
 	}
 	
 }
