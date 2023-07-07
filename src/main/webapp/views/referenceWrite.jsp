@@ -50,8 +50,10 @@
 						</tr>
 						<tr>
 							<th>작성자</th>
-							<td><input type="text" name="emp_no1" value="${loginName}" readonly="readonly"/></td>
-							<td><input type="hidden" name="emp_no" value="${loginId}" readonly="readonly"/></td>
+							<td>
+								<input type="text" name="emp_no1" value="${loginName}" readonly="readonly"/>
+								<input type="hidden" name="emp_no" value="${loginId}" readonly="readonly"/>
+							</td>
 						</tr>
 						<tr>	
 							<th>내용</th>
@@ -64,7 +66,7 @@
 						<tr>
 							<th colspan="2">
 								<button>작성</button>
-								<button type="button" onclick="location.href='reference.do'">취소</button>
+								<button type="button" onclick="location.href='referenceList.do'">취소</button>
 							</th>
 						</tr>
 					</table>

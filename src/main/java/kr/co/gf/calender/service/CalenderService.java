@@ -33,6 +33,45 @@ public class CalenderService {
 		return dao.calendarlist();
 	}
 
+
+
+	public void updateEvent(CalenderDTO dto) {
+		dao.updateEvent(dto);
+		
+	}
+
+
+
+	public void deletecalendar(CalenderDTO dto) {
+		dao.deletecalendar(dto);
+		
+	}
+
+
+
+	public List<CalenderDTO> branchCalendarlist(String b_idx) {
+		
+		return dao.branchCalendarlist(b_idx);
+	}
+	
+	
+	public ArrayList<CalenderDTO> branchCalendar(String branchYear, String branch) {
+	      return dao.branchCalendar(branchYear,branch);
+	   }
+
+
+	public ArrayList<CalenderDTO> CalendarBranchList() {
+		
+		return dao.CalendarBranchList();
+	}
+
+
+
+	public ArrayList<CalenderDTO> selectedBranch(String b_idx, String branch) {
+		
+		return dao.selectedBranch(b_idx, branch);
+	}
+
 		
 	}
 	

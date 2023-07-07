@@ -3,4 +3,66 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
    <mapper namespace="kr.co.gf.mail.dao.MailDAO">
+   
+   	<!-- 보낸쪽지 리스트 검색 -->
+	<select id="post_sendList" resultType="mail" 
+		parameterType="String">
+		select e.name
+			  ,p.subject
+			  ,p.content
+			  ,p.send_time
+			  ,p.get_chk
+			  ,p.send_empno
+			  ,p.email_num
+			  ,p.chk_time
+		from emp e
+		, post p
+		where p.send_empno = #{send_empno} AND e.emp_no in (select get_empno from post where send_empno = #{send_empno})
+		group by p.email_num
+	</select>
+	
+   	<!-- 받은쪽지 리스트 검색 -->
+	<select id="post_getList" resultType="mail" 
+		parameterType="String">
+		SELECT * FROM post
+		where get_empno = #{get_empno}
+	</select>
+
+	<insert id="post_sendWrite" parameterType="mail"
+      useGeneratedKeys="true"  
+      keyColumn="idx" 
+      keyProperty="email_num">
+	  insert into post (send_empno, get_empno, subject, content)
+	  select #{send_empno}, e.emp_no, #{subject}, #{content}
+	  from emp e
+	  where e.name = #{get_empno}
+	</insert>
+	
+	<select id="post_sendDetail" resultType="mail">
+		SELECT * FROM post
+		where email_num = #{emailid}
+	</select>
+	
+	<select id="post_get" resultType="mail">
+		SELECT * FROM post
+		where email_num = #{emailid}
+	</select>
+	
+	<update id="post_upHit">
+		UPDATE post SET 
+		get_chk = 1,
+		chk_time = now()
+	    WHERE email_num = #{emailid}
+	</update>
+			
+			
+	<!-- 받은사람no > 이름으로 불러오기 -->	
+<!-- <select id="emp_post" resultType="mail">
+		select name
+		from emp e
+		inner join post p 
+		where e.emp_no = #{get_empno}
+	</select> -->
+   
+   
    </mapper>

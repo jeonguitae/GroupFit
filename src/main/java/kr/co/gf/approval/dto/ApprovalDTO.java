@@ -4,29 +4,80 @@ import java.sql.Date;
 
 public class ApprovalDTO {
 
-	private int a_idx;
+	private String a_idx;
 	private String approval;
 	private String subject;
-	private int emp_no;
+	private String emp_no;
 	private Date write_date;
 	private String state;
 	private String manager;
 	private String top_manager;
-	private int e_idx;
+	private String e_idx;
 	private String briefs;
-	private int price;
+	private String price;
 	private String note;
-	private Date start_day;
-	private Date finish_day;
+	private String start_day;
+	private String finish_day;
 	private String reason;
 	private String content;
 	private String etc;
 	private String vacation_type;
+	private String board_num;
+	private String new_photo_name;
+	private String name;
+	private String ori_photo_name;
+	private String position;
+	private String c_idx;
+	private String p_idx;
 	
-	public int getA_idx() {
+	
+	
+	public String getP_idx() {
+		return p_idx;
+	}
+	public void setP_idx(String p_idx) {
+		this.p_idx = p_idx;
+	}
+	public String getC_idx() {
+		return c_idx;
+	}
+	public void setC_idx(String c_idx) {
+		this.c_idx = c_idx;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
+	public String getOri_photo_name() {
+		return ori_photo_name;
+	}
+	public void setOri_photo_name(String ori_photo_name) {
+		this.ori_photo_name = ori_photo_name;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getNew_photo_name() {
+		return new_photo_name;
+	}
+	public void setNew_photo_name(String new_photo_name) {
+		this.new_photo_name = new_photo_name;
+	}
+	public String getBoard_num() {
+		return board_num;
+	}
+	public void setBoard_num(String board_num) {
+		this.board_num = board_num;
+	}
+	public String getA_idx() {
 		return a_idx;
 	}
-	public void setA_idx(int a_idx) {
+	public void setA_idx(String a_idx) {
 		this.a_idx = a_idx;
 	}
 	public String getApproval() {
@@ -41,10 +92,10 @@ public class ApprovalDTO {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public int getEmp_no() {
+	public String getEmp_no() {
 		return emp_no;
 	}
-	public void setEmp_no(int emp_no) {
+	public void setEmp_no(String emp_no) {
 		this.emp_no = emp_no;
 	}
 	public Date getWrite_date() {
@@ -71,10 +122,10 @@ public class ApprovalDTO {
 	public void setTop_manager(String top_manager) {
 		this.top_manager = top_manager;
 	}
-	public int getE_idx() {
+	public String getE_idx() {
 		return e_idx;
 	}
-	public void setE_idx(int e_idx) {
+	public void setE_idx(String e_idx) {
 		this.e_idx = e_idx;
 	}
 	public String getBriefs() {
@@ -83,10 +134,10 @@ public class ApprovalDTO {
 	public void setBriefs(String briefs) {
 		this.briefs = briefs;
 	}
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	public String getNote() {
@@ -95,16 +146,16 @@ public class ApprovalDTO {
 	public void setNote(String note) {
 		this.note = note;
 	}
-	public Date getStart_day() {
+	public String getStart_day() {
 		return start_day;
 	}
-	public void setStart_day(Date start_day) {
+	public void setStart_day(String start_day) {
 		this.start_day = start_day;
 	}
-	public Date getFinish_day() {
+	public String getFinish_day() {
 		return finish_day;
 	}
-	public void setFinish_day(Date finish_day) {
+	public void setFinish_day(String finish_day) {
 		this.finish_day = finish_day;
 	}
 	public String getReason() {

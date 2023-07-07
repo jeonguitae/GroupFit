@@ -25,11 +25,17 @@ public interface NoticeDAO {
 
 	int rcount(String emp_no, String n_idx);
 
+	void photoSave(String oriName, String newName, int c_idx, int n_idx);
+
+	int ndelete(String n_idx);
+
+	int rdelete(String n_idx);
 
 
 
 
-	//void photoSave(String oriName, String newName, String c_Content, int c_idx, int n_idx);
+
+
 
 	
 

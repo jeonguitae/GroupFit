@@ -18,6 +18,9 @@
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+
+</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
 
@@ -25,7 +28,7 @@
 		<h3>직원 프로필 상세보기</h3>
 			<table>
 				<tr>
-					<input type="file" name="emp_photo"/>
+					<img width="500" height="500" src = "/photo/${emp.new_photo_name}" readonly/>
 				</tr>
 				<tr>
 					<th>*사내번호</th>
@@ -72,13 +75,6 @@
 					<td><input type="text" name="position" value="${emp.position}" readonly/></td>
 				</tr>
 				<tr>
-					<th>*계약기간</th>
-					<td>
-						<input type="text" name="start_conterm" value="${emp.start_conterm}" readonly/>부터
-						<input type="text" name="end_conterm" value="${emp.end_conterm}" readonly/>까지
-					</td>
-				</tr>
-				<tr>
 					<th>*재직상태</th>
 					<td><input type="text" name="status" value="${emp.status}" readonly/></td>
 				</tr>
@@ -86,16 +82,19 @@
 					<th>*입사일자</th>
 					<td><input type="text" name="join_year" value="${emp.join_year}" readonly/></td>
 				</tr>
-				<button type="button" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">수정</button>
-				<button type="button" onclick="location.href='./empList.go'">목록</button>	
-				<button type="button" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>	
+				<c:if test="${emp.status eq '퇴직'}">
+				<tr>
+					<th>*퇴사일자</th>
+					<td><input type="text" name="retire_year" value="${emp.retire_year}" readonly/></td>
+				</tr>
+				</c:if>
+				<button type="button" class="btn" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">수정</button>
+				<button type="button" class="btn" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
+				<br>
+				<button type="button" class="btn" onclick="location.href='./empList.go'">목록</button>	
 			</table>
 		</div>
 </body>
 <script>
-var msg = "${msg}";
-if(msg != ""){
-	alert(msg);
-}
 </script>
 </html>

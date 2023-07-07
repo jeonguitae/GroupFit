@@ -39,10 +39,6 @@ public class NoticeDTO {
 		return fix;
 	}
 
-	public String isFix() {
-		return fix;
-	}
-
 	public void setFix(String fix) {
 		this.fix = fix;
 	}
@@ -107,16 +103,16 @@ public class NoticeDTO {
 		return c_idx;
 	}
 
-	public void setC_idx(int c_idx) {
-		this.c_idx = c_idx;
+	public int setC_idx(int c_idx) {
+		return this.c_idx = c_idx;
 	}
 
 	public String getC_Content() {
 		return c_Content;
 	}
 
-	public void setC_Content(String c_Content) {
-		this.c_Content = c_Content;
+	public String setC_Content(String c_Content) {
+		return this.c_Content = c_Content;
 	}
 
 	public int getP_idx() {

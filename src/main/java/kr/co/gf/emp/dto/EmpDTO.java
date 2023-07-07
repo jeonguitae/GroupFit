@@ -15,13 +15,28 @@ public class EmpDTO {
 	private String phone;
 	private String email;
 	private String position;
-	private Date start_conterm;
-	private Date end_conterm;
 	private String status;
 	private Date join_year;
+	private Date retire_year;
 	private String b_idx;
 	private String new_photo_name;
+	private String ori_photo_name;
+	private int board_num;
 	
+	
+	
+	public String getOri_photo_name() {
+		return ori_photo_name;
+	}
+	public void setOri_photo_name(String ori_photo_name) {
+		this.ori_photo_name = ori_photo_name;
+	}
+	public int getBoard_num() {
+		return board_num;
+	}
+	public void setBoard_num(int board_num) {
+		this.board_num = board_num;
+	}
 	public String getNew_photo_name() {
 		return new_photo_name;
 	}
@@ -36,11 +51,6 @@ public class EmpDTO {
 	public void setB_name(String b_name) {
 		this.b_name = b_name;
 	}
-
-	/* 사용 안하기로 함 */
-	private int salary;
-	private String incentive;
-	/* 사용 안하기로 함 */
 	
 	public String getEmp_no() {
 		return emp_no;
@@ -91,18 +101,6 @@ public class EmpDTO {
 		this.position = position;
 	}
 
-	public Date getStart_conterm() {
-		return start_conterm;
-	}
-	public void setStart_conterm(Date start_conterm) {
-		this.start_conterm = start_conterm;
-	}
-	public Date getEnd_conterm() {
-		return end_conterm;
-	}
-	public void setEnd_conterm(Date end_conterm) {
-		this.end_conterm = end_conterm;
-	}
 	public String getStatus() {
 		return status;
 	}
@@ -121,20 +119,12 @@ public class EmpDTO {
 	public void setB_idx(String b_idx) {
 		this.b_idx = b_idx;
 	}
-	/* 사용 안하기로 함 */
-	public int getSalary() {
-		return salary;
+	public Date getRetire_year() {
+		return retire_year;
 	}
-	public void setSalary(int salary) {
-		this.salary = salary;
+	public void setRetire_year(Date retire_year) {
+		this.retire_year = retire_year;
 	}
-	public String getIncentive() {
-		return incentive;
-	}
-	public void setIncentive(String incentive) {
-		this.incentive = incentive;
-	}
-	/* 사용 안하기로 함 */
 
 	
 

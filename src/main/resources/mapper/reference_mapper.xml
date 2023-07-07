@@ -5,14 +5,16 @@
    <mapper namespace="kr.co.gf.board.dao.ReferenceDAO">
    
    <select id="list" resultType="ReferenceDTO">
-   		select * from reference
+   		select r.r_idx, e.name, r.subject,r.content,r.`date`, r.emp_no from reference r
+			left join emp e 
+		on r.emp_no = e.emp_no;
    </select>
    
    <select id="detail" resultType="ReferenceDTO" >
-   		select * from reference r
-	left join wphoto w 
-	on r.r_idx = w.board_num
-	where r.r_idx = #{r_idx}
+	   	select r.r_idx, r.emp_no, r.subject, r.content, r.`date`, e.name from reference r 
+			left join emp e 
+			on r.emp_no = e.emp_no  
+		where r.r_idx = #{r_idx};
    </select>
    
    <insert 
@@ -45,8 +47,11 @@
    </select>
    
    <select id="selectFile" resultType="String">
-   		select ori_photo_name from wphoto w where new_photo_name = #{param1};
+   		select ori_photo_name from wphoto w where w.new_photo_name = #{p_idx};
    </select>
    
+   <select id="detailFile" resultType="ReferenceDTO">
+   		select * from wphoto w where board_num = #{idx} and c_idx = 4;
+   </select>
    
    </mapper>

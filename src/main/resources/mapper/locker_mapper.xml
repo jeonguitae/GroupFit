@@ -3,4 +3,41 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
    <mapper namespace="kr.co.gf.board.dao.LockerDAO">
+   
+   <select id="loclist" resultType="locker">
+   		SELECT l.loc_no, l.status, m.name, m.mem_no 
+   		FROM locker l LEFT JOIN member m 
+   		ON l.loc_num = m.loc_num
+   		WHERE b_idx = #{param1}
+   		ORDER BY l.loc_no ASC
+   </select>
+   
+   <update id="loc_status" parameterType="String">
+   		UPDATE locker SET status = #{status} WHERE b_idx = #{b_idx} AND loc_no = #{loc_no}
+   </update>
+   
+   <select id="loc_status_chk" resultType="String">
+   		SELECT l.status FROM locker l JOIN member m 
+   		ON l.loc_num = m.loc_num
+   		WHERE m.mem_no = #{param1} 
+   </select>
+   
+   <select id="chk_loc_no" resultType="int">
+   		SELECT l.loc_no FROM locker l JOIN member m 
+   		ON l.loc_num = m.loc_num
+   		WHERE m.mem_no = #{param1} 
+   </select>
+   
+   <update id="excng_loc_no">
+   		UPDATE locker SET status = '미사용' WHERE b_idx = #{param1} AND loc_no = #{param2}
+   </update>
+   
+   <update id="update_loc_no" parameterType="String">
+   		UPDATE member SET loc_num = #{loc_no} WHERE mem_no = #{mem_no}
+   </update>
+   
+   <update id="update_loc_status" parameterType="String">
+   		UPDATE locker SET status = '사용중' WHERE b_idx = #{b_idx} AND loc_no = #{loc_no}
+   </update>
+   
    </mapper>
