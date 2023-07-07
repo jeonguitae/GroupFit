@@ -19,11 +19,13 @@ public interface ReferenceDAO {
 
 	void fileWrite(int c_idx, String ori_photo_name, String new_photo_name, int board_num);
 
-	void write(ReferenceDTO dto);
+	int write(ReferenceDTO dto);
 
 	String selectName(String loginId);
 
 	String selectFile(String path);
+
+	ArrayList<ReferenceDTO> detailFile(String idx);
 
 
 	

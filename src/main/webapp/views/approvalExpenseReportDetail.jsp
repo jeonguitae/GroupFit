@@ -77,6 +77,42 @@
 	    width: 100px;
 	    text-align: center;
 	}
+	
+	#table3_1{
+		border: 1px solid black;
+	    border-collapse: collapse;
+	    float: right;
+	    margin-right: 9%;
+	    margin-top: 2%;
+	    text-align: center;
+	    width: 20%;
+	}
+	
+	#table3_1 th {
+	    border: 1px solid black;
+	    border-collapse: collapse;
+	    padding: 5px;
+	    text-align: center;
+	}
+	
+	#table3_1 td {
+	    border: 1px solid black;
+	    border-collapse: collapse;
+	    padding: 5px 10px;
+	    text-align: center;
+	    width: 40%;
+	}
+	
+	#tr22{
+		height: 100px;
+		vertical-align: bottom;
+	}
+	
+	#tr11{
+		vertical-align: middle;
+	}
+	
+	
 	#tr2{
 		height: 100px;
 		vertical-align: bottom;
@@ -139,13 +175,13 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
-				<h5 id="aAp" style="display: inline;"><a href="approvalEventRequest.go">이벤트결재</a></h5>
+				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
+				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
+				<h5 id="aAp"><a href="approvalEventRequest.go">이벤트신청</a></h5>
 				
 			
 				<div id="table1_div">
-					<form action="approvalExpenseReport.do" method="post" enctype="multipart/form-data">
+					<form action="approvalAccept.do?a_idx=${dto.a_idx}&approval=${dto.approval}">
 					<table id="table1">
 						<tr>
 							<th>기안자</th>
@@ -155,9 +191,13 @@
 							<th>기안일</th>
 							<td>${dto.write_date }</td>
 						</tr>
+						<tr>
+							<th>결재구분</th>
+							<td>${dto.approval }</td>
+						</tr>
 					</table>
 					
-				<c:if test="${position eq 'FC' or position eq '트레이너'}">
+				<c:if test="${dto.position eq 'FC' or dto.position eq '트레이너'}">
 					<table id="table3">
 						<tr id="tr1">
 							<th rowspan="4">신청</th>
@@ -174,15 +214,15 @@
 					</table>
 					</c:if>	
 					
-					<c:if test="${position eq '지점장'}">
+					<c:if test="${dto.position eq '지점장'}">
 					<table id="table3_1">
-						<tr id="tr1" style="height: 100px;">
+						<tr id="tr11">
 							<th rowspan="3">신청</th>
 							<th>지점장</th>
 							<th rowspan="3">결재</th>
 							<th>대표</th>
 						</tr>
-						<tr id="tr2">
+						<tr id="tr22">
 							<td>${dto.name}</td>
 							<td>${dto.top_manager }</td>
 						</tr>
@@ -195,21 +235,23 @@
 				</div>
 				<table id="table2">
 					<tr>
-						<th>첨부파일</th>
-						<c:if test="${dto.new_photo_name eq null}">
-							<td>첨부파일이 없습니다.</td>
-						</c:if>
-						<c:if test="${dto.new_photo_name ne null}">
-							<td>${dto.ori_photo_name}</td>
-						</c:if>
+						<th style="text-align: center;">첨부파일</th>
+						<td colspan="2">
+							<c:if test="${empty list}">
+								첨부파일이 없습니다...
+							</c:if>	
+							<c:forEach items="${list }" var="files">
+								<a href="download.do?path=${files.new_photo_name}&idx=${files.board_num}">${files.ori_photo_name}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+							</c:forEach>
+						</td>
 					</tr>
 					<tr id="cols">
 						<th>적요</th>
 						<th>금액</th>
 						<th>비고</th>
 					</tr>
-					<c:forEach items="${list}" var="expen">
-						<tr>
+					<c:forEach items="${jgb}" var="expen">
+						<tr style="text-align: center;">
 							<td>${expen.briefs }</td>
 							<td>${expen.price }</td>
 							<td>${expen.note }</td>
@@ -217,6 +259,12 @@
 					</c:forEach>
 				</table>
 				<div id="button_sin_mok">
+					<c:if test="${position eq '지점장' or position eq '대표'}">
+						<button id="su" onclick="location.href=''">승인</button>
+					</c:if>
+					<c:if test="${dto.emp_no eq loginId }">
+						<button type="button" id="su" onclick="location.href='approvalUpdate.do'">수정</button>
+					</c:if>
 					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>
 				</form>
@@ -227,14 +275,6 @@
 	</div>
 </body>
 <script type="text/javascript">
-
-	var currentDate = new Date();
-	var year = currentDate.getFullYear();
-	var month = currentDate.getMonth() + 1;
-	var day = currentDate.getDate();
-	
-	var dateSpan = document.getElementById("date");
-	dateSpan.textContent = year + "-" + month + "-" + day;
 
 function add() {
 	  var content = '';

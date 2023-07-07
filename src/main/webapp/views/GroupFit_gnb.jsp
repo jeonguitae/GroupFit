@@ -291,7 +291,7 @@
 										class="fas fa-file nav-icon"></i>
 										<p>결재 대기 문서</p>
 								</a></li>
-								<li class="nav-item"><a href="#" class="nav-link"> <i
+								<li class="nav-item"><a href="approvalExpectedList.do" class="nav-link"> <i
 										class="fas fa-file-signature nav-icon"></i>
 										<p>결재 예정 문서</p>
 								</a></li>

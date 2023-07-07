@@ -42,76 +42,91 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<c:if test="${loginId eq dto.emp_no}">
-					<form action="referenceUpdate.do?r_idx=${dto.r_idx}">
-						<button>수정</button>
-						<button onclick="location.href='referenceDelete.do?r_idx=${dto.r_idx}'">삭제</button>
-						<table class="table table-bordered table-hover dataTable dtr-inline">
-							<tr>
-								<th>글번호</th>
-								<td><input type="text" name="r_idx" value="${dto.r_idx}" readonly="readonly"/></td>
-							</tr>
-							<tr>
-								<th>작성자</th>
-								<td><input type="text" name="emp_no" value="${dto.name}" readonly="readonly"/></td>
-							</tr>
-							<tr>
-								<th>제목</th>
-								<td><input type="text" name="subject" value="${dto.subject}"/></td>
-							</tr>
-							<tr>
-								<th>작성일</th>
-								<td><input type="text" name="date" value="${dto.date}" readonly="readonly"/></td>
-							</tr>
-							<tr>
-								<th>내용</th>
-								<td><textarea name="content">${dto.content}</textarea></td>
-							</tr>
-							<tr>
-								<th>첨부파일</th>
-								<td><a href="download.do?path=${dto.new_photo_name}&idx=${dto.r_idx}">${dto.ori_photo_name}</a></td>
-							</tr>           
-							<tr>
-								<th colspan="2">
-									<button type="button" onclick="location.href='referenceList.do'">목록</button>
-								</th>
-							</tr>
-						</table>
-						</form>
+			<c:if test="${loginId eq dto.emp_no}">
+			<form action="referenceUpdate.do?r_idx=${dto.r_idx}">
+				<button>수정</button>
+			<button onclick="location.href='referenceDelete.do?r_idx=${dto.r_idx}'">삭제</button>
+	<table>
+		<tr>
+			<th>글번호</th>
+			<td><input type="text" name="r_idx" value="${dto.r_idx}" readonly="readonly"/></td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td><input type="text" name="emp_no" value="${dto.name}" readonly="readonly"/></td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td><input type="text" name="subject" value="${dto.subject}"/></td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td><input type="text" name="date" value="${dto.date}" readonly="readonly"/></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td><textarea name="content">${dto.content}</textarea></td>
+		</tr>
+		<tr>
+			<th>첨부파일</th>
+				<td>
+					<c:if test="${empty list}">
+						첨부파일이 없습니다...
 					</c:if>
-	<c:if test="${loginId ne dto.emp_no}">
-		<table class="table table-bordered table-hover dataTable dtr-inline">
-			<tr>
-				<th>글번호</th>
-				<td>${dto.r_idx}</td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td>${dto.name}</td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td>${dto.subject}</td>
-			</tr>
-			<tr>
-				<th>작성일</th>
-				<td>${dto.date}</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td>${dto.content}</td>
-			</tr>
-			<tr>
-				<th>첨부파일</th>
-				<td><a href="download.do?path=${dto.new_photo_name}&idx=${dto.r_idx}">${dto.ori_photo_name}</a></td>
-			</tr>           
-			<tr>
-				<th colspan="2">
-					<button type="button" onclick="location.href='referenceList.do'">목록</button>
-				</th>
-			</tr>
-		</table>
+					<c:forEach items="${list }" var="files">
+						<a href="download.do?path=${files.new_photo_name}&idx=${files.board_num}">${files.ori_photo_name}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					</c:forEach>
+				</td>
+		</tr>           
+		<tr>
+			<th colspan="2">
+				<button type="button" onclick="location.href='referenceList.do'">목록</button>
+			</th>
+		</tr>
+	</table>
+	</form>
 	</c:if>
+	<c:if test="${loginId ne dto.emp_no}">
+				
+	<table >
+		<tr>
+			<th>글번호</th>
+			<td>${dto.r_idx}</td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td>${dto.name}</td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td>${dto.subject}</td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td>${dto.date}</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td>${dto.content}</td>
+		</tr>
+		<tr>
+			<th>첨부파일</th>
+				<td>
+					<c:if test="${empty list}">
+						첨부파일이 없습니다...
+					</c:if>	
+					<c:forEach items="${list }" var="files">
+						<a href="download.do?path=${files.new_photo_name}&idx=${files.board_num}">${files.ori_photo_name}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					</c:forEach>
+				</td>
+		</tr>           
+		<tr>
+			<th colspan="2">
+				<button type="button" onclick="location.href='referenceList.do'">목록</button>
+			</th>
+		</tr>
+	</table>
+			</c:if>
 			</div>
 			<!--/. container-fluid -->
 		</section>
