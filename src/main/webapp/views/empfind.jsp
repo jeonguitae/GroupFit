@@ -5,9 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>임시저장 문서함</title>
-
-
+<title>직원 리스트</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -28,14 +26,6 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>임시저장 문서함</h1>
-					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a href="#">메인</a></li>
-							<li class="breadcrumb-item active">뎁스1</li>
-							<li class="breadcrumb-item active">뎁스2</li>
-						</ol>
 					</div>
 				</div>
 			</div>
@@ -44,40 +34,38 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<table class="table table-bordered table-hover dataTable dtr-inline">
-			<thead>
-				<tr>
-			 		<th>no</th>
-			 		<th>결재구분</th>
-			 		<th>제목</th>
-			 		<th>기안일</th>
-					<td>처리상태</td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:if test="${list.size() == 0}">
-					<tr><th colspan="5">임시저장한 문서가 없습니다.</th></tr>
-				</c:if>
-				<c:forEach items="${list}" var="save">
+		<div class="table">
+			<table>
+				<thead>
 					<tr>
-						<td>${save.a_idx}</td>
-						<td>${save.approval}</td>
-						<td><a href="eventDetail.do?a_idx=${a_idx}&approval=${save.approval}">${save.subject}</a></td>
-						<td>${save.write_date}</td>
-						<td>${save.state}</td>
-					</tr>			
-				</c:forEach>
-			</tbody>
-		</table>
+						<th>사번</th>
+						<th>이름</th>
+						<th>지점</th>
+						<th>직급</th>
+						<th>재직상태</th>
+						<th>선택</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${list}" var="emp">
+						<tr>
+							<td>${emp.emp_no}</td>
+							<td>${emp.name}</td>
+							<td>${emp.b_name}</td>
+							<td>${emp.position}</td>
+							<td>${emp.status}</td>
+							<td><input type="button"></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
-<script type="text/javascript">
+<script>
 
 </script>
 </html>
-
-
-

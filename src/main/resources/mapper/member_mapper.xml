@@ -36,7 +36,7 @@
    </insert>
    
    <update id="loc_status">
-   		UPDATE locker SET status = '사용중' WHERE loc_no = #{param1}
+   		UPDATE locker SET status = '사용중' WHERE loc_no = #{param1} AND b_idx = #{param2}
    </update>
    
    <select id="mem_no" resultType="int">
@@ -140,12 +140,12 @@
    		SELECT regt_idx FROM registered_ticket WHERE mem_no = #{param1}
    </select>
    
-   <select id="loc_num" resultType="String">
+   <select id="loc_no" resultType="String">
    		SELECT loc_num FROM member WHERE mem_no = #{param1}
    </select>
    
    <update id="locker_update">
-   		UPDATE locker SET status = '미사용' WHERE loc_num = #{param1}
+   		UPDATE locker SET status = '미사용' WHERE loc_no = #{param1} AND b_idx = #{param2}
    </update>
    
    <select id="entermem" resultType="int">
@@ -191,6 +191,14 @@
    		SELECT m.mem_no, m.name, m.birth, m.gender, m.phone, pt.goal, pt.str, pt.count
    		FROM member m JOIN pt_mem pt
    		WHERE m.mem_no = pt.mem_no AND m.mem_no = #{param1}
+   </select>
+   
+   <delete id="memphotodel">
+   		DELETE FROM wphoto WHERE board_num = #{param1} AND c_idx = 2
+   </delete>
+   
+   <select id="del_new_file_name" resultType="String">
+   		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 2
    </select>
    
    </mapper>

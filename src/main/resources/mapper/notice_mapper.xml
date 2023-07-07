@@ -48,4 +48,13 @@
    	INSERT INTO wphoto(c_idx, new_photo_name, ori_photo_name, board_num)
    	VALUES(#{c_idx},#{newName},#{oriName},#{n_idx})
    </insert>
+  
+  <delete id="rdelete" parameterType="String">
+  	DELETE FROM read_list WHERE n_idx=#{n_idx} 	
+  </delete> 
+  
+   <delete id="ndelete" parameterType="String">
+   	DELETE FROM notice WHERE n_idx=#{n_idx}
+   </delete>
+   
    </mapper>

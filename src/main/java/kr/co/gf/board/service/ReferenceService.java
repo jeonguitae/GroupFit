@@ -37,11 +37,8 @@ public class ReferenceService {
 		return mav;
 	}
 
-	public ModelAndView detail(String idx) {
-		ModelAndView mav = new ModelAndView("referenceDetail");
-		ReferenceDTO dto = dao.detail(idx);
-		mav.addObject("dto", dto);
-		return mav;
+	public ReferenceDTO detail(String idx) {
+		return dao.detail(idx);
 	}
 
 /*
@@ -69,21 +66,22 @@ public class ReferenceService {
 		dto.setContent(params.get("content"));
 		// dto.setR_idx(Integer.parseInt(params.get("r_idx")));
 		
-		dao.write(dto);
+		int row = dao.write(dto);
 		
-		for (MultipartFile file : uploadFiles) {
-			logger.info("photo 있으면 false, 없으면 true :"+file.isEmpty());
-			if(file.isEmpty()==false) {
-				upload(file,dto.getBoard_num());
-				
-				try {
-					Thread.sleep(1);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+		if(row == 1) {
+			
+			for (MultipartFile file : uploadFiles) {
+				logger.info("photo 있으면 false, 없으면 true :"+file.isEmpty());
+				if(!file.isEmpty()) {
+					upload(file,dto.getBoard_num());
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-				
 			}
-		} 
+		}
 		return page;
 	}
 	
@@ -91,9 +89,8 @@ public void upload(MultipartFile uploadFile,int board_num) {
 		
 		// 1. 파일명 추출
 		String ori_photo_name = uploadFile.getOriginalFilename();
+		logger.info(ori_photo_name);
 		int c_idx = 4;
-		//ReferenceDTO dto = new ReferenceDTO();
-		//int board_num = dto.getBoard_num();
 		logger.info("board_num"+board_num);
 		
 		// 2. 새파일 생성(현재시간 + 확장자)
@@ -120,6 +117,10 @@ public String selectName(String loginId) {
 public String selectFile(String path) {
 	return dao.selectFile(path);
 	
+}
+
+public ArrayList<ReferenceDTO> detailFile(String idx) {
+	return dao.detailFile(idx);
 }
 
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -98,12 +101,20 @@ public class EmpController {
 		return new ModelAndView("empJoin");
 	}
 	
-	@PostMapping(value="/empJoin.do")
-	public ModelAndView joinDo(EmpDTO dto, RedirectAttributes rAttr) {
-		
-		logger.info("dto: " + dto.getEmp_no());
-		
-		return service.emp_join(dto, rAttr);
+//	@PostMapping(value="/empJoin.do")
+//	public String joinDo(@RequestParam HashMap<String, String>params, MultipartFile[] files, 
+//								HttpSession session) {
+//		logger.info("params값"+params);
+//		service.emp_join(params, files, session);
+//		return "redirect:/empDetail.do";
+//	
+//	}
+	
+	@RequestMapping(value="/empJoin.do")
+	public ModelAndView join(@RequestParam HashMap<String, String>params, MultipartFile file,
+							 HttpSession session, EmpDTO dto) {
+		logger.info("params:"+params);
+		return service.emp_join(params, file, session, dto);
 	}
 	
 
@@ -111,6 +122,8 @@ public class EmpController {
 	public ModelAndView detail(@RequestParam String detailid) {
 		
 		EmpDTO dto = service.emp_detail(detailid);
+		String new_photo_name = service.emp_photo(detailid);
+		dto.setNew_photo_name(new_photo_name);
 		String page ="redirect:/empList.go";
 		
 		if(dto!=null) {

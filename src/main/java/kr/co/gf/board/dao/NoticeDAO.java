@@ -27,6 +27,11 @@ public interface NoticeDAO {
 
 	void photoSave(String oriName, String newName, int c_idx, int n_idx);
 
+	int ndelete(String n_idx);
+
+	int rdelete(String n_idx);
+
+
 
 
 

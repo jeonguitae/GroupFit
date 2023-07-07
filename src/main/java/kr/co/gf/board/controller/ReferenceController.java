@@ -52,16 +52,31 @@ public class ReferenceController {
 	// 자료실 상세보기
 	@RequestMapping(value="/referenceDetail.do")
 	public ModelAndView referenceDetail(String idx, HttpSession session, Model model) {
-		logger.info("자료실 상세보기 번호 : "+idx);
-		String loginId = (String)session.getAttribute("loginId");
-		if (loginId != null && !session.getAttribute("loginId").equals("")) {
-			
-		String loginName = service.selectName(loginId);
-		model.addAttribute("loginName",loginName);
-		return service.detail(idx);
 		
+		ModelAndView mav = new ModelAndView("referenceDetail");
+		
+		logger.info("자료실 상세보기 번호 : "+idx);
+		
+		String loginId = (String)session.getAttribute("loginId");
+		if (loginId != null && !loginId.equals("")) {
+			
+			String loginName = service.selectName(loginId);
+			model.addAttribute("loginName",loginName);
+			ReferenceDTO dto = service.detail(idx); // 게시글
+		
+			if(dto != null) {
+				ArrayList<ReferenceDTO> list = service.detailFile(idx); //파일찾기
+				logger.info("-------------------------------------------------------------------------------------------------------------------------------------------- : "+list);
+				mav.addObject("dto",dto); // 게시글 내용
+				if(list.isEmpty()) {
+					mav.addObject("list",null);
+				}else {
+					mav.addObject("list",list);
+				}
+			}
+			return mav;
 		}
-		return new ModelAndView("redirect:/");
+			return new ModelAndView("redirect:/");
 	}
 	
 	// 자료실 글작성 페이지 이동
@@ -81,7 +96,8 @@ public class ReferenceController {
 	// 자료실 글작성 기능
 	@RequestMapping(value="/referenceWrite.do")
 	public String referenceWrite(@RequestParam HashMap<String,String> params, MultipartFile[] files, HttpSession session) {
-		logger.info("params 값 : "+params+files);
+		logger.info("params 값 : "+params);
+		logger.info("file 값 :"+files);
 		service.write(params,files);
 		return "redirect:/referenceList.do";
 	}
@@ -103,7 +119,12 @@ public class ReferenceController {
 	
 	@GetMapping(value="/download.do")
 	public ResponseEntity<Resource> download(String path,String idx) {
+		
+		logger.info("path 값"+path);
+		logger.info("idx 값"+idx);
+		
 		String newFileName = service.selectFile(path);
+		
 		Resource body = new FileSystemResource(root+"/"+path);//BODY		
 		HttpHeaders header = new HttpHeaders();//Header
 		try {						
@@ -114,11 +135,10 @@ public class ReferenceController {
 			// text/... 은 문자열, image/... 이미지, application/octet-stream 은 바이너리 데이터
 			header.add("Content-type", "application/octet-stream");
 			// content-Disposition 은 내려보낼 내용이 문자열(inline)인지 파일(attatchment)인지 알려준다. 
-			header.add("content-Disposition", "attatchment;fileName=\""+newFileName+"\"");
+			header.add("content-Disposition", "attachment;fileName=\""+newFileName+"\"");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			
 		//body, header, status
 		return new ResponseEntity<Resource>(body, header, HttpStatus.OK);
 	}

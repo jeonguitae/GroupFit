@@ -5,9 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>임시저장 문서함</title>
-
-
+<title>쪽지 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -28,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>임시저장 문서함</h1>
+						<h1>쪽지 상세보기</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -44,40 +42,44 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<table class="table table-bordered table-hover dataTable dtr-inline">
-			<thead>
-				<tr>
-			 		<th>no</th>
-			 		<th>결재구분</th>
-			 		<th>제목</th>
-			 		<th>기안일</th>
-					<td>처리상태</td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:if test="${list.size() == 0}">
-					<tr><th colspan="5">임시저장한 문서가 없습니다.</th></tr>
-				</c:if>
-				<c:forEach items="${list}" var="save">
-					<tr>
-						<td>${save.a_idx}</td>
-						<td>${save.approval}</td>
-						<td><a href="eventDetail.do?a_idx=${a_idx}&approval=${save.approval}">${save.subject}</a></td>
-						<td>${save.write_date}</td>
-						<td>${save.state}</td>
-					</tr>			
-				</c:forEach>
-			</tbody>
-		</table>
+					<table>
+						<tr>
+							<th>작성자</th>
+							<td><input type="text" value="${post.send_empno}" readonly/></td>
+						</tr>
+						<tr>
+							<th>보낸시간</th>
+							<td><input type="text" value="${post.send_time}" readonly/></td>
+						</tr>
+						<tr>
+							<th>제목</th>
+							<td><input type="text" name="subject" value="${post.subject}" readonly/></td>
+						</tr>
+						<tr>
+							<th>받는사람 이름</th>
+							<td>
+								<p><input type="text" name="get_empno" value="${post.get_empno}" readonly/>
+							</td>
+						</tr>
+						<tr>
+							<th>첨부파일</th>
+							<td><input type="file" name="post_photo" readonly/></td>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td>
+								<textarea name="content" readonly>${post.content}</textarea> 
+							</td>
+						</tr>
+						<button type="button" onclick="location.href='./postGetWrite.go?emailid=${post.email_num}'">회신</button>	
+						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
+					</table>
+				</form>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
-<script type="text/javascript">
-
+<script>
 </script>
 </html>
-
-
-

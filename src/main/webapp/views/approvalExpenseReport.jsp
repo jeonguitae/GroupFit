@@ -12,6 +12,7 @@
 	#aAp{
 		margin-left: 70px;
 		margin-top: 20px;
+		display: inline;
 	}	
 
 	#table1 {
@@ -77,6 +78,32 @@
 	    width: 100px;
 	    text-align: center;
 	}
+	#table3_1{
+		border: 1px solid black;
+	    border-collapse: collapse;
+	    float: right;
+	    margin-right: 9%;
+	    margin-top: 2%;
+	    text-align: center;
+	    width: 20%;
+	}
+	
+	#table3_1 th {
+	    border: 1px solid black;
+	    border-collapse: collapse;
+	    padding: 5px;
+	    text-align: center;
+	}
+	
+	#table3_1 td {
+	    border: 1px solid black;
+	    border-collapse: collapse;
+	    padding: 5px 10px;
+	    text-align: center;
+	    width: 40%;
+	}
+	
+	
 	#tr2{
 		height: 100px;
 		vertical-align: bottom;
@@ -84,6 +111,16 @@
 	#tr1{
 		vertical-align: middle;
 	}
+	
+	#tr22{
+		height: 100px;
+		vertical-align: bottom;
+	}
+	
+	#tr11{
+		vertical-align: middle;
+	}
+	
 	
 	#button_sin_mok {
 	    margin-top: 5%;
@@ -139,9 +176,9 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
-				<h5 id="aAp" style="display: inline;"><a href="approvalEventRequest.go">이벤트결재</a></h5>
+				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
+				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
+				<h5 id="aAp"><a href="approvalEventRequest.go">이벤트신청</a></h5>
 				
 			
 				<div id="table1_div">
@@ -157,6 +194,10 @@
 							<th>기안일</th>
 							<td><span id="date"></span></td>
 						</tr>
+						<tr>
+							<th>결재구분</th>
+							<td>지출결의서</td>
+						</tr>
 					</table>
 					
 				<c:if test="${position eq 'FC' or position eq '트레이너'}">
@@ -171,22 +212,22 @@
 						<tr id="tr2">
 							<td>${loginIdName}</td>
 							<td>${manager}</td>
-							<td>${top_Manager }</td>
+							<td>${top_manager }</td>
 						</tr>
 					</table>
 					</c:if>	
 					
 					<c:if test="${position eq '지점장'}">
 					<table id="table3_1">
-						<tr id="tr1" style="height: 100px;">
+						<tr id="tr11" >
 							<th rowspan="3">신청</th>
 							<th>지점장</th>
 							<th rowspan="3">결재</th>
 							<th>대표</th>
 						</tr>
-						<tr id="tr2">
+						<tr id="tr22">
 							<td>${loginIdName}</td>
-							<td>${top_Manager }</td>
+							<td>${top_manager }</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -196,6 +237,12 @@
 					<button type="button" onclick="del()">삭제</button>
 				</div>
 				<table id="table2">
+					<tr>
+						<th>제목</th>
+						<td colspan="3">
+							<input type="text" name="subject"/>
+						</td >
+					</tr>
 					<tr>
 						<th colspan="3">
 							<input type="file" name="files" multiple="multiple"/>
@@ -212,18 +259,18 @@
 						<td><input type="text" name="note[]" id="td_inp"/></td>
 					</tr>
 				</table>
+				
 				<div id="button_sin_mok">
 					<button id="sin">신청하기</button>
-					<button id="mm" onclick="location.href='approvalList.do'">임시저장</button>
-					<button id="mok" onclick="location.href='approvalAllList.do'">목록</button>
+					<button type="button" id="mm"  onclick="location.href='approvalAllList.do'">임시저장</button>
+					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>
 				<input type="hidden" name="emp_no" value="${loginId}"/>
 				<input type="hidden" name="approval" value="지출결의서"/>
-				<input type="hidden" name="subject" value="지출결의서"/>
 				<input type="hidden" name="write_date" value="${write_date}"/>
 				<input type="hidden" name="state" value="대기"/>
 				<input type="hidden" name="manager" value="${manager}"/>
-				<input type="hidden" name="top_manager" value="${top_Manager}"/>
+				<input type="hidden" name="top_manager" value="${top_manager}"/>
 				</form>
 			</div>
 		</div>	
@@ -235,8 +282,8 @@
 
 	var currentDate = new Date();
 	var year = currentDate.getFullYear();
-	var month = currentDate.getMonth() + 1;
-	var day = currentDate.getDate();
+	var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // 월이 한 자리 수일 경우 앞에 0을 추가하여 두 자리로 만듦
+	var day = ('0' + currentDate.getDate()).slice(-2); // 일이 한 자리 수일 경우 앞에 0을 추가하여 두 자리로 만듦
 	
 	var dateSpan = document.getElementById("date");
 	dateSpan.textContent = year + "-" + month + "-" + day;

@@ -14,4 +14,10 @@ public interface StatisDAO {
 
 	ArrayList<StatisDTO> branchTotalSales(String branchYear, String branch);
 
+	ArrayList<StatisDTO> empList();
+
+	ArrayList<StatisDTO> branchEmpList(String branch);
+
+	ArrayList<StatisDTO> individual(String emp_no, String year);
+
 }

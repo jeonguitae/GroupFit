@@ -55,7 +55,13 @@
 						</tr>
 						<tr>
 							<th>*받는사람 이름</th>
-							<td><input type="text" name="get_empno"/></td>
+							<td>
+								<p>
+									<input type="text" name="get_empno"/>
+									<a class="btn btn-primary" data-bs-toggle="modal"
+									data-bs-target="#search" data-shuffle> 직원 찾기 </a>&nbsp;
+								</p>
+							</td>
 						</tr>
 						<tr>
 							<th>*첨부파일</th>
@@ -76,4 +82,14 @@
 		</section>
 	</div>
 </body>
+<script>
+function new_window() {
+    window.open(
+      "empfind.html",
+      "EmpFind",
+      "width=400, height=300, top=50, left=50"
+    );
+  }
+
+</script>
 </html>
