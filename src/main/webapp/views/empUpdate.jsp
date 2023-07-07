@@ -87,13 +87,6 @@
 					</td>
 				</tr>
 				<tr>
-					<th>*계약기간</th>
-					<td>
-						<input type="date" name="start_conterm" value="${emp.start_conterm}" />부터
-						<input type="date" name="end_conterm" value="${emp.end_conterm}" />까지
-					</td>
-				</tr>
-				<tr>
 					<th>*재직상태</th>
 					<td>
 					<select name="status">

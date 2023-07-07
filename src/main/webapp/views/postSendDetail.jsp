@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쪽지 작성하기</title>
+<title>쪽지 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>쪽지 쓰기</h1>
+						<h1>쪽지 상세보기</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -42,38 +42,36 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<form action="postSendWrite.do" method="post" enctype="multipart/form-data">
 					<table>
-						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
 						<tr>
-							<th>*작성자</th>
-							<td><input type="text" value="${emp.name}" readonly/></td>
+							<th>작성자</th>
+							<td><input type="text" value="${post.send_empno}" readonly/></td>
 						</tr>
 						<tr>
-							<th>*제목</th>
-							<td><input type="text" name="subject"/></td>
+							<th>보낸시간</th>
+							<td><input type="text" value="${post.send_time}" readonly/></td>
 						</tr>
 						<tr>
-							<th>*받는사람 이름</th>
+							<th>제목</th>
+							<td><input type="text" name="subject" value="${post.subject}" readonly/></td>
+						</tr>
+						<tr>
+							<th>받는사람 이름</th>
 							<td>
-								<p>
-									<input type="text" name="get_empno"/>
-									<a class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#search" data-shuffle> 직원 찾기 </a>&nbsp;
-								</p>
+								<p><input type="text" name="get_empno" value="${post.get_empno}" readonly/>
 							</td>
 						</tr>
 						<tr>
-							<th>*첨부파일</th>
-							<td><input type="file" name="post_photo"/></td>
+							<th>첨부파일</th>
+							<td><input type="file" name="post_photo" readonly/></td>
 						</tr>
 						<tr>
-							<th>*내용</th>
+							<th>내용</th>
 							<td>
-								<textarea name="content"></textarea> 
+								<textarea name="content" readonly>${post.content}</textarea> 
 							</td>
 						</tr>
-						<input type="submit" value="보내기"/>
+						<button type="button" onclick="location.href='./postGetWrite.go?emailid=${post.email_num}'">회신</button>	
 						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
 					</table>
 				</form>
@@ -83,13 +81,5 @@
 	</div>
 </body>
 <script>
-function new_window() {
-    window.open(
-      "empfind.html",
-      "EmpFind",
-      "width=400, height=300, top=50, left=50"
-    );
-  }
-
 </script>
 </html>

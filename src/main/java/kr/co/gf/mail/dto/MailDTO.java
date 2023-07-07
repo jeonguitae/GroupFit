@@ -12,6 +12,8 @@ public class MailDTO {
 	private String content;
 	private String send_time;
 	private String get_chk;
+	private String name;
+	private String chk_time;
 	
 	public int getEmail_num() {
 		return email_num;
@@ -55,6 +57,20 @@ public class MailDTO {
 	public void setGet_chk(String get_chk) {
 		this.get_chk = get_chk;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getChk_time() {
+		return chk_time;
+	}
+	public void setChk_time(String chk_time) {
+		this.chk_time = chk_time;
+	}
+	
+	
 
 	
 	
