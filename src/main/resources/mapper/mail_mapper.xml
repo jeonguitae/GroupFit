@@ -4,21 +4,29 @@
    
    <mapper namespace="kr.co.gf.mail.dao.MailDAO">
    
+   <select id="post_sendSerch" resultType="mail" parameterType="hashmap">
+   		select * from post p
+   		left join emp e on p.send_empno = e.emp_no
+   		<where> 
+			<if test="keyword != null and !keyword.equals('') and opt == 'e_name'">
+				e.name LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="keyword != null and !keyword.equals('') and opt == 'subject'">
+				p.subject LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="keyword != null and !keyword.equals('') and opt == 'content'">
+				p.content LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			AND e.is_delete=0;					
+		</where>
+   
+   </select>
+   
    	<!-- 보낸쪽지 리스트 검색 -->
 	<select id="post_sendList" resultType="mail" 
 		parameterType="String">
-		select e.name
-			  ,p.subject
-			  ,p.content
-			  ,p.send_time
-			  ,p.get_chk
-			  ,p.send_empno
-			  ,p.email_num
-			  ,p.chk_time
-		from emp e
-		, post p
-		where p.send_empno = #{send_empno} AND e.emp_no in (select get_empno from post where send_empno = #{send_empno})
-		group by p.email_num
+		SELECT * FROM post
+		where send_empno = #{send_empno} AND is_delete=0
 	</select>
 	
    	<!-- 받은쪽지 리스트 검색 -->
@@ -54,6 +62,13 @@
 		chk_time = now()
 	    WHERE email_num = #{emailid}
 	</update>
+	
+	<insert id="post_getWrite" parameterType="mail">
+	  insert into post (send_empno, get_empno, subject, content)
+	  select #{send_empno}, e.emp_no, #{subject}, #{content}
+	  from emp e
+	  where e.name = #{get_empno}
+	</insert>
 			
 			
 	<!-- 받은사람no > 이름으로 불러오기 -->	
@@ -63,6 +78,18 @@
 		inner join post p 
 		where e.emp_no = #{get_empno}
 	</select> -->
+   
+   	<!-- 목록에서 삭제 -->
+	<update id="post_hide" parameterType="hashmap">
+      UPDATE post
+         SET is_delete = 1
+      WHERE email_num IN (
+      <foreach collection="hideList" item="item" separator=",">
+         #{item}
+      </foreach>
+      )
+   </update>
+   
    
    
    </mapper>

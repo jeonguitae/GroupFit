@@ -14,7 +14,16 @@ public class MailDTO {
 	private String get_chk;
 	private String name;
 	private String chk_time;
+	private String is_delete;
 	
+	
+	
+	public String getIs_delete() {
+		return is_delete;
+	}
+	public void setIs_delete(String is_delete) {
+		this.is_delete = is_delete;
+	}
 	public int getEmail_num() {
 		return email_num;
 	}

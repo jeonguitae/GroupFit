@@ -115,8 +115,8 @@
 		SELECT * FROM emp WHERE emp_no = #{param1}
 	</select>
 	
-	<select id="emp_photo" resultType="emp">
-		SELECT * FROM wphoto WHERE board_num = #{param1} AND c_idx = 1
+	<select id="emp_photo" resultType="String">
+		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 1
 	</select>
 	
 	<update id="emp_update" parameterType="emp">
