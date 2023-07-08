@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결재 문서함</title>
+<title>결재 대기 문서함</title>
 
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -28,7 +28,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>결재 문서함</h1>
+						<h1>결재 대기 문서함</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -48,7 +48,7 @@
 			<thead>
 				<tr>
 			 		<th>no</th>
-			 		<th>결재양식</th>
+			 		<th>결재구분</th>
 			 		<th>제목</th>
 			 		<th>신청자</th>
 			 		<th>기안일</th>
@@ -57,16 +57,16 @@
 			</thead>
 			<tbody>
 				<c:if test="${list.size() == 0}">
-					<tr><th colspan="5">결재신청이 없습니다.</th></tr>
+					<tr><th colspan="6">결재신청이 없습니다.</th></tr>
 				</c:if>
-				<c:forEach items="${list}" var="approval">
+				<c:forEach items="${list}" var="stay">
 					<tr>
-						<td>${approval.a_idx}</td>
-						<td>${approval.approval}</td>
-						<td><a href="eventDetail.do?idx=${approval.a_idx}&approval=${approval.approval}">${approval.subject}</a></td>
-						<td>${approval.name }</td>
-						<td>${approval.write_date}</td>
-						<td>${approval.state}</td>
+						<td>${stay.a_idx}</td>
+						<td>${stay.approval}</td>
+						<td><a href="eventDetail.do?a_idx=${stay.a_idx}&approval=${stay.approval}">${stay.subject}</a></td>
+						<td>${stay.name }</td>
+						<td>${stay.write_date}</td>
+						<td>${stay.state}</td>
 					</tr>			
 				</c:forEach>
 			</tbody>

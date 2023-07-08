@@ -6,6 +6,20 @@ public class StatisDTO {
 	private String month;
 	private String b_idx;
 	private String b_name;
+	private String name;
+	private String emp_no;
+	public String getEmp_no() {
+		return emp_no;
+	}
+	public void setEmp_no(String emp_no) {
+		this.emp_no = emp_no;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getB_idx() {
 		return b_idx;
 	}

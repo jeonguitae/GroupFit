@@ -70,7 +70,7 @@
 			<tr>
 				<th>사진 및 파일</th>
 				<td>
-					<input type="file" name="photo"/>
+					<input type="file" name="photos" multiple="multiple"/>
 				</td>
 			</tr>
 			<tr>

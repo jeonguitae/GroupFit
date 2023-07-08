@@ -268,6 +268,20 @@
       	});
   		
   	});
+      var options = {
+    		  hover: {
+    		    mode: null
+    		  },
+    		  scales: {
+    		    yAxes: [
+    		      {
+    		        ticks: {
+    		          beginAtZero: true
+    		        }
+    		      }
+    		    ]
+    		  }
+    		};
       
       function branchChartPrint(data){
   		labels=[];
@@ -319,17 +333,7 @@
   	                        } */
   	                    ]
   	                },
-  	                options: {
-  	                    scales: {
-  	                        yAxes: [
-  	                            {
-  	                                ticks: {
-  	                                    beginAtZero: true
-  	                                }
-  	                            }
-  	                        ]
-  	                    }
-  	                }
+  	                options:options
   	            });
   	}
       

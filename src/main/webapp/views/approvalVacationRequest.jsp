@@ -12,6 +12,7 @@
 	#aAp{
 		margin-left: 70px;
 		margin-top: 20px;
+		display: inline;
 	}	
 
 	#table1 {
@@ -133,9 +134,9 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp" style="display: inline;"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp" style="display: inline;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
-				<h5 id="aAp" style="display: inline;"><a href="approvalEventRequest.go">이벤트결재</a></h5>
+				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalVacationRequest.go">휴가신청</a></h5>
+				<h5 id="aAp"><a href="approvalExpenseReport.go">지출결의서</a></h5>
+				<h5 id="aAp" ><a href="approvalEventRequest.go">이벤트신청</a></h5>
 				
 			
 				<div id="table1_div">
@@ -149,7 +150,11 @@
 						</tr>
 						<tr>
 							<th>기안일</th>
-							<td>${write_date}</td>
+							<td><span id="date"></span></td>
+						</tr>
+						<tr>
+							<th>결재구분</th>
+							<td>휴가신청</td>
 						</tr>
 					</table>
 					
@@ -165,7 +170,7 @@
 						<tr id="tr2">
 							<td>${loginIdName}</td>
 							<td>${manager}</td>
-							<td>${top_Manager }</td>
+							<td>${top_manager }</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -180,11 +185,10 @@
 						</tr>
 						<tr id="tr2">
 							<td>${loginIdName}</td>
-							<td>${top_Manager }</td>
+							<td>${top_manager }</td>
 						</tr>
 					</table>
 					</c:if>
-				
 				
 				<table id="table2">
 					<tr>
@@ -221,7 +225,7 @@
 				<input type="hidden" name="write_date" value="${write_date}"/>
 				<input type="hidden" name="state" value="대기"/>
 				<input type="hidden" name="manager" value="${manager}"/>
-				<input type="hidden" name="top_manager" value="${top_Manager}"/>
+				<input type="hidden" name="top_manager" value="${top_manager}"/>
 				</form>
 			</div>
 		</div>	
@@ -230,5 +234,12 @@
 	</div>
 </body>
 <script type="text/javascript">
-	</script>
+	var currentDate = new Date();
+	var year = currentDate.getFullYear();
+	var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // 월이 한 자리 수일 경우 앞에 0을 추가하여 두 자리로 만듦
+	var day = ('0' + currentDate.getDate()).slice(-2); // 일이 한 자리 수일 경우 앞에 0을 추가하여 두 자리로 만듦
+	
+	var dateSpan = document.getElementById("date");
+	dateSpan.textContent = year + "-" + month + "-" + day;
+</script>
 </html>

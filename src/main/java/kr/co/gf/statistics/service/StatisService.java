@@ -31,4 +31,18 @@ public class StatisService {
 		return dao.branchTotalSales(branchYear,branch);
 	}
 
+	public ArrayList<StatisDTO> empList() {
+		return dao.empList();
+	}
+
+	public ArrayList<StatisDTO> branchEmpList(String branch) {
+		return dao.branchEmpList(branch);
+	}
+
+	public ArrayList<StatisDTO> individual(String emp_no, String year) {
+		return dao.individual(emp_no,year);
+	}
+
+	
+
 }

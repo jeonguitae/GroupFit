@@ -56,7 +56,7 @@
    
    <insert id="approvalFileWrite" >
    		insert into wphoto (c_idx,new_photo_name,ori_photo_name,board_num) 
-   		values(#{c_idx},#{new_photo_name},#{ori_photo_name},#{board_num})
+   		values(#{c_idx},#{new_photo_name},#{ori_photo_name},#{a_idx})
    </insert>
    
    <insert 
@@ -68,30 +68,31 @@
 		insert into payment (emp_no, approval, subject,  state, manager, top_manager)values(${emp_no},#{approval},#{subject},#{state},#{manager},#{top_manager})
    </insert>
    
-   <insert id="expenseReportWDown">
-   		insert into expense_report (briefs,price,note,a_idx) 
-   		values(#{briefs},#{price},#{note},#{a_idx})
-   </insert>
-   
-   <select id="eventDetail" >
-   
-	  	select e.name, p.write_date,p.manager,p.top_manager,p2.start_day,p2.finish_day,p2.reason,p2.etc, w.new_photo_name,w.ori_photo_name from payment p 
+   <select id="eventDetail" resultType="ApprovalDTO">
+	  	select p.subject, p.emp_no, p.a_idx, p.approval, e.position, e.name, p.write_date,p.manager, p.top_manager, p.state, p2.start_day, p2.finish_day, p2.reason, p2.etc from payment p
 			left join payment2 p2 
-			on p.a_idx = p2.a_idx
+			on p.a_idx = p2.a_idx 
 			left join emp e 
 			on p.emp_no = e.emp_no
-			left join wphoto w 
-			on w.c_idx = 7
 		where p.a_idx = #{a_idx} and p.approval = #{approval};
-   
    </select>
    
-   <select id="expenseReportDetail">
-   		select e.name, p.write_date,p.manager,p.top_manager,w.new_photo_name,w.ori_photo_name from payment p 
+   <select id="expenseDetail" resultType="ApprovalDTO">
+		select p.emp_no, p.a_idx, p.approval, e.position, e.name, p.write_date,p.manager, p.top_manager, p.state from payment p
 			left join emp e 
 			on p.emp_no = e.emp_no
-			left join wphoto w 
-			on w.c_idx = 7
+		where p.a_idx = #{a_idx} and p.approval = #{approval};
+   </select>
+   
+    <insert id="expenseReportWDown">
+ 		insert into expense_report (briefs,price,note,a_idx) 
+ 		values(#{briefs},#{price},#{note},#{a_idx})
+   </insert>
+   
+   <select id="expenseReportDetail" resultType="ApprovalDTO">
+   		select p.a_idx, p.approval, e.position, e.name, p.write_date,p.manager, p.top_manager  from payment p 
+			left join emp e 
+			on p.emp_no = e.emp_no
 		where p.a_idx = #{a_idx} and p.approval = #{approval}
    </select>
    
@@ -99,11 +100,30 @@
    		select * from expense_report er where er.a_idx = #{a_idx}
    </select>
    
-   <select id="approvalStayList">
-   		select e.name,p.emp_no ,p.approval,p.subject,p.write_date,p.state from payment p 
+   <select id="approvalStayList" resultType="ApprovalDTO">
+   		select p.a_idx, e.name,p.emp_no ,p.approval,p.subject,p.write_date,p.state from payment p 
 			left join emp e 
 			ON p.emp_no = e.emp_no
 		where state = '대기';
+   </select>
+   
+   <select id="approvalExpectedList" resultType="ApprovalDTO">
+   		select p.a_idx, e.name,p.emp_no ,p.approval,p.subject,p.write_date,p.state from payment p 
+			left join emp e 
+			ON p.emp_no = e.emp_no
+		where state = '예정';
+   </select>
+   
+   <update id="stayAccept">
+   		update payment p set state = '예정' where p.a_idx = ${a_idx} and p.approval = #{approval}
+   </update>
+   
+   <update id="expectedAccept">
+   		update payment p set state = '승인' where p.a_idx = ${a_idx} and p.approval = #{approval}
+   </update>
+   
+   <select id="detailFiles" resultType="ApprovalDTO">
+   		select  p_idx, c_idx, new_photo_name, ori_photo_name, board_num From wphoto w where board_num = #{a_idx} and c_idx = 7;
    </select>
    
    </mapper>

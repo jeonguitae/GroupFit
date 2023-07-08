@@ -48,7 +48,7 @@
 			<thead>
 				<tr>
 			 		<th>no</th>
-			 		<th>결재양식</th>
+			 		<th>결재구분</th>
 			 		<th>제목</th>
 			 		<th>기안일</th>
 					<td>처리상태</td>
@@ -62,7 +62,7 @@
 					<tr>
 						<td>${approval.a_idx}</td>
 						<td>${approval.approval}</td>
-						<td><a href="eventDetail.do?idx=${approval.a_idx}&approval=${approval.approval}">${approval.subject}</a></td>
+						<td><a href="eventDetail.do?a_idx=${approval.a_idx}&approval=${approval.approval}">${approval.subject}</a></td>
 						<td>${approval.write_date}</td>
 						<td>${approval.state}</td>
 					</tr>			

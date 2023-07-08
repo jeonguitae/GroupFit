@@ -20,15 +20,15 @@ public interface ApprovalDAO {
 
 	int eventRequestWrite(ApprovalDTO dto);
 
-	void approvalFileWrite(int c_idx, String ori_photo_name, String new_photo_name, int board_num);
+	void approvalFileWrite(int c_idx, String ori_photo_name, String new_photo_name, String a_idx);
 
 	ArrayList<ApprovalDTO> approvalSaveList(String loginId);
 
 	int ExpenseReportW(ApprovalDTO dto);
 
-	void eventRequestWriteDown(ApprovalDTO dto);
+	int eventRequestWriteDown(ApprovalDTO dto);
 
-	void expenseReportWDown(int a_idx, String briefs, String price, String note);
+	int expenseReportWDown(String a_idx, String briefs, String price, String note);
 
 	ApprovalDTO eventDetail(String a_idx, String approval);
 
@@ -36,7 +36,17 @@ public interface ApprovalDAO {
 
 	ApprovalDTO expenseReportDetail(String a_idx, String approval);
 
-	ArrayList<String> approvalStayList(String loginId);
+	ArrayList<ApprovalDTO> approvalStayList(String loginId);
+
+	ArrayList<ApprovalDTO> approvalExpectedList(String loginId);
+
+	void stayAccept(String a_idx, String approval);
+
+	void expectedAccept(String a_idx, String approval);
+
+	ApprovalDTO expenseDetail(String a_idx, String approval);
+
+	ArrayList<ApprovalDTO> detailFiles(String a_idx);
 
 	int vacationRequestWrite(ApprovalDTO dto);
 

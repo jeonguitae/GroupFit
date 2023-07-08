@@ -180,6 +180,7 @@
     }
       console.log("${sessionScope.loginEmp.b_name}");
       console.log("${sessionScope.loginEmp.b_idx}");
+      console.log("${sessionScope.loginEmp.position}");
   	
       
       
