@@ -55,13 +55,13 @@ public class MemberService {
 		
 		String name = params.get("name");
 		String phone = params.get("phone");
-		String loc_num = params.get("loc_num");
+		String loc_no = params.get("loc_no");
 		
 		int row = dao.memjoin(params);
 		
 		if(row == 1) {
 			
-			dao.loc_status(loc_num);
+			dao.loc_status(loc_no);
 			int mem_no = dao.mem_no(name, phone);
 			map.put("mem_no", mem_no);
 		}

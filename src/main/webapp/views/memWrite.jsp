@@ -109,7 +109,7 @@
 			         		<tr>
 								<th>라커 번호</th>
 								<td>
-									<select name="loc_num">
+									<select name="loc_no">
 										<c:forEach items="${locker}" var="name">
 											<option value="${name.loc_no}">${name.loc_no}
 										</c:forEach>

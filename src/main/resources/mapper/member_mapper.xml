@@ -31,8 +31,8 @@
    </select>
    
    <insert id="memjoin" parameterType="member"> 
-   		INSERT INTO member(name, birth, gender, phone, loc_num)
-   		VALUES(#{name}, #{birth}, #{gender}, #{phone}, #{loc_num})
+   		INSERT INTO member(name, birth, gender, phone, loc_no)
+   		VALUES(#{name}, #{birth}, #{gender}, #{phone}, #{loc_no})
    </insert>
    
    <update id="loc_status">
