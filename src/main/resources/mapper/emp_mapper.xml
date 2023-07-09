@@ -4,22 +4,82 @@
    
 <mapper namespace="kr.co.gf.emp.dao.EmpDAO">
    
-   <insert id="join" parameterType="emp">
-		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, start_conterm, end_conterm, status, join_year, b_idx)
-		values(#{emp_no},#{pw},#{name},#{gender}, #{birth},
-		#{phone},#{email},#{position},#{start_conterm},#{end_conterm},#{status},#{join_year},#{b_idx})
-	</insert>
-
-   <insert id="tempJoin" parameterType="emp">
+	<insert id="tempJoin" parameterType="emp">
 		insert into emp(emp_no, pw, name, email, phone, b_idx, position)
 		values(#{emp_no},#{pw},#{name},#{email}, #{phone}, 1, #{position})
 	</insert>
 	
-	<select id="list" resultType="emp" parameterType="emp">
+	<!-- 직원리스트 검색 -->
+	<select id="emp_listDo" resultType="emp" 
+		parameterType="hashmap">
+		SELECT * FROM emp e   
+		LEFT JOIN branch b on e.b_idx = b.b_idx
+		<where> 
+			<if test="keyword != null and !keyword.equals('') and opt == 'name'">
+				e.name LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="keyword != null and !keyword.equals('') and opt == 'b_name'">
+				b.b_name LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="keyword != null and !keyword.equals('') and opt == 'position'">
+				e.position LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			AND is_delete=0;					
+		</where>
+	</select>
+	
+	<!-- 대표지점리스트 검색 -->
+	<select id="empRep_listDo" resultType="emp" parameterType="hashmap">
+	  SELECT * FROM emp e 
+	  LEFT JOIN branch b on e.b_idx = b.b_idx
+	  <where>
+	    <if test="opt != null and opt != ''">
+	      AND b.b_name = #{opt}
+	    </if>
+	    <!-- <if test="opt == '방배'">
+	      AND b.b_name = '방배'
+	    </if>
+	    <if test="opt == '역삼'">
+	      AND b.b_name = '역삼'
+	    </if>
+	    <if test="opt == '논현'">
+	      AND b.b_name = '논현'
+	    </if> -->
+	    AND is_delete = 0
+	  </where>
+	</select>
+	
+	<!-- 대표퇴사리스트 검색 -->
+	<select id="empRep_retireListDo" resultType="emp" parameterType="emp">
 		SELECT e.emp_no
 			  ,e.name
 			  ,b.b_name 
 			  ,e.position
+			  ,e.retire_year
+		FROM emp e
+		LEFT JOIN branch b on e.b_idx = b.b_idx
+		<where> 
+			<if test="keyword != null and !keyword.equals('') and opt == 'name'">
+				e.name LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="keyword != null and !keyword.equals('') and opt == 'b_name'">
+				b.b_name LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="keyword != null and !keyword.equals('') and opt == 'position'">
+				e.position LIKE CONCAT('%',#{keyword},'%')
+			</if>
+			AND is_delete=0
+			AND status = '퇴직';
+		</where>
+	</select>
+	
+	<select id="emp_list" resultType="emp" parameterType="emp">
+		SELECT e.emp_no
+			  ,e.name
+			  ,b.b_name 
+			  ,e.position
+			  ,e.status
+			  ,e.join_year
 		FROM emp e
 		LEFT JOIN branch b on e.b_idx = b.b_idx
 		<where>
@@ -27,11 +87,39 @@
 		</where>
 	</select>
 	
-	<select id="detail" resultType="emp">
+	<select id="emp_retirelist" resultType="emp" parameterType="emp">
+		SELECT e.emp_no
+			  ,e.name
+			  ,b.b_name 
+			  ,e.position
+			  ,e.retire_year
+		FROM emp e
+		LEFT JOIN branch b on e.b_idx = b.b_idx
+		<where>
+		AND status = '퇴직';
+		</where>
+	</select>
+
+   <insert id="emp_join" parameterType="emp">
+		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, status, join_year, retire_year, b_idx)
+		values(#{emp_no},#{pw},#{name},#{gender}, #{birth},
+		#{phone},#{email},#{position},#{status},#{join_year},#{retire_year},#{b_idx})
+	</insert>
+	
+	<insert id="emp_fileWrite">
+		insert into wphoto(c_idx,new_photo_name,ori_photo_name,board_num)
+		values(#{c_idx}, #{new_photo_name},#{ori_photo_name},#{emp_no})
+	</insert>
+	
+	<select id="emp_detail" resultType="emp">
 		SELECT * FROM emp WHERE emp_no = #{param1}
 	</select>
 	
-	<update id="update" parameterType="emp">
+	<select id="emp_photo" resultType="String">
+		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 1
+	</select>
+	
+	<update id="emp_update" parameterType="emp">
 		UPDATE emp SET 
 			  pw = #{pw}
 			, name = #{name}
@@ -40,18 +128,27 @@
 			, phone = #{phone}
 			, email = #{email}
 			, position = #{position}
-			, start_conterm = #{start_conterm}
-			, end_conterm = #{end_conterm}
 			, status = #{status}
 			, join_year = #{join_year}
 		WHERE emp_no = #{emp_no}
-	
 	</update>
 	
-	<delete id="delete" parameterType="emp">
+	<!-- 상세에서 삭제 -->
+	<delete id="emp_delete" parameterType="emp">
 		UPDATE emp
 			SET is_delete = 1
 		WHERE emp_no = #{param1}
 	</delete>
-   
+	
+	<!-- 목록에서 삭제 -->
+	<update id="emp_hide" parameterType="hashmap">
+      UPDATE emp
+         SET is_delete = 1
+      WHERE emp_no IN (
+      <foreach collection="hideList" item="item" separator=",">
+         #{item}
+      </foreach>
+      )
+   </update>
+
 </mapper>

@@ -4,7 +4,7 @@
    
    <mapper namespace="kr.co.gf.statistics.dao.StatisDAO">
    		<select id="totalSales" resultType="statisDTO">
-   			   SELECT DATE_FORMAT(rt.purch_date, '%Y-%m') AS month, SUM(t.ticket_price) AS totalSales
+   			   SELECT DATE_FORMAT(rt.purch_date, '%Y-%m') AS month, COALESCE(SUM(t.ticket_price), 0) AS totalsales
 			   FROM registered_ticket rt
     		   JOIN ticket t ON rt.ticket_no = t.ticket_no
     		   WHERE YEAR(rt.purch_date) = '2023'
@@ -13,7 +13,7 @@
    		</select>
    		
    		<select id="totalYearSales" resultType="statisDTO">
-   			   SELECT DATE_FORMAT(sd.year_month, '%Y-%m') AS `month`,SUM(t.ticket_price) AS totalsales
+   			   SELECT DATE_FORMAT(sd.year_month, '%Y-%m') AS `month`,COALESCE(SUM(t.ticket_price), 0) AS totalsales
 			   FROM standard_date sd
 			   LEFT JOIN registered_ticket rt ON date_format(rt.purch_date,'%Y-%m')=date_format(sd.year_month,'%Y-%m')
 			   LEFT JOIN ticket t ON rt.ticket_no = t.ticket_no
@@ -23,5 +23,31 @@
    		
    		<select id="branchList" resultType="statisDTO">
    			SELECT * FROM branch
+   		</select>
+   		
+   		<select id="branchTotalSales" resultType="statisDTO">
+   			 SELECT DATE_FORMAT(sd.year_month, '%Y-%m') AS `month`,COALESCE(SUM(t.ticket_price), 0) AS totalsales
+			 FROM standard_date sd
+			 LEFT JOIN registered_ticket rt ON DATE_FORMAT(rt.purch_date, '%Y-%m') = DATE_FORMAT(sd.year_month, '%Y-%m') AND rt.b_idx = #{param2}
+			 LEFT JOIN ticket t ON rt.ticket_no = t.ticket_no
+			 WHERE YEAR(sd.year_month) = #{param1}
+			 GROUP BY DATE_FORMAT(sd.year_month, '%Y-%m');
+   		</select>
+   		
+   		<select id="empList">
+   			SELECT name,b_idx,emp_no FROM emp where position !='대표'
+   		</select>
+   		
+   		<select id="branchEmpList" resultType="statisDTO">
+   			SELECT name,emp_no FROM emp where b_idx=#{param1}
+   		</select>
+   		
+   		<select id="individual" resultType="statisDTO">
+   			 SELECT DATE_FORMAT(sd.year_month, '%Y-%m') AS `month`,COALESCE(SUM(t.ticket_price), 0) AS totalsales
+			 FROM standard_date sd
+			 LEFT JOIN registered_ticket rt ON DATE_FORMAT(rt.purch_date, '%Y-%m') = DATE_FORMAT(sd.year_month, '%Y-%m') AND rt.emp_no = #{param1}
+			 LEFT JOIN ticket t ON rt.ticket_no = t.ticket_no
+			 WHERE YEAR(sd.year_month) = #{param2}
+			 GROUP BY DATE_FORMAT(sd.year_month, '%Y-%m');
    		</select>
    </mapper>

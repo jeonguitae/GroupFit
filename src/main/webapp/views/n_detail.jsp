@@ -66,14 +66,14 @@
 			</tr>
 			<tr>
 				<th>사진 및 파일</th>
-				<td>
-					<input type="file" name="photo"/>
-				</td>
+				<td><img width="500" src="/photo/${dto.new_photo_name}"/>
+						<a href="ndownload.do?path=${dto.new_photo_name}"></a>
+					</td>
 			</tr>			
 		</table>
-		
 					<input type="button" onclick="location.href='nlist.go'" value="목록"/>
 					<input type="button" onclick="location.href='nupdate.go?n_idx=${dto.n_idx}'" value="수정"/>
+					<input type="button" onclick="location.href='ndelete.do?n_idx=${dto.n_idx}'" value="삭제"/>
 					<button class="forsave">저장</button>
 		</div>
 		<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">

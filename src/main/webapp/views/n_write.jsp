@@ -65,9 +65,7 @@
 			</tr>
 			<tr>
 				<th>사진 및 파일</th>
-				<td>
-					<input type="file" name="photo"/>
-				</td>
+				<td><input type="file" name="photos" multiple="multiple"/></td>
 			</tr>
 			
 <%-- 			<c:if test="${sessionScope.loginId}=="></c:if>

@@ -14,9 +14,17 @@ public class ReferenceDTO {
 	private String ori_photo_name;
 	private int board_num;
 	private String new_photo_name;
+	private String p_idx;
 	
 	
 	
+	
+	public String getP_idx() {
+		return p_idx;
+	}
+	public void setP_idx(String p_idx) {
+		this.p_idx = p_idx;
+	}
 	public String getNew_photo_name() {
 		return new_photo_name;
 	}

@@ -69,13 +69,15 @@ public interface MemberDAO {
 
 	int loc_status(String loc_no);
 
+	int loc_status(String loc_num, String b_idx);
+
 	ArrayList<MemberDTO> memsearch(String sortting, String txt);
 
 	String regt_idx(String mem_no);
 
-	String loc_num(String mem_no);
+	String loc_no(String mem_no);
 	
-	void locker_update(String loc_num);
+	void locker_update(String loc_num, String b_idx);
 
 	int entermem(String entermem_no);
 
@@ -94,6 +96,12 @@ public interface MemberDAO {
 	int emp_b_idx(String loginId);
 
 	ArrayList<MemberDTO> entermemlist(int b_idx, LocalDate now);
+
+	MemberDTO ptmemdetail(String mem_no);
+
+	void memphotodel(String mem_no);
+
+	String del_new_file_name(String mem_no);
 
 	/* int memjoin(HashMap<String, String> params); */
 

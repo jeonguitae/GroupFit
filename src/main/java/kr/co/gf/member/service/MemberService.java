@@ -1,6 +1,7 @@
 package kr.co.gf.member.service;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,6 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.member.dao.MemberDAO;
 import kr.co.gf.member.dto.MemberDTO;
 
@@ -56,12 +60,15 @@ public class MemberService {
 		String name = params.get("name");
 		String phone = params.get("phone");
 		String loc_no = params.get("loc_no");
+		String loc_num = params.get("loc_num");
+		String b_idx = params.get("b_idx");
 		
 		int row = dao.memjoin(params);
 		
 		if(row == 1) {
 			
 			dao.loc_status(loc_no);
+			dao.loc_status(loc_num, b_idx);
 			int mem_no = dao.mem_no(name, phone);
 			map.put("mem_no", mem_no);
 		}
@@ -135,16 +142,25 @@ public class MemberService {
 		return map;
 	}
 
-	public HashMap<String, Object> memdelete(ArrayList<String> memdelList) {
+	public HashMap<String, Object> memdelete(ArrayList<String> memdelList, String b_idx) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();		
 		int delSize = memdelList.size();
 		int successCnt = 0;
 		for (String mem_no : memdelList) {
-			String loc_num = dao.loc_num(mem_no);
-			logger.info("loc_num : " + loc_num);
-			dao.locker_update(loc_num);
+			String loc_no = dao.loc_no(mem_no);
+			logger.info("loc_num : " + loc_no);
+			dao.locker_update(loc_no, b_idx);
 			successCnt += dao.memdelete(mem_no);
+			
+			String new_file_name = dao.del_new_file_name(mem_no);
+			
+			File f = new File("C:/upload/"+ new_file_name);
+			if(f.exists()) {
+				f.delete();
+			}
+			
+			dao.memphotodel(mem_no);
 		}		
 		map.put("msg", delSize+" 요청중 "+successCnt+" 개 삭제 했습니다.");		
 		map.put("success", true);
@@ -374,6 +390,11 @@ public class MemberService {
 		map.put("list", list);
 		
 		return map;
+	}
+
+	public MemberDTO ptmemdetail(String mem_no) {
+		
+		return dao.ptmemdetail(mem_no);
 	}
 
 }

@@ -145,7 +145,7 @@ function listDraw(ptmemlist){
 		content += '<tr>';
 		content += '<td><input type="checkbox" value="'+item.mem_no+'"/></td>';
 		content += '<td>'+item.mem_no+'</td>';
-		content += '<td><a href="memdetail.go?mem_no='+item.mem_no+'">'+item.name+'</a></td>';
+		content += '<td><a href="ptmemdetail.go?mem_no='+item.mem_no+'">'+item.name+'</a></td>';
 		content += '<td>'+item.ticket_time+' / '+item.count+'</td>';	
 		content += '<td>'+item.gender+'</td>';
 		content += '</tr>';

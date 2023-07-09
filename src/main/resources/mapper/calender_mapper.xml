@@ -14,7 +14,40 @@
         <!-- 여기에 실제로 데이터베이스에서 일정 데이터를 조회하는 SQL 쿼리문 작성 -->
         SELECT * FROM calendar;
     </select>
+    
+    <update id="updateEvent" parameterType="cal">
+    	UPDATE calendar
+		  SET
+		    event_name = #{event_name},
+		    start_time = #{start_time},
+		    end_time = #{end_time}
+		  WHERE
+		    calendar_no = #{calendar_no}
+    </update>
+	
+	<delete id="deletecalendar">
+	  DELETE FROM calendar
+	  WHERE calendar_no = #{calendar_no};
+	</delete>
+	
+	
+	<select id="branchCalendarlist" resultType="kr.co.gf.calender.dto.CalenderDTO">
+        <!-- 여기에 실제로 데이터베이스에서 일정 데이터를 조회하는 SQL 쿼리문 작성 -->
+        SELECT * FROM calendar WHERE b_idx = #{param1};
 
+    </select>
+    
+    
+    <select id="selectedBranch" resultType="kr.co.gf.calender.dto.CalenderDTO">
+             SELECT * From calendar WHERE b_idx = #{branch}
+    </select>
+  
+  
+    <select id="CalendarBranchList" resultType="kr.co.gf.calender.dto.CalenderDTO">
+         	SELECT * FROM branch;
+    </select>
+	
+	
    
    
    </mapper>
