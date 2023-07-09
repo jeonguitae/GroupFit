@@ -188,7 +188,7 @@ function memjoin(){
 	var $birth = $('input[name="birth"]');
 	var $gender = $('input[name="gender"]:checked');
 	var $phone = $('input[name="phone"]');
-	var $loc_num = $('select[name="loc_num"]');
+	var $loc_no = $('select[name="loc_no"]');
 	
 	var param = {};
 	
@@ -196,7 +196,7 @@ function memjoin(){
 	param.birth = $birth.val();
 	param.gender = $gender.val();
 	param.phone = $phone.val();
-	param.loc_num = $loc_num.val();
+	param.loc_no = $loc_no.val();
 	
 	$.ajax({
 		type:'post',

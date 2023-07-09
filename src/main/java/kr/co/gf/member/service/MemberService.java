@@ -66,9 +66,7 @@ public class MemberService {
 		int row = dao.memjoin(params);
 		
 		if(row == 1) {
-			
-			dao.loc_status(loc_no);
-			dao.loc_status(loc_num, b_idx);
+			dao.loc_status(loc_no, b_idx);
 			int mem_no = dao.mem_no(name, phone);
 			map.put("mem_no", mem_no);
 		}
