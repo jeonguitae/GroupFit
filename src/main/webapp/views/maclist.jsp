@@ -31,7 +31,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>라커 관리</h1>
+						<h1>기구 관리</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -48,8 +48,8 @@
 		<section class="content">
 			<div class="container-fluid">
 			
-				<button class="cng" onclick="openModal1()">기구등록</button>
-				<button class="fix" onclick="openModal2()">상태변경</button>
+				<button class="cng" onclick="openModal2()">기구등록</button>
+				<button class="fix" onclick="openModal()">기구 상태 변경</button>
 			
 				<div class="first_row" style="display : flex;">
 					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
@@ -93,7 +93,7 @@
 				    <div class="modal-dialog" role="document">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          	<h5 class="modal-title" id="event-modal-label">라커 상태변경</h5>
+				          	<h5 class="modal-title" id="event-modal-label">기구 상태변경</h5>
 				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				            <span aria-hidden="true">&times;</span>
 				          </button>
@@ -101,16 +101,20 @@
 				        <div class="modal-body">
 				          <form id="event-form">
 				            <div class="form-group">
-				              <label for="event-name">라커 번호</label>
-				              <input type="text" class="form-control" id="loc_no" name="loc_no" placeholder="라커번호를 입력하세요">
+				              <label for="event-name">기구 이름</label>
+				              <select name="mac_name">
+				              		<c:forEach items="${list}" var="name">
+				              			<option value="${name.mac_name}">${name.mac_name}</option>
+				              		</c:forEach>
+				              </select>
 				            </div>
 				
 				            <div class="form-group">
 				              <label for="start-datetime">상태 변경</label>
-				              <!-- <input id="start_time" type="datetime-local" class="form-control" name="start_time"> -->
-				              <select name="status">
-				              		<option value="미사용">미사용</option>
+				              <select name="mac_status">
+				              		<option value="정상">정상</option>
 				              		<option value="점검중">점검중</option>
+				              		<option value="고장">고장</option>
 				              </select>
 				            </div>
 				          </form>
@@ -127,7 +131,7 @@
 				    <div class="modal-dialog" role="document">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          	<h5 class="modal-title" id="event-modal-label">회원 라커 변경</h5>
+				          	<h5 class="modal-title" id="event-modal-label">기구등록</h5>
 				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				            <span aria-hidden="true">&times;</span>
 				          </button>
@@ -135,14 +139,13 @@
 				        <div class="modal-body">
 				          <form id="event-form">
 				            <div class="form-group">
-				              <label for="event-name">회원 번호</label>
-				              <input type="text" class="form-control" id="mem_no" name="mem_no" placeholder="회원번호를 입력하세요">
+				              <label for="event-name">구매자</label>
+				              <input type="text" class="form-control" id="emp_no" name="emp_no" value="${dto.emp_no}" readonly="readonly">
 				            </div>
 				
 				            <div class="form-group">
-				              <label for="start-datetime">라커 번호</label>
-				              <!-- <input id="start_time" type="datetime-local" class="form-control" name="start_time"> -->
-				              <input type="text" class="form-control" id="loc_no2" name="loc_no" placeholder="라커번호를 입력하세요">
+				              <label for="start-datetime">기구이름</label>
+				              <input type="text" class="form-control" id="mac_name" name="mac_name" placeholder="기구이름을 입력하세요">
 				            </div>
 				          </form>
 				        </div>
@@ -160,16 +163,16 @@
 </body>
 <script>
 
-loclist();
+maclist();
 
-function loclist(){
+function maclist(){
 	$.ajax({
 		type:'get',
-		url:'loclist.ajax',
+		url:'maclist.ajax',
 		data:{},
 		dataType:'json',
 		success:function(data){
-			loclistDraw(data.list);
+			maclistDraw(data.list);
 		},
 		error:function(e){
 			console.log(e);
@@ -177,25 +180,20 @@ function loclist(){
 	});	
 }
 
-function loclistDraw(loclist){
+function maclistDraw(maclist){
 	
 
-		loclist.forEach(function(item,index){
+		maclist.forEach(function(item,index){
 				var content = '';
-				var name = '';
-				var mem_no = '';
+				var mac_name = '';
+				var mac_status = '';
 				
 				if(item.name != null){
 					
-					name = item.name;
-				}
-				
-				if(item.mem_no != 0){
-					
-					mem_no = '(' + item.mem_no + ')';
+					mac_name = item.mac_name;
 				}
 
-				content += '<div style="text-align: center; width: 150px; height: 150px; border: 1px solid white; margin: 5px">' + '라커번호 : ' + item.loc_no + '<hr/>' + item.status + '<br/>' + name + mem_no + '</div>';
+				content += '<div style="text-align: center; width: 150px; height: 150px; border: 1px solid white; margin: 5px">' + '기구 명 : ' + item.mac_name + '<hr/>' + item.status + '<br/>' + name + mem_no + '</div>';
 				console.log(index);
 			if(index >= 0 && index <= 4){
 				

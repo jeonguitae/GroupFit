@@ -2,8 +2,7 @@ package kr.co.gf.mail.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.mail.dao.MailDAO;
 import kr.co.gf.mail.dto.MailDTO;
 @Service
@@ -29,6 +27,16 @@ public class MailService {
 
 	@Autowired
 	PasswordEncoder encoder;
+	
+	public ModelAndView post_sendSerch(HashMap<String, String> params) {
+		
+		ModelAndView mav = new ModelAndView("postList");
+		
+		ArrayList<MailDTO> list = dao.post_sendSerch(params);
+		
+		mav.addObject("list",list);
+		return mav;
+	}
 
 	//보낸 쪽지
 	public ModelAndView post_sendList(String send_empno) {
@@ -61,7 +69,7 @@ public class MailService {
 		
 		return mav;
 	}
-
+	
 	public ModelAndView post_sendWrite(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
 		
 		MailDTO dto = new MailDTO();
@@ -101,6 +109,32 @@ public class MailService {
 		
 		return dao.post_get(emailid);
 	}
+	
+	public ModelAndView post_getWrite(HashMap<String, String> params, RedirectAttributes rAttr) {
+		
+		int success = dao.post_getWrite(params);
+		String msg = (success ==1) ? "회신에 실패했습니다!" : "회신을 보냈습니다!";
+		String page = "postGetWrite";
+		if(success > 0) {
+			page = "redirect:/postSendList.go";
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(page);
+		rAttr.addFlashAttribute("msg",msg);
+		
+		return mav;
+	}
+	
+	// 목록에서 삭제
+	public ModelAndView post_hide(List<String> hideList, RedirectAttributes rAttr) {
+		logger.info("hideservice");
+		dao.post_hide(hideList);
+		String msg = "쪽지를 삭제 했습니다.";
+
+		rAttr.addFlashAttribute("msg",msg);
+		return new ModelAndView("redirect:/postSendList.go");
+	}
+
 
 
 

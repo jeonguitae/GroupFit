@@ -45,14 +45,13 @@ public class MemberDTO {
 	// locker
 	private String loc_num;
 	private String status;
-	private int loc_no;
-	
-	public int getLoc_no() {
-		return loc_no;
-	}
-	public void setLoc_no(int loc_no) {
-		this.loc_no = loc_no;
-	}
+	private String loc_no;
+	/*
+	 * private int loc_no;
+	 * 
+	 * public int getLoc_no() { return loc_no; } public void setLoc_no(int loc_no) {
+	 * this.loc_no = loc_no; }
+	 */
 	// entry_mem
 	private Date enter_date;
 	private Time enter_time;
@@ -224,6 +223,13 @@ public class MemberDTO {
 	}
 	public void setEnter_time(Time enter_time) {
 		this.enter_time = enter_time;
+	}
+	
+	public String getLoc_no() {
+		return loc_no;
+	}
+	public void setLoc_no(String loc_no) {
+		this.loc_no = loc_no;
 	}
 	
 

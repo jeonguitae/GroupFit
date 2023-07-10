@@ -1,6 +1,7 @@
 package kr.co.gf.mail.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,17 +31,21 @@ public class MailController {
 	
 	@Autowired PasswordEncoder encoder;
 	
+	@RequestMapping(value="/postSendList.do")
+	public ModelAndView SendSerch(@RequestParam HashMap<String, String>params) {
+		logger.info("serch :"+params);
+		return service.post_sendSerch(params);
+	}
 	
 	// 보낸 쪽지
-	@GetMapping(value="/postSendList.go")
+	@RequestMapping(value="/postSendList.go")
 	public ModelAndView sendList(HttpSession session) {
 		String send_empno = (String)session.getAttribute("loginId");
-
 		return service.post_sendList(send_empno);
 	}
 
 	// 받은 쪽지
-	@GetMapping(value="/postGetList.go")
+	@RequestMapping(value="/postGetList.go")
 	public ModelAndView getList(HttpSession session) {
 		String get_empno = (String) session.getAttribute("loginId");
 		return service.post_getList(get_empno);
@@ -79,13 +86,26 @@ public class MailController {
 	}
 	
 	@GetMapping(value="/postGetWrite.go")
-	public ModelAndView postGetWrite(HttpSession session, String emailid) {
+	public ModelAndView postGet(HttpSession session, String emailid) {
 		
 		ModelAndView mav = new ModelAndView("postGetWrite");
 		session.setAttribute("post", service.post_get(emailid));
 		// 직원정보를 담고 있는 loginEmp (loginController)
 		mav.addObject("emp",session.getAttribute("loginEmp"));
 		return mav;
+	}
+	@PostMapping(value="/postGetWrite.do")
+	public ModelAndView postGetWrite(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
+		logger.info("params: "+params);
+		return service.post_getWrite(params,rAttr);
+	}
+	
+	
+	// 목록에서 삭제
+	@PostMapping(value="/post_sendhide.ajax")
+	public ModelAndView hide(@RequestParam(value="hideList[]") List<String> hideList, RedirectAttributes rAttr) {
+		logger.info("hide~");
+		return service.post_hide(hideList, rAttr);
 	}
 	
 }

@@ -121,9 +121,9 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value="/nupdate.do") 
-	public String nupdatedo(@RequestParam HashMap<String, String> params, Model model) { 
+	public String nupdatedo(@RequestParam HashMap<String, String> params, Model model, MultipartFile photos) { 
 		logger.info("업뎃 icin params+ "+params); 
-		nservice.nupdate(params);  
+		nservice.nupdate(params, photos);  
 		return "redirect:/ndetail.do?n_idx="+params.get("n_idx")+"&flag=update"; 
 		//지가 쓴 글만 수정 가능해야함 -대표 지점장 session값 갖고 오고 
 	}

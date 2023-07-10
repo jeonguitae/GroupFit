@@ -61,7 +61,7 @@ public class NoticeService {
 		  
 		  
 	}
-	public String photoSave(MultipartFile photo,HashMap<String, String>params, int n_idx) {
+	public String photoSave(MultipartFile photo, int n_idx) {
 			
 			NoticeDTO dto = new NoticeDTO();
 			String c_Content=dto.setC_Content("공지사항");
@@ -98,10 +98,6 @@ public class NoticeService {
 		return ndao.ndetail(n_idx);
 	}
 
-	public void nupdate(HashMap<String, String> params) {
-		ndao.nupdate(params);
-	}
-	
 	public void getinfo(String emp_no, String n_idx) {
 		ndao.getinfo(emp_no, n_idx);
 		
@@ -118,6 +114,14 @@ public class NoticeService {
 		int row = ndao.rdelete(n_idx);
 		logger.info("reader 삭제됐으면 숫자 1 반환+"+row);
 		return ndao.ndelete(n_idx);
+	}
+	public void nupdate(HashMap<String, String> params, MultipartFile photos) {
+		ndao.nupdate(params);
+		NoticeDTO dto = new NoticeDTO();
+		int n_idx=dto.getN_idx();
+		logger.info("업뎃할 n_idx는"+n_idx);
+		photoSave(photos,n_idx);
+		
 	}
 
 	/*

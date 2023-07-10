@@ -61,9 +61,9 @@ div[class="table"]{
 		<section class="content">
 			<div class="container-fluid">
 				<fieldset>
-					<form action=".do" class="search">
+					<form action="/postSendList.do" class="search">
 						<select name="opt">
-							<option value="send_empno">받은사람</option>
+							<option value="e_name">받은사람</option>
 							<option value="subject">제목</option>
 							<option value="content">내용</option>
 						</select>
@@ -92,7 +92,7 @@ div[class="table"]{
 								<tr>
 									<td><input type="checkbox" name="chk" value="${post.email_num}"/></td>
 									<td><a href="postSendDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
-									<td>${post.name}</td>
+									<td>"${sessionScope.loginEmp.name}"</td>
 									<td>${post.send_time}</td>
 									<c:if test="${post.get_chk eq '1'}">
 									<td>${post.chk_time}</td>
@@ -110,4 +110,26 @@ div[class="table"]{
 		</section>
 	</div>
 </body>
+<script>
+function hide() {
+	   var hideList = new Array();
+	   $("input[name=chk]:checked").each(function() {
+	      hideList.push($(this).val());
+	   });
+	   $.ajax({
+	      type: 'post',
+	      url: 'post_sendhide.ajax',
+	      data: {
+	         'hideList' : hideList
+	      },
+	      dataType: 'text',
+	      success: function(data){
+	         
+	      },
+	      error: function(e){
+	         console.log(e);
+	      }
+	   });
+	}
+</script>
 </html>

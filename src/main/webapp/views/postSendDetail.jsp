@@ -58,7 +58,7 @@
 						<tr>
 							<th>받는사람 이름</th>
 							<td>
-								<p><input type="text" name="get_empno" value="${post.get_empno}" readonly/>
+								<input type="text" name="get_empno" value="${post.get_empno}" readonly/>
 							</td>
 						</tr>
 						<tr>
