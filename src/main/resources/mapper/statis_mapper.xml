@@ -50,4 +50,13 @@
 			 WHERE YEAR(sd.year_month) = #{param2}
 			 GROUP BY DATE_FORMAT(sd.year_month, '%Y-%m');
    		</select>
+   		
+   		<select id="branchPersonal" resultType="statisDTO">
+   			SELECT e.name, COALESCE(SUM(t.ticket_price), 0) AS personal_totalsales
+			FROM emp AS e
+			LEFT JOIN registered_ticket AS rt ON e.emp_no = rt.emp_no and DATE_FORMAT(rt.purch_date, '%Y-%m') = #{param1}
+			LEFT JOIN ticket AS t ON rt.ticket_no = t.ticket_no
+			where `position` !='지점장' AND `position` !='대표' and e.b_idx=#{param2}
+			GROUP BY e.name;
+   		</select>
    </mapper>

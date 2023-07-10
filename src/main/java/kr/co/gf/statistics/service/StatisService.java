@@ -43,6 +43,10 @@ public class StatisService {
 		return dao.individual(emp_no,year);
 	}
 
+	public ArrayList<StatisDTO> branchPersonal(String formattedDate, String b_idx) {
+		return dao.branchPersonal(formattedDate,b_idx);
+	}
+
 	
 
 }
