@@ -176,9 +176,11 @@
 
 								        <label for="repCount">SET수 : </label>
 								        <input type="number" id="pt_set1" name="pt_set[]" value="${weightList[0].pt_set}">
+
 								   		
 								   		<!-- weight_no 값을 따로 전송 -->
     									<input type="hidden" name="weight_no_value[]" value="${weightList[0].weight_no}">
+    									
 								    </div>
 													           
 						           <!-- 추가된 운동 정보를 가져와서 폼을 생성 -->
@@ -194,8 +196,10 @@
 
 								            <label for="repCount">SET수 : </label>
 								            <input type="number" id="pt_set${loop.index + 1}" name="pt_set[]" value="${weight.pt_set}">
+								            <button type="button" class="btn btn-light removeExerciseButton">삭제</button>
 								        	<!-- weight_no 값을 따로 전송 -->
         									<input type="hidden" name="weight_no_value[]" value="${weight.weight_no}">
+        									
     	
 								        </div>
 								    </c:forEach>
@@ -264,6 +268,7 @@ function addWeightExercise() {
         <input type="number" id="pt_kg${index}" name="pt_kg[]" value="">
         <label for="pt_set${index}">SET 수:</label>
         <input type="number" id="pt_set${index}" name="pt_set[]" value="">
+        <button type="button" class="btn btn-light removeExerciseButton">삭제</button>
     `;
 
     container.appendChild(newExercise);
@@ -327,6 +332,15 @@ function enableInputs() {
     });
 }
 
+
+//삭제 버튼 클릭 이벤트 처리
+var removeButtons = document.getElementsByClassName('removeExerciseButton');
+for (var i = 0; i < removeButtons.length; i++) {
+    removeButtons[i].addEventListener('click', function() {
+        var exerciseContainer = this.parentNode;
+        exerciseContainer.remove();
+    });
+}
 
 
 

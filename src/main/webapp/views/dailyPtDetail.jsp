@@ -163,6 +163,8 @@
 
 								        <label for="repCount">SET수 : </label>
 								        <input type="number" id="pt_set1" name="pt_set[]" value="${weightList[0].pt_set}" readonly>
+								         
+    
 								    </div>
 													           
 						           <!-- 추가된 운동 정보를 가져와서 폼을 생성 -->
@@ -176,6 +178,7 @@
 
 								            <label for="repCount">SET수 : </label>
 								            <input type="number" id="pt_set${loop.index + 1}" name="pt_set[]" value="${weight.pt_set}" readonly>
+								          
 								        </div>
 								    </c:forEach>
 						    </div>
@@ -211,8 +214,10 @@
                     <hr>
                     
 					<div class="submit-button">
+					<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
 	                    <button type="submit"  class="btn btn-primary" onclick="location.href='./dailyptUpdate.go?dailypt_no=${dto.dailypt_no}'">수정</button>
 	                    <button type="submit" class="btn btn-danger" onclick="location.href='./dailyptdelete.do?dailypt_no=${dto.dailypt_no}'">삭제</button>
+	                </c:if>
 	                    <button type="submit" class="btn btn-primary" onclick="location.href='./dailyptt'" >리스트</button>
 	                </div>
 	                

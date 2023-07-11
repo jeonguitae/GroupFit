@@ -193,7 +193,7 @@
 										class="fas fa-running nav-icon"></i>
 										<p>PT 회원</p>
 								</a></li>
-								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="dailyptt" class="nav-link"> <i
 										class="fas fa-edit nav-icon"></i>
 										<p>PT 회원일지</p>
 								</a></li>

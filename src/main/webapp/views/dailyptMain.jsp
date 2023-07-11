@@ -81,11 +81,13 @@ tfoot td {
 							</div>
 							</div>
 							<div class="float-right">
+								<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
 								<button class="btn btn-primary" onclick="location.href='dailypt.go'">일지 등록</button>&nbsp; 
 								<form id="deleteForm" action="dailyptdelete.do" method="post">
 								  <input type="hidden" name="dailypt_no" id="dailypt_no" value="">
 								  <button class="btn btn-danger" onclick="deleteSelectedRows()">일지 삭제</button>
 								</form>
+								</c:if>
 							</div>
 						</div>
 						<div class="card card-primary">
