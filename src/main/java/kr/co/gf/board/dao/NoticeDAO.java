@@ -32,7 +32,9 @@ public interface NoticeDAO {
 
 	void pupdate(MultipartFile[] photos);
 
-	void photoSave(String oriName, String newName, int c_idx, int n_idx);
+	int pupdate(String n_idx, int c_idx, String oriName, String newName);
+
+	void photoSave(String oriName, String newName, int c_idx, String n_idx);
 
 
 

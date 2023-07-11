@@ -3,5 +3,9 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
    <mapper namespace="kr.co.gf.board.dao.MachineDAO">
-
+		<select id="maclist">
+			SELECT m.mac_name, m.mac_num, m.emp_no, w.new_photo_name
+			FROM machine m JOIN wphoto w ON m.mac_num = w.board_num
+			WHERE w.c_idx = '5'
+		</select>
    </mapper>

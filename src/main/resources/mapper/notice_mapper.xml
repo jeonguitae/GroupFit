@@ -33,9 +33,10 @@
    	UPDATE notice SET title=#{title}, content=#{content}, fix=#{fix} WHERE n_idx=#{n_idx}
    </update>
    
-   <update id="pupdate">
-   	UPDATE wphoto SET where board_num=#{param1}
+	<update id="pupdate">
+   	UPDATE wphoto SET ori_photo_name=#{oriName}, new_photo_name=#{newName} where board_num=#{n_idx} AND c_idx=#{c_idx}
    </update>
+   
    <insert id="getinfo" parameterType="string">
    	INSERT INTO read_list(emp_no, n_idx) values(#{emp_no},#{n_idx})
    </insert>

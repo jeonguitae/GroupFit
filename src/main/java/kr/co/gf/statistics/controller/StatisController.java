@@ -122,6 +122,43 @@ public class StatisController {
 		return "branchIndividualChart";
 	}
 	
+	@RequestMapping(value="/branchIndividualChart.ajax")
+	@ResponseBody
+	public HashMap<String, Object> branchIndividualChartPrint(@RequestParam String year, @RequestParam String emp_no){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("지점별 개인 매출 :"+year+emp_no);
+		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+		list = service.individual(emp_no,year);
+		map.put("individual", list);
+		return map;
+	}
+	
+	@RequestMapping(value="personalIndividualChart")
+	public String personalIndividualChart() {
+		return "personalIndividualChart";
+	}
+	
+	@RequestMapping(value="/personalIndividualChart.ajax")
+	@ResponseBody
+	public HashMap<String, Object> personalIndividualChartPrint(@RequestParam String year, @RequestParam String emp_no){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+		list = service.individual(emp_no,year);
+		map.put("individual", list);
+		return map;
+	}
+	
+	@RequestMapping(value="/branchPersonal.ajax")
+	@ResponseBody
+	public HashMap<String, Object> branchPersonal(@RequestParam String formattedDate, @RequestParam String b_idx){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+		logger.info("출력할 지점, 달"+formattedDate+b_idx);
+		list = service.branchPersonal(formattedDate,b_idx);
+		map.put("branchPersonal", list);
+		return map;
+	}
+	
 	
 	
 
