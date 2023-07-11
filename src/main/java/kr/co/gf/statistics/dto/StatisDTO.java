@@ -8,6 +8,13 @@ public class StatisDTO {
 	private String b_name;
 	private String name;
 	private String emp_no;
+	private String personal_totalsales;
+	public String getPersonal_totalsales() {
+		return personal_totalsales;
+	}
+	public void setPersonal_totalsales(String personal_totalsales) {
+		this.personal_totalsales = personal_totalsales;
+	}
 	public String getEmp_no() {
 		return emp_no;
 	}
