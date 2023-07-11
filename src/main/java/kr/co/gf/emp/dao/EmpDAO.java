@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.multipart.MultipartFile;
+
 import kr.co.gf.emp.dto.EmpDTO;
 @Mapper
 public interface EmpDAO {
@@ -31,21 +33,17 @@ public interface EmpDAO {
 	
 	String emp_photo(String detailid);
 
-	int emp_update(EmpDTO dto);
+	int emp_update(HashMap<String, String> params);
+	
+	void emp_removePhoto(String emp_no);
 
 	int emp_delete(String detailid);
 
 	void emp_hide(List<String> hideList);
-
 	
 	
 
 	
 
-	
-
-	
-
-	
 
 }

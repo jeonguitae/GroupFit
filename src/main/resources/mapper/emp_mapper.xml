@@ -133,6 +133,10 @@
 		WHERE emp_no = #{emp_no}
 	</update>
 	
+	<delete id="emp_removePhoto" parameterType="String">
+		DELETE FROM wphoto WHERE board_num = #{emp_no}
+	</delete>
+	
 	<!-- 상세에서 삭제 -->
 	<delete id="emp_delete" parameterType="emp">
 		UPDATE emp

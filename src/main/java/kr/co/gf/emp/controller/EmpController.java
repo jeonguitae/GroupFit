@@ -137,14 +137,21 @@ public class EmpController {
 	}
 	
 	@GetMapping(value="/empUpdate.go")
-	public ModelAndView update(@RequestParam String detailid) {
+	public ModelAndView update(@RequestParam String detailid, HttpSession session) {
 		
 		EmpDTO dto = service.emp_detail(detailid);
 		String page ="redirect:/empList.go";
 		
-		if(dto!=null) {
-			page="empUpdate";
+		//로그인한 아이디가 작성자 일 때 수정으로 이동, 아니면 리스트로 이동
+		if (session.getAttribute("loginId") != null) {
+		String loginId = (String) session.getAttribute("loginId");
+		if (loginId.equals(detailid)) {
+		if (dto != null) {
+		    page = "empUpdate";
+		        }
+		    }
 		}
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(page);
 		mav.addObject("emp",dto);
@@ -152,11 +159,32 @@ public class EmpController {
 		return mav;
 	}
 	
-	@PostMapping(value="/empUpdate.do")
-	public ModelAndView updateDo(EmpDTO dto) {
-		logger.info("dto: " + dto.getEmp_no());
-		return service.emp_update(dto);
-	}
+//	@PostMapping(value="/empUpdate.do")
+//	public ModelAndView updateDo(@RequestParam HashMap<String, String>params, MultipartFile file) {
+//		return service.emp_update(params,file);
+//	}
+	
+	 @RequestMapping(value="/empUpdate.do")
+	   public String updateDo(MultipartFile file,@RequestParam HashMap<String, String> params, HttpSession session, Model model) {
+	       logger.info("마이페이지 수정");
+	       String page = "redirect:/empUpdate.go";
+	       String loginId = null;
+	       String emp_no;
+	       logger.info("session loginId : " + session.getAttribute("loginId"));
+	       if (session.getAttribute("loginId") != null) {
+	          logger.info("params : " + params);
+	          
+	           logger.info("params-emp_no : " + params.get("emp_no"));
+	          loginId = (String) session.getAttribute("loginId");
+	           
+	           if (loginId.equals(params.get("emp_no"))) {
+	              logger.info("file : " + file);
+	               service.emp_update(file, params);
+	               page = "redirect:/empDetail.do";
+	           }
+	       }
+	       return page;
+	   }
 	
 	// 상세에서 삭제
 	@GetMapping(value="/empDelete.do")

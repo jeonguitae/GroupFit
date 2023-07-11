@@ -111,6 +111,11 @@
 	</div>
 </body>
 <script>
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
+
 var now = new Date();
 document.getElementById('join_year').valueAsDate = now;
 

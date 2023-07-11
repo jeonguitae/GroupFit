@@ -47,7 +47,7 @@ public class NoticeService {
 		  for (MultipartFile photo : photos) {
 			if (photo.getOriginalFilename()!=null) {
 				 //logger.info("photosave가기 전"+photo.getOriginalFilename());
-				 photoSave(photo,params,n_idx);
+				 photoSave(photo,n_idx);
 				 
 				 try {
 					Thread.sleep(1000);
