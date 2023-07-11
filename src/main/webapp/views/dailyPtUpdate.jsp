@@ -121,18 +121,11 @@
    
 				    <div class="container">
 
-				    <form action="dailyptWrite.do" method="post">
+				    <form action="dailyptUpdate.do" method="post">
+				    	<input type="hidden" name="dailypt_no" value="${dto.dailypt_no}"/>
 				    
 					    <div style="display: flex; justify-content: space-between; align-items: center;">
 					        <h3 style="margin: 0;">회원pt일지</h3>
-					        
-					        <div id="branchFilter">
-									  <select name="daily_pt" id="daily_pt" style = "margin-left : 30px" onchange="selectName()">
-							            <c:forEach items="${dailypt}" var="item">
-							               <option value="${item.mem_no}">${item.member_name}</option>
-							            </c:forEach>
-							           </select>
-							</div>
 					        
 					        <br>
 					        
@@ -143,7 +136,7 @@
 					        
 					        <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
 					            <label for="date">날짜 : </label>
-					            <input type="date" id="date" name="date">
+					            <input type="date" id="date" name="date" value="${dto.pt_date}">
 					        </div>
 					        
 					    </div>
@@ -153,44 +146,70 @@
 				            <div class="form-group">
 
 				                <label for="memberNumber">회원 번호 : </label>
-				                <input type="text" id="mem_no" name="mem_no">
+				                <input type="text" id="mem_no" name="mem_no" value="${dto.mem_no}">
 				                
 				                <label for="name">이름 : </label>
-				                <input type="text" id="name" name="name">
+				                <input type="text" id="name" name="name" value="${dto.member_name}">
 				                
 				                <label for="weight">몸무게 : </label>
-				                <input type="number" id="af_weight" name="af_weight">
+				                <input type="number" id="af_weight" name="af_weight" value="${dto.af_weight}">
 				            </div>
 				
 				            <hr>
 				            
 
 				             <h5 >웨이트 운동</h5>
-						        <div id="weightExerciseContainer">
-							          <div class="form-group add-exercise-container">
+				              <div id="weightExerciseContainer">
+							       
+							        <div class="form-group add-exercise-container">
 						                <button type="button" class="btn btn-primary add-exercise-button" id="addWeightExercise">운동 추가</button>
-						            </div>
-						            <div class="form-group">
-						                <label for="weightExerciseName">운동명 : </label>
-						                <input type="text" id="pt_name" name="pt_name[]">
-						                
-						                <label for="setCount">무게 : </label>
-						                <input type="number" id="pt_kg" name="pt_kg[]">
-						                
-						                <label for="repCount">SET수 : </label>
-						                <input type="number" id="pt_set" name="pt_set[]">
-						            </div>
-						
-						        </div>
-				
+						          	</div>
+						          	
+						          <div class="form-group">
+						          	<input type="hidden" name="weight_no[]" value="${weightList[0].weight_no}"/>
+
+								        <label for="weightExerciseName">운동명 : </label>
+								        <input type="text" id="pt_name1" name="pt_name[]" value="${weightList[0].pt_name}">
+
+								        <label for="setCount">무게 : </label>
+								        <input type="number" id="pt_kg1" name="pt_kg[]" value="${weightList[0].pt_kg}">
+
+								        <label for="repCount">SET수 : </label>
+								        <input type="number" id="pt_set1" name="pt_set[]" value="${weightList[0].pt_set}">
+								   		
+								   		<!-- weight_no 값을 따로 전송 -->
+    									<input type="hidden" name="weight_no_value[]" value="${weightList[0].weight_no}">
+								    </div>
+													           
+						           <!-- 추가된 운동 정보를 가져와서 폼을 생성 -->
+								      <c:forEach var="weight" items="${weightList}" begin="1" varStatus="loop">
+								 
+								        <div class="form-group">
+								        	<input type="hidden" name="weight_no[]" value="${weight.weight_no}"/>
+								            <label for="weightExerciseName">운동명 : </label>
+								            <input type="text" id="pt_name${loop.index + 1}" name="pt_name[]" value="${weight.pt_name}">
+								   
+								            <label for="setCount">무게 : </label>
+								            <input type="number" id="pt_kg${loop.index + 1}" name="pt_kg[]" value="${weight.pt_kg}">
+
+								            <label for="repCount">SET수 : </label>
+								            <input type="number" id="pt_set${loop.index + 1}" name="pt_set[]" value="${weight.pt_set}">
+								        	<!-- weight_no 값을 따로 전송 -->
+        									<input type="hidden" name="weight_no_value[]" value="${weight.weight_no}">
+    	
+								        </div>
+								    </c:forEach>
+						    </div>
+						    
+						    
+						    								
 				            <hr>
 				
 				           <!-- 유산소 운동 -->
                     <h5>유산소 운동</h5>
                     <br>
                     <div class="form-group">
-                       
-                        <textarea id="aerobic" name="aerobic" class="aerobic-exercise"></textarea>
+                        <textarea id="aerobic" name="aerobic" class="aerobic-exercise">${dto.aerobic}</textarea>
                     </div>
 
                     <hr>
@@ -200,7 +219,7 @@
                     <br>
                     <div class="form-group">
                         
-                        <textarea id="diet" name="diet" class="diet-journal"></textarea>
+                        <textarea id="diet" name="diet" class="diet-journal">${dto.diet}</textarea>
                     </div>
 
                     <hr>
@@ -209,13 +228,13 @@
                     <h5>특이 사항</h5>
                     <br>
                     <div class="form-group">
-                        <textarea id="etc" name="etc" class="remarks"></textarea>
+                        <textarea id="etc" name="etc" class="remarks">${dto.str}</textarea>
                     </div>
 
                     <hr>
                     
 					<div class="submit-button">
-	                    <button type="submit" class="btn btn-primary" onclick="location.href='dailyptWrite.go'" >등록</button>
+	                    <button type="submit" class="btn btn-primary" >수정하기</button>
 	                    <button type="submit" class="btn btn-primary" onclick="location.href='./dailyptt'" >리스트</button>
 	                </div>
 	                
@@ -231,19 +250,22 @@
 					</div>
 				</body>
 <script>
-// 웨이트 운동 추가 버튼 클릭 이벤트 처리
+//웨이트 운동 추가 버튼 클릭 이벤트 처리
 function addWeightExercise() {
     var container = document.getElementById('weightExerciseContainer');
+    var index = container.getElementsByClassName('form-group').length + 1;
+
     var newExercise = document.createElement('div');
     newExercise.classList.add('form-group');
     newExercise.innerHTML = `
-        <label for="pt_name">운동명 : </label>
-        <input type="text" id="pt_name" name="pt_name[]">
-        <label for="pt_kg">무게 : </label>
-        <input type="number" id="pt_kg" name="pt_kg[]">
-        <label for="pt_set">SET 수 : </label>
-        <input type="number" id="pt_set" name="pt_set[]">
+        <label for="pt_name${index}">운동명:</label>
+        <input type="text" id="pt_name${index}" name="pt_name[]" value="">
+        <label for="pt_kg${index}">무게:</label>
+        <input type="number" id="pt_kg${index}" name="pt_kg[]" value="">
+        <label for="pt_set${index}">SET 수:</label>
+        <input type="number" id="pt_set${index}" name="pt_set[]" value="">
     `;
+
     container.appendChild(newExercise);
 }
 
@@ -285,7 +307,6 @@ function selectName() {
 
 
 
-// 모든 텍스트 영역을 비활성화(disabled) 
 function disableInputs() {
     formInputs.forEach(function(input) {
         input.disabled = true;
@@ -295,7 +316,6 @@ function disableInputs() {
         textarea.disabled = true;
     });
 }
-
 
 function enableInputs() {
     formInputs.forEach(function(input) {
@@ -307,32 +327,8 @@ function enableInputs() {
     });
 }
 
-function enableInputs() {
-	  formInputs.forEach(function(input) {
-	    if (input.id !== 'name' && input.id !== 'mem_no') {
-	      input.readOnly = false;
-	    }
-	  });
-
-	  formTextarea.forEach(function(textarea) {
-	    textarea.readOnly = false;
-	  });
-	}
 
 
-function disableInputs() {
-	  formInputs.forEach(function(input) {
-	    if (input.id !== 'name' && input.id !== 'mem_no') {
-	      input.value = '';
-	    }
-	    input.readOnly = true;
-	  });
-
-	  formTextarea.forEach(function(textarea) {
-	    textarea.value = '';
-	    textarea.readOnly = true;
-	  });
-	}
 
 
 

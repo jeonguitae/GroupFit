@@ -20,7 +20,21 @@ public interface PtMemberDAO {
 
 	PtMemberDTO dailyPtDetail(String dailypt_no);
 
-	ArrayList<PtMemberDTO> weightList(String dailypt_no);
+	ArrayList<PtMemberDTO> weightDetail(String dailypt_no);
+
+	int dailyptUpdate(PtMemberDTO dto);
+
+	//void UpdateWeight(int dailypt_no, String weightname, String muge, String set, int weightNoValue);
+
+	void InsertWeight(int dailypt_no, String weightname, String muge, String set);
+
+	void insertNewWeight(int dailypt_no, String ptName, String ptKg, String ptSet);
+
+	boolean delete(int dailypt_no);
+
+	void dailyptdelete(String dailypt_no);
+
+	int weightptdelete(String dailypt_no);
 
 
 

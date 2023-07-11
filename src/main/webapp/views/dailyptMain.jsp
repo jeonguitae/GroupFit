@@ -69,9 +69,23 @@ tfoot td {
 				<div class="row">
 					<div class="col-12">
 						<div style="height: 50px">
+						<div class = "float-left">
+							<div id="branchFilter">
+									  <select name="branch" id="branch" style = "margin-left : 30px">
+									  	<option value="listAll">전체</option>
+							            <c:forEach items="${dailyptlist}" var="item">
+							               <option value="${item.emp_no}">${item.emp_name}</option>
+							            </c:forEach>
+							           </select>
+							  
+							</div>
+							</div>
 							<div class="float-right">
-								<a class="btn btn-primary" id="registerBtn"> 일지 등록 </a>&nbsp; 
-								<a class="btn btn-danger" id="deleteBtn"> 일지 삭제 </a>
+								<button class="btn btn-primary" onclick="location.href='dailypt.go'">일지 등록</button>&nbsp; 
+								<form id="deleteForm" action="dailyptdelete.do" method="post">
+								  <input type="hidden" name="dailypt_no" id="dailypt_no" value="">
+								  <button class="btn btn-danger" onclick="deleteSelectedRows()">일지 삭제</button>
+								</form>
 							</div>
 						</div>
 						<div class="card card-primary">
@@ -88,6 +102,9 @@ tfoot td {
 												<th>회원번호</th>
 												<th>운동일자</th>
 												<th>트레이너</th>
+												 <th>
+										            <input type="checkbox" id="selectAll" onclick="toggleAllCheckboxes()">
+										        </th>
 											</tr>
 										</thead>
 										<tbody>
@@ -97,11 +114,11 @@ tfoot td {
 
 												<tr>
 													<td>${daily_pt.dailypt_no}</td>
-													<td><a href="dailyPtDetail.do?dailypt_no=${daily_pt.dailypt_no}">${daily_pt.name}</a></td>
+													<td><a href="dailyPtDetail.do?dailypt_no=${daily_pt.dailypt_no}">${daily_pt.member_name}</a></td>
 													<td>${daily_pt.mem_no}</td>
 													<td>${daily_pt.pt_date}</td>
-													<td>${daily_pt.emp_no}</td>
-													<%--  <td><input type="checkbox" class="rowCheckbox" name="deleteRow[]" value="${dailyptlist.dailypt_no}"></td>--%>
+													<td>${daily_pt.emp_name}</td>
+													<td><input type="checkbox" class="rowCheckbox" name="deleteRow[]" value="${daily_pt.dailypt_no}"></td>
 												</tr>
 
 											</c:forEach>
@@ -138,22 +155,26 @@ tfoot td {
 	}
 
 	function deleteSelectedRows() {
-		const checkboxes = document.getElementsByClassName('rowCheckbox');
-		const selectedRows = [];
-		for (let i = 0; i < checkboxes.length; i++) {
-			if (checkboxes[i].checked) {
-				selectedRows.push(checkboxes[i].value);
-			}
+		  const checkboxes = document.getElementsByClassName('rowCheckbox');
+		  const deleteForm = document.getElementById('deleteForm');
+		  const dailyptNoInput = document.getElementById('dailypt_no');
+		  
+		  // 선택된 행의 dailypt_no 값을 배열로 저장
+		  const selectedRows = [];
+		  for (let i = 0; i < checkboxes.length; i++) {
+		    if (checkboxes[i].checked) {
+		      selectedRows.push(checkboxes[i].value);
+		    }
+		  }
+		  
+		  // 선택된 dailypt_no 값을 hidden input에 설정
+		  dailyptNoInput.value = selectedRows.join(',');
+		  
+		  // form을 제출하여 서버로 데이터 전송
+		  deleteForm.submit();
 		}
-		// 선택된 행 삭제 처리를 수행하는 로직을 추가하세요.
-		// 서버로 선택된 행을 전송하여 삭제 작업을 수행하거나, 클라이언트 측에서 동적으로 행을 제거할 수 있습니다.
-	}
 
 	
-	 // 등록 버튼 클릭 시 이벤트 처리
-	  document.getElementById("registerBtn").addEventListener("click", function() {
-	    window.location.href = "/dailypt"; // "주소" 부분에 이동하고자 하는 주소를 입력합니다.
-	  });
 
 	  
 	
