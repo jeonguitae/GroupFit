@@ -5,7 +5,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("machine")
 public class MachineDTO {
 	
-	private int mac_num;
+	private String mac_num;
 	private String emp_no;
 	private String mac_name;
 	private String purch_date;
@@ -17,10 +17,18 @@ public class MachineDTO {
 	private String fixed_date;
 	private String fixed_content;
 	
-	public int getMac_num() {
+	private String new_photo_name;
+	
+	public String getNew_photo_name() {
+		return new_photo_name;
+	}
+	public void setNew_photo_name(String new_photo_name) {
+		this.new_photo_name = new_photo_name;
+	}
+	public String getMac_num() {
 		return mac_num;
 	}
-	public void setMac_num(int mac_num) {
+	public void setMac_num(String mac_num) {
 		this.mac_num = mac_num;
 	}
 	public String getEmp_no() {
