@@ -21,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.gf.board.dto.NoticeDTO;
 import kr.co.gf.board.service.NoticeService;
@@ -33,8 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class NoticeController {
 
-	@Autowired
-	NoticeService nservice;
+	@Autowired NoticeService nservice;
 	
 	@Value("${spring.servlet.multipart.location}") private String root;
 

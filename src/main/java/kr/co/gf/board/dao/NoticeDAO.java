@@ -3,7 +3,6 @@ package kr.co.gf.board.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.gf.board.dto.NoticeDTO;

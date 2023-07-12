@@ -85,7 +85,7 @@
 					<span></span>
 				</div></li>
 				<li>
-					<button type="button" class="btn btn-dark">퇴근</button>
+					<button type="button" class="btn btn-dark" onclick="location.href='out.update'">퇴근</button>
 				</li>
 				<!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -341,7 +341,7 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="pages/charts/chartjs.move"
+								<li class="nav-item item-sub"><a href="/wlist.do"
 									class="nav-link"> <i class="fas fa-user-check nav-icon"></i>
 										<p>나의 근태관리</p>
 								</a></li>
