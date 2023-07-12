@@ -24,16 +24,19 @@
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>직원 프로필 수정하기</h3>
 		<form action="empUpdate.do" method="post" enctype="multipart/form-data">
-			<table>
+			<table class="table table-dark table-striped">
 				<tr>
-					<th>
-						<img src="img/GroupFit_lg_2.png" alt="그룹핏"
+					<c:choose>
+	                 <c:when test="${not empty emp.new_photo_name}">
+	                     <img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
+	                     <input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
+						 <img id="preview" style="max-width: 200px; max-height: 200px;">
+	                 </c:when>
+	                 <c:otherwise>
+	                     <img src="img/GroupFit_lg_2.png" alt="그룹핏"
 							 width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
-					</th>
-					<td>
-						<input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
-						<img id="preview" style="max-width: 200px; max-height: 200px;">
-					</td>
+	                 </c:otherwise>
+	           		 </c:choose>
 				</tr>
 				<tr>
 					<th>*사내번호</th>

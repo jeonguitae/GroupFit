@@ -165,8 +165,8 @@ public class EmpController {
 //	}
 	
 	 @RequestMapping(value="/empUpdate.do")
-	   public String updateDo(MultipartFile file,@RequestParam HashMap<String, String> params, HttpSession session, Model model) {
-	       logger.info("마이페이지 수정");
+	   public String updateDo(@RequestParam HashMap<String, Object> params, MultipartFile file, HttpSession session, Model model) {
+	       logger.info("직원 수정");
 	       String page = "redirect:/empUpdate.go";
 	       String loginId = null;
 	       String emp_no;
@@ -180,7 +180,7 @@ public class EmpController {
 	           if (loginId.equals(params.get("emp_no"))) {
 	              logger.info("file : " + file);
 	               service.emp_update(file, params);
-	               page = "redirect:/empDetail.do";
+	               page = "redirect:/empList.go";
 	           }
 	       }
 	       return page;

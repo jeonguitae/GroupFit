@@ -112,14 +112,16 @@
 	</insert>
 	
 	<select id="emp_detail" resultType="emp">
-		SELECT * FROM emp WHERE emp_no = #{param1}
+		SELECT * FROM emp e
+		LEFT JOIN wphoto w ON w.board_num = e.emp_no
+		WHERE emp_no = #{param1}
 	</select>
 	
 	<select id="emp_photo" resultType="String">
 		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 1
 	</select>
 	
-	<update id="emp_update" parameterType="emp">
+	<update id="emp_update" parameterType="hashmap">
 		UPDATE emp SET 
 			  pw = #{pw}
 			, name = #{name}
@@ -129,7 +131,6 @@
 			, email = #{email}
 			, position = #{position}
 			, status = #{status}
-			, join_year = #{join_year}
 		WHERE emp_no = #{emp_no}
 	</update>
 	

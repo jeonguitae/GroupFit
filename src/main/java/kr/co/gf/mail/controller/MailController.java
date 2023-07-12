@@ -68,14 +68,32 @@ public class MailController {
 	}
 	
 	@GetMapping(value="/postSendDetail.do")
-	public ModelAndView postSendDetail(@RequestParam String emailid) {
+	public ModelAndView postSendDetail(@RequestParam String emailid, HttpSession session) {
 		logger.info("emailid :"+emailid);
 		
-		MailDTO dto = service.post_sendDetail(emailid,"detail");
+		MailDTO dto = service.post_sendDetail(emailid,"detail", session);
 		String page = "redirect:/postSendList.go";
 		
 		if(dto != null) {
 			page = "postSendDetail";
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(page);
+		mav.addObject("post",dto);
+		
+		return mav;
+	}
+	
+	@GetMapping(value="/postGetDetail.do")
+	public ModelAndView postGetDetail(@RequestParam String emailid, HttpSession session) {
+		logger.info("emailid :"+emailid);
+		
+		MailDTO dto = service.post_GetDetail(emailid,"detail", session);
+		String page = "redirect:/postGetList.go";
+		
+		if(dto != null) {
+			page = "postGetDetail";
 		}
 		
 		ModelAndView mav = new ModelAndView();

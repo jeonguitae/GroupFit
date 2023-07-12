@@ -84,17 +84,22 @@ div[class="table"]{
 								<th>제목</th>
 								<th>보낸사람</th>
 								<th>받은시간</th>
-								<th>상태</th>
+								<th>읽은시간</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach items="${list}" var="post">
 								<tr>
 									<td><input type="checkbox" name="chk" value="${post.email_num}"/></td>
-									<td><a href="postSendDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
-									<td>${post.send_empno}</td>
+									<td><a href="postGetDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
+									<td>${post.name}</td>
 									<td>${post.send_time}</td>
-									<td>${post.get_chk}</td>
+									<c:if test="${post.get_chk eq '1'}">
+									<td>${post.chk_time}</td>
+									</c:if>
+									<c:if test="${post.get_chk ne '1'}">
+									<td>안읽음</td>
+									</c:if>
 								</tr>
 							</c:forEach>
 						</tbody>

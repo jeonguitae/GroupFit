@@ -33,7 +33,7 @@ public interface EmpDAO {
 	
 	String emp_photo(String detailid);
 
-	int emp_update(HashMap<String, String> params);
+	int emp_update(HashMap<String, Object> params);
 	
 	void emp_removePhoto(String emp_no);
 

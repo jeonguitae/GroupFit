@@ -24,14 +24,18 @@ public interface MailDAO {
 	int post_sendWrite(MailDTO dto);
 
 	MailDTO post_sendDetail(String emailid);
+	
+	MailDTO post_GetDetail(String emailid);
 
-	MailDTO post_get(String emailid);
+	MailDTO post_get(String email_num);
 
-	void post_upHit(String emailid);
+	void post_upHit(String get_empno, String emailid);
 	
 	void post_hide(List<String> hideList);
 
 	int post_getWrite(HashMap<String, String> params);
+
+	
 
 	
 

@@ -191,13 +191,13 @@ public class EmpService {
 		return dao.emp_photo(detailid);
 	}
 	
-	public void emp_update(MultipartFile file, HashMap<String, String> params) {
+	public void emp_update(MultipartFile file, HashMap<String, Object> params) {
 		
 		logger.info("params : " + params);
 	
 		int row = dao.emp_update(params);
 		logger.info("update row: " + row);
-		String emp_no = params.get("emp_no");
+		String emp_no = params.get("emp_no").toString();
 		
 		if (row > 0) {
 			logger.info("업로드할 file 있나요? :" + !file.isEmpty());

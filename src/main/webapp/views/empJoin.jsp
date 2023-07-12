@@ -4,6 +4,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+
+h3{
+	text-align: center;
+}
+
+th{
+	text-align: center;
+}
+
+.btn btn-primary{
+	text-align: center;
+}
+
+</style>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -23,7 +38,7 @@
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>신규직원 인적 정보 작성</h3>
 		<form action="empJoin.do" method="post" enctype="multipart/form-data">
-			<table>
+			<table class="table table-dark table-striped">
 				<tr>
 					<th>
 						<img src="img/GroupFit_lg_2.png" alt="그룹핏"
@@ -107,6 +122,7 @@
 				<input class="btn btn-primary" type="submit" value="등록"/>
 				<button class="btn btn-primary" type="button" onclick="location.href='./empList.go'">목록</button>	
 			</table>
+
 		</form>
 	</div>
 </body>

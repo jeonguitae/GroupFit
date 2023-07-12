@@ -60,8 +60,10 @@ div[class="table"]{
 		</fieldset>
 		
 		<div class="btn1">
+			<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 			<button class="btn btn-primary" onclick="location.href='empJoin.go'">직원 등록</button>
 			<button class="btn btn-primary" onclick="hide()">직원 삭제</button>
+			</c:if>
 			<c:if test="${sessionScope.loginEmp.position eq '대표'}">
 				<button class="btn btn-primary" onclick="location.href='empRepList.do'">지점별</button>
 				<button class="btn btn-primary" onclick="location.href='empRetire.go'">퇴사직원</button>
