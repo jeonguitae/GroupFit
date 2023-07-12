@@ -36,6 +36,16 @@ public interface NoticeDAO {
 
 	void photoSave(String oriName, String newName, int c_idx, String n_idx);
 
+	ArrayList<NoticeDTO> pdetail(String n_idx);
+
+	String findfile(String path);
+
+	void pdelete(String new_photo_name);
+
+	void fordb(String n_idx);
+
+	void alldelete(String n_idx);
+
 
 
 
