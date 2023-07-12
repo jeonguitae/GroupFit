@@ -70,7 +70,11 @@
 			<tr>
 				<th>사진 및 파일</th>
 				<td>
-					<input type="file" name="photos" multiple="multiple"/>
+					<c:forEach items="${photos}" var="photo">
+						<img width="500" src="/photo/${photo.new_photo_name}"/>
+						<input type="button" onclick="location.href='pdelete.do?new_photo_name=${photo.new_photo_name}&n_idx=${photo.board_num}'" value="삭제"/>
+					</c:forEach>
+					<input type="file" name="mphotos" multiple="multiple"/>
 				</td>
 			</tr>
 			<tr>

@@ -44,6 +44,7 @@ public class NoticeService {
 		  
 //		  int n_idx=dto.getN_idx();
 		  
+
 		  for (MultipartFile photo : photos) {
 			if (photo.getOriginalFilename()!=null) {
 				 //logger.info("photosave가기 전"+photo.getOriginalFilename());
@@ -54,13 +55,53 @@ public class NoticeService {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
-		}
-		  
-		  return page;
-		  
-		  
+
+		  if (!photos[0].isEmpty()){ //photos!=null&&photos.length>0&& photos[0] != null 
+			  logger.info("사진이 있는 것임");
+
+			  for (MultipartFile photo : photos) {
+					 String flag="write";
+					 photoSave(photo,n_idx);	
+					 
+					 try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}	
+
+
+	
+	public String photoSave(MultipartFile photo, String n_idx) {
+			
+			NoticeDTO dto = new NoticeDTO();
+			String c_Content=dto.setC_Content("공지사항");
+			int c_idx=dto.setC_idx(5);
+			logger.info("가져온 공지사항 번호는 "+c_idx);
+		
+			String oriName= photo.getOriginalFilename(); 
+			String ext= oriName.substring(oriName.lastIndexOf(".")); 
+			String newName= System.currentTimeMillis()+ext;
+			logger.info("newname"+newName);
+				  
+			try { 
+				byte[] bytes=photo.getBytes(); 
+				//파일 객체화
+				Path path= Paths.get(root+"/"+newName);
+				Files.write(path, bytes);
+				
+				/*
+				 * if (flag.equals("pupdate")) { //c드라이브서 삭제 icin //Files.delete(path); int
+				 * row=ndao.pupdate(n_idx, c_idx, oriName, newName); }
+				 */
+					ndao.photoSave(oriName, newName, c_idx , n_idx);
+				} 
+			catch (IOException e) { 
+				e.printStackTrace(); 
+				}	
+			String page = "redirect:/ndetail.do?n_idx="+"n_idx";
+			return page;
 	}
+	
 
 	public ArrayList<NoticeDTO> nlist() {
 		return ndao.nlist();
@@ -91,15 +132,32 @@ public class NoticeService {
 		return ndao.ndelete(n_idx);
 	}
 	
-	public void nupdate(HashMap<String, String> params, MultipartFile photos) {
-		ndao.nupdate(params);
+	public void nupdate(HashMap<String, String> params, MultipartFile[] mphotos) {
+		ndao.nupdate(params);//글들
 		String n_idx=params.get("n_idx");
 		logger.info("업뎃하려면 n_idx는"+n_idx);
 		NoticeDTO dto = new NoticeDTO();
 		
+
 		if (photos.getOriginalFilename()!=null) {
 			String flag="pupdate";
 //			photoSave(photos, n_idx, flag);
+
+		logger.info("일단 mphotos photosave 가기 전");
+		if (mphotos!=null &&mphotos.length>0) {
+			for (MultipartFile mphoto : mphotos) {
+				if (!mphoto.isEmpty()) {
+					logger.info("사진이 있을 경우에만 출력됨 for 다시 photosave icin");
+					photoSave(mphoto, n_idx);
+				}
+				
+
+			}
+		}
+		
+	}		
+			
+
 			/*
 			 * String oriName=photos.getOriginalFilename(); String ext =
 			 * oriName.substring(oriName.lastIndexOf(".")); String newName =
@@ -116,10 +174,26 @@ public class NoticeService {
 			 * //logger.info(oriName+"newname"+newName+"n_idx"+n_idx+c_idx); } catch
 			 * (IOException e) { e.printStackTrace(); }
 			 */
-		}
+
 		/*
 		 * String page = "redirect:/ndetail.do?n_idx="+"n_idx"; return page;
 		 */		
+	
+
+	public ArrayList<NoticeDTO> pdetail(String n_idx) {
+		return ndao.pdetail(n_idx);
+
+	}
+	public String findfile(String path) {
+		return ndao.findfile(path);
+	}
+	public void pdelete(String new_photo_name) {
+		/*
+		 * File file= new File(new_photo_name); logger.info("사진 삭제 원해"); if
+		 * (file.exists()) { file.delete(); logger.info("일단 파일 존재함 c드라이브 확인 ㄱ"); }
+		 */
+		ndao.pdelete(new_photo_name);
+		
 	}
 
 	/*

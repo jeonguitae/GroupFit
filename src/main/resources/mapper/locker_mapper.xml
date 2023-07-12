@@ -5,7 +5,7 @@
    <mapper namespace="kr.co.gf.board.dao.LockerDAO">
    
    <select id="loclist" resultType="locker">
-   		SELECT l.loc_no, l.status, m.name, m.mem_no 
+   		SELECT l.loc_no, l.status, m.name, m.mem_no , l.loc_num
    		FROM locker l LEFT JOIN member m 
    		ON l.loc_num = m.loc_num
    		WHERE b_idx = #{param1}
