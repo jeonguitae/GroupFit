@@ -92,7 +92,7 @@ div[class="table"]{
 								<tr>
 									<td><input type="checkbox" name="chk" value="${post.email_num}"/></td>
 									<td><a href="postSendDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
-									<td>"${sessionScope.loginEmp.name}"</td>
+									<td>${post.name}</td>
 									<td>${post.send_time}</td>
 									<c:if test="${post.get_chk eq '1'}">
 									<td>${post.chk_time}</td>
@@ -124,12 +124,17 @@ function hide() {
 	      },
 	      dataType: 'text',
 	      success: function(data){
-	         
+	    	  alert('삭제되었습니다!');
 	      },
 	      error: function(e){
 	         console.log(e);
 	      }
 	   });
 	}
+var msg = "${msg}";
+if(msg != ""){
+   alert(msg);
+}
+
 </script>
 </html>

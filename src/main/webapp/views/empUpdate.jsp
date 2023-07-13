@@ -24,9 +24,19 @@
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>직원 프로필 수정하기</h3>
 		<form action="empUpdate.do" method="post" enctype="multipart/form-data">
-			<table>
+			<table class="table table-dark table-striped">
 				<tr>
-					<input type="file" name="emp_photo"/>
+					<c:choose>
+	                 <c:when test="${not empty emp.new_photo_name}">
+	                     <img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
+	                     <input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
+						 <img id="preview" style="max-width: 200px; max-height: 200px;">
+	                 </c:when>
+	                 <c:otherwise>
+	                     <img src="img/GroupFit_lg_2.png" alt="그룹핏"
+							 width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
+	                 </c:otherwise>
+	           		 </c:choose>
 				</tr>
 				<tr>
 					<th>*사내번호</th>
@@ -101,6 +111,10 @@
 					<th>*입사일자</th>
 					<td><input type="date" name="join_year" value="${emp.join_year}" /></td>
 				</tr>
+				<tr>
+					<th>*퇴사일자</th>
+					<td><input type="date" id="retire_year" name="retire_year"/></td>
+				</tr>
 				<input type="submit" value="등록"/>
 				<button type="button" onclick="location.href='./empList.go'">목록</button>	
 				<button type="button" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
@@ -113,5 +127,15 @@ var msg = "${msg}";
 if(msg != ""){
 	alert(msg);
 }
+
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#preview').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
 </script>
 </html>
