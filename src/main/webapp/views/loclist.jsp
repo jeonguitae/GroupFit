@@ -50,6 +50,7 @@
 			
 				<button class="cng" onclick="openModal2()">라커변경</button>
 				<button class="fix" onclick="openModal()">상태변경</button>
+				
 			
 				<div class="first_row" style="display : flex;">
 					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
