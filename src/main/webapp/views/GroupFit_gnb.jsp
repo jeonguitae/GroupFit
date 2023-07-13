@@ -222,7 +222,7 @@
 								</li>
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-item item-sub">
-									<a href="empRepList.do" class="nav-link">
+									<a href="/empRetireList.do" class="nav-link">
 										<i class="fas fa-running nav-icon"></i>
 										<p>퇴사 직원 리스트</p>
 									</a>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -112,6 +113,45 @@ public class MachineService {
 		}
 		
 		return msg;
+	}
+
+	public HashMap<String, Object> mac_chk(ArrayList<String> chk_mac, String mac_status, String b_idx, String emp_no) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int successCnt = 0;
+		for (String mac_num : chk_mac) {
+			
+			successCnt += dao.mac_status(mac_num, mac_status, b_idx, emp_no);
+		}
+		
+		String msg = successCnt + "개 기구 점검 완료!";
+		map.put("msg", msg);
+		
+		return map;
+	}
+
+	public ArrayList<MachineDTO> Fmaclist(String b_idx) {
+		
+		LocalDate now = LocalDate.now();
+		
+		return dao.Fmaclist(b_idx);
+	}
+
+	public HashMap<String, Object> mac_fixed(String emp_no, String mac_name, String fixed_content, String b_idx) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String mac_num = dao.mac_num(mac_name, b_idx);
+		int row = dao.mac_fixed(emp_no, mac_num, fixed_content, b_idx);
+		
+		if(row == 1) {
+			
+			String msg = "신청이 완료되었습니다!";
+			map.put("msg", msg);
+		}
+		
+		return map;
 	}
 
 }

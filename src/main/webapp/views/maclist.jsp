@@ -8,6 +8,18 @@
 	div.meminfo. div.memprofile{
 		float: center;
 	}
+	
+	#macchk{
+		margin-left: 377px;
+	}
+	
+	#fixed_mac{
+		margin-left: 4px;
+	}
+	
+	#macreg, #macphoto{
+		margin-left: 4px;
+	}
 </style>
 <meta charset="UTF-8">
 <title>여기에 페이지 이름 입력</title>
@@ -47,10 +59,13 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-			
-				<button class="btn btn-primary" onclick="openModal2()">기구등록</button>
-				<button class="btn btn-secondary" onclick="openModal3()">기구 사진 등록</button>
-
+				<h1>기구 리스트</h1>
+				
+				<button id="macreg" class="btn btn-primary" onclick="openModal2()">기구등록</button>
+				<button id="macphoto" class="btn btn-secondary" onclick="openModal3()">기구 사진 등록</button>
+				
+				<button id="macchk" class="btn btn-primary" onclick="openModal4()">기구점검</button>
+				<button id="fixed_mac" class="btn btn-secondary" onclick="openModal5()">수리신청</button>
 			
 				<div class="first_row" style="display : flex;">
 					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
@@ -220,14 +235,101 @@
 				            </div>
 				            
 					        <div class="modal-footer">
+					          <input type="button" id="photodel" onclick="#" class="btn btn-primary" value="삭제"/>
+					          <input type="button" id="close" class="btn btn-secondary" data-dismiss="modal" value="돌아가기"/>
 					        </div>
 				          </form>
-				          <input type="button" id="photodel" onclick="#" class="btn btn-primary" value="삭제"/>
-				          <input type="button" class="btn btn-secondary" data-dismiss="modal" value="돌아가기"/>
 				        </div>
 				      </div>
 				   </div>
 				</div>
+				
+				<div class="modal fade" id="event-modal4" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h5 class="modal-title" id="event-modal-label">기구 점검</h5>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        
+				        <div class="modal-body">
+				          <form action="mac_photo_reg.do?" method="post" enctype="multipart/form-data">
+				          
+				          	<div class="form-group">
+				              <label for="event-name">기구 이름</label><br/>
+				              <p><input type="checkbox" id="all"/> &nbsp; &nbsp; 전체선택</p>
+		              		  <c:forEach items="${list}" var="name" varStatus="num">
+		              			<input type="checkbox" value="${name.mac_num}"/> &nbsp; &nbsp; ${name.mac_name}<br/>
+		              		  </c:forEach>
+				            </div>
+				            
+				            <div class="form-group">
+				            	<label for="start-datetime">점검자</label>
+				            	<input type="text" class="form-control" id="emp_no2" name="emp_no" value="${sessionScope.loginId}" readonly="readonly">
+				            </div>
+				            
+				            <div class="form-group">
+				            	<label for="start-datetime">기구 상태</label><br/>
+				            	<select name="mac_status">
+				            		<option value="정상">정상</option>
+				            		<option value="수리필요">수리필요</option>
+				            		<option value="고장">고장</option>
+				            	</select>
+				            </div>
+				          </form>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				          <button type="button" class="btn btn-primary" id="save-event-btn4">저장</button>
+				        </div>
+				      </div>
+				   </div>
+				</div>
+				
+				<div class="modal fade" id="event-modal5" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h5 class="modal-title" id="event-modal-label">수리 신청</h5>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        <div class="modal-body">
+				          <form id="event-form">
+				            <div class="form-group">
+				              <label for="event-name">신청자</label>
+				              <input type="text" class="form-control" id="emp_no3" name="emp_no" value="${sessionScope.loginId}" readonly="readonly">
+				            </div>
+				
+				            <div class="form-group">
+				              <label for="event-name">수리가 필요한 기구</label><br/>
+				              <select name="mac_name2">
+			              		  <c:forEach items="${list2}" var="name">
+			              			<option value="${name.mac_name}">${name.mac_name}</option>
+			              		  </c:forEach>
+		              		  </select>
+				            </div>
+				            
+				             <div class="form-group">
+				              <label for="start-datetime">신청 사유</label>
+				              <textarea style="width: 100%; height: 100px; resize: none; background-color: #454d55; color: white;" 
+				              			id="fixed_content" name="fixed_content">
+				              </textarea>
+				            </div>
+				          </form>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				          <button type="button" class="btn btn-primary" id="save-event-btn5">신청</button>
+				        </div>
+				      </div>
+				   </div>
+				</div>
+				
+				
 			</div>
 			<!--/. container-fluid -->
 		</section>
@@ -268,7 +370,7 @@ function maclistDraw(maclist){
 					+ '<br/>'
 					/* + '<a href="macdetail.do?mac_num=' + item.mac_num + '">' */
 					+ '<a onclick=openModal(' + item.mac_num + ')>'		
-					+ '<img width="100%" height="85%" src="/photo/' + item.new_photo_name + '"/>'
+					+ '<img width="100%" height="84%" src="/photo/' + item.new_photo_name + '"/>'
 					+ '</a>' 
 					+ '<br/>' 
 					+ '</div>';
@@ -313,6 +415,14 @@ function openModal2() {
 function openModal3() {
     $('#event-modal3').modal('show');
   }
+ 
+function openModal4() {
+    $('#event-modal4').modal('show');
+  }
+  
+function openModal5() {
+    $('#event-modal5').modal('show');
+  }
   
 function openModal(mac_num) {
 	$.ajax({
@@ -351,7 +461,6 @@ function macinfoDraw(macinfo){
 		$('#machine_emp').append(macinfo.emp_no);
 		
 		$('input[id="photodel"]').attr('onclick', 'location.href="macdel.do?mac_num=' + macinfo.mac_num + '"');
-
 }
   
 $(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
@@ -376,7 +485,6 @@ $(document).on('click', '#save-event-btn2', function() {
       success: function(data) {
         alert(data.alert);
         $('#event-modal2').modal('hide');
-        openModal3();
         location.href = 'maclist.go';
       },
       error: function(e) {
@@ -391,6 +499,85 @@ $(document).on('click', '#event-modal2 .close, #event-modal2 .modal-footer .btn-
   
 $(document).on('click', '#event-modal3 .close, #event-modal3 .modal-footer .btn-secondary', function() {
     $('#event-modal3').modal('hide');
+  });
+  
+$(document).on('click', '#event-modal4 .close, #event-modal4  .modal-footer .btn-secondary', function() {
+    $('#event-modal4').modal('hide');
+  });
+  
+$(document).on('click', '#event-modal5 .close, #event-modal5  .modal-footer .btn-secondary', function() {
+    $('#event-modal5').modal('hide');
+  });
+  
+$('#all').click(function(e){	
+	var $chk = $('input[type="checkbox"]');
+	console.log($chk);
+	if($(this).is(':checked')){
+		$chk.prop('checked',true);
+	}else{
+		$chk.prop('checked',false);
+	}	
+});
+
+$(document).on('click', '#save-event-btn4', function() {
+    // 데이터 추출
+    var checkArr = [];
+	
+	$('input[type="checkbox"]:checked').each(function(idx,item){		
+		//checkbox 에 value 를 지정하지 않으면 기본값을 on 으로 스스로 지정한다.
+		if($(this).val()!='on'){
+			//console.log(idx,$(this).val());
+			checkArr.push($(this).val());
+		}	
+	});
+	
+    var $mac_status = $('select[name="mac_status"]').val();
+    var $emp_no = $('#emp_no2').val();
+    
+    // AJAX 요청
+    $.ajax({
+      type: 'POST',
+      url: 'mac_chk.ajax',
+      data: {
+    	  'chk_mac' : checkArr,
+    	  'mac_status' : $mac_status,
+    	  'emp_no' : $emp_no
+      },
+      success: function(data) {
+        alert(data.msg);
+        $('#event-modal4').modal('hide');
+        location.href = 'maclist.go';
+      },
+      error: function(e) {
+        console.log(e);
+      }
+    });
+  });
+  
+$(document).on('click', '#save-event-btn5', function() {
+ 
+    var $mac_name = $('select[name="mac_name2"]').val();
+    var $fixed_content = $('#fixed_content').val();
+    var $emp_no = $('#emp_no3').val();
+    
+    // AJAX 요청
+    $.ajax({
+      type: 'POST',
+      url: 'mac_fixed.ajax',
+      data: {
+    	  'mac_name' : $mac_name,
+    	  'fixed_content' : $fixed_content,
+    	  'emp_no' : $emp_no
+      },
+      success: function(data) {
+        alert(data.msg);
+        $('#event-modal5').modal('hide');
+        location.href = 'maclist.go';
+      },
+      error: function(e) {
+        console.log(e);
+      }
+    });
   });
 
 </script>

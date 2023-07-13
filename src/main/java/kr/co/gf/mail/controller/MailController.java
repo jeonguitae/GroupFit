@@ -1,5 +1,6 @@
 package kr.co.gf.mail.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,14 +70,32 @@ public class MailController {
 	}
 	
 	@GetMapping(value="/postSendDetail.do")
-	public ModelAndView postSendDetail(@RequestParam String emailid) {
+	public ModelAndView postSendDetail(@RequestParam String emailid, HttpSession session) {
 		logger.info("emailid :"+emailid);
 		
-		MailDTO dto = service.post_sendDetail(emailid,"detail");
+		MailDTO dto = service.post_sendDetail(emailid,"detail", session);
 		String page = "redirect:/postSendList.go";
 		
 		if(dto != null) {
 			page = "postSendDetail";
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName(page);
+		mav.addObject("post",dto);
+		
+		return mav;
+	}
+	
+	@GetMapping(value="/postGetDetail.do")
+	public ModelAndView postGetDetail(@RequestParam String emailid, HttpSession session) {
+		logger.info("emailid :"+emailid);
+		
+		MailDTO dto = service.post_GetDetail(emailid,"detail", session);
+		String page = "redirect:/postGetList.go";
+		
+		if(dto != null) {
+			page = "postGetDetail";
 		}
 		
 		ModelAndView mav = new ModelAndView();
@@ -107,5 +127,13 @@ public class MailController {
 		logger.info("hide~");
 		return service.post_hide(hideList, rAttr);
 	}
+	
+	@RequestMapping(value="/emp_find.ajax")
+	@ResponseBody
+	public HashMap<String, Object> empFind(@RequestParam String emp_no){
+		
+		return service.emp_find(emp_no);
+	}
+	
 	
 }

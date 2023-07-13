@@ -42,25 +42,26 @@ public class NoticeService {
 
 		  int row=ndao.nwrite(dto);
 		  
-		  String n_idx=dto.getN_idx();
+//		  int n_idx=dto.getN_idx();
 		  
-		  if (!photos[0].isEmpty()){ //photos!=null&&photos.length>0&& photos[0] != null 
-			  logger.info("사진이 있는 것임");
 
-			  for (MultipartFile photo : photos) {
-					 String flag="write";
-					 photoSave(photo,n_idx);	
-					 
-					 try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}	
+		  for (MultipartFile photo : photos) {
+			if (photo.getOriginalFilename()!=null) {
+				 //logger.info("photosave가기 전"+photo.getOriginalFilename());
+				String flag="write";
+//				 photoSave(photo,n_idx,flag);				 
+				 try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-			  
-		}		  
-		  return page;		  
+		  }
+		return page;
 	}
+
+
+
 	
 	public String photoSave(MultipartFile photo, String n_idx) {
 			
@@ -93,6 +94,7 @@ public class NoticeService {
 			return page;
 	}
 	
+
 	public ArrayList<NoticeDTO> nlist() {
 		return ndao.nlist();
 	}
@@ -128,6 +130,9 @@ public class NoticeService {
 		logger.info("업뎃하려면 n_idx는"+n_idx);
 		NoticeDTO dto = new NoticeDTO();
 		
+
+
+
 		logger.info("일단 mphotos photosave 가기 전");
 		if (mphotos!=null &&mphotos.length>0) {
 			for (MultipartFile mphoto : mphotos) {
@@ -142,6 +147,7 @@ public class NoticeService {
 		
 	}		
 			
+
 			/*
 			 * String oriName=photos.getOriginalFilename(); String ext =
 			 * oriName.substring(oriName.lastIndexOf(".")); String newName =

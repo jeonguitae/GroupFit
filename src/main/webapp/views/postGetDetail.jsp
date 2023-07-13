@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쪽지 상세보기</title>
+<title>받은 쪽지 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>쪽지 상세보기</h1>
+						<h1>받은 쪽지 상세보기</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -44,15 +44,19 @@
 			<div class="container-fluid">
 					<table>
 						<tr>
-							<th>보낸시간</th>
+							<th>받은시간</th>
 							<td><input type="text" value="${post.send_time}" readonly/></td>
+						</tr>
+						<tr>
+							<th>읽은시간</th>
+							<td><input type="text" value="${post.chk_time}" readonly/></td>
 						</tr>
 						<tr>
 							<th>제목</th>
 							<td><input type="text" name="subject" value="${post.subject}" readonly/></td>
 						</tr>
 						<tr>
-							<th>받는사람 이름</th>
+							<th>보낸사람 이름</th>
 							<td>
 								<input type="text" name="get_empno" value="${post.name}" readonly/>
 							</td>

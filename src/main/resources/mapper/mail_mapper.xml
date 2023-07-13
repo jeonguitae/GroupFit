@@ -25,15 +25,17 @@
    	<!-- 보낸쪽지 리스트 검색 -->
 	<select id="post_sendList" resultType="mail" 
 		parameterType="String">
-		SELECT * FROM post
-		where send_empno = #{send_empno} AND is_delete=0
+		SELECT * FROM post p
+		left join emp e on p.get_empno = e.emp_no
+		where p.send_empno = #{send_empno} AND p.is_delete=0
 	</select>
 	
    	<!-- 받은쪽지 리스트 검색 -->
 	<select id="post_getList" resultType="mail" 
 		parameterType="String">
-		SELECT * FROM post
-		where get_empno = #{get_empno}
+		SELECT * FROM post p
+		left join emp e on p.send_empno = e.emp_no
+		where p.get_empno = #{get_empno} AND p.is_delete=0
 	</select>
 
 	<insert id="post_sendWrite" parameterType="mail"
@@ -47,8 +49,15 @@
 	</insert>
 	
 	<select id="post_sendDetail" resultType="mail">
-		SELECT * FROM post
-		where email_num = #{emailid}
+		SELECT * FROM post p
+		left join emp e on p.get_empno = e.emp_no
+		where p.email_num = #{emailid}
+	</select>
+	
+	<select id="post_GetDetail" resultType="mail">
+		SELECT * FROM post p
+		left join emp e on p.send_empno = e.emp_no
+		where p.email_num = #{emailid}
 	</select>
 	
 	<select id="post_get" resultType="mail">
@@ -60,7 +69,7 @@
 		UPDATE post SET 
 		get_chk = 1,
 		chk_time = now()
-	    WHERE email_num = #{emailid}
+	    WHERE email_num = #{emailid} AND get_empno = #{get_empno}
 	</update>
 	
 	<insert id="post_getWrite" parameterType="mail">
@@ -72,7 +81,7 @@
 			
 			
 	<!-- 받은사람no > 이름으로 불러오기 -->	
-<!-- <select id="emp_post" resultType="mail">
+	<!-- <select id="emp_post" resultType="mail">
 		select name
 		from emp e
 		inner join post p 
@@ -90,6 +99,15 @@
       )
    </update>
    
+   <select id="emp_find" resultType="emp">
+	SELECT * FROM emp
+	WHERE name = #{emp_no}
+   </select>
+   
+   <select id="emp_findList" resultType="hashmap">
+	SELECT * FROM emp
+	WHERE name = #{emp_no}
+   </select>
    
    
    </mapper>
