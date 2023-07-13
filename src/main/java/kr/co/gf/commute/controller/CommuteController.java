@@ -66,6 +66,7 @@ public class CommuteController {
 		//0이면 출근 insert/1이면 msg만 출력
 		if (row==0) {
 			int row2=cservice.comedo(emp_no, b_idx);
+			logger.info("12331 : " + emp_no + b_idx);
 			logger.info("3번 로거 출근처리했으면 row2는"+row2);
 		}else {
 			model.addAttribute("msg","이미 출근처리 되었습니다.");
