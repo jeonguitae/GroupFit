@@ -12,10 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.mail.dao.MailDAO;
 import kr.co.gf.mail.dto.MailDTO;
 @Service
@@ -148,6 +150,31 @@ public class MailService {
 
 		rAttr.addFlashAttribute("msg",msg);
 		return new ModelAndView("redirect:/postSendList.go");
+	}
+
+	public HashMap<String, Object> emp_find(String emp_no) {
+		
+		logger.info("emp_no: "+emp_no);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<EmpDTO> list = dao.emp_find(emp_no);
+		
+		String page = "redirect:/postSendWrite.go";
+		
+		map.put("page", page);
+		map.put("list", list);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> emp_findList(String emp_no) {
+		logger.info("emp_findList:"+emp_no);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<EmpDTO> list = dao.emp_findList(emp_no);
+		map.put("list", list);
+		return map;
 	}
 
 

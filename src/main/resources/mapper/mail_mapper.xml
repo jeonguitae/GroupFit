@@ -99,6 +99,15 @@
       )
    </update>
    
+   <select id="emp_find" resultType="emp">
+	SELECT * FROM emp
+	WHERE name = #{emp_no}
+   </select>
+   
+   <select id="emp_findList" resultType="hashmap">
+	SELECT * FROM emp
+	WHERE name = #{emp_no}
+   </select>
    
    
    </mapper>

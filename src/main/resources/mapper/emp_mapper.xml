@@ -101,9 +101,9 @@
 	</select>
 
    <insert id="emp_join" parameterType="emp">
-		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, status, join_year, retire_year, b_idx)
+		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, status, join_year, b_idx)
 		values(#{emp_no},#{pw},#{name},#{gender}, #{birth},
-		#{phone},#{email},#{position},#{status},#{join_year},#{retire_year},#{b_idx})
+		#{phone},#{email},#{position},#{status},#{join_year},#{b_idx})
 	</insert>
 	
 	<insert id="emp_fileWrite">
@@ -131,6 +131,7 @@
 			, email = #{email}
 			, position = #{position}
 			, status = #{status}
+			, retire_year = #{retire_year}
 		WHERE emp_no = #{emp_no}
 	</update>
 	

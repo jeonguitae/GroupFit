@@ -118,7 +118,7 @@ public class EmpController {
 	}
 	
 
-	@RequestMapping(value="/empDetail.do")
+	@RequestMapping(value="/empDetail.go")
 	public ModelAndView detail(@RequestParam String detailid) {
 		
 		EmpDTO dto = service.emp_detail(detailid);
@@ -180,7 +180,7 @@ public class EmpController {
 	           if (loginId.equals(params.get("emp_no"))) {
 	              logger.info("file : " + file);
 	               service.emp_update(file, params);
-	               page = "redirect:/empList.go";
+	               page="redirect:/empDetail.go?detailid="+params.get("emp_no");
 	           }
 	       }
 	       return page;
@@ -200,6 +200,9 @@ public class EmpController {
 		logger.info("hide~");
 		return service.emp_hide(hideList);
 	}
+	
+
+	
 	
 
 

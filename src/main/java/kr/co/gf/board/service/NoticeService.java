@@ -55,19 +55,11 @@ public class NoticeService {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+			}
+		  }
+		return page;
+	}
 
-		  if (!photos[0].isEmpty()){ //photos!=null&&photos.length>0&& photos[0] != null 
-			  logger.info("사진이 있는 것임");
-
-			  for (MultipartFile photo : photos) {
-					 String flag="write";
-					 photoSave(photo,n_idx);	
-					 
-					 try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}	
 
 
 	
@@ -139,9 +131,7 @@ public class NoticeService {
 		NoticeDTO dto = new NoticeDTO();
 		
 
-		if (photos.getOriginalFilename()!=null) {
-			String flag="pupdate";
-//			photoSave(photos, n_idx, flag);
+
 
 		logger.info("일단 mphotos photosave 가기 전");
 		if (mphotos!=null &&mphotos.length>0) {

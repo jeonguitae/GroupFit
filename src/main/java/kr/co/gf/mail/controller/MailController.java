@@ -1,5 +1,6 @@
 package kr.co.gf.mail.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -125,5 +127,13 @@ public class MailController {
 		logger.info("hide~");
 		return service.post_hide(hideList, rAttr);
 	}
+	
+	@RequestMapping(value="/emp_find.ajax")
+	@ResponseBody
+	public HashMap<String, Object> empFind(@RequestParam String emp_no){
+		
+		return service.emp_find(emp_no);
+	}
+	
 	
 }
