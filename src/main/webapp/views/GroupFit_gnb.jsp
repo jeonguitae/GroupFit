@@ -85,7 +85,10 @@
 					<span></span>
 				</div></li>
 				<li>
-					<button type="button" class="btn btn-dark" onclick="location.href='out.update'">퇴근</button>
+					<button type="button" class="btn btn-dark" onclick="location.href='come.do'">출근</button>
+				</li>
+				<li>
+					<button type="button" class="btn btn-dark" onclick="location.href='out.do'">퇴근</button>
 				</li>
 				<!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -401,6 +404,7 @@
 </body>
 <script>
 	var msg = "${msg}";
+	 
 	if(msg != ""){
 		alert(msg);
 	}

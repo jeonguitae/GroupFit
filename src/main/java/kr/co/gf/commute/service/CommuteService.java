@@ -1,5 +1,7 @@
 package kr.co.gf.commute.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -21,5 +23,30 @@ public class CommuteService {
 	public ArrayList<CommuteDTO> list(String emp_no) {
 		return cdao.list(emp_no);
 	}
+
+	public int count(String emp_no, LocalDate now) {
+		return cdao.count(emp_no,now);
+	}
+
+	public int comedo(String emp_no, String b_idx) {
+		return cdao.comedo(emp_no,b_idx);
+	}
+
+	public CommuteDTO selectAll(String emp_no, LocalDate now) {
+		return cdao.selectAll(emp_no,now);
+	}
+
+	public int outdo(String emp_no, LocalTime now2, LocalDate day) {
+		return cdao.outdo(emp_no,now2, day);
+	}
+
+	public CommuteDTO wtime(String emp_no, LocalDate day) {
+		return cdao.wtime(emp_no,day);
+	}
+
+	/*
+	 * public CommuteDTO selectAll(String emp_no, LocalDate previousDay) { return
+	 * cdao.selectAll(emp_no, previousDay); }
+	 */
 
 }

@@ -11,6 +11,15 @@ public class CommuteDTO {
 	private Time out_time ;
 	private Date work_date ;
 	private String w_type ;
+	private String w_time;
+	
+	
+	public String getW_time() {
+		return w_time;
+	}
+	public void setW_time(String w_time) {
+		this.w_time = w_time;
+	}
 	public String getEmp_no() {
 		return emp_no;
 	}
@@ -26,13 +35,13 @@ public class CommuteDTO {
 	public Time getCome_time() {
 		return come_time;
 	}
-	public void setCome_date(Time come_time) {
+	public void setCome_time(Time come_time) {
 		this.come_time = come_time;
 	}
 	public Time getOut_time() {
 		return out_time;
 	}
-	public void setOut_date(Time out_time) {
+	public void setOut_time(Time out_time) {
 		this.out_time = out_time;
 	}
 	public Date getWork_date() {
