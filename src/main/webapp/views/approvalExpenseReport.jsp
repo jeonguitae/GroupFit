@@ -182,9 +182,9 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
 				<h5 id="aAp"><a href="approvalEventRequest.go">이벤트신청</a></h5>
+				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
+				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
 				
 			
 				<div id="table1_div">

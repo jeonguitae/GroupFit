@@ -17,11 +17,11 @@
 
 	#table1 {
 		border: 1px solid black;
-		border-collapse: collapse;
-		float: left;
-		margin-top: 5%;
-		margin-left: 5%;
-		position:absolute;
+	    border-collapse: collapse;
+	    float: left;
+	    margin-top: 4%;
+	    margin-left: 5%;
+	    position: absolute;
 	}
 	#table1 th{
 		border: 1px solid black;
@@ -62,7 +62,8 @@
 	    width: 30%;
 	    float: right;
 	    margin-right: 9%;
-	    margin-top: 2%;
+	    margin-top: 5%;
+	    margin-bottom: 4%;
 	}
 	
 	#table3 th {
@@ -172,9 +173,9 @@
 		<section class="content">      
 			<div class="container-fluid">
 			
-				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp"><a href="approvalExpenseReport.go">지출결의서</a></h5>
 				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalEventRequest.go">이벤트신청</a></h5>
+				<h5 id="aAp"><a href="approvalExpenseReport.go">지출결의서</a></h5>
+				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
 				
 			
 				<div id="table1_div">

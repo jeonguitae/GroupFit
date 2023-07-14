@@ -178,7 +178,7 @@
 					<ul class="nav nav-pills nav-sidebar flex-column"
 						data-widget="treeview" role="menu" data-accordion="false">
 						<li class="nav-header"  style="text-align: center;margin: 0 auto">
-							<button class="btn btn-outline-info" style="margin: 0 auto" onclick="location.href='/approvalVacationRequest.go'">결재 문서 작성
+							<button class="btn btn-outline-info" style="margin: 0 auto" onclick="location.href='/approvalEventRequest.go'">결재 문서 작성
 							</button></li>
 						<li class="nav-header">GroupFit Works</li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i

@@ -43,7 +43,7 @@ public class ApprovalController {
 			logger.info(loginIdName);
 			model.addAttribute("loginIdName",loginIdName);
 			
-			// 지점장
+			// 지점장 
 			String manager = service.manager();
 			logger.info(manager);
 			model.addAttribute("manager",manager);
@@ -86,13 +86,14 @@ public class ApprovalController {
 			logger.info("reason 값 : " + params.get("reason"));
 			logger.info("etc 값 : " + params.get("etc"));
 			
+			// 사실 이건 안함
 			service.vacationRequestWrite(params,files);
 			
 			return "redirect:/approvalAllList.do";
 		}
 	
 	
-	// 이벤트신청
+	// 이벤트신청 이게 진짜임
 	@RequestMapping(value="/approvalEventRequest.go")
 	public String event(HttpSession session, Model model) {
 
