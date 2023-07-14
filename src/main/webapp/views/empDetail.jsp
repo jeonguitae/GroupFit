@@ -26,14 +26,14 @@
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>직원 프로필 상세보기</h3>
-			<table>
+			<table class="table table-dark table-striped">
 				<tr>
 					<c:choose>
 	                 <c:when test="${not empty emp.new_photo_name}">
-	                     <img width="500" height="500" src="/photo/${emp.new_photo_name}">
+	                     <img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
 	                 </c:when>
 	                 <c:otherwise>
-	                     <img width="500" height="500" src="img/GroupFit_lg_2.png" />
+	                     <img width="90px" height="90px" src="img/GroupFit_lg_2.png" />
 	                 </c:otherwise>
 	           		 </c:choose>
 				</tr>

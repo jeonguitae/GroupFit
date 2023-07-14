@@ -181,52 +181,6 @@ public class EmpService {
 		return mav;
 	}
 
-//	public String emp_join(HashMap<String, String> params, MultipartFile[] files, 
-//						   HttpSession session, EmpDTO dto) {
-//		
-//		String encpass = encoder.encode(dto.getPw());
-//		dto.setPw(encpass);
-//		
-//		dto.setEmp_no(params.get("emp_no"));
-//		dto.setPw(params.get("pw"));
-//		dto.setName(params.get("name"));
-//		dto.setGender(params.get("gender"));
-//		dto.setBirth(Integer.parseInt(params.get("birth")));
-//		dto.setPhone(params.get("phone"));
-//		dto.setEmail(params.get("email"));
-//		dto.setB_idx(params.get("b_idx"));
-//		dto.setPosition(params.get("position"));
-//		dto.setStatus(params.get("status"));
-//		dto.setJoin_year(params.get("join_year"));
-//		dto.setRetire_year(params.get("retire_year"));
-//		return "";
-//	}
-
-//	public void upload(MultipartFile uploadFile,int board_num) {
-//		
-//		// 1. 파일명 추출
-//		String ori_photo_name = uploadFile.getOriginalFilename();
-//		int c_idx = 1;
-//		//ReferenceDTO dto = new ReferenceDTO();
-//		//int board_num = dto.getBoard_num();
-//		logger.info("board_num"+board_num);
-//		
-//		// 2. 새파일 생성(현재시간 + 확장자)
-//		String ext = ori_photo_name.substring(ori_photo_name.lastIndexOf("."));
-//		String new_photo_name = System.currentTimeMillis() + ext;
-//		logger.info(ori_photo_name+" => "+new_photo_name);
-//		
-//		// 3. 파일 저장
-//		try {
-//			byte[] bytes = uploadFile.getBytes();
-//			Path path = Paths.get(root+"/"+new_photo_name);
-//			Files.write(path, bytes);
-//			dao.emp_fileWrite(c_idx,ori_photo_name,new_photo_name,board_num);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//}
-
 	public EmpDTO emp_detail(String detailid) {
 
 		return dao.emp_detail(detailid);
@@ -236,25 +190,49 @@ public class EmpService {
 
 		return dao.emp_photo(detailid);
 	}
-
-	public ModelAndView emp_update(EmpDTO dto) {
-		int success = dao.emp_update(dto);
-		logger.info("success: " + success);
-		String msg = "직원수정에 실패 했습니다";
-		String page = "empUpdate";
-		EmpDTO emp = null;
-
-		if (success > 0) {
-			msg = "직원수정에 성공 했습니다.";
-			page = "empDetail";
-			emp = dao.emp_detail(dto.getEmp_no());
+	
+	public void emp_update(MultipartFile file, HashMap<String, Object> params) {
+		
+		logger.info("params : " + params);
+	
+		int row = dao.emp_update(params);
+		logger.info("update row: " + row);
+		String emp_no = params.get("emp_no").toString();
+		
+		if (row > 0) {
+			logger.info("업로드할 file 있나요? :" + !file.isEmpty());
+		
+		if (!file.isEmpty()) {
+			// 기존 프로필 사진을 데이터베이스에서 삭제합니다.
+			dao.emp_removePhoto(emp_no);
+		
+			attachmentSave(emp_no, file, "직원사진");
 		}
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(page);
-		mav.addObject("emp", emp);
-		mav.addObject("msg", msg);
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	private void attachmentSave(String emp_no, MultipartFile file, String cls) {
+	   String ori_photo_name = file.getOriginalFilename();
+	   int c_idx = 1;
+	   String ext = ori_photo_name.substring(ori_photo_name.lastIndexOf("."));
+	   String new_photo_name = System.currentTimeMillis() + ext;
+	   logger.info("파일 업로드 : " + ori_photo_name + "=>" + new_photo_name + "으로 변경될 예정");
 
-		return mav;
+	   try {
+	       byte[] bytes = file.getBytes();
+	       Path path = Paths.get("C:/upload/" + new_photo_name);
+	   Files.write(path, bytes);
+	   logger.info(new_photo_name + " upload 디렉토리에 저장 완료 !");
+	   		dao.emp_fileWrite(c_idx, ori_photo_name, new_photo_name, emp_no);
+	       } catch (IOException e) {
+	           e.printStackTrace();
+	       }
 	}
 
 	// 상세에서 삭제
@@ -285,5 +263,7 @@ public class EmpService {
 		mav.setViewName(page);
 		return mav;
 	}
+
+
 
 }

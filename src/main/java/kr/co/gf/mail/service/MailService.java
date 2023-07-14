@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.mail.dao.MailDAO;
 import kr.co.gf.mail.dto.MailDTO;
 @Service
@@ -91,18 +95,29 @@ public class MailService {
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(page);
-		rAttr.addFlashAttribute("msg",msg);
-		
+		mav.addObject("msg", msg);
+		rAttr.addAttribute("msg",msg);
 		return mav;
 	}
 
-	public MailDTO post_sendDetail(String emailid, String flag) {
+	public MailDTO post_sendDetail(String emailid, String flag, HttpSession session) {
 		
 		if(flag.equals("detail")) {
-			dao.post_upHit(emailid);
+			String get_empno = (String) session.getAttribute("loginId");
+			dao.post_upHit(get_empno, emailid);
 		}
 		
 		return dao.post_sendDetail(emailid);
+	}
+	
+	public MailDTO post_GetDetail(String emailid, String flag, HttpSession session) {
+		
+		if(flag.equals("detail")) {
+			String get_empno = (String) session.getAttribute("loginId");
+			dao.post_upHit(get_empno, emailid);
+		}
+		
+		return dao.post_GetDetail(emailid);
 	}
 
 	public MailDTO post_get(String emailid) {
@@ -113,7 +128,7 @@ public class MailService {
 	public ModelAndView post_getWrite(HashMap<String, String> params, RedirectAttributes rAttr) {
 		
 		int success = dao.post_getWrite(params);
-		String msg = (success ==1) ? "회신에 실패했습니다!" : "회신을 보냈습니다!";
+		String msg = (success ==1) ? "회신에 실패했습니다!"  : "회신을 보냈습니다!";
 		String page = "postGetWrite";
 		if(success > 0) {
 			page = "redirect:/postSendList.go";
@@ -128,11 +143,38 @@ public class MailService {
 	// 목록에서 삭제
 	public ModelAndView post_hide(List<String> hideList, RedirectAttributes rAttr) {
 		logger.info("hideservice");
+		
 		dao.post_hide(hideList);
+		
 		String msg = "쪽지를 삭제 했습니다.";
 
 		rAttr.addFlashAttribute("msg",msg);
 		return new ModelAndView("redirect:/postSendList.go");
+	}
+
+	public HashMap<String, Object> emp_find(String emp_no) {
+		
+		logger.info("emp_no: "+emp_no);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<EmpDTO> list = dao.emp_find(emp_no);
+		
+		String page = "redirect:/postSendWrite.go";
+		
+		map.put("page", page);
+		map.put("list", list);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> emp_findList(String emp_no) {
+		logger.info("emp_findList:"+emp_no);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<EmpDTO> list = dao.emp_findList(emp_no);
+		map.put("list", list);
+		return map;
 	}
 
 

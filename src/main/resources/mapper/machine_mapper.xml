@@ -6,6 +6,59 @@
 		<select id="maclist">
 			SELECT m.mac_name, m.mac_num, m.emp_no, w.new_photo_name
 			FROM machine m JOIN wphoto w ON m.mac_num = w.board_num
-			WHERE w.c_idx = '5'
+			WHERE w.c_idx = '5' AND m.b_idx = #{param1}
 		</select>
+		
+		<select id="Smaclist" resultType="machine">
+			SELECT * FROM machine WHERE b_idx = #{param1}
+		</select>
+		
+		<insert id="mac_reg" parameterType="HashMap">
+			INSERT INTO machine(emp_no, mac_name, purch_date, b_idx) VALUES(#{emp_no}, #{mac_name}, #{purch_date}, #{b_idx})
+  		</insert>
+  		
+  		<select id="mac_num" resultType="String" parameterType="String">
+			SELECT mac_num FROM machine WHERE mac_name = #{mac_name} AND b_idx = #{b_idx}
+		</select>
+		
+		<insert id="mac_photo_reg" parameterType="String">
+	   		INSERT INTO wphoto(c_idx, new_photo_name, ori_photo_name, board_num)
+	   		VALUES(5, #{new_photo_name}, #{ori_photo_name}, #{mac_num})
+   		</insert>
+   		
+   		<select id="mac_info" resultType="machine">
+			SELECT m.mac_num, m.mac_name, m.purch_date, m.emp_no, w.new_photo_name 
+			FROM machine m JOIN wphoto w
+			ON m.mac_num = w.board_num
+			WHERE m.mac_num = #{param1}
+		</select>
+		
+		<delete id="mac_photo_del">
+			DELETE FROM wphoto WHERE c_idx = '5' AND board_num = #{param1}
+		</delete>
+		
+		<delete id="macdel" parameterType="String">
+			DELETE FROM machine WHERE b_idx = #{b_idx} AND mac_num = #{mac_num}
+		</delete>
+		
+		<select id="mac_new_file_name" resultType="String">
+			SELECT new_photo_name FROM wphoto WHERE c_idx = '5' AND board_num = #{param1}
+		</select>
+		
+		<insert id="mac_status" parameterType="String">
+			INSERT INTO mac_chk(mac_num, emp_no, mac_status, b_idx)
+			VALUES(#{mac_num}, #{emp_no}, #{mac_status}, #{b_idx})
+		</insert>
+		
+		<select id="Fmaclist" resultType="machine">
+			SELECT DISTINCT m.mac_name, mc.mac_status
+			FROM machine m
+			JOIN mac_chk mc ON m.mac_num = mc.mac_num
+			WHERE m.b_idx = #{param1} AND mc.mac_status = '수리필요'
+		</select>
+		
+		<insert id="mac_fixed" parameterType="String">
+			INSERT INTO fixlist(mac_num, emp_no, fixed_content, b_idx)
+			VALUES(#{mac_num}, #{emp_no}, #{fixed_content}, #{b_idx})
+		</insert>
    </mapper>

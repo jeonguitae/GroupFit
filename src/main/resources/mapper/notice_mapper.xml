@@ -17,12 +17,14 @@
    </select>
    
    <select id="ndetail" resultType="hashmap">
-   	SELECT n.title, n.reg_date, n.content, e.position, e.emp_no, w.new_photo_name
+   	SELECT n.title, n.reg_date, n.content, e.position, e.emp_no
 	FROM notice n
 	LEFT JOIN emp e ON n.emp_no = e.emp_no
-	LEFT JOIN wphoto w ON n.n_idx = w.board_num
-	WHERE n.n_idx = #{param1}
-   	
+	WHERE n.n_idx = #{param1} 	
+   </select>
+   
+   <select id="pdetail" resultType="kr.co.gf.board.dto.NoticeDTO">
+   	SELECT *FROM wphoto WHERE board_num=#{n_idx} AND c_idx=5
    </select>
    
    <update id="hit">
@@ -33,9 +35,6 @@
    	UPDATE notice SET title=#{title}, content=#{content}, fix=#{fix} WHERE n_idx=#{n_idx}
    </update>
    
-   <update id="pupdate">
-   	UPDATE wphoto SET where board_num=#{param1}
-   </update>
    <insert id="getinfo" parameterType="string">
    	INSERT INTO read_list(emp_no, n_idx) values(#{emp_no},#{n_idx})
    </insert>
@@ -63,4 +62,12 @@
    	DELETE FROM notice WHERE n_idx=#{n_idx}
    </delete>
    
+   <select id="findfile" resultType="String">
+   	SELECT ori_photo_name FROM wphoto WHERE new_photo_name=#{path}
+   </select>
+   
+   <delete id="pdelete">
+   	DELETE FROM wphoto WHERE new_photo_name=#{new_photo_name}
+   </delete>
+
    </mapper>

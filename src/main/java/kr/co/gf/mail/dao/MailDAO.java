@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.mail.dto.MailDTO;
 
 @Mapper
@@ -24,14 +25,22 @@ public interface MailDAO {
 	int post_sendWrite(MailDTO dto);
 
 	MailDTO post_sendDetail(String emailid);
+	
+	MailDTO post_GetDetail(String emailid);
 
-	MailDTO post_get(String emailid);
+	MailDTO post_get(String email_num);
 
-	void post_upHit(String emailid);
+	void post_upHit(String get_empno, String emailid);
 	
 	void post_hide(List<String> hideList);
 
 	int post_getWrite(HashMap<String, String> params);
+
+	ArrayList<EmpDTO> emp_find(String emp_no);
+
+	ArrayList<EmpDTO> emp_findList(String emp_no);
+
+	
 
 	
 

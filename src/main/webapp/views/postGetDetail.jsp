@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 수정</title>
+<title>받은 쪽지 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>공지사항 수정</h1>
+						<h1>받은 쪽지 상세보기</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -42,61 +42,45 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<div class="table table-bordered">
-		<form action="/nupdate.do" method="post" enctype="multipart/form-data">
-		<table>
-		<colgroup>
-			<col width="20%">
-			<col width="80%">
-		</colgroup>
-			<tr>
-				<th>제목</th>
-				<td><input type="text" name="title" value="${dto.title}" required/>
-					<input type="hidden" name="n_idx" value="${dto.n_idx}">
-				</td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td>${dto.position}</td>
-			</tr>
-			<tr>
-				<th>작성일시</th>
-				<td>${dto.reg_date}</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td><textarea class="content" name="content" required>${dto.content}</textarea></td>
-			</tr>
-			<tr>
-				<th>사진 및 파일</th>
-				<td>
-					<c:forEach items="${photos}" var="photo">
-						<img width="500" src="/photo/${photo.new_photo_name}"/>
-						<input type="button" onclick="location.href='pdelete.do?new_photo_name=${photo.new_photo_name}&n_idx=${photo.board_num}'" value="삭제"/>
-					</c:forEach>
-					<input type="file" name="mphotos" multiple="multiple"/>
-				</td>
-			</tr>
-			<tr>
-				<th>고정 여부</th>
-				<td>
-					<input type="radio" name="fix" value="1" required>고정
-					<input type="radio" name="fix" value="0" required>고정 안 함
-				</td> 
-			</tr>			
-		</table>
-					<input type="button" onclick="location.href='nlist.go'" value="목록"/>
-					<button class="forsave">저장</button>
-		</form>
-		</div>
-	
+					<table>
+						<tr>
+							<th>받은시간</th>
+							<td><input type="text" value="${post.send_time}" readonly/></td>
+						</tr>
+						<tr>
+							<th>읽은시간</th>
+							<td><input type="text" value="${post.chk_time}" readonly/></td>
+						</tr>
+						<tr>
+							<th>제목</th>
+							<td><input type="text" name="subject" value="${post.subject}" readonly/></td>
+						</tr>
+						<tr>
+							<th>보낸사람 이름</th>
+							<td>
+								<input type="text" name="get_empno" value="${post.name}" readonly/>
+							</td>
+						</tr>
+						<tr>
+							<th>첨부파일</th>
+							<td><input type="file" name="post_photo" readonly/></td>
+						</tr>
+						<tr>
+							<th>내용</th>
+							<td>
+								<textarea name="content" readonly>${post.content}</textarea> 
+							</td>
+						</tr>
+						<button type="button" onclick="location.href='./postGetWrite.go?emailid=${post.email_num}'">회신</button>	
+						<button type="button" onclick="location.href='./postSendList.go'">보낸쪽지 목록</button>	
+						<button type="button" onclick="location.href='./postGetList.go'">받은쪽지 목록</button>	
+					</table>
+				</form>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
 <script>
-
-
 </script>
 </html>

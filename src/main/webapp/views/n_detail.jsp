@@ -66,8 +66,11 @@
 			</tr>
 			<tr>
 				<th>사진 및 파일</th>
-				<td><img width="500" src="/photo/${dto.new_photo_name}"/>
-						<a href="ndownload.do?path=${dto.new_photo_name}"></a>
+				<td>
+					<c:forEach items="${photos}" var="photo">
+						<img width="500" src="/photo/${photo.new_photo_name}"/>
+						<input type="button" onclick="location.href='ndownload.do?path=${photo.new_photo_name}'" value="다운로드">
+					</c:forEach>
 					</td>
 			</tr>			
 		</table>
