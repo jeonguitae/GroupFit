@@ -105,7 +105,7 @@ public class MachineController {
 		
 		String msg = service.macdel(b_idx, mac_num);
 		
-		rattr.addAttribute("msg", msg);
+		rattr.addFlashAttribute("msg", msg);
 		
 		return "redirect:/maclist.go";
 	}

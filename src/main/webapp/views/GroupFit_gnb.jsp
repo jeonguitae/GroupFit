@@ -248,6 +248,10 @@
 										class="nav-icon fas fa-dumbbell"></i>
 										<p>머신 관리</p>
 								</a></li>
+								<li class="nav-item item-sub"><a href="maclist.go" class="nav-link"> <i
+										class="nav-icon fas fa-dumbbell"></i>
+										<p>수리신청 된 머신</p>
+								</a></li>
 								<li class="nav-item item-sub"><a href="loclist.go" class="nav-link"> <i
 										class="nav-icon fas fa-dumbbell"></i>
 										<p>라커 관리</p>			
