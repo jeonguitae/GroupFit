@@ -1,6 +1,7 @@
 package kr.co.gf.statistics.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.co.gf.statistics.dto.StatisDTO;
 
@@ -21,5 +22,11 @@ public interface StatisDAO {
 	ArrayList<StatisDTO> individual(String emp_no, String year);
 
 	ArrayList<StatisDTO> branchPersonal(String formattedDate, String b_idx);
+
+	ArrayList<StatisDTO> memberAdmission(HashMap<String, String> params);
+
+	ArrayList<StatisDTO> countMember(HashMap<String, String> params);
+
+	String branchName(String b_idx);
 
 }

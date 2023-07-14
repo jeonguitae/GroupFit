@@ -86,16 +86,16 @@
 				  <button onclick="openModal()">일정 등록</button>
 			</c:if>
 			<!-- 필터링이요 -->
-		<div id="branchFilter">
-			<c:if test="${sessionScope.loginEmp.position eq '대표' }">
-				  <select name="branch" id="branch" style = "margin-left : 30px">
-				  	<option value="listAll">전체</option>
-		            <c:forEach items="${branchList}" var="item">
-		               <option value="${item.b_idx}">${item.b_name}</option>
-		            </c:forEach>
-		           </select>
-		    </c:if>
-		</div>
+			<div id="branchFilter">
+				<c:if test="${sessionScope.loginEmp.position eq '대표' }">
+					  <select name="branch" id="branch" style = "margin-left : 30px">
+					  	<option value="listAll">전체</option>
+			            <c:forEach items="${branchList}" var="item">
+			               <option value="${item.b_idx}">${item.b_name}</option>
+			            </c:forEach>
+			           </select>
+			    </c:if>
+			</div>
 				  <!-- <button onclick="ck()">이벤트 확인</button> -->
 				
 				  <div id='calendar'></div>
@@ -464,6 +464,9 @@
 				    }
 				  });
 				
+				  
+				  
+				  
 				  
 				// 선택된 지점의 값이 변경될 때마다 실행되는 함수
 				  $("#branch").change(function() {
