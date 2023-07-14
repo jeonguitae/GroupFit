@@ -11,8 +11,8 @@
    		id="submitdailypt"
    		parameterType="dailypt">
    		
-   		insert into daily_pt (dailypt_no, emp_no, mem_no, aerobic,  diet, str, pt_date, af_weight)
-   		values(${dailypt_no},${emp_no},#{mem_no},#{aerobic},#{diet},#{str},#{pt_date},#{af_weight})
+   		insert into daily_pt (emp_no, mem_no, aerobic,  diet, str, pt_date, af_weight)
+   		values(${emp_no},#{mem_no},#{aerobic},#{diet},#{str},#{pt_date},#{af_weight})
    
    </insert>
    
@@ -21,17 +21,34 @@
 	   		values(#{param1},#{param2},#{param3},#{param4})   
    </insert>
    
+
    
-   <select id="dailyptlist" resultType="dailypt">
-		SELECT
-		    dp.dailypt_no, dp.mem_no, dp.pt_date, dp.emp_no, m.name AS member_name, e.name AS emp_name
-		FROM
-		    daily_pt dp
-		JOIN
-		    member m ON dp.mem_no = m.mem_no
-		JOIN
-		    emp e ON dp.emp_no = e.emp_no
-	</select>
+   <insert 
+   id="submitcut" parameterType="dailypt">
+   	 insert into daily_pt (emp_no,mem_no, pt_date, pt_state)
+   	 values(${emp_no},#{mem_no},#{pt_date},#{pt_state})
+
+   </insert>
+   
+   
+   
+   <update id="ptcountUpdate">
+   		    UPDATE pt_mem
+    SET count = count - 1
+    WHERE mem_no = #{mem_no}
+
+   	
+   </update>
+   
+
+	<update id="updateaf_weight">
+	    UPDATE pt_mem pm
+	    JOIN daily_pt dp ON pm.mem_no = dp.mem_no
+	    SET pm.weight = #{af_weight}
+	    WHERE pm.mem_no = #{mem_no}
+	</update>
+	
+
 	
 	
 	<select id="dailyptwritego" resultType="dailypt" >
@@ -48,6 +65,7 @@
 		    r.emp_no = #{loginId};
 	</select>
 	
+
 	
 	 <select id="weightDetail" resultType="dailypt">
 		SELECT
@@ -104,9 +122,10 @@
 				,pt_set = #{param4}
 				
 			WHERE dailypt_no = #{dailypt_no} AND weight_no = #{param5};
-	   
-   
+
    </update>
+   
+   
    
    <insert id="insertNewWeight">
 	   insert into pt_weight (dailypt_no, pt_name, pt_kg, pt_set) 
@@ -115,7 +134,7 @@
    </insert>
    
    
-   <delete id="delete">
+   <delete id="deletedaily_pt">
    
 	  DELETE FROM pt_weight
 	  WHERE dailypt_no = #{dailypt_no};
@@ -141,5 +160,55 @@
 	</delete>
 	
 	
+	
+	<select id="ptmemSearch" resultType="dailypt" parameterType="hashmap">
+	
+		 
+		 select dp.dailypt_no, dp.mem_no, dp.pt_date, dp.emp_no, m.name AS member_name, e.name AS emp_name
+		 FROM daily_pt dp
+		 JOIN
+			    member m ON dp.mem_no = m.mem_no
+			JOIN
+			    emp e ON dp.emp_no = e.emp_no
+
+				where m.mem_no LIKE #{searchInput}
+			
+				or m.name LIKE #{searchInput}
+
+	</select>
+	
+	
+	  <select id="pt_b_idx" resultType="int">
+   		SELECT b_idx FROM emp WHERE emp_no = #{param1}
+   		</select>
+   		
+   		
+   		 <!--   <select id="dailyptlist" resultType="dailypt">
+		SELECT
+		    dp.dailypt_no, dp.mem_no, dp.pt_date, dp.emp_no, m.name AS member_name, e.name AS emp_name
+		FROM
+		    daily_pt dp
+		JOIN
+		    member m ON dp.mem_no = m.mem_no
+		JOIN
+		    emp e ON dp.emp_no = e.emp_no
+	</select> -->
+   		
+   		
+   		<select id="ptlist" resultType="dailypt">
+	   		SELECT
+			    dp.dailypt_no, dp.mem_no, dp.pt_date, dp.emp_no, m.name AS member_name, e.name AS emp_name, dp.pt_state
+			FROM
+			    daily_pt dp
+			JOIN
+			    member m ON dp.mem_no = m.mem_no
+			JOIN
+			    emp e ON dp.emp_no = e.emp_no
+			
+			ORDER BY dp.dailypt_no DESC
+			
+  		</select>
+   		
+   		
    
    </mapper>

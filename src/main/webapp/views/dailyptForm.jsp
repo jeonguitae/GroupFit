@@ -92,6 +92,12 @@
 .submit-button button {
     margin: 0 auto;
 }
+
+.form-group .removeExerciseButton {
+  margin-left: 10px;
+  flex-shrink: 0; /* 추가 */
+}
+
 </style>
 </head>
 <body>
@@ -120,8 +126,9 @@
 				
    
 				    <div class="container">
-
-				    <form action="dailyptWrite.do" method="post">
+					<div class="submit-button">
+				    <form id="dailyptForm" method="post">
+			
 				    
 					    <div style="display: flex; justify-content: space-between; align-items: center;">
 					        <h3 style="margin: 0;">회원pt일지</h3>
@@ -135,12 +142,7 @@
 							</div>
 					        
 					        <br>
-					        
-					         <div style="display: flex; align-items: center; margin-left: 50px;">
-				                <input type="checkbox" id="absentCheckbox" name="absentCheckbox">
-				                <label for="absentCheckbox">결석</label>
-				            </div>
-					        
+					     
 					        <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
 					            <label for="date">날짜 : </label>
 					            <input type="date" id="date" name="date">
@@ -213,17 +215,23 @@
                     </div>
 
                     <hr>
-                    
-					<div class="submit-button">
-	                    <button type="submit" class="btn btn-primary" onclick="location.href='dailyptWrite.go'" >등록</button>
-	                    <button type="submit" class="btn btn-primary" onclick="location.href='./dailyptt'" >리스트</button>
+               
+			             <div class="submit-button">
+	                    <button type="submit" class="btn btn-primary" formaction="/dailyptWrite.do" >등록</button>
+	                     <button type="submit" id="absentButton" formaction="/submitcut" class="btn btn-primary">결석</button>
+	                    <button type="button" class="btn btn-primary" onclick="location.href='./dailyptt'" >리스트</button>
 	                </div>
-	                
-				    <br>
-				
+					    
+					    <br>
 				        </form>
+				        
+				      
+	                
+			             
+			             <br>  
+			              
 				    </div>
-				
+				</div>
 				
 							</div>
 							<!--/. container-fluid -->
@@ -231,45 +239,47 @@
 					</div>
 				</body>
 <script>
-// 웨이트 운동 추가 버튼 클릭 이벤트 처리
+//웨이트 운동 추가 버튼 클릭 이벤트 처리
 function addWeightExercise() {
-    var container = document.getElementById('weightExerciseContainer');
-    var newExercise = document.createElement('div');
-    newExercise.classList.add('form-group');
-    newExercise.innerHTML = `
-        <label for="pt_name">운동명 : </label>
-        <input type="text" id="pt_name" name="pt_name[]">
-        <label for="pt_kg">무게 : </label>
-        <input type="number" id="pt_kg" name="pt_kg[]">
-        <label for="pt_set">SET 수 : </label>
-        <input type="number" id="pt_set" name="pt_set[]">
-    `;
-    container.appendChild(newExercise);
+  var container = document.getElementById('weightExerciseContainer');
+  var newExercise = document.createElement('div');
+  newExercise.classList.add('form-group');
+  newExercise.innerHTML = `
+    <label for="pt_name">운동명 : </label>
+    <input type="text" name="pt_name[]">
+    <label for="pt_kg">무게 : </label>
+    <input type="number" name="pt_kg[]">
+    <label for="pt_set">SET 수 : </label>
+    <input type="number" name="pt_set[]">
+    <button type="button" class="btn btn-light removeExerciseButton">삭제</button>
+  `;
+  container.appendChild(newExercise);
+
+  // 새로운 삭제 버튼에 이벤트 핸들러 등록
+  var removeButton = newExercise.querySelector('.removeExerciseButton');
+  removeButton.addEventListener('click', function() {
+    var exerciseContainer = this.parentNode;
+    exerciseContainer.remove();
+  });
 }
 
 document.getElementById('addWeightExercise').addEventListener('click', function() {
-    addWeightExercise();
+  addWeightExercise();
 });
 
+// 초기 로드 시 기존 삭제 버튼에 이벤트 핸들러 등록
+registerRemoveButtonEvent();
 
-
-
-
-
-// 결석 체크박스 상태에 따라 입력 제한 설정
-var absentCheckbox = document.getElementById('absentCheckbox');
-var formInputs = document.querySelectorAll('form input:not(#absentCheckbox)');
-var formTextarea = document.querySelectorAll('form textarea');
-
-absentCheckbox.addEventListener('change', function() {
-    if (this.checked) {
-        disableInputs();
-    } else {
-        enableInputs();
-    }
-});
-
-
+// 삭제 버튼 클릭 이벤트 처리
+function registerRemoveButtonEvent() {
+  var removeButtons = document.getElementsByClassName('removeExerciseButton');
+  for (var i = 0; i < removeButtons.length; i++) {
+    removeButtons[i].addEventListener('click', function() {
+      var exerciseContainer = this.parentNode;
+      exerciseContainer.remove();
+    });
+  }
+}
 
 //이름 선택 시 해당 이름과 회원번호를 필드에 입력하고 readonly 속성을 설정하는 함수
 function selectName() {
@@ -283,41 +293,6 @@ function selectName() {
   document.getElementById("mem_no").readOnly = true;
 }
 
-
-
-// 모든 텍스트 영역을 비활성화(disabled) 
-function disableInputs() {
-    formInputs.forEach(function(input) {
-        input.disabled = true;
-    });
-
-    formTextarea.forEach(function(textarea) {
-        textarea.disabled = true;
-    });
-}
-
-
-function enableInputs() {
-    formInputs.forEach(function(input) {
-        input.disabled = false;
-    });
-
-    formTextarea.forEach(function(textarea) {
-        textarea.disabled = false;
-    });
-}
-
-function enableInputs() {
-	  formInputs.forEach(function(input) {
-	    if (input.id !== 'name' && input.id !== 'mem_no') {
-	      input.readOnly = false;
-	    }
-	  });
-
-	  formTextarea.forEach(function(textarea) {
-	    textarea.readOnly = false;
-	  });
-	}
 
 
 function disableInputs() {
@@ -334,6 +309,31 @@ function disableInputs() {
 	  });
 	}
 
+
+ 
+document.getElementById('absentButton').addEventListener('click', function(event) {
+	  event.preventDefault(); // 폼 제출 방지
+
+	  var nameInput = document.getElementById('name');
+	  var memNoInput = document.getElementById('mem_no');
+	  var dateInput = document.getElementById('date');
+
+	  if (nameInput.value.trim() === '' || memNoInput.value.trim() === '' || dateInput.value.trim() === '') {
+	    alert('이름, 회원번호, 날짜는 필수 입력 사항입니다.');
+	    return; // 함수 종료
+	  }
+
+	  if (confirm('결석 처리하시겠습니까?')) {
+	    // 추가로 필요한 로직 수행
+
+	    // '/submitcut' URL로 이동
+	    document.getElementById('dailyptForm').setAttribute('action', '/submitcut');
+	    document.getElementById('dailyptForm').submit();
+	  } else {
+	    // 확인을 누르지 않은 경우에는 아무 작업도 수행하지 않습니다.
+	    return; // 함수 종료
+	  }
+	});
 
 
 </script>

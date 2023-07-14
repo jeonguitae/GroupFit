@@ -12,13 +12,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.gf.calender.dto.CalenderDTO;
 import kr.co.gf.emp.dto.EmpDTO;
+import kr.co.gf.member.dto.MemberDTO;
 import kr.co.gf.member.dto.PtMemberDTO;
 import kr.co.gf.member.service.PtMemberService;
 
@@ -30,23 +33,45 @@ public class PtMemberController {
 	@Autowired PtMemberService service;
 	
 	//리스트
-	@RequestMapping(value = "/dailyptt")
-	public String dailyptMain(Model model) {
+	/*
+	 * @RequestMapping(value = "/dailyptt") public String dailyptMain(Model model) {
+	 * 
+	 * logger.info("list call"); ArrayList<PtMemberDTO> dailyptlist =
+	 * service.dailyptlist(); //logger.info("dailyptlist : "+dailyptlist); for
+	 * (PtMemberDTO dto : dailyptlist) { System.out.println(dto.getMem_no()); //
+	 * mem_no 값 출력 System.out.println(dto.getDailypt_no());
+	 * System.out.println(dto.getMember_name()); // 나머지 필드에 대해서도 필요한 작업 수행 }
+	 * 
+	 * logger.info("list cnt : "+dailyptlist.size());
+	 * model.addAttribute("dailyptlist", dailyptlist);
+	 * 
+	 * return "dailyptMain"; }
+	 */
+	
+	 @RequestMapping(value = "/dailyptt") public String dailyptMain(Model model) {
+		 
+		 return "dailyptMain";
+	 }
+	
+	
+	
+	
+	@GetMapping(value="/ptlist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> memlist(HttpSession session){
 		
-		logger.info("list call");
-		ArrayList<PtMemberDTO> dailyptlist = service.dailyptlist();	
-		//logger.info("dailyptlist : "+dailyptlist);
-		for (PtMemberDTO dto : dailyptlist) {
-		    System.out.println(dto.getMem_no()); // mem_no 값 출력
-		    System.out.println(dto.getDailypt_no());
-		    System.out.println(dto.getMember_name());
-		    // 나머지 필드에 대해서도 필요한 작업 수행
-		}
-
-		logger.info("list cnt : "+dailyptlist.size());
-		model.addAttribute("dailyptlist", dailyptlist);
+		String loginId = (String) session.getAttribute("loginId");
 		
-		return "dailyptMain";
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("map : " + map);
+		
+		ArrayList<MemberDTO> list = service.ptlist(loginId);
+		logger.info("list : "+ list);
+		
+		
+		map.put("ptlist", list);
+		
+		return map;
 	}
 	
 	
@@ -58,6 +83,7 @@ public class PtMemberController {
 		String loginId = (String)session.getAttribute("loginId");
 		
 		ArrayList<PtMemberDTO> dailypt = service.dailyptwritego(loginId);	
+		logger.info("dailypt : "+ dailypt);
 		
 		
 		model.addAttribute("dailypt", dailypt);
@@ -81,9 +107,25 @@ public class PtMemberController {
 		logger.info("map : "+params);
 		logger.info("pt_kg[] : "+pt_kg);
 		
+		
 
 		return service.submitdailypt(params,pt_name,pt_kg,pt_set,emp_no);
 	}
+	
+	
+	@RequestMapping(value="/submitcut", method = {RequestMethod.GET, RequestMethod.POST})
+	public String submitcut(@RequestParam HashMap<String, String> params
+			,HttpSession session) {
+		
+		logger.info("submitcut params : "+params);
+		
+		EmpDTO empDTO = (EmpDTO) session.getAttribute("loginEmp");
+		String emp_no = empDTO.getEmp_no();
+
+		
+		return service.submitcut(params,emp_no);
+	}
+	
 	
 	
 	@RequestMapping(value="/dailyPtDetail.do")
@@ -183,6 +225,20 @@ public class PtMemberController {
 		return "redirect:/dailyptt";
 	}
 	
+	
+	
+	@RequestMapping(value="/ptmemberSearch.ajax")
+	@ResponseBody
+	public HashMap<String, Object> ptmemberSearch(String ptmember, String searchInput, HttpSession session){
+		
+		/* String loginId = (String) session.getAttribute("loginId"); */
+		
+		logger.info("ptmember : "+ptmember);
+		logger.info("searchInput : "+ searchInput);
+		
+		
+		return service.ptmemberSearch(ptmember, searchInput);
+	}
 	
 	
 	

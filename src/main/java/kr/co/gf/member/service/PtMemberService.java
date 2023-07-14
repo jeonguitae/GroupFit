@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import kr.co.gf.member.dao.PtMemberDAO;
+import kr.co.gf.member.dto.MemberDTO;
 import kr.co.gf.member.dto.PtMemberDTO;
 
 @Service
@@ -45,6 +46,7 @@ public class PtMemberService {
 		dto.setPt_date(params.get("date"));
 		
 		int success = dao.submitdailypt(dto);
+		dao.updateaf_weight(dto);
 		
 		if(success == 1) {
 			int dailypt_no = dto.getDailypt_no();
@@ -59,7 +61,12 @@ public class PtMemberService {
 				String Muge = pt_kg.get(i);
 				String Set = pt_set.get(i);
 				
+				// params 에서 mem_no 
+				
 	            dao.writeWeight(dailypt_no, weightname, Muge, Set);
+	            int mem_no = dto.getMem_no();
+	           dao.ptcountUpdate(mem_no);
+	            
 	        }
 		}
 		
@@ -67,10 +74,11 @@ public class PtMemberService {
 		return page;
 	}
 
-	public ArrayList<PtMemberDTO> dailyptlist() {
-
-		return dao.dailyptlist();
-	}
+	/*
+	 * public ArrayList<PtMemberDTO> dailyptlist() {
+	 * 
+	 * return dao.dailyptlist(); }
+	 */
 
 	public ArrayList<PtMemberDTO> dailyptwritego(String loginId) {
 		
@@ -114,12 +122,13 @@ public class PtMemberService {
 	    
 
 	    int success = dao.dailyptUpdate(dto);
+	    dao.updateupaf_weight(dto);
 
 	    if (success == 1) {
 	        int dailypt_no = dto.getDailypt_no();
 	        logger.info("업데이트 웨이트 일지: " + dailypt_no);
 	        
-	        boolean deleteSuccess = dao.delete(dailypt_no);
+	        boolean deleteSuccess = dao.deletedaily_pt(dailypt_no);
 	        
 	        logger.info("{}",pt_name.size());
 
@@ -134,18 +143,17 @@ public class PtMemberService {
 	            if (deleteSuccess) {
 	                // INSERT 작업 수행
 	                dao.insertNewWeight(dailypt_no, weightname, Muge, Set);
+	            
 	            }
 	        }
 	        page = "redirect:/dailyPtDetail.do?dailypt_no=" + dailypt_no;
 	    }
-	        
 
-	        
-	       
-	
 
 	    return page;
 	}
+	
+	
 
 	public void dailyptdelete(String dailypt_no) {
 		int success = dao.weightptdelete(dailypt_no);
@@ -154,5 +162,79 @@ public class PtMemberService {
 		}
 		
 	}
+
+	public HashMap<String, Object> ptmemberSearch(String ptmember, String searchInput) {
+		
 	
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		        searchInput = "%" + searchInput + "%";
+		        logger.info("mem_no");
+		        logger.info("searchInput : " + searchInput);
+
+
+				
+		ArrayList<PtMemberDTO> list = dao.ptmemSearch(ptmember,searchInput);
+		
+		map.put("ptlist", list);
+		
+		
+		
+		return map;
+
+		
+}
+	
+
+	public ArrayList<MemberDTO> ptlist(String loginId) {
+		
+		int b_idx = dao.pt_b_idx(loginId);
+		
+		return dao.ptlist(b_idx);
+		
+	}
+
+	public String submitcut(HashMap<String, String> params, String emp_no) {
+		
+		//params.put("pt_state", "결석");
+		String page = "";
+		
+		logger.info("submitcut params : "+params);
+		
+		 PtMemberDTO dto = new PtMemberDTO();
+		
+		
+		dto.setEmp_no(emp_no);
+		dto.setMem_no(Integer.parseInt(params.get("mem_no")));
+		dto.setPt_date(params.get("date"));
+		dto.setPt_state("결석");
+		
+		int submitcut =  dao.submitcut(dto);
+		
+		if (submitcut == 1) {
+			page = "redirect:/dailyptt";
+		}
+		
+		return page;
+	}
+
+	
+	
+	/*
+	 * public void submitcut(HashMap<String, String> params, ArrayList<String>
+	 * pt_name, ArrayList<String> pt_kg, ArrayList<String> pt_set, String emp_no) {
+	 * 
+	 * PtMemberDTO dto = new PtMemberDTO();
+	 * 
+	 * dto.setDailypt_no(Integer.parseInt(params.get("dailypt_no")));
+	 * dto.setEmp_no(emp_no); dto.setMem_no(Integer.parseInt(params.get("mem_no")));
+	 * dto.setPt_date(params.get("date"));
+	 * 
+	 * dao.submitdailypt(dto);
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
+
 }

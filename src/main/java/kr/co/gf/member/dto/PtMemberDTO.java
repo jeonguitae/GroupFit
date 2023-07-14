@@ -10,6 +10,7 @@ public class PtMemberDTO {
 	private int dailypt_no;
 	private String emp_no;
 	private int mem_no;
+	private int b_idx;
 	private String aerobic;
 	private String diet;
 	private String str;
@@ -26,6 +27,8 @@ public class PtMemberDTO {
 	private String pt_kg;
 	private String pt_set;
 	
+	private int count;
+	private int ticket_no;
 	
 	
 	
@@ -126,6 +129,24 @@ public class PtMemberDTO {
 	}
 	public void setAf_weight(String af_weight) {
 		this.af_weight = af_weight;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getTicket_no() {
+		return ticket_no;
+	}
+	public void setTicket_no(int ticket_no) {
+		this.ticket_no = ticket_no;
+	}
+	public int getB_idx() {
+		return b_idx;
+	}
+	public void setB_idx(int b_idx) {
+		this.b_idx = b_idx;
 	}
 	
 	

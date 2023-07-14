@@ -3,6 +3,7 @@ package kr.co.gf.member.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import kr.co.gf.member.dto.MemberDTO;
 import kr.co.gf.member.dto.PtMemberDTO;
 
 
@@ -30,11 +31,31 @@ public interface PtMemberDAO {
 
 	void insertNewWeight(int dailypt_no, String ptName, String ptKg, String ptSet);
 
-	boolean delete(int dailypt_no);
+	boolean deletedaily_pt(int dailypt_no);
 
 	void dailyptdelete(String dailypt_no);
 
 	int weightptdelete(String dailypt_no);
+
+
+
+	int pt_b_idx(String loginId);
+
+	ArrayList<MemberDTO> ptlist(int b_idx);
+
+	ArrayList<PtMemberDTO> ptmemSearch(String ptmember, String searchInput);
+
+	void updateaf_weight(PtMemberDTO dto);
+
+	void updateupaf_weight(PtMemberDTO dto);
+
+
+	void ptcountUpdate(int mem_no);
+
+	int submitcut(PtMemberDTO dto);
+
+
+	
 
 
 

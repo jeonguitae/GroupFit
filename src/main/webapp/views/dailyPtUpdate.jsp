@@ -92,6 +92,11 @@
 .submit-button button {
     margin: 0 auto;
 }
+
+.form-group .removeExerciseButton {
+  margin-left: 10px;
+  flex-shrink: 0; /* 추가 */
+}
 </style>
 </head>
 <body>
@@ -121,7 +126,7 @@
    
 				    <div class="container">
 
-				    <form action="dailyptUpdate.do" method="post">
+				    <form method="post">
 				    	<input type="hidden" name="dailypt_no" value="${dto.dailypt_no}"/>
 				    
 					    <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -238,8 +243,9 @@
                     <hr>
                     
 					<div class="submit-button">
-	                    <button type="submit" class="btn btn-primary" >수정하기</button>
-	                    <button type="submit" class="btn btn-primary" onclick="location.href='./dailyptt'" >리스트</button>
+	                    <button type="submit" formaction="/dailyptUpdate.do" class="btn btn-primary" >수정하기</button>
+	                     <button type="submit" id="absentButton" formaction="/submitcut" class="btn btn-primary">결석</button>
+	                    <button type="button" class="btn btn-primary" onclick="location.href='./dailyptt'" >리스트</button>
 	                </div>
 	                
 				    <br>
@@ -256,28 +262,48 @@
 <script>
 //웨이트 운동 추가 버튼 클릭 이벤트 처리
 function addWeightExercise() {
-    var container = document.getElementById('weightExerciseContainer');
-    var index = container.getElementsByClassName('form-group').length + 1;
+  var container = document.getElementById('weightExerciseContainer');
+  var index = container.getElementsByClassName('form-group').length + 1;
 
-    var newExercise = document.createElement('div');
-    newExercise.classList.add('form-group');
-    newExercise.innerHTML = `
-        <label for="pt_name${index}">운동명:</label>
-        <input type="text" id="pt_name${index}" name="pt_name[]" value="">
-        <label for="pt_kg${index}">무게:</label>
-        <input type="number" id="pt_kg${index}" name="pt_kg[]" value="">
-        <label for="pt_set${index}">SET 수:</label>
-        <input type="number" id="pt_set${index}" name="pt_set[]" value="">
-        <button type="button" class="btn btn-light removeExerciseButton">삭제</button>
-    `;
+  var newExercise = document.createElement('div');
+  newExercise.classList.add('form-group');
+  newExercise.innerHTML = `
+    <label for="pt_name${index}">운동명:</label>
+    <input type="text" id="pt_name${index}" name="pt_name[]" value="">
+    <label for="pt_kg${index}">무게:</label>
+    <input type="number" id="pt_kg${index}" name="pt_kg[]" value="">
+    <label for="pt_set${index}">SET 수:</label>
+    <input type="number" id="pt_set${index}" name="pt_set[]" value="">
+    <button type="button" class="btn btn-light removeExerciseButton">삭제</button>
+  `;
 
-    container.appendChild(newExercise);
+  container.appendChild(newExercise);
+
+  // 새로운 삭제 버튼에 이벤트 핸들러 등록
+  var removeButton = newExercise.querySelector('.removeExerciseButton');
+  removeButton.addEventListener('click', function() {
+    var exerciseContainer = this.parentNode;
+    exerciseContainer.remove();
+  });
 }
 
 document.getElementById('addWeightExercise').addEventListener('click', function() {
-    addWeightExercise();
+  addWeightExercise();
 });
 
+// 삭제 버튼 클릭 이벤트 처리
+function registerRemoveButtonEvent() {
+  var removeButtons = document.getElementsByClassName('removeExerciseButton');
+  for (var i = 0; i < removeButtons.length; i++) {
+    removeButtons[i].addEventListener('click', function() {
+      var exerciseContainer = this.parentNode;
+      exerciseContainer.remove();
+    });
+  }
+}
+
+// 초기 로드 시 기존 삭제 버튼에 이벤트 핸들러 등록
+registerRemoveButtonEvent();
 
 
 
@@ -333,14 +359,31 @@ function enableInputs() {
 }
 
 
-//삭제 버튼 클릭 이벤트 처리
-var removeButtons = document.getElementsByClassName('removeExerciseButton');
-for (var i = 0; i < removeButtons.length; i++) {
-    removeButtons[i].addEventListener('click', function() {
-        var exerciseContainer = this.parentNode;
-        exerciseContainer.remove();
-    });
-}
+
+
+document.getElementById('absentButton').addEventListener('click', function(event) {
+    event.preventDefault(); // 폼 제출 방지
+
+    if (confirm('결석 처리하시겠습니까?')) {
+        var nameInput = document.getElementById('name');
+        var memNoInput = document.getElementById('mem_no');
+        var dateInput = document.getElementById('date');
+
+        if (nameInput.value.trim() === '' || memNoInput.value.trim() === '' || dateInput.value.trim() === '') {
+            alert('이름, 회원번호, 날짜는 필수 입력 사항입니다.');
+            return; // 함수 종료
+        }
+
+        // 여기에서 추가로 필요한 로직을 수행할 수 있습니다.
+
+    } else {
+        return; // 함수 종료
+    }
+
+    // 폼으로 돌아가는 로직을 수행해야합니다.
+    // 예를 들어, 현재 페이지로 돌아가는 코드를 작성합니다.
+    location.href = './dailyptWrite.do';
+});
 
 
 
