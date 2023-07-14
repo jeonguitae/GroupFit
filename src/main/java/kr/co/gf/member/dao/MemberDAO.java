@@ -67,7 +67,7 @@ public interface MemberDAO {
 
 	ArrayList<MemberDTO> locker(String b_idx);
 
-	int loc_status(String loc_num, String b_idx);
+	int loc_status(String loc_no, String b_idx);
 
 	ArrayList<MemberDTO> memsearch(String sortting, String txt);
 

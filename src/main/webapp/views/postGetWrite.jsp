@@ -51,13 +51,13 @@
 						</tr>
 						<tr>
 							<th>*제목</th>
-							<td><input type="text" name="subject"/></td>
+							<td><input type="text" name="subject" value="${post.subject}"/></td>
 						</tr>
 						<div id = "search_name">
 						<tr>
 							<th>*받는사람 이름</th>
 							<td>
-								<p><input type="text" name="get_empno" value="${post.get_empno}"/>
+								<input type="text" name="get_empno"/>
 								<input type="button" value="직원 찾기" onclick="new_window();"></p>
 							</td>
 						</tr>
@@ -72,8 +72,8 @@
 								<textarea name="content">${post.content}</textarea> 
 							</td>
 						</tr>
-						<input type="submit" value="회신보내기"/>
-						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
+						<input class="btn btn-primary" type="submit" value="회신보내기"/>
+						<button class="btn btn-primary" type="button" onclick="location.href='./postSendList.go'">목록</button>	
 					</table>
 				</form>
 			</div>

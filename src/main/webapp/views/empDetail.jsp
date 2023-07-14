@@ -26,9 +26,16 @@
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>직원 프로필 상세보기</h3>
-			<table>
+			<table class="table table-dark table-striped">
 				<tr>
-					<img width="500" height="500" src = "/photo/${emp.new_photo_name}" readonly/>
+					<c:choose>
+	                 <c:when test="${not empty emp.new_photo_name}">
+	                     <img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
+	                 </c:when>
+	                 <c:otherwise>
+	                     <img width="90px" height="90px" src="img/GroupFit_lg_2.png" />
+	                 </c:otherwise>
+	           		 </c:choose>
 				</tr>
 				<tr>
 					<th>*사내번호</th>
@@ -88,10 +95,10 @@
 					<td><input type="text" name="retire_year" value="${emp.retire_year}" readonly/></td>
 				</tr>
 				</c:if>
-				<button type="button" class="btn" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">수정</button>
-				<button type="button" class="btn" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
 				<br>
-				<button type="button" class="btn" onclick="location.href='./empList.go'">목록</button>	
+				<button type="button" class="btn btn-primary" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">수정</button>
+				<button type="button" class="btn btn-primary" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
+				<button type="button" class="btn btn-primary" onclick="location.href='./empList.go'">목록</button>	
 			</table>
 		</div>
 </body>

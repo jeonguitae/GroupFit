@@ -46,12 +46,7 @@
 			  <button onclick="yearChange(-1)"><</button>
 			  <span id="year">2023</span>
 			  <button id="nextYear" onclick="yearChange(1)" disabled>></button>
-			  <select name="branch" id="branch" style = "margin-left : 30px">
-			  		<option value="all">전체</option>
-				<c:forEach items="${branchList}" var="item">
-					<option value="${item.b_idx}">${item.b_name}</option>
-				</c:forEach>
-		      </select>
+			  
 		      <select name="emp" id="emp" style = "margin-left : 30px">
 		      	<c:forEach items="${empList}" var="item">
 					<option value="${item.emp_no}">${item.name}</option>
@@ -73,8 +68,77 @@
 
 
 <script>
-var branch = ${sessionScope.emp.b_idx};
-var year = 
+var year = parseInt($('#year').text());
+var emp_no = $('#emp').val();
+firstChart(year,emp_no);
+
+function firstChart(year,emp_no){
+	$.ajax({
+		type:'get',
+		url:'branchIndividualChart.ajax',
+		data:{
+			'year':year,
+			'emp_no':emp_no
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			chartPrint(data.individual);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+function yearChange(change) {
+	year += change;
+    $('#year').text(year);
+    
+    if (year == (new Date()).getFullYear()) {
+        $('#nextYear').prop('disabled', true);
+      } else {
+        $('#nextYear').prop('disabled', false);
+      }
+    $.ajax({
+		type:'get',
+		url:'branchIndividualChart.ajax',
+		data:{
+			'year':year,
+			'emp_no':emp_no
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			chartPrint(data.individual);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+$('#emp').change(function(){
+	emp_no = $(this).val();
+	$.ajax({
+		type:'get',
+		url:'branchIndividualChart.ajax',
+		data:{
+			'year':year,
+			'emp_no':emp_no
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			chartPrint(data.individual);	
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+	
+});
 
 	
 function chartPrint(data){

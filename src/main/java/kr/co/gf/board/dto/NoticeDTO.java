@@ -6,7 +6,7 @@ public class NoticeDTO {
 
 	private String emp_no;
 	private String name;
-	private int n_idx;
+	private String n_idx;
 	private String title;
 	private String content;
 	private Date reg_date;
@@ -59,11 +59,11 @@ public class NoticeDTO {
 		this.emp_no = emp_no;
 	}
 
-	public int getN_idx() {
+	public String getN_idx() {
 		return n_idx;
 	}
 
-	public void setN_idx(int n_idx) {
+	public void setN_idx(String n_idx) {
 		this.n_idx = n_idx;
 	}
 

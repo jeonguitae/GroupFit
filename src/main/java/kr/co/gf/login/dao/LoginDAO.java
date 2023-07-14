@@ -11,4 +11,6 @@ public interface LoginDAO {
 
 	EmpDTO getEmp(String id);
 
+	int cometime(String emp_no, String b_idx);
+
 }
