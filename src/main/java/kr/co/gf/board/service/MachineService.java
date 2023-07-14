@@ -154,4 +154,47 @@ public class MachineService {
 		return map;
 	}
 
+	public HashMap<String, Object> fixedmaclist(String b_idx) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<MachineDTO> list = dao.fixedmaclist(b_idx);
+		
+		map.put("list", list);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> fix_content(String mac_num) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		MachineDTO dto = dao.fix_content(mac_num);
+		map.put("dto", dto);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> mac_status_cng(HashMap<String, String> params) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = dao.mac_status_cng(params);
+		
+		if(row != 0) {
+			if(params.get("mac_status").equals("break")) {
+				
+				map.put("msg", "고장처리 완료!");
+			}
+			
+			else{
+				
+				map.put("msg", "수리 완료!");
+			}
+			
+			dao.delete_fix_mac(params);
+		}
+		
+		return map;
+	}
+
 }

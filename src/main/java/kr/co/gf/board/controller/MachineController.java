@@ -42,6 +42,7 @@ public class MachineController {
 		
 		return "maclist";
 	}
+
 	
 	@RequestMapping(value="mac_reg.ajax")
 	@ResponseBody
@@ -122,4 +123,39 @@ public class MachineController {
 		return service.mac_chk(chk_mac, mac_status, b_idx, emp_no);
 	}
 	
+	@GetMapping(value="fixedmac.go")
+	public String fixedmaclistg() {
+		
+		return "fixedmac";
+	}
+	
+	@RequestMapping(value="fixedmaclist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> fixedmaclist(HttpSession session){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		
+		return service.fixedmaclist(b_idx);
+	}
+	
+	@RequestMapping(value="fix_content.ajax")
+	@ResponseBody
+	public HashMap<String, Object> fix_content(HttpSession session, String mac_num){
+		
+		
+		return service.fix_content(mac_num);
+	}
+	
+	@RequestMapping(value="mac_status_cng.ajax.ajax")
+	@ResponseBody
+	public HashMap<String, Object> mac_status_cng(HttpSession session, @RequestParam HashMap<String, String> params){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		params.put("b_idx", b_idx);
+		
+		return service.mac_status_cng(params);
+	}
+
 }
