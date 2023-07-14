@@ -27,7 +27,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>페이지 제목</h1>
+						<h1>전체 매출</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -43,27 +43,30 @@
 		<!-- Main content -->
 		
 		<section class="content">
-			  <button onclick="yearChange(-1)"><</button>
+			  <button style="margin-left:36%" onclick="yearChange(-1)"><</button>
 			  <span id="year">2023</span>
 			  <button id="nextYear" onclick="yearChange(1)" disabled>></button>
 			  
 			  
 			<div class="container-fluid">
-				<div style="width: 500px; height: 500px;">
+				<div style="width: 1500px; height: 1000px;">
 				<!--차트가 그려질 부분-->
 				<canvas id="myChart"></canvas>
 				</div>
+				<div class="col-sm-6">
+						<h1>지점 매출</h1>
+					</div>
 				
-			  <button onclick="branchYearChange(-1)"><</button>
+			  <button style="margin-left:36%" onclick="branchYearChange(-1)"><</button>
 			  <span id="branchYear">2023</span>
 			  <button id="branchNextYear" onclick="branchYearChange(1)" disabled>></button>
-			  <select name="branch" id="branch" style = "margin-left : 30px">
+			  <select style="margin-left:30%" name="branch" id="branch" style = "margin-left : 30px">
 				<c:forEach items="${list}" var="item">
 					<option value="${item.b_idx}">${item.b_name}</option>
 				</c:forEach>
 		      </select>
 				
-				<div style="width: 500px; height: 500px;">
+				<div style="width: 1500px; height: 1000px;">
 				<!--차트가 그려질 부분-->
 				<canvas id="myChart2"></canvas>
 				</div>
@@ -119,45 +122,30 @@
 	                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
 	                            data: datasets,
 	                            backgroundColor: [
-	                                //색상
-	                                'rgba(255, 99, 132, 0.2)',
-	                                'rgba(54, 162, 235, 0.2)',
-	                                'rgba(255, 206, 86, 0.2)',
-	                                'rgba(75, 192, 192, 0.2)',
-	                                'rgba(153, 102, 255, 0.2)',
-	                                'rgba(255, 159, 64, 0.2)'
+	                                'rgba(255, 159, 164, 0.2)'
 	                            ],
 	                            borderColor: [
-	                                //경계선 색상
-	                                'rgba(255, 99, 132, 1)',
-	                                'rgba(54, 162, 235, 1)',
-	                                'rgba(255, 206, 86, 1)',
-	                                'rgba(75, 192, 192, 1)',
-	                                'rgba(153, 102, 255, 1)',
-	                                'rgba(255, 159, 64, 1)'
+	                                // 경계선 색상
+	                                'rgba(50, 205, 50, 1)'
 	                            ],
-	                            borderWidth: 1 //경계선 굵기
-	                        }/* ,
-	                        {
-	                            label: 'test2',
-	                            fill: false,
-	                            data: [
-	                                8, 34, 12, 24
-	                            ],
-	                            backgroundColor: 'rgb(157, 109, 12)',
-	                            borderColor: 'rgb(157, 109, 12)'
-	                        } */
+	                            borderWidth: 2, //경계선 굵기
+	                            pointBorderColor: 'rgba(144, 238, 144, 1)'
+	                        }
 	                    ]
 	                },
 	                options: {
 	                    scales: {
-	                        yAxes: [
-	                            {
-	                                ticks: {
-	                                    beginAtZero: true
-	                                }
-	                            }
-	                        ]
+	                    	xAxes: [{
+	                    	      ticks: {
+	                    	        fontColor: 'rgba(255, 255, 255, 1)', // x축 눈금 레이블 색상 (흰색)
+	                    	      },
+	                    	    }],
+	                    	    yAxes: [{
+	                    	      ticks: {
+	                    	        fontColor: 'rgba(255, 255, 255, 1)',
+	                    	        beginAtZero: true// y축 눈금 레이블 색상 (흰색)
+	                    	      },
+	                    	    }],
 	                    }
 	                }
 	            });
@@ -293,48 +281,43 @@
   	    var context = document
   	    			.getElementById('myChart2')
   	                .getContext('2d');
-  	    var myChart = new Chart(context, {
-  	                type: 'line', // 차트의 형태
-  	                data: { // 차트에 들어갈 데이터
-  	                    labels: labels,
-  	                    datasets: [
-  	                        { //데이터
-  	                            label: '전체매출', //차트 제목
-  	                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-  	                            data: datasets,
-  	                            backgroundColor: [
-  	                                //색상
-  	                                'rgba(255, 99, 132, 0.2)',
-  	                                'rgba(54, 162, 235, 0.2)',
-  	                                'rgba(255, 206, 86, 0.2)',
-  	                                'rgba(75, 192, 192, 0.2)',
-  	                                'rgba(153, 102, 255, 0.2)',
-  	                                'rgba(255, 159, 64, 0.2)'
-  	                            ],
-  	                            borderColor: [
-  	                                //경계선 색상
-  	                                'rgba(255, 99, 132, 1)',
-  	                                'rgba(54, 162, 235, 1)',
-  	                                'rgba(255, 206, 86, 1)',
-  	                                'rgba(75, 192, 192, 1)',
-  	                                'rgba(153, 102, 255, 1)',
-  	                                'rgba(255, 159, 64, 1)'
-  	                            ],
-  	                            borderWidth: 1 //경계선 굵기
-  	                        }/* ,
-  	                        {
-  	                            label: 'test2',
-  	                            fill: false,
-  	                            data: [
-  	                                8, 34, 12, 24
-  	                            ],
-  	                            backgroundColor: 'rgb(157, 109, 12)',
-  	                            borderColor: 'rgb(157, 109, 12)'
-  	                        } */
-  	                    ]
-  	                },
-  	                options:options
-  	            });
+  	  var myChart = new Chart(context, {
+          type: 'line', // 차트의 형태
+          data: { // 차트에 들어갈 데이터
+              labels: labels,
+              datasets: [
+                  { //데이터
+                      label: '지점매출', //차트 제목
+                      fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                      data: datasets,
+                      backgroundColor: [
+                          'rgba(255, 159, 164, 0.2)'
+                      ],
+                      borderColor: [
+                          // 경계선 색상
+                          'rgba(50, 205, 50, 1)'
+                      ],
+                      borderWidth: 2, //경계선 굵기
+                      pointBorderColor: 'rgba(144, 238, 144, 1)'
+                  }
+              ]
+          },
+          options: {
+              scales: {
+              	xAxes: [{
+              	      ticks: {
+              	        fontColor: 'rgba(255, 255, 255, 1)', // x축 눈금 레이블 색상 (흰색)
+              	      },
+              	    }],
+              	    yAxes: [{
+              	      ticks: {
+              	        fontColor: 'rgba(255, 255, 255, 1)',
+              	        beginAtZero: true// y축 눈금 레이블 색상 (흰색)
+              	      },
+              	    }],
+              }
+          }
+      });
   	}
       
       console.log("${sessionScope.loginEmp.b_name}");

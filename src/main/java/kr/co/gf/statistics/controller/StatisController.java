@@ -55,10 +55,17 @@ public class StatisController {
 		list = service.branchTotalSales(branchYear,branch);
 		map.put("list", list);
 		return map;
-	}
+	}	
 	
 	@RequestMapping(value="/branchChart")
-	public String branchChart() {
+	public String branchChart(HttpSession session,Model model) {
+		String branchName;
+		if(session.getAttribute("loginId")!=null) {
+			EmpDTO empDTO = (EmpDTO) session.getAttribute("loginEmp");
+			String b_idx = empDTO.getB_idx();
+			branchName = service.brachName(b_idx);
+			model.addAttribute("branchName",branchName);
+		}
 		return "branchChart";
 	}
 	
@@ -156,6 +163,44 @@ public class StatisController {
 		logger.info("출력할 지점, 달"+formattedDate+b_idx);
 		list = service.branchPersonal(formattedDate,b_idx);
 		map.put("branchPersonal", list);
+		return map;
+	}
+	
+	@RequestMapping(value="/memberStatis")
+	public String memberStatis(HttpSession session, Model model) {
+		EmpDTO empDTO = (EmpDTO) session.getAttribute("loginEmp");
+		String position = empDTO.getPosition();
+		String page="";
+		if(position.equals("대표")) {
+			page="leaderMemberStatis";
+			ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+			list=service.branchList();
+			model.addAttribute("branchList",list);
+		}else {
+			page="memberStatis";
+		}
+		return page;
+	}
+	
+	@RequestMapping(value="/memberAdmission.ajax")
+	@ResponseBody
+	public HashMap<String, Object> memberAdmission(@RequestParam HashMap<String, String> params){
+		logger.info("입장 시간 통계"+params);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+		list = service.memberAdmission(params);
+		map.put("entryList", list);
+		return map;
+	}
+	
+	@RequestMapping(value="/countMember.ajax")
+	@ResponseBody
+	public HashMap<String, Object> countMember(@RequestParam HashMap<String, String> params){
+		logger.info("회원 수 추이"+params);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+		list = service.countMember(params);
+		map.put("countList", list);
 		return map;
 	}
 	
