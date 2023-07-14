@@ -244,11 +244,11 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="fixedmac.go" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="maclist.go" class="nav-link"> <i
 										class="nav-icon fas fa-dumbbell"></i>
 										<p>머신 관리</p>
 								</a></li>
-								<li class="nav-item item-sub"><a href="maclist.go" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="fixedmac.go" class="nav-link"> <i
 										class="nav-icon fas fa-dumbbell"></i>
 										<p>수리신청 된 머신</p>
 								</a></li>
