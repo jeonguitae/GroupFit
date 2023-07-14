@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트</title>	
+<title>지출결의서</title>	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 
@@ -25,7 +25,7 @@
 	#table1 th{
 		border: 1px solid black;
 	    padding: 10px;
-		
+	    white-space: nowrap;
 	}
 	#table1 td{
 		border: 1px solid black;
@@ -44,6 +44,7 @@
 	#table2 th{
 		border: 1px solid black;
 		padding: 10px;
+		white-space: nowrap;
 	}
 	#table2 td{
 		border: 1px solid black;
@@ -139,6 +140,10 @@
 	#button_ch_sak{
 		
 	}
+	#accept{
+		PADDING-RIGHT: 3%;
+	    PADDING-BOTTOM: 2%;
+	}
 </style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -175,13 +180,8 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
-				<h5 id="aAp"><a href="approvalEventRequest.go">이벤트신청</a></h5>
-				
-			
 				<div id="table1_div">
-					<form action="approvalAccept.do?a_idx=${dto.a_idx}&approval=${dto.approval}">
+					<form action="approvalUpdate.go?a_idx=${dto.a_idx}&approval=${dto.approval}">
 					<table id="table1">
 						<tr>
 							<th>기안자</th>
@@ -207,9 +207,24 @@
 							<th>대표</th>
 						</tr>
 						<tr id="tr2">
-							<td>${dto.name}</td>
-							<td>${dto.manager}</td>
-							<td>${dto.top_manager }</td>
+							<td>
+								<c:if test="${dto.state eq '대기' or dto.state eq '예정' or dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.name}
+							</td>
+							<td>
+								<c:if test="${dto.state eq '예정' or dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.manager}
+							</td>
+							<td>
+								<c:if test="${dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.top_manager}
+							</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -263,7 +278,12 @@
 						<button id="su" onclick="location.href=''">승인</button>
 					</c:if>
 					<c:if test="${dto.emp_no eq loginId }">
-						<button type="button" id="su" onclick="location.href='approvalUpdate.do'">수정</button>
+						<button type="submit" id="su">수정</button>
+						<input type="hidden" name="a_idx" value="${dto.a_idx}"/>
+						<input type="hidden" name="approval" value="${dto.approval}"/>
+						<input type="hidden" name="write_date" value="${dto.write_date}"/>
+						<input type="hidden" name="manager" value="${dto.manager}"/>
+						<input type="hidden" name="top_manager" value="${dto.top_manager}"/>
 					</c:if>
 					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>

@@ -26,7 +26,7 @@
 	#table1 th{
 		border: 1px solid black;
 	    padding: 10px;
-		
+	    white-space: nowrap;
 	}
 	#table1 td{
 		border: 1px solid black;
@@ -46,6 +46,7 @@
 	#table2 th{
 		border: 1px solid black;
 		padding: 10px;
+		white-space: nowrap;
 	}
 	#table2 td{
 		border: 1px solid black;
@@ -134,7 +135,10 @@
    		width: 60%;
    		height: 30%;
 	}
-
+	#accept{
+		PADDING-RIGHT: 3%;
+	    PADDING-BOTTOM: 2%;
+	}
 </style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -178,21 +182,21 @@
 				
 			
 				<div id="table1_div">
-					<form action="approvalEventRequest.do" method="post" enctype="multipart/form-data">
+					<form action="approvalUpdate.do?a_idx=${dto.a_idx}&approval=${dto.approval}" method="post" enctype="multipart/form-data">
 					<table id="table1">
 						<tr>
 							<th>기안자</th>
 							<td>
-								${loginIdName}
+								${dto.name}
 							</td>
 						</tr>
 						<tr>
 							<th>기안일</th>
-							<td><span id="date"></span></td>
+							<td>${dto.write_date}</td>
 						</tr>
 						<tr>
 							<th>결재구분</th>
-							<td>이벤트신청</td>
+							<td>${dto.approval}</td>
 						</tr>
 					</table>
 					
@@ -206,9 +210,24 @@
 							<th>대표</th>
 						</tr>
 						<tr id="tr2">
-							<td>${loginIdName}</td>
-							<td>${manager}</td>
-							<td>${top_manager }</td>
+							<td>
+								<c:if test="${dto.state eq '대기' or dto.state eq '예정' or dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.name}
+							</td>
+							<td>
+								<c:if test="${dto.state eq '예정' or dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.manager}
+							</td>
+							<td>
+								<c:if test="${dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.top_manager}
+							</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -222,8 +241,8 @@
 							<th>대표</th>
 						</tr>
 						<tr id="tr22">
-							<td>${loginIdName}</td>
-							<td>${top_manager }</td>
+							<td>${dto.name}</td>
+							<td>${dto.top_manager}</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -232,35 +251,43 @@
 				<table id="table2">
 					<tr>
 						<th>제목</th>
-						<td><input type="text" name="subject" id="subject"/></td>
+						<td><input type="text" name="subject" id="subject" value="${dto.subject}"/></td>
 					</tr>
 					<tr>
 						<th>기간</th>
-						<td><input type="date" name="start_day" id="start_day"/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="finish_day" id="finish_day"/></td>
+						<td><input type="date" name="start_day" id="start_day" value="${dto.start_day}"/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="finish_day" id="finish_day" value="${dto.finish_day}"/></td>
 					</tr>
 					<tr>
 						<th>사유</th>
-						<td><textarea id="sa" name="reason" class="reason"></textarea></td>
+						<td><textarea id="sa" name="reason" class="reason">${dto.reason}</textarea></td>
 					</tr>
 					<tr>
 						<th>기타사항</th>
-						<td><textarea id="sa" name="etc" class="etc"></textarea></td>
+						<td><textarea id="sa" name="etc" class="etc">${dto.etc}</textarea></td>
 					</tr>
 					<tr>
 						<th>첨부파일</th>
-						<td><input type="file" name="files" multiple="multiple" class="files"/></td>
+						<td>
+							<input type="file" name="files" multiple="multiple" class="files"/>
+							<c:if test="${empty list}">
+								첨부파일이 없습니다...
+							</c:if>	
+							<c:forEach items="${list }" var="files">
+								<a href="download.do?path=${files.new_photo_name}&idx=${files.board_num}">${files.ori_photo_name}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+							</c:forEach>							
+						</td>
 					</tr>
 				</table>
 				<div id="button_sin_mok">
-					<button type="submit" id="sin" formaction="approvalEventRequest.do">신청하기</button>
-					<button type="submit" id="mm" formaction="saveRequest.do" onclick="save()">임시저장</button>
+					<button type="submit" id="sin">수정하기</button>
 					<button type="button" id="mok" onclick="location.href='approvalList.do'">목록</button>
 				</div>
 				<input type="hidden" name="emp_no" value="${loginId}"/>
 				<input type="hidden" name="approval" value="이벤트신청"/>
 				<input type="hidden" name="state" value="대기"/>
-				<input type="hidden" name="manager" value="${manager}"/>
-				<input type="hidden" name="top_manager" value="${top_manager}"/>
+				<input type="hidden" name="write_date" value="${dto.write_date}"/>
+				<input type="hidden" name="manager" value="${dto.manager}"/>
+				<input type="hidden" name="top_manager" value="${dto.top_manager}"/>
 				</form>
 			</div>
 		</div>	
@@ -269,11 +296,6 @@
 	</div>
 </body>
 <script type="text/javascript">
-
-var msg = "${msg}";
-if(msg != ""){
-	alert(msg);
-}
 	var currentDate = new Date();
 	var year = currentDate.getFullYear();
 	var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // 월이 한 자리 수일 경우 앞에 0을 추가하여 두 자리로 만듦
@@ -282,11 +304,6 @@ if(msg != ""){
 	var dateSpan = document.getElementById("date");
 	dateSpan.textContent = year + "-" + month + "-" + day;
 	
-	function save(){
-		if($('#subject').val()==null ){
-			alert("제목을 입력해주세요");
-		}
-	}
 	
 </script>
 </html>

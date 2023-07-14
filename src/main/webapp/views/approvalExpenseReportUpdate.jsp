@@ -5,14 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트신청</title>	
+<title>지출결의서</title>	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 
 	#aAp{
 		margin-left: 70px;
 		margin-top: 20px;
-		display: inline;
 	}	
 
 	#table1 {
@@ -26,7 +25,7 @@
 	#table1 th{
 		border: 1px solid black;
 	    padding: 10px;
-		
+		white-space: nowrap;
 	}
 	#table1 td{
 		border: 1px solid black;
@@ -39,13 +38,13 @@
 		border: 1px solid black;
 	    border-collapse: collapse;
 	    margin-top: 15%;
-	    margin-left: 5%;
-	    position: absolute;
-	    width: 70%;
+	    margin-left: 6%;
+	    width: 85%;
 	}
 	#table2 th{
 		border: 1px solid black;
 		padding: 10px;
+		white-space: nowrap;
 	}
 	#table2 td{
 		border: 1px solid black;
@@ -114,6 +113,7 @@
 		vertical-align: middle;
 	}
 	
+	
 	#tr2{
 		height: 100px;
 		vertical-align: bottom;
@@ -122,19 +122,28 @@
 		vertical-align: middle;
 	}
 	
-	
-	
 	#button_sin_mok {
-	    margin-top: 35%;
-	    position: absolute;
-	    margin-left: 30%;
+	    margin-top: 5%;
+	    margin-left: 35%;
 	}
 
 	textarea {
    		width: 60%;
    		height: 30%;
 	}
-
+	#td_inp{
+		width:100%;
+	}
+	#cols{
+		text-align: center;
+	}
+	#button_ch_sak{
+		
+	}
+	#accept{
+		PADDING-RIGHT: 3%;
+	    PADDING-BOTTOM: 2%;
+	}
 </style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -171,32 +180,24 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-			
-				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp"><a href="approvalExpenseReport.go">지출결의서</a></h5>
-				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalEventRequest.go">이벤트신청</a></h5>
-				
-			
 				<div id="table1_div">
-					<form action="approvalEventRequest.do" method="post" enctype="multipart/form-data">
+					<form action="approvalUpdate.go?a_idx=${dto.a_idx}&approval=${dto.approval}">
 					<table id="table1">
 						<tr>
 							<th>기안자</th>
-							<td>
-								${loginIdName}
-							</td>
+							<td>${dto.name}</td>
 						</tr>
 						<tr>
 							<th>기안일</th>
-							<td><span id="date"></span></td>
+							<td>${dto.write_date }</td>
 						</tr>
 						<tr>
 							<th>결재구분</th>
-							<td>이벤트신청</td>
+							<td>${dto.approval }</td>
 						</tr>
 					</table>
 					
-				<c:if test="${position eq 'FC' or position eq '트레이너'}">
+				<c:if test="${dto.position eq 'FC' or dto.position eq '트레이너'}">
 					<table id="table3">
 						<tr id="tr1">
 							<th rowspan="4">신청</th>
@@ -206,14 +207,29 @@
 							<th>대표</th>
 						</tr>
 						<tr id="tr2">
-							<td>${loginIdName}</td>
-							<td>${manager}</td>
-							<td>${top_manager }</td>
+							<td>
+								<c:if test="${dto.state eq '대기' or dto.state eq '예정' or dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.name}
+							</td>
+							<td>
+								<c:if test="${dto.state eq '예정' or dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.manager}
+							</td>
+							<td>
+								<c:if test="${dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.top_manager}
+							</td>
 						</tr>
 					</table>
 					</c:if>	
 					
-					<c:if test="${position eq '지점장'}">
+					<c:if test="${dto.position eq '지점장'}">
 					<table id="table3_1">
 						<tr id="tr11">
 							<th rowspan="3">신청</th>
@@ -222,45 +238,55 @@
 							<th>대표</th>
 						</tr>
 						<tr id="tr22">
-							<td>${loginIdName}</td>
-							<td>${top_manager }</td>
+							<td>${dto.name}</td>
+							<td>${dto.top_manager }</td>
 						</tr>
 					</table>
 					</c:if>	
 				
-				
+				<div id="button_ch_sak">
+					<button type="button" onclick="add()">추가</button>
+					<button type="button" onclick="del()">삭제</button>
+				</div>
 				<table id="table2">
 					<tr>
-						<th>제목</th>
-						<td><input type="text" name="subject" id="subject"/></td>
+						<th style="text-align: center;">첨부파일</th>
+						<td colspan="2">
+							<c:if test="${empty list}">
+								첨부파일이 없습니다...
+							</c:if>	
+							<c:forEach items="${list }" var="files">
+								<a href="download.do?path=${files.new_photo_name}&idx=${files.board_num}">${files.ori_photo_name}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+							</c:forEach>
+						</td>
 					</tr>
-					<tr>
-						<th>기간</th>
-						<td><input type="date" name="start_day" id="start_day"/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="finish_day" id="finish_day"/></td>
+					<tr id="cols">
+						<th>적요</th>
+						<th>금액</th>
+						<th>비고</th>
 					</tr>
-					<tr>
-						<th>사유</th>
-						<td><textarea id="sa" name="reason" class="reason"></textarea></td>
-					</tr>
-					<tr>
-						<th>기타사항</th>
-						<td><textarea id="sa" name="etc" class="etc"></textarea></td>
-					</tr>
-					<tr>
-						<th>첨부파일</th>
-						<td><input type="file" name="files" multiple="multiple" class="files"/></td>
-					</tr>
+					<c:forEach items="${jgb}" var="expen">
+						<tr style="text-align: center;">
+							<td>${expen.briefs }</td>
+							<td>${expen.price }</td>
+							<td>${expen.note }</td>
+						</tr>
+					</c:forEach>
 				</table>
 				<div id="button_sin_mok">
-					<button type="submit" id="sin" formaction="approvalEventRequest.do">신청하기</button>
-					<button type="submit" id="mm" formaction="saveRequest.do" onclick="save()">임시저장</button>
-					<button type="button" id="mok" onclick="location.href='approvalList.do'">목록</button>
+					<c:if test="${position eq '지점장' or position eq '대표'}">
+						<button id="su" onclick="location.href=''">승인</button>
+					</c:if>
+					<c:if test="${dto.emp_no eq loginId }">
+						<button type="submit" id="su">수정</button>
+						<input type="hidden" name="a_idx" value="${dto.a_idx}"/>
+						<input type="hidden" name="approval" value="${dto.approval}"/>
+						<input type="hidden" name="write_date" value="${dto.write_date}"/>
+						<input type="hidden" name="manager" value="${dto.manager}"/>
+						<input type="hidden" name="top_manager" value="${dto.top_manager}"/>
+					</c:if>
+					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>
-				<input type="hidden" name="emp_no" value="${loginId}"/>
-				<input type="hidden" name="approval" value="이벤트신청"/>
-				<input type="hidden" name="state" value="대기"/>
-				<input type="hidden" name="manager" value="${manager}"/>
-				<input type="hidden" name="top_manager" value="${top_manager}"/>
 				</form>
 			</div>
 		</div>	
@@ -270,23 +296,20 @@
 </body>
 <script type="text/javascript">
 
-var msg = "${msg}";
-if(msg != ""){
-	alert(msg);
-}
-	var currentDate = new Date();
-	var year = currentDate.getFullYear();
-	var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // 월이 한 자리 수일 경우 앞에 0을 추가하여 두 자리로 만듦
-	var day = ('0' + currentDate.getDate()).slice(-2); // 일이 한 자리 수일 경우 앞에 0을 추가하여 두 자리로 만듦
-	
-	var dateSpan = document.getElementById("date");
-	dateSpan.textContent = year + "-" + month + "-" + day;
-	
-	function save(){
-		if($('#subject').val()==null ){
-			alert("제목을 입력해주세요");
-		}
+function add() {
+	  var content = '';
+	  content += '<tr>';
+	  content += '<td><input type="text" name="briefs[]" id="td_inp" /></td>';
+	  content += '<td><input type="text" name="price[]" id="td_inp" /></td>';
+	  content += '<td><input otype="text" name="note[]" id="td_inp" /></td>';
+	  content += '</tr>';
+	  $('#table2').append(content);
 	}
-	
+function del(){
+	console.log("click");
+	var lastRow = $('#table2 tr:last');
+	  // 마지막 행의 마지막 컬럼을 삭제합니다
+	  lastRow.remove();
+}
 </script>
 </html>

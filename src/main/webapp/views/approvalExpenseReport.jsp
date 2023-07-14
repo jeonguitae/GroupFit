@@ -137,9 +137,18 @@
 	#cols{
 		text-align: center;
 	}
-	#button_ch_sak{
-		
-	}
+	
+	#button_sin_mok {
+    margin-top: 32%;
+    margin-left: 35%;
+    position: absolute;
+}
+	#button_ch_sak {
+    position: absolute;
+    margin-left: 68%;
+    margin-top: 11%;
+}
+	
 </style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -267,7 +276,6 @@
 				</div>
 				<input type="hidden" name="emp_no" value="${loginId}"/>
 				<input type="hidden" name="approval" value="지출결의서"/>
-				<input type="hidden" name="write_date" value="${write_date}"/>
 				<input type="hidden" name="state" value="대기"/>
 				<input type="hidden" name="manager" value="${manager}"/>
 				<input type="hidden" name="top_manager" value="${top_manager}"/>

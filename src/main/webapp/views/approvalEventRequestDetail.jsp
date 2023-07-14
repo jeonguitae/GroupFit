@@ -25,7 +25,7 @@
 	#table1 th{
 		border: 1px solid black;
 	    padding: 10px;
-		
+		white-space: nowrap;
 	}
 	#table1 td{
 		border: 1px solid black;
@@ -45,6 +45,7 @@
 	#table2 th{
 		border: 1px solid black;
 		padding: 10px;
+		white-space: nowrap;
 	}
 	#table2 td{
 		border: 1px solid black;
@@ -130,6 +131,11 @@
    		width: 60%;
    		height: 30%;
 	}
+	
+	#accept{
+		PADDING-RIGHT: 3%;
+		PADDING-BOTTOM: 2%;
+	}
 
 </style>
 <link
@@ -194,9 +200,24 @@
 									<th>대표</th>
 								</tr>
 								<tr id="tr2">
-									<td>${dto.name}</td>
-									<td>${dto.manager}</td>
-									<td>${dto.top_manager }</td>
+									<td>
+										<c:if test="${dto.state eq '대기' or dto.state eq '예정' or dto.state eq '승인'}">
+											<img id="accept" src="img/success.png">
+										</c:if>
+										${dto.name}
+									</td>
+									<td>
+										<c:if test="${dto.state eq '예정' or dto.state eq '승인'}">
+											<img id="accept" src="img/success.png">
+										</c:if>
+										${dto.manager}
+									</td>
+									<td>
+										<c:if test="${dto.state eq '승인'}">
+											<img id="accept" src="img/success.png">
+										</c:if>
+										${dto.top_manager}
+									</td>
 								</tr>
 							</table>
 						</c:if>	
@@ -255,7 +276,7 @@
 			</form>
 		</c:if>
 		<c:if test="${dto.emp_no eq loginId }">
-				<form action="approvalAccept.do?a_idx=${dto.a_idx}&approval=${dto.approval}">
+				<form action="approvalUpdate.go?a_idx=${dto.a_idx}&approval=${dto.approval}">
 				
 					<table id="table1">
 						<tr>
@@ -282,9 +303,24 @@
 								<th>대표</th>
 							</tr>
 							<tr id="tr2">
-								<td>${dto.name}</td>
-								<td>${dto.manager}</td>
-								<td>${dto.top_manager }</td>
+								<td>
+									<c:if test="${dto.state eq '대기' or dto.state eq '예정' or dto.state eq '승인'}">
+										<img id="accept" src="img/success.png">
+									</c:if>
+									${dto.name}
+								</td>
+								<td>
+									<c:if test="${dto.state eq '예정' or dto.state eq '승인'}">
+										<img id="accept" src="img/success.png">
+									</c:if>
+									${dto.manager}
+								</td>
+								<td>
+									<c:if test="${dto.state eq '승인'}">
+										<img id="accept" src="img/success.png">
+									</c:if>
+									${dto.top_manager}
+								</td>
 							</tr>
 						</table>
 					</c:if>	
@@ -298,8 +334,8 @@
 								<th>대표</th>
 							</tr>
 							<tr id="tr22">
-								<td>${dto.name}</td>
-								<td>${dto.top_manager }</td>
+								<td>${dto.name}<img src="img/success.png"></td>
+								<td>${dto.top_manager }<img src="img/success.png"></td>
 							</tr>
 						</table>
 					</c:if>	
@@ -334,7 +370,12 @@
 					</tr>
 				</table>
 				<div id="button_sin_mok">
-					<button type="button" id="su" onclick="location.href='approvalUpdate.go'">수정</button>
+					<button id="su">수정</button>
+					<input type="hidden" name="a_idx" value="${dto.a_idx}"/>
+					<input type="hidden" name="approval" value="${dto.approval}"/>
+					<input type="hidden" name="write_date" value="${dto.write_date}"/>
+					<input type="hidden" name="manager" value="${dto.manager}"/>
+					<input type="hidden" name="top_manager" value="${dto.top_manager}"/>
 					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>
 		</form>

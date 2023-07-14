@@ -62,7 +62,7 @@
 					<tr>
 						<td>${save.a_idx}</td>
 						<td>${save.approval}</td>
-						<td><a href="eventDetail.do?a_idx=${a_idx}&approval=${save.approval}">${save.subject}</a></td>
+						<td><a href="eventDetail.do?a_idx=${save.a_idx}&approval=${save.approval}">${save.subject}</a></td>
 						<td>${save.write_date}</td>
 						<td>${save.state}</td>
 					</tr>			

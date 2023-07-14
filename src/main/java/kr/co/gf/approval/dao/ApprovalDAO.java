@@ -42,7 +42,7 @@ public interface ApprovalDAO {
 
 	void stayAccept(String a_idx, String approval);
 
-	void expectedAccept(String a_idx, String approval);
+	int expectedAccept(String a_idx, String approval);
 
 	ApprovalDTO expenseDetail(String a_idx, String approval);
 
@@ -51,6 +51,10 @@ public interface ApprovalDAO {
 	int vacationRequestWrite(ApprovalDTO dto);
 
 	void vacationRequestWriteDown(ApprovalDTO dto);
+
+	int eventUpdateUp(ApprovalDTO dto);
+
+	void eventUpdateDown(ApprovalDTO dto);
 
 	
 

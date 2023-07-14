@@ -86,6 +86,7 @@
 	</table>
 	</form>
 	</c:if>
+	
 	<c:if test="${loginId ne dto.emp_no}">
 				
 	<table >
