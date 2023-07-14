@@ -31,4 +31,20 @@
 	SELECT come_time, out_time, FORMAT((TIME_TO_SEC(out_time) - TIME_TO_SEC(come_time)) / 3600, 1) AS w_time FROM working WHERE emp_no=#{emp_no} AND work_date=#{day}   
   	</select>
   
+  	<select id="seltype" resultType="String">
+  	SELECT gtwork FROM commute WHERE emp_no=#{emp_no}
+  	</select>
+  	
+  	<select id="workdate" resultType="String">
+  	SELECT DAYNAME(work_date) AS day FROM working WHERE emp_no=#{emp_no} AND w_type='계산'
+  	</select>
+  	
+  	<!-- <select id="selday" resultType="int">
+  	SELECT dayofweek(#{date}) AS day FROM working WHERE emp_no=#{emp_no} AND w_type='계산'
+  	</select> -->
+  	
+  	<update id="wtype">
+  	UPDATE working SET w_type=#{flag} WHERE emp_no=#{emp_no} AND work_date=#{now}
+  	</update>
+  	
    </mapper>

@@ -1,5 +1,7 @@
+
 package kr.co.gf.commute.controller;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,8 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.gf.commute.dto.CommuteDTO;
 import kr.co.gf.commute.service.CommuteService;
@@ -76,7 +80,7 @@ public class CommuteController {
 	}
 	
 	@RequestMapping(value="/out.do")
-	public String outdo(HttpSession session, Model model) {
+	public String outdo(HttpSession session, Model model, RedirectAttributes rattr) {
 		//세션에 저장된 사내번호 불러오기
 		EmpDTO eDto = (EmpDTO)session.getAttribute("loginEmp"); 
 		String emp_no = eDto.getEmp_no();
@@ -113,21 +117,82 @@ public class CommuteController {
 				Time come_time2=dto2.getCome_time();
 				Time out_time2=dto2.getOut_time();
 				
-				model.addAttribute("wtime",wtime);
-				model.addAttribute("come_time2",come_time2);
-				model.addAttribute("out_time",out_time2);
-				
+				rattr.addFlashAttribute("wtime",wtime);
+				rattr.addFlashAttribute("come_time2",come_time2);
+				rattr.addFlashAttribute("out_time2",out_time2);
+				rattr.addFlashAttribute("emp_no",emp_no);
+				rattr.addFlashAttribute("work_date",now);
 				logger.info("계산 가기 직전 w_time은"+wtime);
 				
-				String page2="redirect:/calculate.do";
-				return page2;
+				page = "redirect:/calculate.do";
+				
 			}
 		}
 		return page;	
 	}
-	/*
-	 * @RequestMapping(value="/calculate.do") public String calculate() {}
-	 */
+	
+		@RequestMapping(value="/calculate.do") 
+		public String calculate(@ModelAttribute("wtime") String wtime, @ModelAttribute("come_time2") Time come_time2, 
+		@ModelAttribute("out_time2") Time out_time2, @ModelAttribute("emp_no")String emp_no,  @ModelAttribute("work_date") LocalDate now) {
+		
+			logger.info("calculate.do 로거1 : wtime, come_time, out_time"+wtime+come_time2+out_time2+emp_no);
+			logger.info("날짜 왔다"+now);
+			//1.퇴근 시간 최대 10시로 해야하니까 퇴근 시간 설정해야 함 : out_time
+			//2.근무 오전/오후 타입 가져와야
+			
+			String type=cservice.seltype(emp_no);
+			logger.info("2번로거 : 근무타입은"+type);
+			//3.요일 불러오기
+			String day=cservice.workdate(emp_no);
+			logger.info("3번 : 요일은"+day);
+			//3.요일 불러오기
+			//int day=cservice.selday(emp_no, date);
+			
+			cservice.calculate(wtime,come_time2,out_time2,emp_no,type,day,now);
+
+			//공통작업 : 퇴근 시간 최대 설정
+			//첫번째 경우의 수 : 평일
+/*			if (!day.equals("Saturday")) {
+				logger.info("4번 : 평일");
+				//두번째 경우의 수 : 오전
+				if (type.equals("오전")) {
+					logger.info("5번 : 오전 근무");
+					//1.최대/최소시간 설정 및 최대시간 설정 완료
+					//원래는 15
+					LocalTime out_time = out_time2.toLocalTime();
+					LocalTime maxtime = LocalTime.of(15, 0);
+					
+					LocalTime come_time = come_time2.toLocalTime();
+					LocalTime mintime = LocalTime.of(7, 0);
+					//13,15
+					LocalTime lower = LocalTime.of(15, 0);
+					LocalTime upper = LocalTime.of(16, 0);
+					
+					if (out_time.isAfter(maxtime)) {
+						out_time = maxtime;
+						logger.info("6번 : 퇴근 시간 최대로 설정 out_time은"+out_time);
+					//2.지각 아닌 경우(빨리옴)
+						if (mintime.isAfter(come_time)) {
+							//조퇴/결근 여부 확인 : 문제는 
+							if (out_time.isAfter(lower) && out_time.isBefore(upper)) {
+								String flag="조퇴";
+								logger.info("7번 결근은 아님");
+								int row=cservice.wtype(emp_no,out_time2,flag);
+								logger.info("8번 : 결근 update시 숫자는 "+row);
+							}
+								
+							}else {//결근인 경우
+								
+							}
+						}else {//지각인 경우
+							
+						}
+					}
+				}*/
+		
+
+			return null;
+		}
 	
 	@RequestMapping(value = "/wlist.do")
 	public String list(HttpSession session) {
