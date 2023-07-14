@@ -280,7 +280,7 @@
 				</table>
 				<div id="button_sin_mok">
 					<button type="submit" id="sin">수정하기</button>
-					<button type="button" id="mok" onclick="location.href='approvalList.do'">목록</button>
+					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>
 				<input type="hidden" name="emp_no" value="${loginId}"/>
 				<input type="hidden" name="approval" value="이벤트신청"/>
