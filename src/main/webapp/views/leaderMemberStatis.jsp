@@ -43,9 +43,24 @@
 		<!-- Main content -->
 		
 		<section class="content">
-			  <button onclick="yearChange(-1)"><</button>
-			  <span id="year">2023</span>
-			  <button id="nextYear" onclick="yearChange(1)" disabled>></button>
+			  <button id="prevMonth" onclick="monthChange(-1)"><</button>
+				  <span id="formattedDate"></span>
+			  <button id="nextMonth" onclick="monthChange(1)">></button>
+			  
+			  <select name="branch" id="branch" style = "margin-left : 30px">
+				<c:forEach items="${branchList}" var="item">
+					<option value="${item.b_idx}">${item.b_name}</option>
+				</c:forEach>
+		      </select>
+			  
+			  <select name="day" id="day" style = "margin-left : 30px">
+					<option value="monday">월</option>
+					<option value="tuesday">화</option>
+					<option value="wednesday">수</option>
+					<option value="thursday">목</option>
+					<option value="friday">금</option>
+					<option value="saturday">토</option>
+		      </select>
 			    
 			<div class="container-fluid">
 				<div style="width: 500px; height: 500px;">
@@ -55,7 +70,16 @@
 			</div>
 			<!--/. container-fluid -->
 			
-			<div style="width: 500px; height: 500px;">
+			<button onclick="branchYearChange(-1)"><</button>
+			  <span id="branchYear">2023</span>
+			  <button id="branchNextYear" onclick="branchYearChange(1)" disabled>></button>
+			  <select name="countBranch" id="countBranch" style = "margin-left : 30px">
+				<c:forEach items="${branchList}" var="item">
+					<option value="${item.b_idx}">${item.b_name}</option>
+				</c:forEach>
+		      </select>
+				
+				<div style="width: 500px; height: 500px;">
 				<!--차트가 그려질 부분-->
 				<canvas id="myChart2"></canvas>
 				</div>
@@ -68,23 +92,90 @@
 
 
 <script>
-var emp_no="${sessionScope.loginEmp.emp_no}";
-var year = parseInt($('#year').text());
-console.log(emp_no);
-firstChart(year,emp_no);
 
-function firstChart(year,emp_no){
+var currentDate = new Date();
+var currentYear = currentDate.getFullYear();
+var currentMonth = currentDate.getMonth();
+
+function updateFormattedDate() {
+  var formattedDateElement = document.getElementById("formattedDate");
+  formattedDateElement.textContent = formatDate(currentYear, currentMonth);
+  year = $('#formattedDate').text();
+  console.log(year);
+  $.ajax({
+		type:'get',
+		url:'memberAdmission.ajax',
+		data:{
+			'year':year,
+			'b_idx':b_idx,
+			'day':day
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			chartPrint(data.entryList);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+function formatDate(year, month) {
+  var formattedYear = year;
+  var formattedMonth = String(month + 1).padStart(2, '0');
+  return formattedYear + "-" + formattedMonth;
+}
+
+function monthChange(change) {
+  currentMonth += change;
+
+  if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear -= 1;
+  } else if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear += 1;
+  }
+  
+ 
+
+  // 현재 연도인 경우 다음 달로 이동하는 버튼을 비활성화합니다.
+  var nextMonthButton = document.getElementById("nextMonth");
+  if (nextMonthButton) {
+    nextMonthButton.disabled = (currentYear === new Date().getFullYear() && currentMonth === new Date().getMonth());
+  }
+
+  updateFormattedDate();
+}
+
+var nextMonthButton = document.getElementById("nextMonth");
+if (nextMonthButton) {
+  nextMonthButton.disabled = (currentYear === new Date().getFullYear() && currentMonth === new Date().getMonth());
+}
+
+// 초기 날짜 설정
+updateFormattedDate();
+
+var year = $('#formattedDate').text();
+var b_idx=$('#branch').val();
+var day = $('#day').val();
+console.log(year+b_idx+day);
+firstChart(year,b_idx,day);
+
+function firstChart(year,b_idx,day){
 	$.ajax({
 		type:'get',
-		url:'personalIndividualChart.ajax',
+		url:'memberAdmission.ajax',
 		data:{
 			'year':year,
-			'emp_no':emp_no
+			'b_idx':b_idx,
+			'day':day
 		},
 		dataType:'json',
 		success:function(data){
 			console.log(data);
-			chartPrint(data.individual);
+			chartPrint(data.entryList);
 		},
 		error:function(e){
 			console.log(e);
@@ -92,41 +183,12 @@ function firstChart(year,emp_no){
 	});
 }
 
-function yearChange(change) {
-	year += change;
-    $('#year').text(year);
-    
-    if (year == (new Date()).getFullYear()) {
-        $('#nextYear').prop('disabled', true);
-      } else {
-        $('#nextYear').prop('disabled', false);
-      }
-    $.ajax({
-		type:'get',
-		url:'personalIndividualChart.ajax',
-		data:{
-			'year':year,
-			'emp_no':emp_no
-		},
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			chartPrint(data.individual);
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-}
-
-
-	
 function chartPrint(data){
 	labels=[];
 	datasets=[];
 	data.forEach(function(item,index){
-		labels.push(item.month);
-		datasets.push(item.totalSales)
+		labels.push(item.time);
+		datasets.push(item.entry_count);
 	});
     var context = document
     			.getElementById('myChart')
@@ -185,44 +247,110 @@ function chartPrint(data){
             });
 }
 
-
-var currentDate = new Date();
-var currentYear = currentDate.getFullYear();
-var currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1을 해주고, padStart()로 두 자리로 만듭니다.
-
-var formattedDate = currentYear + "-" + currentMonth;
-
-var b_idx="${sessionScope.loginEmp.b_idx}";
-
-console.log("Current Year-Month:", formattedDate);
-
-secondChart(formattedDate,b_idx);
-
-function secondChart(formattedDate,b_idx){
-		$.ajax({
-  		type:'get',
-  		url:'branchPersonal.ajax',
-  		data:{
-  			'formattedDate':formattedDate,
-  			'b_idx':b_idx
-  		},
-  		dataType:'json',
-  		success:function(data){
-  			console.log(data);
-  			branchPersonalChartPrint(data.branchPersonal);
-  		},
-  		error:function(e){
-  			console.log(e);
-  		}
-  	});
-	}
+$('#day').change(function(){
+	day = $(this).val();
+	$.ajax({
+		type:'get',
+		url:'memberAdmission.ajax',
+		data:{
+			'year':year,
+			'b_idx':b_idx,
+			'day':day
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			chartPrint(data.entryList);	
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
 	
-function branchPersonalChartPrint(data){
+});
+
+$('#branch').change(function(){
+	b_idx = $(this).val();
+	$.ajax({
+		type:'get',
+		url:'memberAdmission.ajax',
+		data:{
+			'year':year,
+			'b_idx':b_idx,
+			'day':day
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			chartPrint(data.entryList);	
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+	
+});
+
+var branchYear = parseInt($('#branchYear').text());
+var countB_idx = $('#countBranch').val();
+
+function branchYearChange(change) {
+	branchYear += change;
+    $('#branchYear').text(branchYear);
+    console.log(branchYear);
+    
+    if (branchYear == (new Date()).getFullYear()) {
+        $('#branchNextYear').prop('disabled', true);
+      } else {
+        $('#branchNextYear').prop('disabled', false);
+      }
+    $.ajax({
+		type:'get',
+		url:'countMember.ajax',
+		data:{
+			'branchYear':branchYear,
+			'b_idx':countB_idx
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			CountMemberChartPrint(data.countList);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+secondChart(branchYear,countB_idx);
+function secondChart(branchYear,countB_idx){
+	$.ajax({
+		type:'get',
+		url:'countMember.ajax',
+		data:{
+			'branchYear':branchYear,
+			'b_idx':countB_idx
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			CountMemberChartPrint(data.countList);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+
+
+function CountMemberChartPrint(data){
 	labels=[];
 	datasets=[];
 	data.forEach(function(item,index){
-		labels.push(item.name);
-		datasets.push(item.personal_totalsales)
+		labels.push(item.month);
+		datasets.push(item.countMember);
 	});
     var context = document
     			.getElementById('myChart2')
@@ -281,16 +409,29 @@ function branchPersonalChartPrint(data){
             });
 }
 
+$('#countBranch').change(function(){
+	countB_idx = $(this).val();
+	$.ajax({
+		type:'get',
+		url:'countMember.ajax',
+		data:{
+			'branchYear':branchYear,
+			'b_idx':countB_idx
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			CountMemberChartPrint(data.countList);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+});
 
 
 
 
-            
-	
-      
-      
-  	
-    
-            
-	</script>
+
+</script>
 </html>

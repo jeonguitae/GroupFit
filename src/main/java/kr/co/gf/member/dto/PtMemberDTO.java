@@ -10,13 +10,15 @@ public class PtMemberDTO {
 	private int dailypt_no;
 	private String emp_no;
 	private int mem_no;
+	private int b_idx;
 	private String aerobic;
 	private String diet;
 	private String str;
 	private String pt_state;
 	private String pt_date;
 	private String af_weight;
-	private String name;
+	private String emp_name;
+	private String member_name;
 	
 	private int regt_idx;
 	
@@ -25,6 +27,8 @@ public class PtMemberDTO {
 	private String pt_kg;
 	private String pt_set;
 	
+	private int count;
+	private int ticket_no;
 	
 	
 	
@@ -76,18 +80,8 @@ public class PtMemberDTO {
 	public void setPt_date(String pt_date) {
 		this.pt_date = pt_date;
 	}
-	public String getAf_weight() {
-		return af_weight;
-	}
-	public void setAf_weight(String af_weight) {
-		this.af_weight = af_weight;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
+
 	public int getWeight_no() {
 		return weight_no;
 	}
@@ -118,6 +112,43 @@ public class PtMemberDTO {
 	public void setRegt_idx(int regt_idx) {
 		this.regt_idx = regt_idx;
 	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+	public String getAf_weight() {
+		return af_weight;
+	}
+	public void setAf_weight(String af_weight) {
+		this.af_weight = af_weight;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getTicket_no() {
+		return ticket_no;
+	}
+	public void setTicket_no(int ticket_no) {
+		this.ticket_no = ticket_no;
+	}
+	public int getB_idx() {
+		return b_idx;
+	}
+	public void setB_idx(int b_idx) {
+		this.b_idx = b_idx;
+	}
+	
 	
 	
 	

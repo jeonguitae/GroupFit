@@ -9,6 +9,35 @@ public class StatisDTO {
 	private String name;
 	private String emp_no;
 	private String personal_totalsales;
+	private String entry_count;
+	private String time;
+	private String weekday;
+	private String countMember;
+	
+	public String getCountMember() {
+		return countMember;
+	}
+	public void setCountMember(String countMember) {
+		this.countMember = countMember;
+	}
+	public String getEntry_count() {
+		return entry_count;
+	}
+	public void setEntry_count(String entry_count) {
+		this.entry_count = entry_count;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	public String getWeekday() {
+		return weekday;
+	}
+	public void setWeekday(String weekday) {
+		this.weekday = weekday;
+	}
 	public String getPersonal_totalsales() {
 		return personal_totalsales;
 	}
