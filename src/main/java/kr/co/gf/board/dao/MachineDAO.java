@@ -31,4 +31,12 @@ public interface MachineDAO {
 
 	int mac_fixed(String emp_no, String mac_num, String fixed_content, String b_idx);
 
+	ArrayList<MachineDTO> fixedmaclist(String b_idx);
+
+	MachineDTO fix_content(String mac_num);
+
+	int mac_status_cng(HashMap<String, String> params);
+
+	void delete_fix_mac(HashMap<String, String> params);
+
 }

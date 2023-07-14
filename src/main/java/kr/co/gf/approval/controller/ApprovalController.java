@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.gf.approval.dto.ApprovalDTO;
 import kr.co.gf.approval.service.ApprovalService;
@@ -48,9 +49,9 @@ public class ApprovalController {
 			model.addAttribute("manager",manager);
 			
 			// 대표
-			String top_Manager = service.top_manager();
-			logger.info(top_Manager);
-			model.addAttribute("top_Manager",top_Manager);
+			String top_manager = service.top_manager();
+			logger.info(top_manager);
+			model.addAttribute("top_manager",top_manager);
 			
 			// 직급
 			String position = service.position(loginId);
@@ -77,7 +78,6 @@ public class ApprovalController {
 			logger.info("emp_no 값 : " + params.get("emp_no"));
 			logger.info("approval 값  : " + params.get("approval"));
 			logger.info("subject 값  : " + params.get("subject"));
-			logger.info("write_date 값 : " + params.get("write_date"));
 			logger.info("state 값  : " + params.get("state"));
 			logger.info("manager 값 : " + params.get("manager"));
 			logger.info("top_manager 값 : " + params.get("top_manager"));
@@ -125,25 +125,7 @@ public class ApprovalController {
 		return"redirect:/" ;
 	}
 	
-	// 이벤트신청하기
-	@RequestMapping(value="approvalEventRequest.do")
-	public String eventRequestW(@RequestParam HashMap<String,String> params, MultipartFile[] files, HttpSession session) {
-		
-		logger.info("emp_no 값 : " + params.get("emp_no"));
-		logger.info("approval 값  : " + params.get("approval"));
-		logger.info("subject 값  : " + params.get("subject"));
-		logger.info("state 값  : " + params.get("state"));
-		logger.info("manager 값 : " + params.get("manager"));
-		logger.info("top_manager 값 : " + params.get("top_manager"));
-		logger.info("start_day 값 : " + params.get("start_day"));
-		logger.info("finish_day 값 : " + params.get("finish_day"));
-		logger.info("reason 값 : " + params.get("reason"));
-		logger.info("etc 값 : " + params.get("etc"));
-		
-		service.eventRequestWrite(params,files);
-		
-		return "redirect:/approvalAllList.do";
-	}
+	
 	
 	// 개인 문서함 리스트
 	@RequestMapping(value="/approvalAllList.do")
@@ -162,7 +144,7 @@ public class ApprovalController {
 	public ModelAndView approvalStayList(HttpSession session) {
 		String loginId = (String)session.getAttribute("loginId");
 		String position = service.position(loginId);
-		if (loginId != null && !session.getAttribute("loginId").equals("") && position.equals("지점장") || position.equals("대표")) {
+		if (loginId != null && !loginId.equals("") && position.equals("지점장") || position.equals("대표")) {
 			return service.approvalStayList(loginId);
 		}
 		return new ModelAndView("redirect:/" );
@@ -173,7 +155,7 @@ public class ApprovalController {
 		public ModelAndView approvalExpectedList(HttpSession session) {
 			String loginId = (String)session.getAttribute("loginId");
 			String position = service.position(loginId);
-			if (loginId != null && !session.getAttribute("loginId").equals("") && position.equals("지점장") || position.equals("대표")) {
+			if (loginId != null && !loginId.equals("") && position.equals("지점장") || position.equals("대표")) {
 				return service.approvalExpectedList(loginId);
 			}
 			return new ModelAndView("redirect:/" );
@@ -223,6 +205,26 @@ public class ApprovalController {
 		return"redirect:/" ;
 	}
 	
+	// 이벤트신청하기
+	@RequestMapping(value="approvalEventRequest.do")
+	public String eventRequestW(@RequestParam HashMap<String,String> params, MultipartFile[] files, HttpSession session) {
+		
+		logger.info("emp_no 값 : " + params.get("emp_no"));
+		logger.info("approval 값  : " + params.get("approval"));
+		logger.info("subject 값  : " + params.get("subject"));
+		logger.info("state 값  : " + params.get("state"));
+		logger.info("manager 값 : " + params.get("manager"));
+		logger.info("top_manager 값 : " + params.get("top_manager"));
+		logger.info("start_day 값 : " + params.get("start_day"));
+		logger.info("finish_day 값 : " + params.get("finish_day"));
+		logger.info("reason 값 : " + params.get("reason"));
+		logger.info("etc 값 : " + params.get("etc"));
+		
+		service.eventRequestWrite(params,files);
+		
+		return "redirect:/approvalAllList.do";
+	}
+	// 지출결의서 신청
 	@RequestMapping(value="approvalExpenseReport.do")
 	public String ExpenseReportW(@RequestParam HashMap<String, String> params, MultipartFile[] files, HttpSession session
 			,@RequestParam(value="briefs[]") ArrayList<String> briefs
@@ -232,7 +234,6 @@ public class ApprovalController {
 		logger.info("emp_no 값 : " + params.get("emp_no"));
 		logger.info("approval 값  : " + params.get("approval"));
 		logger.info("subject 값  : " + params.get("subject"));
-		logger.info("write_date 값 : " + params.get("write_date"));
 		logger.info("state 값  : " + params.get("state"));
 		logger.info("manager 값 : " + params.get("manager"));
 		logger.info("top_manager 값 : " + params.get("top_manager"));
@@ -246,44 +247,44 @@ public class ApprovalController {
 	// 이벤트 상세
 	@RequestMapping(value="eventDetail.do")
 	public ModelAndView eventDetail(String a_idx, String approval, HttpSession session, Model model) {
+		
 	logger.info("이벤트 상세보기 : "+a_idx);
 	logger.info("결재 종류 : "+approval);
-	
-	ModelAndView mav = null;
-	ApprovalDTO dto = null;
 	
 	String loginId = (String)session.getAttribute("loginId");
 	String position = service.position(loginId);
 	model.addAttribute("loginId",loginId);
-	logger.info(position);
 	model.addAttribute("position",position);
+	
+	ModelAndView mav = null;
+	ApprovalDTO dto = null;
 
 	if (loginId != null && !loginId.equals("")) {
-			logger.info("이벤트신청 상세보기");
+		
+		if(approval.equals("지출결의서")) {
+			logger.info("지출결의서 상세");
+			 mav = new ModelAndView("approvalExpenseReportDetail");
+			 dto = service.expenseDetail(a_idx,approval);  // payment
+			if(dto != null) {
+				ArrayList<ApprovalDTO> JGB = service.expenseR(a_idx); // expense_report
+				ArrayList<ApprovalDTO> list = service.detailFiles(a_idx); // 첨부파일
+				mav.addObject("dto",dto);
+				mav.addObject("jgb",JGB);
+				mav.addObject("list",list);
+			}
+			return mav;
+		}
+
+		
 			if(approval.equals("이벤트신청")) {
+				logger.info("이벤트신청 상세");
 				 mav = new ModelAndView("approvalEventRequestDetail");
 				 dto = service.eventDetail(a_idx,approval);// payment, payment2
 				if(dto != null) {
 					ArrayList<ApprovalDTO> list = service.detailFiles(a_idx); // 첨부파일
-					logger.info("----------------------------------------------------- : "+list);
 						mav.addObject("list",list);
 						mav.addObject("dto",dto);
-					
-					//mav.addObject("list",new ArrayList<ApprovalDTO>());
 					}
-				}
-				return mav;
-			}
-			if(approval.equals("지출결의서")) {
-				 mav = new ModelAndView("approvalExpenseReportDetail");
-				 dto = service.expenseDetail(a_idx,approval);  // payment, expense_report
-				if(dto != null) {
-					ArrayList<ApprovalDTO> list = service.detailFiles(a_idx); // 첨부파일
-					logger.info("----------------------------------------------------- : "+list);
-					ArrayList<ApprovalDTO> JGB = service.expenseR(a_idx);
-					mav.addObject("dto",dto);
-					mav.addObject("jgb",JGB);
-					//mav.addObject("list",list);
 				}
 				return mav;
 			}
@@ -301,7 +302,12 @@ public class ApprovalController {
 		String position = service.position(loginId);
 		logger.info(position);
 		if(position.equals("대표")) {
-			service.expectedAccept(a_idx,approval);
+			
+			int row = service.expectedAccept(a_idx,approval);
+			
+			if(row == 1  && approval.equals("이벤트신청")) {
+				// service.addTicket(); 이용권으로 바로 추가하고 싶었으나 좀 힘듦 
+			}
 			return "redirect:/approvalExpectedList.do";
 		}
 		if(position.equals("지점장")) {			
@@ -311,7 +317,8 @@ public class ApprovalController {
 	}
 
 	@RequestMapping(value="/saveRequest.do")
-	public String saveRequest(@RequestParam HashMap<String, String> params, MultipartFile[] files, Model model) {
+	public String saveRequest(@RequestParam HashMap<String, String> params, MultipartFile[] files, Model model, RedirectAttributes attr) {
+		
 		logger.info("emp_no 값 : " + params.get("emp_no"));
 		logger.info("approval 값  : " + params.get("approval"));
 		logger.info("subject 값  : " + params.get("subject"));
@@ -322,20 +329,63 @@ public class ApprovalController {
 		logger.info("finish_day 값 : " + params.get("finish_day"));
 		logger.info("reason 값 : " + params.get("reason"));
 		logger.info("etc 값 : " + params.get("etc"));
-		
-		if (params.get("subject") == null) {
-			model.addAttribute("msg","제목을 입력해 주세요");
-		}else if(params.get("start_day")== null) {
-			model.addAttribute("msg","시작일을 선택해주세요");
-		}else if(params.get("finish_day")== null) {
-			model.addAttribute("msg","종료일을 선택해주세요");
-		}else if(params.get("reason")== null) {
-			model.addAttribute("msg","사유를  입력해주세요");
-		}else if(params.get("etc")== null) {
-			model.addAttribute("msg","기타사항 입력해주세요");
-		}
 
 		return service.saveRequest(params, files);
 	}
 	
-}
+	@RequestMapping(value="approvalUpdate.go")
+	public ModelAndView appUpdate(String a_idx, HttpSession session, Model model, String approval) {
+		
+		logger.info("이벤트 상세보기 : "+a_idx);
+		logger.info("결재 종류 : "+approval);
+		
+		ModelAndView mav = null;
+		ApprovalDTO dto = null;
+		
+		String loginId = (String)session.getAttribute("loginId");
+		String position = service.position(loginId);
+		model.addAttribute("loginId",loginId);
+		logger.info(position);
+		model.addAttribute("position",position);
+
+		if (loginId != null && !loginId.equals("")) {
+
+			if(approval.equals("지출결의서")) {
+				logger.info("지출결의서 상세");
+				 mav = new ModelAndView("approvalExpenseReportDetail");
+				 dto = service.expenseDetail(a_idx,approval);  // payment
+				if(dto != null) {
+					ArrayList<ApprovalDTO> JGB = service.expenseR(a_idx); // expense_report
+					ArrayList<ApprovalDTO> list = service.detailFiles(a_idx); // 첨부파일
+					mav.addObject("dto",dto);
+					mav.addObject("jgb",JGB);
+					mav.addObject("list",list);
+				}
+				return mav;
+			}
+			
+			if(approval.equals("이벤트신청")) {
+				 mav = new ModelAndView("approvalEventRequestUpdate");
+				 dto = service.eventDetail(a_idx,approval);// payment, payment2
+				if(dto != null) {
+					ArrayList<ApprovalDTO> list = service.detailFiles(a_idx); // 첨부파일
+					logger.info("----------------------------------------------------- : "+list);
+						mav.addObject("list",list);
+						mav.addObject("dto",dto);
+					}
+				}
+			return mav;
+		}
+		
+		
+		
+		return new ModelAndView("redirect:/");
+	}
+
+	@RequestMapping(value="approvalUpdate.do")
+	public String eventUpdate(@RequestParam HashMap<String, String> params, MultipartFile files) {
+		logger.info("수정할려고 하는 값 : "+params);
+		return service.eventUpdate(params);
+	}
+}	
+

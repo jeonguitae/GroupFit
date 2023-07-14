@@ -1,14 +1,12 @@
 package kr.co.gf.approval.dto;
 
-import java.sql.Date;
-
 public class ApprovalDTO {
 
 	private String a_idx;
 	private String approval;
 	private String subject;
 	private String emp_no;
-	private Date write_date;
+	private String write_date;
 	private String state;
 	private String manager;
 	private String top_manager;
@@ -32,6 +30,13 @@ public class ApprovalDTO {
 	
 	
 	
+	
+	public String getWrite_date() {
+		return write_date;
+	}
+	public void setWrite_date(String write_date) {
+		this.write_date = write_date;
+	}
 	public String getP_idx() {
 		return p_idx;
 	}
@@ -97,12 +102,6 @@ public class ApprovalDTO {
 	}
 	public void setEmp_no(String emp_no) {
 		this.emp_no = emp_no;
-	}
-	public Date getWrite_date() {
-		return write_date;
-	}
-	public void setWrite_date(Date write_date) {
-		this.write_date = write_date;
 	}
 	public String getState() {
 		return state;

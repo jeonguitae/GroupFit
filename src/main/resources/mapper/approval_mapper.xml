@@ -21,7 +21,7 @@
    </select>
    
    <select id="approvalAllList" resultType="ApprovalDTO">
-   		select a_idx, approval, subject, write_date, state from payment p where emp_no = #{loginId}
+   		select a_idx, approval, subject, write_date, state from payment p where emp_no = #{loginId} and(state = '승인' or state = '대기' or state = '예정')
    </select>
    
    <select id="approvalSaveList" resultType="ApprovalDTO">
@@ -32,18 +32,27 @@
    		useGeneratedKeys="true"
       	keyColumn="a_idx"
       	keyProperty="board_num"
+   		id="vacationRequestWrite">
+   		
+		insert into payment (emp_no, approval, subject, state, manager, top_manager)values(${emp_no},#{approval},#{subject},#{state},#{manager},#{top_manager})
+   </insert>
+   
+      <insert 
+   		useGeneratedKeys="true"
+      	keyColumn="a_idx"
+      	keyProperty="board_num"
    		id="eventRequestWrite">
    		
 		insert into payment (emp_no, approval, subject, state, manager, top_manager)values(${emp_no},#{approval},#{subject},#{state},#{manager},#{top_manager})
    </insert>
    
-   <insert 
+      <insert 
    		useGeneratedKeys="true"
       	keyColumn="a_idx"
       	keyProperty="board_num"
-   		id="vacationRequestWrite">
+   		id="ExpenseReportW">
    		
-		insert into payment (emp_no, approval, subject, state, manager, top_manager)values(${emp_no},#{approval},#{subject},#{state},#{manager},#{top_manager})
+		insert into payment (emp_no, approval, subject,  state, manager, top_manager)values(${emp_no},#{approval},#{subject},#{state},#{manager},#{top_manager})
    </insert>
    
    <insert id="vacationRequestWriteDown">
@@ -59,14 +68,7 @@
    		values(#{c_idx},#{new_photo_name},#{ori_photo_name},#{a_idx})
    </insert>
    
-   <insert 
-   		useGeneratedKeys="true"
-      	keyColumn="a_idx"
-      	keyProperty="board_num"
-   		id="ExpenseReportW">
-   		
-		insert into payment (emp_no, approval, subject,  state, manager, top_manager)values(${emp_no},#{approval},#{subject},#{state},#{manager},#{top_manager})
-   </insert>
+
    
    <select id="eventDetail" resultType="ApprovalDTO">
 	  	select p.subject, p.emp_no, p.a_idx, p.approval, e.position, e.name, p.write_date,p.manager, p.top_manager, p.state, p2.start_day, p2.finish_day, p2.reason, p2.etc from payment p
@@ -125,5 +127,84 @@
    <select id="detailFiles" resultType="ApprovalDTO">
    		select  p_idx, c_idx, new_photo_name, ori_photo_name, board_num From wphoto w where board_num = #{a_idx} and c_idx = 7;
    </select>
+   
+<!-- 	<update id="eventUpdateUp">
+		UPDATE payment  
+		<set>
+			<if test="!emp_no.equals('')">emp_no = #{emp_no},</if>
+			<if test="!approval.equals('')">approval =#{approval}, </if>
+			<if test="!write_date.equals('')">write_date=#{write_date}, </if>
+			<if test="!subject.equals('')">subject=#{subject}, </if>
+			<if test="!manager.equals('')">manager=#{manager} </if>
+			<if test="!top_manager.equals('')">top_manager=#{top_manager} </if>		
+		</set> 
+		WHERE a_idx=#{a_idx} and approval=#{approval}
+	</update> -->
+	
+<!-- 	<update id="eventUpdateDown">
+		UPDATE payment2  
+		<set>
+			<if test="!start_day.equals('')">start_day = #{start_day},</if>
+			<if test="!finish_day.equals('')">finish_day =#{finish_day}, </if>
+			<if test="!reason.equals('')">reason=#{reason}, </if>
+			<if test="!etc.equals('')">etc=#{etc} </if>
+		</set> 
+		WHERE a_idx=#{a_idx}
+	</update> --> 
+	
+	   <update id="eventUpdateUp">
+   		update payment set 
+
+			subject = #{subject}
+
+			WHERE a_idx = #{a_idx} and approval=#{approval}
+   </update>
+	
+	<update id="eventUpdateDown">
+   		update payment2 set 
+   			start_day = #{start_day}
+			,finish_day = #{finish_day}
+			,reason = #{reason}
+			,etc = #{etc}
+			WHERE a_idx = #{a_idx}
+   </update>
+	
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    </mapper>

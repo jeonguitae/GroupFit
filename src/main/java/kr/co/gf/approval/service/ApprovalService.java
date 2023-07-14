@@ -87,6 +87,38 @@ public class ApprovalService {
 
 	}
 
+	
+	
+public void upload(MultipartFile uploadFile,String a_idx) {
+		
+		// 1. 파일명 추출
+		String ori_photo_name = uploadFile.getOriginalFilename();
+		int c_idx = 7;
+		logger.info("board_num"+a_idx);
+		
+		// 2. 새파일 생성(현재시간 + 확장자)
+		String ext = ori_photo_name.substring(ori_photo_name.lastIndexOf("."));
+		String new_photo_name = System.currentTimeMillis() + ext;
+		logger.info(ori_photo_name+" => "+new_photo_name);
+		
+		// 3. 파일 저장
+		try {
+			byte[] bytes = uploadFile.getBytes();
+			Path path = Paths.get(root+"/"+new_photo_name);
+			Files.write(path, bytes);
+			dao.approvalFileWrite(c_idx,ori_photo_name,new_photo_name,a_idx);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+}
+
+	public ModelAndView approvalSaveList(String loginId) {
+		ModelAndView mav = new ModelAndView("approvalSaveList");
+		ArrayList<ApprovalDTO> list = dao.approvalSaveList(loginId);
+		mav.addObject("list",list);
+		return mav;
+	}
+	
 	public String eventRequestWrite(HashMap<String, String> params, MultipartFile[] uploadFiles) {
 		String page = "redirect:/approvalAllList.do";
 		
@@ -128,36 +160,6 @@ public class ApprovalService {
     	}
 		return page;
 	}
-	
-public void upload(MultipartFile uploadFile,String a_idx) {
-		
-		// 1. 파일명 추출
-		String ori_photo_name = uploadFile.getOriginalFilename();
-		int c_idx = 7;
-		logger.info("board_num"+a_idx);
-		
-		// 2. 새파일 생성(현재시간 + 확장자)
-		String ext = ori_photo_name.substring(ori_photo_name.lastIndexOf("."));
-		String new_photo_name = System.currentTimeMillis() + ext;
-		logger.info(ori_photo_name+" => "+new_photo_name);
-		
-		// 3. 파일 저장
-		try {
-			byte[] bytes = uploadFile.getBytes();
-			Path path = Paths.get(root+"/"+new_photo_name);
-			Files.write(path, bytes);
-			dao.approvalFileWrite(c_idx,ori_photo_name,new_photo_name,a_idx);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-}
-
-	public ModelAndView approvalSaveList(String loginId) {
-		ModelAndView mav = new ModelAndView("approvalSaveList");
-		ArrayList<ApprovalDTO> list = dao.approvalSaveList(loginId);
-		mav.addObject("list",list);
-		return mav;
-	}
 
 	public String ExpenseReportW(HashMap<String, String> params, MultipartFile[] uploadFiles, ArrayList<String> briefs1, ArrayList<String> price1, ArrayList<String> note1) {
 		String page = "redirect:/";
@@ -175,10 +177,12 @@ public void upload(MultipartFile uploadFile,String a_idx) {
 		dto.setManager(params.get("manager"));
 		dto.setTop_manager(params.get("top_manager"));
 		
+		int row = dao.ExpenseReportW(dto);
+		
 		String a_idx = dto.getBoard_num();
 		dto.setA_idx(a_idx);
 		logger.info(""+a_idx);
-			
+		
 		for (int i = 0; i < briefs1.size(); i++) {
 			
 			logger.info(briefs1.get(i));
@@ -192,7 +196,7 @@ public void upload(MultipartFile uploadFile,String a_idx) {
 			dao.expenseReportWDown(a_idx, briefs, price, note);
         }
 		
-		int row = dao.ExpenseReportW(dto);
+		
 		
 		if(row == 1) {
 			for (MultipartFile file : uploadFiles) {
@@ -232,8 +236,8 @@ public void upload(MultipartFile uploadFile,String a_idx) {
 		dao.stayAccept(a_idx,approval);
 	}
 
-	public void expectedAccept(String a_idx, String approval) {
-		dao.expectedAccept(a_idx,approval);
+	public int expectedAccept(String a_idx, String approval) {
+		return dao.expectedAccept(a_idx,approval);
 		
 	}
 
@@ -254,6 +258,7 @@ public void upload(MultipartFile uploadFile,String a_idx) {
 	}
 
 	public String saveRequest(HashMap<String, String> params, MultipartFile[] uploadFiles) {
+		
 		String page = "redirect:/approvalSaveList.do";
 		ApprovalDTO dto = new ApprovalDTO();
 		
@@ -292,4 +297,39 @@ public void upload(MultipartFile uploadFile,String a_idx) {
     	}
 		return page;
 	}
+
+	public String eventUpdate(HashMap<String, String> params) {
+		ApprovalDTO dto = new ApprovalDTO();
+		String a_idx = dto.getBoard_num();
+		
+		String page = "redirect:/approvalAllList.do";
+		
+		dto.setA_idx(params.get("a_idx"));
+		dto.setEmp_no(params.get("emp_no"));
+		dto.setApproval(params.get("approval"));
+		dto.setSubject(params.get("subject"));
+		dto.setWrite_date(params.get("write_date"));
+		dto.setManager(params.get("manager"));
+		dto.setTop_manager(params.get("top_manager"));
+		
+		int row = dao.eventUpdateUp(dto); // payment 테이블 업데이트
+		
+		if(row == 1) {
+			dto.setStart_day(params.get("start_day"));
+			dto.setFinish_day(params.get("finish_day"));
+			dto.setReason(params.get("reason"));
+			dto.setEtc(params.get("etc"));
+			dto.setA_idx(params.get("a_idx"));
+			logger.info("" + a_idx);
+			
+			dao.eventUpdateDown(dto); //payment2 테이블 업데이트
+			
+			//page = "redirect:/eventDetail.do?a_idx?=" +a_idx+ "&approval="+params.get("approval");
+		}
+	    
+	    // 파일해야돼...
+
+		return page;
+	}
+
 }

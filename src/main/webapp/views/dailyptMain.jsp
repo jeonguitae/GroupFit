@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -7,8 +6,7 @@
 <meta charset="UTF-8">
 <title>pt 회원 일지</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
@@ -64,14 +62,29 @@ tfoot td {
 		<!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-
-
 				<div class="row">
 					<div class="col-12">
 						<div style="height: 50px">
+							<div class="float-left">
+								<div id="branchFilter">
+									<!-- select 에서 체인지 이벤트 걸어주려고 id지정 -->
+									<select name="ptmember" id="ptmember" style="margin-left: 30px">
+										<option value="listAll">전체</option>
+										<option value="member_name">이름</option>
+										<option value="mem_no">회원번호</option>
+									</select>
+									<input type="text" id="searchInput" name="searchInput" value="">
+									<button id="searchButton" class="btn btn-outline-dark">검색</button>
+								</div>
+							</div>
 							<div class="float-right">
-								<a class="btn btn-primary" id="registerBtn"> 일지 등록 </a>&nbsp; 
-								<a class="btn btn-danger" id="deleteBtn"> 일지 삭제 </a>
+								<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
+									<button class="btn btn-primary" onclick="location.href='dailypt.go'">일지 등록</button>&nbsp;
+									<form id="deleteForm" action="dailyptdelete.do" method="post">
+										<input type="hidden" name="dailypt_no" id="dailypt_no" value="">
+										<button class="btn btn-danger" onclick="deleteSelectedRows()">일지 삭제</button>
+									</form>
+								</c:if>
 							</div>
 						</div>
 						<div class="card card-primary">
@@ -79,50 +92,23 @@ tfoot td {
 								<h4 class="card-title">일지 리스트</h4>
 							</div>
 							<div class="card-body">
-								<c:if test="${dailyptlist.size() > 0}">
-									<table class="table">
-										<thead class="table-light">
-											<tr>
-												<th>no</th>
-												<th>이름</th>
-												<th>회원번호</th>
-												<th>운동일자</th>
-												<th>트레이너</th>
-											</tr>
-										</thead>
-										<tbody>
-
-											<c:forEach items="${dailyptlist}" var="daily_pt"
-												varStatus="status">
-
-												<tr>
-													<td>${daily_pt.dailypt_no}</td>
-													<td><a href="dailyPtDetail.do?dailypt_no=${daily_pt.dailypt_no}">${daily_pt.name}</a></td>
-													<td>${daily_pt.mem_no}</td>
-													<td>${daily_pt.pt_date}</td>
-													<td>${daily_pt.emp_no}</td>
-													<%--  <td><input type="checkbox" class="rowCheckbox" name="deleteRow[]" value="${dailyptlist.dailypt_no}"></td>--%>
-												</tr>
-
-											</c:forEach>
-
-											<c:if test="${empty dailyptlist}">
-												<tr class="empty-data">
-													<td colspan="4">데이터가 없습니다.</td>
-												</tr>
-											</c:if>
-										</tbody>
-									</table>
-								</c:if>
-								<c:if test="${dailyptlist.size() == 0}">
-									<div style="text-align: center;">등록한 일지가 없습니다. 일지를 등록해
-										주세요.</div>
-								</c:if>
+								<table class="table">
+									<thead class="table-light">
+										<tr>
+											<th>이름</th>
+											<th>회원번호</th>
+											<th>운동일자</th>
+											<th>트레이너</th>
+											<th>출석여부</th>
+											<th><input type="checkbox" id="selectAll" onclick="toggleAllCheckboxes()"></th>
+										</tr>
+									</thead>
+									<tbody id="ptlist"></tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 			<!--/. container-fluid -->
 		</section>
@@ -139,23 +125,92 @@ tfoot td {
 
 	function deleteSelectedRows() {
 		const checkboxes = document.getElementsByClassName('rowCheckbox');
+		const deleteForm = document.getElementById('deleteForm');
+		const dailyptNoInput = document.getElementById('dailypt_no');
+
+		// 선택된 행의 dailypt_no 값을 배열로 저장
 		const selectedRows = [];
 		for (let i = 0; i < checkboxes.length; i++) {
 			if (checkboxes[i].checked) {
 				selectedRows.push(checkboxes[i].value);
 			}
 		}
-		// 선택된 행 삭제 처리를 수행하는 로직을 추가하세요.
-		// 서버로 선택된 행을 전송하여 삭제 작업을 수행하거나, 클라이언트 측에서 동적으로 행을 제거할 수 있습니다.
+
+		// 선택된 dailypt_no 값을 hidden input에 설정
+		dailyptNoInput.value = selectedRows.join(',');
+
+		// form을 제출하여 서버로 데이터 전송
+		deleteForm.submit();
 	}
 
 	
-	 // 등록 버튼 클릭 시 이벤트 처리
-	  document.getElementById("registerBtn").addEventListener("click", function() {
-	    window.location.href = "/dailypt"; // "주소" 부분에 이동하고자 하는 주소를 입력합니다.
-	  });
+	$(document).ready(function() {
+		// 페이지 로드 시 초기 데이터 호출
+		ptlist();
+	});
 
-	  
+	function ptlist() {
+		$.ajax({
+			type: 'get',
+			url: 'ptlist.ajax',
+			dataType: 'json',
+			success: function(data) {
+				ptlistdraw(data.ptlist);
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
+
 	
+	function ptlistdraw(ptlist) {
+			
+		var content = '';
+		
+			ptlist.forEach(function(dailypt,index){
+				
+			content += '<tr>';
+			content += '<td><a href="dailyPtDetail.do?dailypt_no=' + dailypt.dailypt_no + '">' + dailypt.member_name + '</a></td>';
+			content += '<td>' + dailypt.mem_no + '</td>';
+			content += '<td>' + dailypt.pt_date + '</td>';
+			content += '<td>' + dailypt.emp_name + '</td>';
+			content += '<td>' + dailypt.pt_state + '</td>';
+			content += '<td><input type="checkbox" class="rowCheckbox" name="deleteRow[]" value="' + dailypt.dailypt_no + '"></td>';
+			content += '</tr>';
+		});
+		
+		$('#ptlist').empty();
+		$('#ptlist').append(content);
+	
+	}
+
+
+	// 검색 버튼 클릭 시
+	$('#searchButton').click(function() {
+		listCall();
+	});
+
+	function listCall() {
+		var ptmember = $('select[name="ptmember"]').val();
+		var searchInput = $('input[name="searchInput"]').val();
+
+		$.ajax({
+			type: 'post',
+			url: 'ptmemberSearch.ajax',
+			data: {
+				'ptmember': ptmember,
+				'searchInput': searchInput
+			},
+			dataType: 'json',
+			success: function(data) {
+				ptlistdraw(data.ptlist);
+				console.log(data);
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
 </script>
 </html>

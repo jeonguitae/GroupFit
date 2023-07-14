@@ -1,6 +1,7 @@
 package kr.co.gf.statistics.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,18 @@ public class StatisService {
 
 	public ArrayList<StatisDTO> branchPersonal(String formattedDate, String b_idx) {
 		return dao.branchPersonal(formattedDate,b_idx);
+	}
+
+	public ArrayList<StatisDTO> memberAdmission(HashMap<String, String> params) {
+		return dao.memberAdmission(params);
+	}
+
+	public ArrayList<StatisDTO> countMember(HashMap<String, String> params) {
+		return dao.countMember(params);
+	}
+
+	public String brachName(String b_idx) {
+		return dao.branchName(b_idx);
 	}
 
 	
