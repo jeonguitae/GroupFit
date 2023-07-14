@@ -334,8 +334,18 @@
 								<th>대표</th>
 							</tr>
 							<tr id="tr22">
-								<td>${dto.name}<img src="img/success.png"></td>
-								<td>${dto.top_manager }<img src="img/success.png"></td>
+								<td>
+									<c:if test="${dto.state eq '예정' or dto.state eq '승인'}">
+										<img id="accept" src="img/success.png">
+									</c:if>
+									${dto.name}
+								</td>
+								<td>
+									<c:if test="${dto.state eq '승인'}">
+										<img id="accept" src="img/success.png">
+									</c:if>
+									${dto.top_manager}
+								</td>
 							</tr>
 						</table>
 					</c:if>	
@@ -370,12 +380,14 @@
 					</tr>
 				</table>
 				<div id="button_sin_mok">
-					<button id="su">수정</button>
-					<input type="hidden" name="a_idx" value="${dto.a_idx}"/>
-					<input type="hidden" name="approval" value="${dto.approval}"/>
-					<input type="hidden" name="write_date" value="${dto.write_date}"/>
-					<input type="hidden" name="manager" value="${dto.manager}"/>
-					<input type="hidden" name="top_manager" value="${dto.top_manager}"/>
+					<c:if test="${dto.state eq '대기'}">
+						<button id="su">수정</button>
+						<input type="hidden" name="a_idx" value="${dto.a_idx}"/>
+						<input type="hidden" name="approval" value="${dto.approval}"/>
+						<input type="hidden" name="write_date" value="${dto.write_date}"/>
+						<input type="hidden" name="manager" value="${dto.manager}"/>
+						<input type="hidden" name="top_manager" value="${dto.top_manager}"/>
+					</c:if>
 					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>
 		</form>

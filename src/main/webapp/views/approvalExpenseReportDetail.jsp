@@ -16,11 +16,11 @@
 
 	#table1 {
 		border: 1px solid black;
-		border-collapse: collapse;
-		float: left;
-		margin-top: 5%;
-		margin-left: 5%;
-		position:absolute;
+	    border-collapse: collapse;
+	    float: left;
+	    margin-top: 4%;
+	    margin-left: 5%;
+	    position: absolute;
 	}
 	#table1 th{
 		border: 1px solid black;
@@ -37,7 +37,6 @@
 	#table2{
 		border: 1px solid black;
 	    border-collapse: collapse;
-	    margin-top: 15%;
 	    margin-left: 6%;
 	    width: 85%;
 	}
@@ -61,7 +60,8 @@
 	    width: 30%;
 	    float: right;
 	    margin-right: 9%;
-	    margin-top: 2%;
+	    margin-top: 5%;
+	    margin-bottom: 4%;
 	}
 	
 	#table3 th {
@@ -80,13 +80,14 @@
 	}
 	
 	#table3_1{
-		border: 1px solid black;
+	    border: 1px solid black;
 	    border-collapse: collapse;
 	    float: right;
 	    margin-right: 9%;
 	    margin-top: 2%;
 	    text-align: center;
-	    width: 20%;
+	    width: 20.6%;
+	    margin-bottom: 5%;
 	}
 	
 	#table3_1 th {
@@ -138,7 +139,7 @@
 		text-align: center;
 	}
 	#button_ch_sak{
-		
+		margin-left: 83%;
 	}
 	#accept{
 		PADDING-RIGHT: 3%;
@@ -275,15 +276,16 @@
 				</table>
 				<div id="button_sin_mok">
 					<c:if test="${position eq '지점장' or position eq '대표'}">
-						<button id="su" onclick="location.href=''">승인</button>
-					</c:if>
-					<c:if test="${dto.emp_no eq loginId }">
-						<button type="submit" id="su">수정</button>
+						<button id="su">승인</button>
 						<input type="hidden" name="a_idx" value="${dto.a_idx}"/>
 						<input type="hidden" name="approval" value="${dto.approval}"/>
-						<input type="hidden" name="write_date" value="${dto.write_date}"/>
-						<input type="hidden" name="manager" value="${dto.manager}"/>
-						<input type="hidden" name="top_manager" value="${dto.top_manager}"/>
+					</c:if>
+					<c:if test="${dto.state eq '대기'}">
+						<c:if test="${dto.emp_no eq loginId }">
+							<button type="submit" id="su">수정</button>
+							<input type="hidden" name="manager" value="${dto.manager}"/>
+							<input type="hidden" name="top_manager" value="${dto.top_manager}"/>
+						</c:if>
 					</c:if>
 					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>

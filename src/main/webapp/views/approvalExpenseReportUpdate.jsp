@@ -9,6 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 
+
 	#aAp{
 		margin-left: 70px;
 		margin-top: 20px;
@@ -16,16 +17,16 @@
 
 	#table1 {
 		border: 1px solid black;
-		border-collapse: collapse;
-		float: left;
-		margin-top: 5%;
-		margin-left: 5%;
-		position:absolute;
+	    border-collapse: collapse;
+	    float: left;
+	    margin-top: 4%;
+	    margin-left: 5%;
+	    position: absolute;
 	}
 	#table1 th{
 		border: 1px solid black;
 	    padding: 10px;
-		white-space: nowrap;
+	    white-space: nowrap;
 	}
 	#table1 td{
 		border: 1px solid black;
@@ -37,7 +38,6 @@
 	#table2{
 		border: 1px solid black;
 	    border-collapse: collapse;
-	    margin-top: 15%;
 	    margin-left: 6%;
 	    width: 85%;
 	}
@@ -61,7 +61,8 @@
 	    width: 30%;
 	    float: right;
 	    margin-right: 9%;
-	    margin-top: 2%;
+	    margin-top: 5%;
+	    margin-bottom: 4%;
 	}
 	
 	#table3 th {
@@ -80,13 +81,14 @@
 	}
 	
 	#table3_1{
-		border: 1px solid black;
+	    border: 1px solid black;
 	    border-collapse: collapse;
 	    float: right;
 	    margin-right: 9%;
 	    margin-top: 2%;
 	    text-align: center;
-	    width: 20%;
+	    width: 20.6%;
+	    margin-bottom: 5%;
 	}
 	
 	#table3_1 th {
@@ -138,7 +140,7 @@
 		text-align: center;
 	}
 	#button_ch_sak{
-		
+		margin-left: 83%;
 	}
 	#accept{
 		PADDING-RIGHT: 3%;

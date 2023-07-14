@@ -49,9 +49,9 @@ public class ApprovalController {
 			model.addAttribute("manager",manager);
 			
 			// 대표
-			String top_Manager = service.top_manager();
-			logger.info(top_Manager);
-			model.addAttribute("top_Manager",top_Manager);
+			String top_manager = service.top_manager();
+			logger.info(top_manager);
+			model.addAttribute("top_manager",top_manager);
 			
 			// 직급
 			String position = service.position(loginId);

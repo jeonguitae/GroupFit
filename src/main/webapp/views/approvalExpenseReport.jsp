@@ -17,16 +17,16 @@
 
 	#table1 {
 		border: 1px solid black;
-		border-collapse: collapse;
-		float: left;
-		margin-top: 5%;
-		margin-left: 5%;
-		position:absolute;
+	    border-collapse: collapse;
+	    float: left;
+	    margin-top: 4%;
+	    margin-left: 5%;
+	    position: absolute;
 	}
 	#table1 th{
 		border: 1px solid black;
 	    padding: 10px;
-		
+	    white-space: nowrap;
 	}
 	#table1 td{
 		border: 1px solid black;
@@ -38,13 +38,13 @@
 	#table2{
 		border: 1px solid black;
 	    border-collapse: collapse;
-	    margin-top: 15%;
 	    margin-left: 6%;
 	    width: 85%;
 	}
 	#table2 th{
 		border: 1px solid black;
 		padding: 10px;
+		white-space: nowrap;
 	}
 	#table2 td{
 		border: 1px solid black;
@@ -61,7 +61,8 @@
 	    width: 30%;
 	    float: right;
 	    margin-right: 9%;
-	    margin-top: 2%;
+	    margin-top: 5%;
+	    margin-bottom: 4%;
 	}
 	
 	#table3 th {
@@ -78,14 +79,16 @@
 	    width: 100px;
 	    text-align: center;
 	}
+	
 	#table3_1{
-		border: 1px solid black;
+	    border: 1px solid black;
 	    border-collapse: collapse;
 	    float: right;
 	    margin-right: 9%;
 	    margin-top: 2%;
 	    text-align: center;
-	    width: 20%;
+	    width: 20.6%;
+	    margin-bottom: 5%;
 	}
 	
 	#table3_1 th {
@@ -103,15 +106,6 @@
 	    width: 40%;
 	}
 	
-	
-	#tr2{
-		height: 100px;
-		vertical-align: bottom;
-	}
-	#tr1{
-		vertical-align: middle;
-	}
-	
 	#tr22{
 		height: 100px;
 		vertical-align: bottom;
@@ -121,6 +115,14 @@
 		vertical-align: middle;
 	}
 	
+	
+	#tr2{
+		height: 100px;
+		vertical-align: bottom;
+	}
+	#tr1{
+		vertical-align: middle;
+	}
 	
 	#button_sin_mok {
 	    margin-top: 5%;
@@ -137,18 +139,13 @@
 	#cols{
 		text-align: center;
 	}
-	
-	#button_sin_mok {
-    margin-top: 32%;
-    margin-left: 35%;
-    position: absolute;
-}
-	#button_ch_sak {
-    position: absolute;
-    margin-left: 68%;
-    margin-top: 11%;
-}
-	
+	#button_ch_sak{
+		margin-left: 83%;
+	}
+	#accept{
+		PADDING-RIGHT: 3%;
+	    PADDING-BOTTOM: 2%;
+	}
 </style>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
