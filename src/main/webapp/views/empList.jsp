@@ -60,11 +60,13 @@ div[class="table"]{
 		</fieldset>
 		
 		<div class="btn1">
-			<button onclick="location.href='empJoin.go'">직원 등록</button>
-			<button onclick="hide()">직원 삭제</button>
+			<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+			<button class="btn btn-primary" onclick="location.href='empJoin.go'">직원 등록</button>
+			<button class="btn btn-primary" onclick="hide()">직원 삭제</button>
+			</c:if>
 			<c:if test="${sessionScope.loginEmp.position eq '대표'}">
-				<button onclick="location.href='empRepList.do'">지점별</button>
-				<button onclick="location.href='empRetire.go'">퇴사직원</button>
+				<button class="btn btn-primary" onclick="location.href='empRepList.do'">지점별</button>
+				<button class="btn btn-primary" onclick="location.href='empRetire.go'">퇴사직원</button>
 			</c:if>
 		</div>
 		<div class="table">
@@ -85,7 +87,7 @@ div[class="table"]{
 						<tr>
 							<td><input type="checkbox" name="chk" value="${emp.emp_no}"/></td>
 							<td>${emp.emp_no}</td>
-							<td><a href="empDetail.do?detailid=${emp.emp_no}">${emp.name}</a></td>
+							<td><a href="empDetail.go?detailid=${emp.emp_no}">${emp.name}</a></td>
 							<td>${emp.b_name}</td>
 							<td>${emp.position}</td>
 							<td>${emp.status}</td>

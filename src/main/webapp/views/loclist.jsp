@@ -50,6 +50,7 @@
 			
 				<button class="cng" onclick="openModal2()">라커변경</button>
 				<button class="fix" onclick="openModal()">상태변경</button>
+				
 			
 				<div class="first_row" style="display : flex;">
 					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
@@ -188,6 +189,7 @@ function loclistDraw(loclist){
 				if(item.name != null){
 					
 					name = item.name;
+
 				}
 				
 				if(item.mem_no != 0){
@@ -195,31 +197,55 @@ function loclistDraw(loclist){
 					mem_no = '(' + item.mem_no + ')';
 				}
 
-				content += '<div style="text-align: center; width: 150px; height: 150px; border: 1px solid white; margin: 5px">' + '라커번호 : ' + item.loc_no + '<hr/>' + item.status + '<br/>' + name + mem_no + '</div>';
+				content += '<div class="locker" style="text-align: center; width: 150px; height: 150px; border: 1px solid white; margin: 5px">'
+						+ '라커번호 : ' 
+						+ item.loc_no + '<hr/>' 
+						+ '<span id="'+item.loc_num+'">'+item.status +'</span><br/>' 
+						+ name 
+						+ '<a href="memdetail.go?mem_no=' + item.mem_no + '">' + mem_no
+						+ '</div>';
 				console.log(index);
 			if(index >= 0 && index <= 4){
-				
-				
-				//$('.first_row').empty();
+
 				$('.first_row').append(content);
 			}
 			
 			if(index >= 5 && index <= 9){
-				
-				//$('.second_row').empty();
+		
 				$('.second_row').append(content);
 			}
 			
 			if(index >= 10 && index <= 14){
-				
-				//$('.third_row').empty();
+
 				$('.third_row').append(content);
 			}
 
 			if(index >= 15 && index <= 19){
-				
-				//$('.fourth_row').empty();
+	
 				$('.fourth_row').append(content);
+				
+			}
+			
+			$('div[class="locker"]').on('mouseenter',function(){
+			    $(this).css({'background-color':'lightgray'});
+			    $(this).css({'color':'black'});
+			});
+			
+			$('div[class="locker"]').on('mouseleave',function(){
+			    $(this).css({'background-color':'#454d55'});
+			    $(this).css({'color':'white'});
+			});
+				
+			if(item.status == '사용중'){
+				$('#'+item.loc_num).css({'color' : 'red'});
+			}
+			
+			if(item.status == '점검중'){
+				$('#'+item.loc_num).css({'color' : 'yellow'});
+			}
+			
+			if(item.status == '미사용'){
+				$('#'+item.loc_num).css({'color' : 'lightblue'});
 			}
 		});
 }

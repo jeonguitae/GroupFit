@@ -85,7 +85,10 @@
 					<span></span>
 				</div></li>
 				<li>
-					<button type="button" class="btn btn-dark">퇴근</button>
+					<button type="button" class="btn btn-dark" onclick="location.href='come.do'">출근</button>
+				</li>
+				<li>
+					<button type="button" class="btn btn-dark" onclick="location.href='out.do'">퇴근</button>
 				</li>
 				<!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -219,7 +222,7 @@
 								</li>
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-item item-sub">
-									<a href="empRepList.do" class="nav-link">
+									<a href="/empRetireList.do" class="nav-link">
 										<i class="fas fa-running nav-icon"></i>
 										<p>퇴사 직원 리스트</p>
 									</a>
@@ -244,6 +247,10 @@
 								<li class="nav-item item-sub"><a href="maclist.go" class="nav-link"> <i
 										class="nav-icon fas fa-dumbbell"></i>
 										<p>머신 관리</p>
+								</a></li>
+								<li class="nav-item item-sub"><a href="fixedmac.go" class="nav-link"> <i
+										class="nav-icon fas fa-dumbbell"></i>
+										<p>수리신청 된 머신</p>
 								</a></li>
 								<li class="nav-item item-sub"><a href="loclist.go" class="nav-link"> <i
 										class="nav-icon fas fa-dumbbell"></i>
@@ -341,7 +348,7 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="pages/charts/chartjs.move"
+								<li class="nav-item item-sub"><a href="/wlist.do"
 									class="nav-link"> <i class="fas fa-user-check nav-icon"></i>
 										<p>나의 근태관리</p>
 								</a></li>
@@ -401,6 +408,7 @@
 </body>
 <script>
 	var msg = "${msg}";
+	 
 	if(msg != ""){
 		alert(msg);
 	}

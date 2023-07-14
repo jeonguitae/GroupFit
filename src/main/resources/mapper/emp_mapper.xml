@@ -101,9 +101,9 @@
 	</select>
 
    <insert id="emp_join" parameterType="emp">
-		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, status, join_year, retire_year, b_idx)
+		insert into emp(emp_no, pw, name, gender, birth, phone, email, position, status, join_year, b_idx)
 		values(#{emp_no},#{pw},#{name},#{gender}, #{birth},
-		#{phone},#{email},#{position},#{status},#{join_year},#{retire_year},#{b_idx})
+		#{phone},#{email},#{position},#{status},#{join_year},#{b_idx})
 	</insert>
 	
 	<insert id="emp_fileWrite">
@@ -112,14 +112,16 @@
 	</insert>
 	
 	<select id="emp_detail" resultType="emp">
-		SELECT * FROM emp WHERE emp_no = #{param1}
+		SELECT * FROM emp e
+		LEFT JOIN wphoto w ON w.board_num = e.emp_no
+		WHERE emp_no = #{param1}
 	</select>
 	
-	<select id="emp_photo" resultType="emp">
-		SELECT * FROM wphoto WHERE board_num = #{param1} AND c_idx = 1
+	<select id="emp_photo" resultType="String">
+		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 1
 	</select>
 	
-	<update id="emp_update" parameterType="emp">
+	<update id="emp_update" parameterType="hashmap">
 		UPDATE emp SET 
 			  pw = #{pw}
 			, name = #{name}
@@ -129,9 +131,13 @@
 			, email = #{email}
 			, position = #{position}
 			, status = #{status}
-			, join_year = #{join_year}
+			, retire_year = #{retire_year}
 		WHERE emp_no = #{emp_no}
 	</update>
+	
+	<delete id="emp_removePhoto" parameterType="String">
+		DELETE FROM wphoto WHERE board_num = #{emp_no}
+	</delete>
 	
 	<!-- 상세에서 삭제 -->
 	<delete id="emp_delete" parameterType="emp">

@@ -61,9 +61,9 @@ div[class="table"]{
 		<section class="content">
 			<div class="container-fluid">
 				<fieldset>
-					<form action=".do" class="search">
+					<form action="/postSendList.do" class="search">
 						<select name="opt">
-							<option value="send_empno">받은사람</option>
+							<option value="e_name">받은사람</option>
 							<option value="subject">제목</option>
 							<option value="content">내용</option>
 						</select>
@@ -110,4 +110,31 @@ div[class="table"]{
 		</section>
 	</div>
 </body>
+<script>
+function hide() {
+	   var hideList = new Array();
+	   $("input[name=chk]:checked").each(function() {
+	      hideList.push($(this).val());
+	   });
+	   $.ajax({
+	      type: 'post',
+	      url: 'post_sendhide.ajax',
+	      data: {
+	         'hideList' : hideList
+	      },
+	      dataType: 'text',
+	      success: function(data){
+	    	  alert('삭제되었습니다!');
+	      },
+	      error: function(e){
+	         console.log(e);
+	      }
+	   });
+	}
+var msg = "${msg}";
+if(msg != ""){
+   alert(msg);
+}
+
+</script>
 </html>

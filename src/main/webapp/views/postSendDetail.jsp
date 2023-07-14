@@ -44,10 +44,6 @@
 			<div class="container-fluid">
 					<table>
 						<tr>
-							<th>작성자</th>
-							<td><input type="text" value="${post.send_empno}" readonly/></td>
-						</tr>
-						<tr>
 							<th>보낸시간</th>
 							<td><input type="text" value="${post.send_time}" readonly/></td>
 						</tr>
@@ -58,7 +54,7 @@
 						<tr>
 							<th>받는사람 이름</th>
 							<td>
-								<p><input type="text" name="get_empno" value="${post.get_empno}" readonly/>
+								<input type="text" name="get_empno" value="${post.name}" readonly/>
 							</td>
 						</tr>
 						<tr>
@@ -72,7 +68,8 @@
 							</td>
 						</tr>
 						<button type="button" onclick="location.href='./postGetWrite.go?emailid=${post.email_num}'">회신</button>	
-						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
+						<button type="button" onclick="location.href='./postSendList.go'">보낸쪽지 목록</button>	
+						<button type="button" onclick="location.href='./postGetList.go'">받은쪽지 목록</button>	
 					</table>
 				</form>
 			</div>

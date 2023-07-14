@@ -46,23 +46,18 @@
 			  <button onclick="yearChange(-1)"><</button>
 			  <span id="year">2023</span>
 			  <button id="nextYear" onclick="yearChange(1)" disabled>></button>
-			  <select name="branch" id="branch" style = "margin-left : 30px">
-			  		<option value="all">전체</option>
-				<c:forEach items="${branchList}" var="item">
-					<option value="${item.b_idx}">${item.b_name}</option>
-				</c:forEach>
-		      </select>
-		      <select name="emp" id="emp" style = "margin-left : 30px">
-		      	<c:forEach items="${empList}" var="item">
-					<option value="${item.emp_no}">${item.name}</option>
-				</c:forEach>
-		      </select>
-			  
-			  
+			    
 			<div class="container-fluid">
 				<div style="width: 500px; height: 500px;">
 				<!--차트가 그려질 부분-->
 				<canvas id="myChart"></canvas>
+				</div>
+			</div>
+			<!--/. container-fluid -->
+			
+			<div style="width: 500px; height: 500px;">
+				<!--차트가 그려질 부분-->
+				<canvas id="myChart2"></canvas>
 				</div>
 			</div>
 			<!--/. container-fluid -->
@@ -73,19 +68,15 @@
 
 
 <script>
-
-
-
+var emp_no="${sessionScope.loginEmp.emp_no}";
 var year = parseInt($('#year').text());
-var emp_no = $('#emp').val();
+console.log(emp_no);
 firstChart(year,emp_no);
-
-
 
 function firstChart(year,emp_no){
 	$.ajax({
 		type:'get',
-		url:'individual.ajax',
+		url:'personalIndividualChart.ajax',
 		data:{
 			'year':year,
 			'emp_no':emp_no
@@ -101,6 +92,35 @@ function firstChart(year,emp_no){
 	});
 }
 
+function yearChange(change) {
+	year += change;
+    $('#year').text(year);
+    
+    if (year == (new Date()).getFullYear()) {
+        $('#nextYear').prop('disabled', true);
+      } else {
+        $('#nextYear').prop('disabled', false);
+      }
+    $.ajax({
+		type:'get',
+		url:'personalIndividualChart.ajax',
+		data:{
+			'year':year,
+			'emp_no':emp_no
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			chartPrint(data.individual);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+
+	
 function chartPrint(data){
 	labels=[];
 	datasets=[];
@@ -165,93 +185,107 @@ function chartPrint(data){
             });
 }
 
-function yearChange(change) {
-	year += change;
-    $('#year').text(year);
-    
-    if (year == (new Date()).getFullYear()) {
-        $('#nextYear').prop('disabled', true);
-      } else {
-        $('#nextYear').prop('disabled', false);
-      }
-    $.ajax({
-		type:'get',
-		url:'individual.ajax',
-		data:{
-			'year':year,
-			'emp_no':emp_no
-		},
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			chartPrint(data.individual);
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-}
 
-$('#branch').change(function(){
-		branch = $(this).val();
+var currentDate = new Date();
+var currentYear = currentDate.getFullYear();
+var currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1을 해주고, padStart()로 두 자리로 만듭니다.
+
+var formattedDate = currentYear + "-" + currentMonth;
+
+var b_idx="${sessionScope.loginEmp.b_idx}";
+
+console.log("Current Year-Month:", formattedDate);
+
+secondChart(formattedDate,b_idx);
+
+function secondChart(formattedDate,b_idx){
 		$.ajax({
   		type:'get',
-  		url:'empList.ajax',
+  		url:'branchPersonal.ajax',
   		data:{
-  			'branch':branch
+  			'formattedDate':formattedDate,
+  			'b_idx':b_idx
   		},
   		dataType:'json',
   		success:function(data){
   			console.log(data);
-  			empList(data.empList);
-  			firstChart(year,emp_no);	
-  			
+  			branchPersonalChartPrint(data.branchPersonal);
   		},
   		error:function(e){
   			console.log(e);
   		}
   	});
-		
-	});
-	
-function empList(data) {
-	  var content = '';
-	  console.log(data);
-	  content += '<select name="emp" id="emp">';
-	  data.forEach(function(item, index) {
-	    content += '<option value="' + item.emp_no + '">' + item.name + '</option>';
-	  });
-	  content += '</select>';
-	  $('#emp').replaceWith(content);
-	  content = '';
-	  emp_no = $('#emp').val();
 	}
-
-$(document).on('change', '#emp', function() {
-	  emp_no = $(this).val();
-	  console.log(emp_no);	
-	  $.ajax({
-	    type: 'get',
-	    url: 'individual.ajax',
-	    data: {
-	      'year': year,
-	      'emp_no': emp_no
-	    },
-	    dataType: 'json',
-	    success: function(data) {
-	      console.log(data);
-	      chartPrint(data.individual);
-	    },
-	    error: function(e) {
-	      console.log(e);
-	    }
-	  });
+	
+function branchPersonalChartPrint(data){
+	labels=[];
+	datasets=[];
+	data.forEach(function(item,index){
+		labels.push(item.name);
+		datasets.push(item.personal_totalsales)
 	});
+    var context = document
+    			.getElementById('myChart2')
+                .getContext('2d');
+    var myChart = new Chart(context, {
+                type: 'line', // 차트의 형태
+                data: { // 차트에 들어갈 데이터
+                    labels: labels,
+                    datasets: [
+                        { //데이터
+                            label: '전체매출', //차트 제목
+                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            data: datasets,
+                            backgroundColor: [
+                                //색상
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                //경계선 색상
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1 //경계선 굵기
+                        }/* ,
+                        {
+                            label: 'test2',
+                            fill: false,
+                            data: [
+                                8, 34, 12, 24
+                            ],
+                            backgroundColor: 'rgb(157, 109, 12)',
+                            borderColor: 'rgb(157, 109, 12)'
+                        } */
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+}
 
 
 
 
 
+            
 
       
       
