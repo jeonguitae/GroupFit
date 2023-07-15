@@ -150,8 +150,7 @@ public class EmpService {
 
 		if (success > 0) {
 			msg = "직원등록에 성공했습니다.";
-			page = "redirect:/empDetail.do";
-
+			page = "redirect:/empDetail.go";
 			if (file != null && !file.isEmpty()) {
 				// 입력받은 파일 이름
 				String ori_photo_name = file.getOriginalFilename();
@@ -263,7 +262,19 @@ public class EmpService {
 		mav.setViewName(page);
 		return mav;
 	}
+	
+    public HashMap<String, Object> emp_idChk(String emp_no) {
+        
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        logger.info("service emp+no");
+        int idChk = dao.emp_idChk(emp_no);
+        map.put("idChk", idChk);
+        return map;
+    }
 
-
+	public String emp_position(String loginId) {
+		
+		return dao.emp_position(loginId);
+	}
 
 }

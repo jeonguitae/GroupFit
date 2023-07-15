@@ -156,5 +156,17 @@
       </foreach>
       )
    </update>
+   
+	<select id="emp_idChk" resultType="int">
+      SELECT COUNT(emp_no) FROM emp WHERE emp_no = #{param1}
+    </select>
+    
+    <select id="emp_position" resultType="String">
+    	SELECT position
+    	FROM emp
+    	WHERE emp_no = #{loginId}
+    </select>
+    
+
 
 </mapper>

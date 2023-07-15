@@ -202,7 +202,7 @@
 										<p>입장한 회원 리스트</p>
 								</a></li>
 							</ul></li>
-						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+						<c:if test="${sessionScope.loginEmp.position == '직원' ||sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 						<li class="nav-item">
 							<a href="#" class="nav-link">
 								<i class="nav-icon fas fa-users"></i>
@@ -219,7 +219,7 @@
 								</li>
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-item item-sub">
-									<a href="/empRetireList.do" class="nav-link">
+									<a href="empRetire.go" class="nav-link">
 										<i class="fas fa-running nav-icon"></i>
 										<p>퇴사 직원 리스트</p>
 									</a>

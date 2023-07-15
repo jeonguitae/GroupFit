@@ -42,6 +42,7 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
+				
 				<form action="postSendWrite.do" method="post" enctype="multipart/form-data">
 					<table>
 						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
@@ -54,19 +55,6 @@
 							<td><input type="text" name="subject"/></td>
 						</tr>
 						<tr>
-							<th>*받는사람 이름</th>
-							<td>
-								<p>
-									<input type="text" name="get_empno"/>
-									
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<th>*첨부파일</th>
-							<td><input type="file" name="post_photo"/></td>
-						</tr>
-						<tr>
 							<th>*내용</th>
 							<td>
 								<textarea name="content"></textarea> 
@@ -76,38 +64,6 @@
 						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
 					</table>
 				</form>
-				
-				<div id="list">
-				
-				</div>
-
-				<button class="cng" onclick="openModal()">직원 찾기</button>&nbsp;
-				
-				<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
-				    <div class="modal-dialog" role="document">
-				      <div class="modal-content">
-				        <div class="modal-header">
-				          	<h5 class="modal-title" id="event-modal-label">직원 찾기</h5>
-				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				            <span aria-hidden="true">&times;</span>
-				          </button>
-				        </div>
-				        <div class="modal-body">
-				          <form id="event-form">
-				            <div class="form-group">
-				              <label for="event-name">직원 이름</label>
-				              <input type="text" class="form-control" id="emp_no" name="emp_no" placeholder="직원이름을 입력하세요">
-				            </div>
-				          </form>
-				        </div>
-				        
-				        <div class="modal-footer">
-				          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-				          <button type="button" class="btn btn-primary" id="save-event-btn2">저장</button>
-				        </div>
-				      </div>
-				   </div>
-				</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>
@@ -115,51 +71,6 @@
 </body>
 <script>
 
-openModal(page);
 
-function listPrint(list){
-	   var content="";
-	   list.forEach(function(item){
-	      content +='<tr>';
-	      content +='<td class="text-center col-md-1">'+item.emp_no+'</td>';
-	      content +='<td class="text-center col-md-1">'+item.name+'</td>';
-	      content +='</tr>';
-	   });
-	   $('#list').empty();
-	   $('#list').append(content);
-	}
-
-
-
-function openModal(page) {
-    $('#event-modal').modal('show');
-  }
-
-  
-$(document).on('click', '#save-event-btn2', function(page) {
-    // 데이터 추출
-    var emp_no = $('#emp_no').val();
-    
-    // AJAX 요청
-    $.ajax({
-      type: 'POST',
-      url: 'emp_find.ajax',
-      data: {
-    	  'emp_no' : emp_no
-      },
-      success: function(data) {
-        console.log(data.list);
-        listPrint(data.list);
-        openModal(page);
-      },
-      error: function(e) {
-        console.log(e);
-      }
-    });
-  });
-  
-$(document).on('click', '#event-modal.close, #event-modal .modal-footer .btn-secondary', function() {
-    $('#event-modal').modal('hide');
-  });
 </script>
 </html>

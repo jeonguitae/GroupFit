@@ -44,32 +44,26 @@
 			<div class="container-fluid">
 				<form action="postGetWrite.do" method="post" enctype="multipart/form-data">
 					<table>
-						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
-						<tr>
+						<input type="hidden" name="send_empno" value="${post.get_empno}"/>
+<%-- 					<tr>
 							<th>*보내는사람</th>
 							<td><input type="text" value="${emp.name}" readonly/></td>
-						</tr>
+						</tr> --%>
 						<tr>
 							<th>*제목</th>
-							<td><input type="text" name="subject" value="${post.subject}"/></td>
+							<td><input type="text" name="subject"/></td>
 						</tr>
-						<div id = "search_name">
 						<tr>
 							<th>*받는사람 이름</th>
 							<td>
-								<input type="text" name="get_empno"/>
-								<input type="button" value="직원 찾기" onclick="new_window();"></p>
+								<input type="hidden" name="get_empno" value="${post.send_empno}"/>
+								<input type="text" value="${post.name}"/>
 							</td>
-						</tr>
-						</div>
-						<tr>
-							<th>*첨부파일</th>
-							<td><input type="file" name="post_photo"/></td>
 						</tr>
 						<tr>
 							<th>*내용</th>
 							<td>
-								<textarea name="content">${post.content}</textarea> 
+								<textarea name="content"></textarea> 
 							</td>
 						</tr>
 						<input class="btn btn-primary" type="submit" value="회신보내기"/>
@@ -82,12 +76,5 @@
 	</div>
 </body>
 <script>
-function new_window() {
-    window.open(
-      "empfind.html",
-      "EmpFind",
-      "width=400, height=300, top=50, left=50"
-    );
-  }
 </script>
 </html>

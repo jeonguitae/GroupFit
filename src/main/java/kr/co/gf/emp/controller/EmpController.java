@@ -119,16 +119,24 @@ public class EmpController {
 	
 
 	@RequestMapping(value="/empDetail.go")
-	public ModelAndView detail(@RequestParam String detailid) {
+	public ModelAndView detail(@RequestParam String detailid, HttpSession session) {
 		
 		EmpDTO dto = service.emp_detail(detailid);
 		String new_photo_name = service.emp_photo(detailid);
 		dto.setNew_photo_name(new_photo_name);
 		String page ="redirect:/empList.go";
+
 		
-		if(dto!=null) {
-			page="empDetail";
-		}
+		//로그인한 아이디가 작성자 일 때 상세로 이동, 아니면 리스트로 이동
+		String loginId = (String) session.getAttribute("loginId");
+		String position = service.emp_position(loginId);
+		String emp_no = dto.getEmp_no();
+		if (emp_no.equals(loginId) && !session.getAttribute("loginId").equals("") || position.equals("지점장") || position.equals("대표")) {
+		if (dto != null) {
+		  page = "empDetail";
+		    }
+		  }
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(page);
 		mav.addObject("emp",dto);
@@ -142,15 +150,9 @@ public class EmpController {
 		EmpDTO dto = service.emp_detail(detailid);
 		String page ="redirect:/empList.go";
 		
-		//로그인한 아이디가 작성자 일 때 수정으로 이동, 아니면 리스트로 이동
-		if (session.getAttribute("loginId") != null) {
-		String loginId = (String) session.getAttribute("loginId");
-		if (loginId.equals(detailid)) {
 		if (dto != null) {
 		    page = "empUpdate";
 		        }
-		    }
-		}
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(page);
@@ -167,10 +169,11 @@ public class EmpController {
 	 @RequestMapping(value="/empUpdate.do")
 	   public String updateDo(@RequestParam HashMap<String, Object> params, MultipartFile file, HttpSession session, Model model) {
 	       logger.info("직원 수정");
-	       String page = "redirect:/empUpdate.go";
+	       String page = "empUpdate";
 	       String loginId = null;
 	       String emp_no;
 	       logger.info("session loginId : " + session.getAttribute("loginId"));
+	      
 	       if (session.getAttribute("loginId") != null) {
 	          logger.info("params : " + params);
 	          
@@ -180,7 +183,7 @@ public class EmpController {
 	           if (loginId.equals(params.get("emp_no"))) {
 	              logger.info("file : " + file);
 	               service.emp_update(file, params);
-	               page="redirect:/empDetail.go?detailid="+params.get("emp_no");
+	               page = "redirect:/empList.go";
 	           }
 	       }
 	       return page;
@@ -201,9 +204,12 @@ public class EmpController {
 		return service.emp_hide(hideList);
 	}
 	
-
+   // 아이디 중복 체크
+   @RequestMapping(value = "/idChk.ajax")
+   @ResponseBody
+   public HashMap<String, Object> idChk(@RequestParam String emp_no) {
+      logger.info("idChk-controller");
+      return service.emp_idChk(emp_no);
+   }
 	
-	
-
-
 }

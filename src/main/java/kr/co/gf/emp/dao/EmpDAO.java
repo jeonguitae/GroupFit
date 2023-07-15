@@ -40,10 +40,10 @@ public interface EmpDAO {
 	int emp_delete(String detailid);
 
 	void emp_hide(List<String> hideList);
-	
-	
 
-	
+	int emp_idChk(String emp_no);
+
+	String emp_position(String loginId);
 
 
 }
