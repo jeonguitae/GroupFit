@@ -85,7 +85,10 @@
 					<span></span>
 				</div></li>
 				<li>
-					<button type="button" class="btn btn-dark" onclick="location.href='out.update'">퇴근</button>
+					<button type="button" class="btn btn-dark" onclick="location.href='come.do'">출근</button>
+				</li>
+				<li>
+					<button type="button" class="btn btn-dark" onclick="location.href='out.do'">퇴근</button>
 				</li>
 				<!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -175,7 +178,7 @@
 					<ul class="nav nav-pills nav-sidebar flex-column"
 						data-widget="treeview" role="menu" data-accordion="false">
 						<li class="nav-header"  style="text-align: center;margin: 0 auto">
-							<button class="btn btn-outline-info" style="margin: 0 auto" onclick="location.href='/approvalVacationRequest.go'">결재 문서 작성
+							<button class="btn btn-outline-info" style="margin: 0 auto" onclick="location.href='/approvalEventRequest.go'">결재 문서 작성
 							</button></li>
 						<li class="nav-header">GroupFit Works</li>
 						<li class="nav-item"><a href="#" class="nav-link"> <i
@@ -193,7 +196,7 @@
 										class="fas fa-running nav-icon"></i>
 										<p>PT 회원</p>
 								</a></li>
-								<li class="nav-item item-sub"><a href="#" class="nav-link"> <i
+								<li class="nav-item item-sub"><a href="dailyptt" class="nav-link"> <i
 										class="fas fa-edit nav-icon"></i>
 										<p>PT 회원일지</p>
 								</a></li>
@@ -244,6 +247,10 @@
 								<li class="nav-item item-sub"><a href="maclist.go" class="nav-link"> <i
 										class="nav-icon fas fa-dumbbell"></i>
 										<p>머신 관리</p>
+								</a></li>
+								<li class="nav-item item-sub"><a href="fixedmac.go" class="nav-link"> <i
+										class="nav-icon fas fa-dumbbell"></i>
+										<p>수리신청 된 머신</p>
 								</a></li>
 								<li class="nav-item item-sub"><a href="loclist.go" class="nav-link"> <i
 										class="nav-icon fas fa-dumbbell"></i>
@@ -401,6 +408,7 @@
 </body>
 <script>
 	var msg = "${msg}";
+	 
 	if(msg != ""){
 		alert(msg);
 	}

@@ -84,7 +84,7 @@
                         <td style="text-align: center;">${working.come_time}</td>
                         <!--<td style="text-align: center;"><a href="ndetail.do?n_idx=${bbs.n_idx}&flag='detail'" id="detail">${bbs.title}</a></td>  -->
                         <td style="text-align: center;">${working.out_time}</td>
-                        <td style="text-align: center;">${String.format('%.1f', (working.out_time.time - workList.come_time.time) / (1000.0 * 60 * 60))} </td>                       
+                        <td style="text-align: center;">${String.format('%.1f', (working.out_time.time - working.come_time.time) / (1000.0 * 60 * 60))} </td>                       
                         <td style="text-align: center;">${working.w_type}</td>
                     </tr>
                 </c:if>         

@@ -25,4 +25,18 @@ public interface MachineDAO {
 
 	String mac_new_file_name(String mac_num);
 
+	int mac_status(String mac_num, String mac_status, String b_idx, String emp_no);
+
+	ArrayList<MachineDTO> Fmaclist(String b_idx);
+
+	int mac_fixed(String emp_no, String mac_num, String fixed_content, String b_idx);
+
+	ArrayList<MachineDTO> fixedmaclist(String b_idx);
+
+	MachineDTO fix_content(String mac_num);
+
+	int mac_status_cng(HashMap<String, String> params);
+
+	void delete_fix_mac(HashMap<String, String> params);
+
 }

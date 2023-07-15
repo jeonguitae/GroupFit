@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이벤트</title>	
+<title>지출결의서</title>	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 
@@ -16,16 +16,16 @@
 
 	#table1 {
 		border: 1px solid black;
-		border-collapse: collapse;
-		float: left;
-		margin-top: 5%;
-		margin-left: 5%;
-		position:absolute;
+	    border-collapse: collapse;
+	    float: left;
+	    margin-top: 4%;
+	    margin-left: 5%;
+	    position: absolute;
 	}
 	#table1 th{
 		border: 1px solid black;
 	    padding: 10px;
-		
+	    white-space: nowrap;
 	}
 	#table1 td{
 		border: 1px solid black;
@@ -37,13 +37,13 @@
 	#table2{
 		border: 1px solid black;
 	    border-collapse: collapse;
-	    margin-top: 15%;
 	    margin-left: 6%;
 	    width: 85%;
 	}
 	#table2 th{
 		border: 1px solid black;
 		padding: 10px;
+		white-space: nowrap;
 	}
 	#table2 td{
 		border: 1px solid black;
@@ -60,7 +60,8 @@
 	    width: 30%;
 	    float: right;
 	    margin-right: 9%;
-	    margin-top: 2%;
+	    margin-top: 5%;
+	    margin-bottom: 4%;
 	}
 	
 	#table3 th {
@@ -79,13 +80,14 @@
 	}
 	
 	#table3_1{
-		border: 1px solid black;
+	    border: 1px solid black;
 	    border-collapse: collapse;
 	    float: right;
 	    margin-right: 9%;
 	    margin-top: 2%;
 	    text-align: center;
-	    width: 20%;
+	    width: 20.6%;
+	    margin-bottom: 5%;
 	}
 	
 	#table3_1 th {
@@ -137,7 +139,11 @@
 		text-align: center;
 	}
 	#button_ch_sak{
-		
+		margin-left: 83%;
+	}
+	#accept{
+		PADDING-RIGHT: 3%;
+	    PADDING-BOTTOM: 2%;
 	}
 </style>
 <link
@@ -175,13 +181,8 @@
 <!-- Main content -->
 		<section class="content">      
 			<div class="container-fluid">
-				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalExpenseReport.go">지출결의서</a></h5>
-				<h5 id="aAp"><a href="approvalEventRequest.go">이벤트신청</a></h5>
-				
-			
 				<div id="table1_div">
-					<form action="approvalAccept.do?a_idx=${dto.a_idx}&approval=${dto.approval}">
+					<form action="approvalUpdate.go?a_idx=${dto.a_idx}&approval=${dto.approval}">
 					<table id="table1">
 						<tr>
 							<th>기안자</th>
@@ -207,9 +208,24 @@
 							<th>대표</th>
 						</tr>
 						<tr id="tr2">
-							<td>${dto.name}</td>
-							<td>${dto.manager}</td>
-							<td>${dto.top_manager }</td>
+							<td>
+								<c:if test="${dto.state eq '대기' or dto.state eq '예정' or dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.name}
+							</td>
+							<td>
+								<c:if test="${dto.state eq '예정' or dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.manager}
+							</td>
+							<td>
+								<c:if test="${dto.state eq '승인'}">
+									<img id="accept" src="img/success.png">
+								</c:if>
+								${dto.top_manager}
+							</td>
 						</tr>
 					</table>
 					</c:if>	
@@ -260,10 +276,16 @@
 				</table>
 				<div id="button_sin_mok">
 					<c:if test="${position eq '지점장' or position eq '대표'}">
-						<button id="su" onclick="location.href=''">승인</button>
+						<button id="su">승인</button>
+						<input type="hidden" name="a_idx" value="${dto.a_idx}"/>
+						<input type="hidden" name="approval" value="${dto.approval}"/>
 					</c:if>
-					<c:if test="${dto.emp_no eq loginId }">
-						<button type="button" id="su" onclick="location.href='approvalUpdate.do'">수정</button>
+					<c:if test="${dto.state eq '대기'}">
+						<c:if test="${dto.emp_no eq loginId }">
+							<button type="submit" id="su">수정</button>
+							<input type="hidden" name="manager" value="${dto.manager}"/>
+							<input type="hidden" name="top_manager" value="${dto.top_manager}"/>
+						</c:if>
 					</c:if>
 					<button type="button" id="mok" onclick="location.href='approvalAllList.do'">목록</button>
 				</div>

@@ -10,7 +10,31 @@ public class CommuteDTO {
 	private Time come_time;
 	private Time out_time ;
 	private Date work_date ;
-	private String w_type ;
+	private String gtwork ;
+	private String w_time;
+	private String w_type;
+	
+	
+	
+	
+	public String getW_type() {
+		return w_type;
+	}
+	public void setW_type(String w_type) {
+		this.w_type = w_type;
+	}
+	public String getGtwork() {
+		return gtwork;
+	}
+	public void setGtwork(String gtwork) {
+		this.gtwork = gtwork;
+	}
+	public String getW_time() {
+		return w_time;
+	}
+	public void setW_time(String w_time) {
+		this.w_time = w_time;
+	}
 	public String getEmp_no() {
 		return emp_no;
 	}
@@ -26,13 +50,13 @@ public class CommuteDTO {
 	public Time getCome_time() {
 		return come_time;
 	}
-	public void setCome_date(Time come_time) {
+	public void setCome_time(Time come_time) {
 		this.come_time = come_time;
 	}
 	public Time getOut_time() {
 		return out_time;
 	}
-	public void setOut_date(Time out_time) {
+	public void setOut_time(Time out_time) {
 		this.out_time = out_time;
 	}
 	public Date getWork_date() {
@@ -41,12 +65,7 @@ public class CommuteDTO {
 	public void setWork_date(Date work_date) {
 		this.work_date = work_date;
 	}
-	public String getW_type() {
-		return w_type;
-	}
-	public void setW_type(String w_type) {
-		this.w_type = w_type;
-	}
+
 	
 	
 }

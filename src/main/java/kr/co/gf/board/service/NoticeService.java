@@ -42,14 +42,14 @@ public class NoticeService {
 
 		  int row=ndao.nwrite(dto);
 		  
-//		  int n_idx=dto.getN_idx();
+		  String n_idx=dto.getN_idx();
 		  
 
 		  for (MultipartFile photo : photos) {
 			if (photo.getOriginalFilename()!=null) {
 				 //logger.info("photosave가기 전"+photo.getOriginalFilename());
 				String flag="write";
-//				 photoSave(photo,n_idx,flag);				 
+				 photoSave(photo,n_idx);				 
 				 try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {

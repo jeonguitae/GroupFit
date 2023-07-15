@@ -17,8 +17,8 @@
 			INSERT INTO machine(emp_no, mac_name, purch_date, b_idx) VALUES(#{emp_no}, #{mac_name}, #{purch_date}, #{b_idx})
   		</insert>
   		
-  		<select id="mac_num" resultType="String">
-			SELECT mac_num FROM machine WHERE mac_name = #{param1} AND b_idx = #{param2}
+  		<select id="mac_num" resultType="String" parameterType="String">
+			SELECT mac_num FROM machine WHERE mac_name = #{mac_name} AND b_idx = #{b_idx}
 		</select>
 		
 		<insert id="mac_photo_reg" parameterType="String">
@@ -44,4 +44,44 @@
 		<select id="mac_new_file_name" resultType="String">
 			SELECT new_photo_name FROM wphoto WHERE c_idx = '5' AND board_num = #{param1}
 		</select>
+		
+		<insert id="mac_status" parameterType="String">
+			INSERT INTO mac_chk(mac_num, emp_no, mac_status, b_idx)
+			VALUES(#{mac_num}, #{emp_no}, #{mac_status}, #{b_idx})
+		</insert>
+		
+		<select id="Fmaclist" resultType="machine">
+			SELECT DISTINCT m.mac_name, mc.mac_status
+			FROM machine m
+			JOIN mac_chk mc ON m.mac_num = mc.mac_num
+			WHERE m.b_idx = #{param1} AND mc.mac_status = '수리필요'
+		</select>
+		
+		<insert id="mac_fixed" parameterType="String">
+			INSERT INTO fixlist(mac_num, emp_no, fixed_content, b_idx)
+			VALUES(#{mac_num}, #{emp_no}, #{fixed_content}, #{b_idx})
+		</insert>
+		
+		<select id="fixedmaclist" resultType="machine">
+			SELECT m.mac_name, m.mac_num, f.fixed_date, f.emp_no
+			FROM machine m JOIN fixlist f
+			ON m.mac_num = f.mac_num 
+			WHERE m.b_idx = #{param1}
+		</select>
+		
+		<select id="fix_content" resultType="machine">
+			SELECT m.mac_name, m.mac_num, f.fixed_content, w.new_photo_name
+			FROM machine m
+			JOIN fixlist f ON m.mac_num = f.mac_num
+			JOIN wphoto w ON m.mac_num = w.board_num
+			WHERE w.c_idx = '5' AND m.mac_num = #{param1}
+		</select>
+		
+		<update id="mac_status_cng" parameterType="String">
+			UPDATE mac_chk SET mac_status = #{mac_status} WHERE mac_num = #{mac_num} AND b_idx = #{b_idx}
+		</update>
+		
+		<delete id="delete_fix_mac" parameterType="String">
+			DELETE FROM fixlist WHERE mac_num = #{mac_num} AND b_idx = #{b_idx}
+		</delete>
    </mapper>

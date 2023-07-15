@@ -35,11 +35,14 @@ public class MachineController {
 		String b_idx = dto.getB_idx();
 		
 		ArrayList<MachineDTO> list = service.Smaclist(b_idx);
+		ArrayList<MachineDTO> list2 = service.Fmaclist(b_idx);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("list2", list2);
 		
 		return "maclist";
 	}
+
 	
 	@RequestMapping(value="mac_reg.ajax")
 	@ResponseBody
@@ -52,6 +55,17 @@ public class MachineController {
 		logger.info("params :" + params);
 		
 		return service.mac_reg(params);
+	}
+	
+	@RequestMapping(value="mac_fixed.ajax")
+	@ResponseBody
+	public HashMap<String, Object> mac_fixed(HttpSession session, 
+			String emp_no, String mac_name, String fixed_content){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		
+		return service.mac_fixed(emp_no, mac_name, fixed_content, b_idx);
 	}
 	
 	@RequestMapping(value="mac_photo_reg.do")
@@ -92,8 +106,56 @@ public class MachineController {
 		
 		String msg = service.macdel(b_idx, mac_num);
 		
-		rattr.addAttribute("msg", msg);
+		rattr.addFlashAttribute("msg", msg);
 		
 		return "redirect:/maclist.go";
 	}
+	
+	@RequestMapping(value="mac_chk.ajax")
+	@ResponseBody
+	public HashMap<String, Object> mac_chk(HttpSession session, 
+			@RequestParam(value="chk_mac[]") ArrayList<String> chk_mac, String mac_status, String emp_no){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		
+		
+		return service.mac_chk(chk_mac, mac_status, b_idx, emp_no);
+	}
+	
+	@GetMapping(value="fixedmac.go")
+	public String fixedmaclistg() {
+		
+		return "fixedmac";
+	}
+	
+	@RequestMapping(value="fixedmaclist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> fixedmaclist(HttpSession session){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		
+		return service.fixedmaclist(b_idx);
+	}
+	
+	@RequestMapping(value="fix_content.ajax")
+	@ResponseBody
+	public HashMap<String, Object> fix_content(HttpSession session, String mac_num){
+		
+		
+		return service.fix_content(mac_num);
+	}
+	
+	@RequestMapping(value="mac_status_cng.ajax.ajax")
+	@ResponseBody
+	public HashMap<String, Object> mac_status_cng(HttpSession session, @RequestParam HashMap<String, String> params){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		params.put("b_idx", b_idx);
+		
+		return service.mac_status_cng(params);
+	}
+
 }

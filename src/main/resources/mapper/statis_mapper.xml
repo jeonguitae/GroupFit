@@ -59,4 +59,26 @@
 			where `position` !='지점장' AND `position` !='대표' and e.b_idx=#{param2}
 			GROUP BY e.name;
    		</select>
+   		
+   		<select id="memberAdmission" parameterType="hashmap" resultType="statisDTO">
+   			SELECT COUNT(*) AS entry_count, DATE_FORMAT(enter_time, '%H') AS time, DAYNAME(enter_date) AS weekday
+			FROM entry_time
+			WHERE b_idx = #{b_idx} AND DAYNAME(enter_date) = #{day} and DATE_FORMAT(enter_date, '%Y-%m') = #{year}
+			GROUP BY time, weekday
+			ORDER BY time;
+   		</select>
+   		
+   		<select id="countMember" parameterType="hashmap" resultType="statisDTO">
+   			   SELECT DATE_FORMAT(sd.year_month, '%Y-%m') AS `month`,count(rt.emp_no) as countMember
+			   FROM standard_date sd
+			   LEFT JOIN registered_ticket rt ON date_format(rt.purch_date,'%Y-%m')=date_format(sd.year_month,'%Y-%m') and b_idx=#{b_idx}
+			   where YEAR(sd.year_month)=#{branchYear}
+			   GROUP BY DATE_FORMAT(sd.year_month, '%Y-%m');
+   		</select>
+   		
+   		<select id="branchName" resultType="String">
+   			SELECT b_name FROM branch WHERE b_idx=#{b_idx}
+   		</select>
+   			
+   		
    </mapper>
