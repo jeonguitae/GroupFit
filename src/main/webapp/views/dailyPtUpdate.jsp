@@ -126,19 +126,14 @@
    
 				    <div class="container">
 
-				    <form method="post">
+				    <form id="dailyptForm" method="post">
 				    	<input type="hidden" name="dailypt_no" value="${dto.dailypt_no}"/>
 				    
 					    <div style="display: flex; justify-content: space-between; align-items: center;">
 					        <h3 style="margin: 0;">회원pt일지</h3>
 					        
 					        <br>
-					        
-					         <div style="display: flex; align-items: center; margin-left: 50px;">
-				                <input type="checkbox" id="absentCheckbox" name="absentCheckbox">
-				                <label for="absentCheckbox">결석</label>
-				            </div>
-					        
+
 					        <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
 					            <label for="date">날짜 : </label>
 					            <input type="date" id="date" name="date" value="${dto.pt_date}">
@@ -244,7 +239,7 @@
                     
 					<div class="submit-button">
 	                    <button type="submit" formaction="/dailyptUpdate.do" class="btn btn-primary" >수정하기</button>
-	                     <button type="submit" id="absentButton" formaction="/submitcut" class="btn btn-primary">결석</button>
+	                     <button type="submit" id="absentButton" formaction="/updatesubmitcut" class="btn btn-primary">결석</button>
 	                    <button type="button" class="btn btn-primary" onclick="location.href='./dailyptt'" >리스트</button>
 	                </div>
 	                
@@ -308,22 +303,6 @@ registerRemoveButtonEvent();
 
 
 
-
-// 결석 체크박스 상태에 따라 입력 제한 설정
-var absentCheckbox = document.getElementById('absentCheckbox');
-var formInputs = document.querySelectorAll('form input:not(#absentCheckbox)');
-var formTextarea = document.querySelectorAll('form textarea');
-
-absentCheckbox.addEventListener('change', function() {
-    if (this.checked) {
-        disableInputs();
-    } else {
-        enableInputs();
-    }
-});
-
-
-
 //이름 선택 시 해당 이름과 회원번호를 필드에 입력하고 readonly 속성을 설정하는 함수
 function selectName() {
   var selectElement = document.getElementById("daily_pt");
@@ -339,51 +318,44 @@ function selectName() {
 
 
 function disableInputs() {
-    formInputs.forEach(function(input) {
-        input.disabled = true;
-    });
+	  formInputs.forEach(function(input) {
+	    if (input.id !== 'name' && input.id !== 'mem_no') {
+	      input.value = '';
+	    }
+	    input.readOnly = true;
+	  });
 
-    formTextarea.forEach(function(textarea) {
-        textarea.disabled = true;
-    });
-}
-
-function enableInputs() {
-    formInputs.forEach(function(input) {
-        input.disabled = false;
-    });
-
-    formTextarea.forEach(function(textarea) {
-        textarea.disabled = false;
-    });
-}
-
+	  formTextarea.forEach(function(textarea) {
+	    textarea.value = '';
+	    textarea.readOnly = true;
+	  });
+	}
 
 
 
 document.getElementById('absentButton').addEventListener('click', function(event) {
-    event.preventDefault(); // 폼 제출 방지
+	  event.preventDefault(); // 폼 제출 방지
 
-    if (confirm('결석 처리하시겠습니까?')) {
-        var nameInput = document.getElementById('name');
-        var memNoInput = document.getElementById('mem_no');
-        var dateInput = document.getElementById('date');
+	  var nameInput = document.getElementById('name');
+	  var memNoInput = document.getElementById('mem_no');
+	  var dateInput = document.getElementById('date');
 
-        if (nameInput.value.trim() === '' || memNoInput.value.trim() === '' || dateInput.value.trim() === '') {
-            alert('이름, 회원번호, 날짜는 필수 입력 사항입니다.');
-            return; // 함수 종료
-        }
+	  if (nameInput.value.trim() === '' || memNoInput.value.trim() === '' || dateInput.value.trim() === '') {
+	    alert('이름, 회원번호, 날짜는 필수 입력 사항입니다.');
+	    return; // 함수 종료
+	  }
 
-        // 여기에서 추가로 필요한 로직을 수행할 수 있습니다.
+	  if (confirm('결석 처리하시겠습니까?')) {
+	    // 추가로 필요한 로직 수행
 
-    } else {
-        return; // 함수 종료
-    }
-
-    // 폼으로 돌아가는 로직을 수행해야합니다.
-    // 예를 들어, 현재 페이지로 돌아가는 코드를 작성합니다.
-    location.href = './dailyptWrite.do';
-});
+	    // '/submitcut' URL로 이동
+	    document.getElementById('dailyptForm').setAttribute('action', '/updatesubmitcut');
+	    document.getElementById('dailyptForm').submit();
+	  } else {
+	    // 확인을 누르지 않은 경우에는 아무 작업도 수행하지 않습니다.
+	    return; // 함수 종료
+	  }
+	});
 
 
 

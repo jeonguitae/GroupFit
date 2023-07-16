@@ -33,15 +33,14 @@ public interface PtMemberDAO {
 
 	boolean deletedaily_pt(int dailypt_no);
 
-	void dailyptdelete(String dailypt_no);
 
 	int weightptdelete(String dailypt_no);
 
 
 
-	int pt_b_idx(String loginId);
+	//int pt_b_idx(String loginId);
 
-	ArrayList<MemberDTO> ptlist(int b_idx);
+	ArrayList<MemberDTO> ptlist();
 
 	ArrayList<PtMemberDTO> ptmemSearch(String ptmember, String searchInput);
 
@@ -53,6 +52,18 @@ public interface PtMemberDAO {
 	void ptcountUpdate(int mem_no);
 
 	int submitcut(PtMemberDTO dto);
+
+	int updatesubmitcut(HashMap<String, String> params);
+
+	int deletedailypt(HashMap<String, String> params);
+
+	void dailyptdelete(String dailypt_no);
+
+	void plusptcount(String mem_no);
+
+	PtMemberDTO getPtStateByDailyPtNo(String dailypt_no);
+
+
 
 
 	

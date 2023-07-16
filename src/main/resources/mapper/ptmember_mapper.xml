@@ -23,8 +23,7 @@
    
 
    
-   <insert 
-   id="submitcut" parameterType="dailypt">
+   <insert id="submitcut" parameterType="dailypt">
    	 insert into daily_pt (emp_no,mem_no, pt_date, pt_state)
    	 values(${emp_no},#{mem_no},#{pt_date},#{pt_state})
 
@@ -39,6 +38,18 @@
 
    	
    </update>
+   
+   
+    <update id="plusptcount">
+   		    UPDATE pt_mem
+    SET count = count + 1
+    WHERE mem_no = #{mem_no}
+
+   	
+   </update>
+   
+   
+   
    
 
 	<update id="updateaf_weight">
@@ -81,7 +92,7 @@
    <select id="dailyPtDetail" resultType="dailypt">
    
    		select 
-			dp.dailypt_no, dp.mem_no, dp.emp_no, dp.pt_date, dp.af_weight , dp.aerobic , dp.diet , dp.str, m.name AS member_name, e.name AS emp_name
+			dp.dailypt_no, dp.mem_no, dp.emp_no, dp.pt_date, dp.af_weight , dp.aerobic , dp.diet , dp.str, m.name AS member_name, e.name AS emp_name, dp.pt_state
 			
 		from daily_pt dp
 		
@@ -94,7 +105,7 @@
 
    </select>
    
-   
+   <!-- 웨이트 빼고 일지 업데이트 -->
    <update id="dailyptUpdate" parameterType="dailypt">
    		UPDATE daily_pt SET 
    			dailypt_no = #{dailypt_no}
@@ -126,6 +137,12 @@
    </update>
    
    
+	<delete id ="weightptdelete">
+	
+		DELETE FROM pt_weight WHERE dailypt_no = #{dailypt_no}
+
+	</delete>
+   
    
    <insert id="insertNewWeight">
 	   insert into pt_weight (dailypt_no, pt_name, pt_kg, pt_set) 
@@ -143,14 +160,15 @@
    </delete>
    
    
+   <select id="getPtStateByDailyPtNo" resultType="dailypt">
+	   		SELECT
+			    pt_state
+			FROM
+			    daily_pt 
+			    
+			WHERE dailypt_no = #{dailypt_no}
+	</select>
    
-	<delete id ="weightptdelete">
-	
-		DELETE FROM pt_weight WHERE dailypt_no = #{dailypt_no}
-	
-	
-	</delete>
-	
 	
 	
    <delete id="dailyptdelete">
@@ -164,23 +182,32 @@
 	<select id="ptmemSearch" resultType="dailypt" parameterType="hashmap">
 	
 		 
-		 select dp.dailypt_no, dp.mem_no, dp.pt_date, dp.emp_no, m.name AS member_name, e.name AS emp_name
+		 select dp.dailypt_no, dp.mem_no, dp.pt_date, dp.emp_no, m.name AS member_name, e.name AS emp_name, dp.pt_state
 		 FROM daily_pt dp
-		 JOIN
+		 	JOIN
 			    member m ON dp.mem_no = m.mem_no
 			JOIN
 			    emp e ON dp.emp_no = e.emp_no
 
-				where m.mem_no LIKE #{searchInput}
+				where
+				
+				<if test="ptmember.equals('mem_no')">
+		            m.name LIKE #{searchInput}
+		        </if>
+				 <if test="ptmember.equals('member_name')">
+		            m.name LIKE #{searchInput}
+		        </if>
+		        <if test="ptmember.equals('emp_name')">
+		            e.name LIKE #{searchInput}
+		        </if>
 			
-				or m.name LIKE #{searchInput}
 
 	</select>
 	
 	
-	  <select id="pt_b_idx" resultType="int">
+	 <!--  <select id="pt_b_idx" resultType="int">
    		SELECT b_idx FROM emp WHERE emp_no = #{param1}
-   		</select>
+   		</select> -->
    		
    		
    		 <!--   <select id="dailyptlist" resultType="dailypt">
@@ -208,7 +235,6 @@
 			ORDER BY dp.dailypt_no DESC
 			
   		</select>
-   		
-   		
+
    
    </mapper>
