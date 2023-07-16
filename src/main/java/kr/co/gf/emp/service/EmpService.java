@@ -138,10 +138,10 @@ public class EmpService {
 //	}
 
 	public ModelAndView emp_join(HashMap<String, String> params, MultipartFile file, HttpSession session, EmpDTO dto) {
-
+		dto.setEmp_no(dao.getEmpNo());
 		String encpass = encoder.encode(dto.getPw());
 		dto.setPw(encpass);
-
+		
 		int success = dao.emp_join(dto);
 		logger.info("success: " + success);
 
@@ -247,13 +247,9 @@ public class EmpService {
 	}
 
 	// 목록에서 삭제
-	public ModelAndView emp_hide(List<String> hideList) {
+	public void emp_hide(List<String> hideList) {
 		logger.info("hideservice");
 		dao.emp_hide(hideList);
-		String page = "redirect:/empList.go";
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(page);
-		return mav;
 	}
 	
     public HashMap<String, Object> emp_idChk(String emp_no) {

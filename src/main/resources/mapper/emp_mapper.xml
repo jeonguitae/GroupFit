@@ -106,6 +106,15 @@
 		#{phone},#{email},#{position},#{status},#{join_year},#{b_idx})
 	</insert>
 	
+	<select id="getEmpNo" resultType="String">
+      SELECT CASE WHEN DATE_FORMAT(SYSDATE(), '%y%m') = SUBSTRING(MAX(EMP_NO), 1, 4)
+               THEN CONVERT(MAX(EMP_NO) + 1, CHAR)
+               ELSE CONCAT(DATE_FORMAT(SYSDATE(), '%y%m'), '001')
+            END AS EMP_NO
+        FROM EMP
+   </select>
+	
+	
 	<insert id="emp_fileWrite">
 		insert into wphoto(c_idx,new_photo_name,ori_photo_name,board_num)
 		values(#{c_idx}, #{new_photo_name},#{ori_photo_name},#{emp_no})

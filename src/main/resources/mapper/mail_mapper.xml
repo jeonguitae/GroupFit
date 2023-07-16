@@ -43,12 +43,6 @@
 			 ORDER BY SEND_TIME DESC
 		</select>
 		
-		<select id="emp_multi" parameterType="String" resultType="hashmap">
-			SELECT *
-			  FROM EMP
-			 WHERE NAME = #{get_empno}
-		</select>
-		
 		<insert id="post_sendWrite" parameterType="mail" useGeneratedKeys="true" keyColumn="idx" keyProperty="email_num">
 			INSERT INTO POST (SEND_EMPNO, GET_EMPNO, SUBJECT, CONTENT)
 			VALUES (#{send_empno}, #{get_empno}, #{subject}, #{content})
@@ -105,6 +99,13 @@
 			SELECT *
 			  FROM EMP
 			 WHERE NAME = #{emp_no}
+		</select>
+		
+		<select id="emp_multi" parameterType="String" resultType="hashmap">
+			SELECT *
+			  FROM EMP
+			 WHERE NAME = #{get_empno}
+			   AND IS_DELETE = 0
 		</select>
 		
 		<select id="emp_multiList" resultType="hashmap">

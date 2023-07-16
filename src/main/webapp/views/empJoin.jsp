@@ -49,14 +49,14 @@ th{
 						<img id="preview" style="max-width: 200px; max-height: 200px;">
 					</td>
 				</tr>
-				<tr>
+<!-- 			<tr>
 					<th>*사내번호</th>
 					<td>
 						<input type="text" name="emp_no" id="emp_no"/>
 						<button id="idChk" type="button">중복확인</button>
 						<span id="msg"></span>
 					</td>
-				</tr>
+				</tr> -->
 				<tr>
 					<th>*비밀번호</th>
 					<td><input type="password" name="pw" id="pw"/></td>
