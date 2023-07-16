@@ -190,30 +190,23 @@ public class EmpService {
 		return dao.emp_photo(detailid);
 	}
 	
-	public void emp_update(MultipartFile file, HashMap<String, Object> params) {
-		
+	public ModelAndView emp_update(MultipartFile file, HashMap<String, Object> params) {
 		logger.info("params : " + params);
-	
 		int row = dao.emp_update(params);
 		logger.info("update row: " + row);
 		String emp_no = params.get("emp_no").toString();
-		
 		if (row > 0) {
-			logger.info("업로드할 file 있나요? :" + !file.isEmpty());
-		
-		if (!file.isEmpty()) {
-			// 기존 프로필 사진을 데이터베이스에서 삭제합니다.
-			dao.emp_removePhoto(emp_no);
-		
-			attachmentSave(emp_no, file, "직원사진");
-		}
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if (file != null && !file.getOriginalFilename().equals("")) {
+				// 기존 프로필 사진을 데이터베이스에서 삭제합니다.
+				dao.emp_removePhoto(emp_no);
+				attachmentSave(emp_no, file, "직원사진");
 			}
 		}
 		
+		ModelAndView mav = new ModelAndView();
+		String page = row > 0 ? "redirect:/empDetail.go?detailid="+emp_no : "redirect:/empList.go";
+		mav.setViewName(page);
+		return mav;
 	}
 	
 	private void attachmentSave(String emp_no, MultipartFile file, String cls) {

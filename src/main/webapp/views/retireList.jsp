@@ -95,7 +95,7 @@ div[class="table"]{
 							<c:forEach items="${list}" var="emp">
 								<tr>
 									<td>${emp.emp_no}</td>
-									<td><a href="empDetail.do?detailid=${emp.emp_no}">${emp.name}</a></td>
+									<td><a href="empDetail.go?detailid=${emp.emp_no}">${emp.name}</a></td>
 									<td>${emp.b_name}</td>
 									<td>${emp.position}</td>
 									<td>${emp.retire_year}</td>

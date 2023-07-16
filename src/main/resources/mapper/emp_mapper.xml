@@ -131,7 +131,10 @@
 			, email = #{email}
 			, position = #{position}
 			, status = #{status}
+		<if test="retire_year != null and retire_year != ''">
 			, retire_year = #{retire_year}
+		</if>
+			
 		WHERE emp_no = #{emp_no}
 	</update>
 	

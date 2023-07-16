@@ -26,17 +26,13 @@
 		<form action="empUpdate.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 			<table class="table table-dark table-striped">
 				<tr>
-					<c:choose>
-	                 <c:when test="${not empty emp.new_photo_name}">
-	                     <img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
-	                     <input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
-						 <img id="preview" style="max-width: 200px; max-height: 200px;">
-	                 </c:when>
-	                 <c:otherwise>
-	                     <img src="img/GroupFit_lg_2.png" alt="그룹핏"
-							 width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
-	                 </c:otherwise>
-	           		 </c:choose>
+					<c:if test="${emp.new_photo_name ne null}">
+						<img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
+					</c:if>
+					<input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
+					<img id="preview" style="max-width: 200px; max-height: 200px;">
+					<img src="img/GroupFit_lg_2.png" alt="그룹핏"
+						width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
 				</tr>
 				<tr>
 					<th>*사내번호</th>

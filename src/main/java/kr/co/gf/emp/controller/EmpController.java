@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -161,33 +162,34 @@ public class EmpController {
 		return mav;
 	}
 	
-//	@PostMapping(value="/empUpdate.do")
-//	public ModelAndView updateDo(@RequestParam HashMap<String, String>params, MultipartFile file) {
-//		return service.emp_update(params,file);
-//	}
+	@RequestMapping(value="/empUpdate.do")
+	public ModelAndView update(@RequestParam HashMap<String, Object>params, MultipartFile file) {
+		logger.info("params: "+params);
+		logger.info("file: "+file);
+		return service.emp_update(file, params);
+	}
 	
-	 @RequestMapping(value="/empUpdate.do")
-	   public String updateDo(@RequestParam HashMap<String, Object> params, MultipartFile file, HttpSession session, Model model) {
-	       logger.info("직원 수정");
-	       String page = "empUpdate";
-	       String loginId = null;
-	       String emp_no;
-	       logger.info("session loginId : " + session.getAttribute("loginId"));
-	      
-	       if (session.getAttribute("loginId") != null) {
-	          logger.info("params : " + params);
-	          
-	           logger.info("params-emp_no : " + params.get("emp_no"));
-	          loginId = (String) session.getAttribute("loginId");
-	           
-	           if (loginId.equals(params.get("emp_no"))) {
-	              logger.info("file : " + file);
-	               service.emp_update(file, params);
-	               page = "redirect:/empList.go";
-	           }
-	       }
-	       return page;
-	   }
+//	 @RequestMapping(value="/empUpdate.do")
+//	   public ModelAndView updateDo(@RequestParam HashMap<String, Object> params, MultipartFile file, HttpSession session, Model model) {
+//	       logger.info("직원 수정");
+//	       String loginId = null;
+//	       logger.info("session loginId : " + session.getAttribute("loginId"));
+//	      
+//	       if (session.getAttribute("loginId") != null) {
+//	          logger.info("params : " + params);
+//	          
+//	           logger.info("params-emp_no : " + params.get("emp_no"));
+//	          loginId = (String) session.getAttribute("loginId");
+//	           
+//	           if (loginId.equals(params.get("emp_no"))) {
+//	              logger.info("file : " + file);
+//	               service.emp_update(file, params);
+//	           }
+//	       }
+//	       ModelAndView mav = new ModelAndView();
+//	       mav.setViewName(page);
+//	       return mav;
+//	   }
 	
 	// 상세에서 삭제
 	@GetMapping(value="/empDelete.do")
