@@ -40,8 +40,5 @@ public class LoginService {
 		return dao.getEmp(id);
 	}
 
-	public int cometime(String emp_no, String b_idx) {
-		return dao.cometime(emp_no, b_idx);
-	}
 
 }

@@ -1,5 +1,7 @@
+
 package kr.co.gf.commute.controller;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,8 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.gf.commute.dto.CommuteDTO;
 import kr.co.gf.commute.service.CommuteService;
@@ -76,7 +80,7 @@ public class CommuteController {
 	}
 	
 	@RequestMapping(value="/out.do")
-	public String outdo(HttpSession session, Model model) {
+	public String outdo(HttpSession session, Model model, RedirectAttributes rattr) {
 		//세션에 저장된 사내번호 불러오기
 		EmpDTO eDto = (EmpDTO)session.getAttribute("loginEmp"); 
 		String emp_no = eDto.getEmp_no();
@@ -113,48 +117,59 @@ public class CommuteController {
 				Time come_time2=dto2.getCome_time();
 				Time out_time2=dto2.getOut_time();
 				
-				model.addAttribute("wtime",wtime);
-				model.addAttribute("come_time2",come_time2);
-				model.addAttribute("out_time",out_time2);
-				
+				rattr.addFlashAttribute("wtime",wtime);
+				rattr.addFlashAttribute("come_time2",come_time2);
+				rattr.addFlashAttribute("out_time2",out_time2);
+				rattr.addFlashAttribute("emp_no",emp_no);
+				rattr.addFlashAttribute("work_date",now);
 				logger.info("계산 가기 직전 w_time은"+wtime);
 				
-				String page2="redirect:/calculate.do";
-				return page2;
+				page = "redirect:/calculate.do";
 			}
 		}
 		return page;	
 	}
-	/*
-	 * @RequestMapping(value="/calculate.do") public String calculate() {}
-	 */
+	
+		@RequestMapping(value="/calculate.do") 
+		public String calculate(@ModelAttribute("wtime") String wtime, @ModelAttribute("come_time2") Time come_time2, 
+		@ModelAttribute("out_time2") Time out_time2, @ModelAttribute("emp_no")String emp_no,  @ModelAttribute("work_date") LocalDate now, Model model) {
+		
+			logger.info("calculate.do 로거1 : wtime, come_time, out_time"+wtime+come_time2+out_time2+emp_no);
+			logger.info("날짜 왔다"+now);
+			//1.퇴근 시간 최대 10시로 해야하니까 퇴근 시간 설정해야 함 : out_time
+			//2.근무 오전/오후 타입 가져와야
+			
+			String type=cservice.seltype(emp_no);
+			logger.info("2번로거 : 근무타입은"+type);
+			//3.요일 불러오기
+			String day=cservice.workdate(emp_no);
+			logger.info("3번 : 요일은"+day);
+			//3.요일 불러오기
+			//int day=cservice.selday(emp_no, date);
+			
+			cservice.calculate(wtime,come_time2,out_time2,emp_no,type,day,now);
+			model.addAttribute("msg","퇴근 처리 되었습니다.");
+			String page = "main";
+			return page;
+		}
 	
 	@RequestMapping(value = "/wlist.do")
-	public String list(HttpSession session) {
+	public String list(HttpSession session, Model model) {
 		EmpDTO eDto = (EmpDTO) session.getAttribute("loginEmp");
 		String emp_no = eDto.getEmp_no();
+		
 		ArrayList<CommuteDTO> working = cservice.list(emp_no);
+		model.addAttribute("working",working);
+		model.addAttribute("emp_no",emp_no);
 		
 		String page="my_working";
-		//String page="redirect:/calculate.do";
 		return page;
-/*		ModelAndView mav = new ModelAndView("my_working");
+		/*ModelAndView mav = new ModelAndView("my_working");
 		mav.addObject("working", working);
-		return mav;*/
+		return mav;*/ 
 	}
+	
+	
 
-	/*
-	 * @RequestMapping(value = "/out.update") public String outupdate(HttpSession
-	 * session) { EmpDTO eDto = (EmpDTO) session.getAttribute("loginEmp"); String
-	 * emp_no = eDto.getEmp_no();
-	 * 
-	 * EmpDTO eDto2 = (EmpDTO) session.getAttribute("loginEmp"); String b_idx =
-	 * eDto2.getB_idx();
-	 * 
-	 * logger.info("out.do icin emp_no" + emp_no); logger.info("out do icin b_idx는"
-	 * + b_idx);
-	 * 
-	 * return null; }
-	 */
 
 }

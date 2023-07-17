@@ -1,113 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
-   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   
-   <mapper namespace="kr.co.gf.mail.dao.MailDAO">
-   
-   <select id="post_sendSerch" resultType="mail" parameterType="hashmap">
-   		select * from post p
-   		left join emp e on p.send_empno = e.emp_no
-   		<where> 
-			<if test="keyword != null and !keyword.equals('') and opt == 'e_name'">
-				e.name LIKE CONCAT('%',#{keyword},'%')
-			</if>
-			<if test="keyword != null and !keyword.equals('') and opt == 'subject'">
-				p.subject LIKE CONCAT('%',#{keyword},'%')
-			</if>
-			<if test="keyword != null and !keyword.equals('') and opt == 'content'">
-				p.content LIKE CONCAT('%',#{keyword},'%')
-			</if>
-			AND e.is_delete=0;					
-		</where>
-   
-   </select>
-   
-   	<!-- 보낸쪽지 리스트 검색 -->
-	<select id="post_sendList" resultType="mail" 
-		parameterType="String">
-		SELECT * FROM post p
-		left join emp e on p.get_empno = e.emp_no
-		where p.send_empno = #{send_empno} AND p.is_delete=0
-	</select>
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-   	<!-- 받은쪽지 리스트 검색 -->
-	<select id="post_getList" resultType="mail" 
-		parameterType="String">
-		SELECT * FROM post p
-		left join emp e on p.send_empno = e.emp_no
-		where p.get_empno = #{get_empno} AND p.is_delete=0
-	</select>
-
-	<insert id="post_sendWrite" parameterType="mail"
-      useGeneratedKeys="true"  
-      keyColumn="idx" 
-      keyProperty="email_num">
-	  insert into post (send_empno, get_empno, subject, content)
-	  select #{send_empno}, e.emp_no, #{subject}, #{content}
-	  from emp e
-	  where e.name = #{get_empno}
-	</insert>
+	<mapper namespace="kr.co.gf.mail.dao.MailDAO">
 	
-	<select id="post_sendDetail" resultType="mail">
-		SELECT * FROM post p
-		left join emp e on p.get_empno = e.emp_no
-		where p.email_num = #{emailid}
-	</select>
-	
-	<select id="post_GetDetail" resultType="mail">
-		SELECT * FROM post p
-		left join emp e on p.send_empno = e.emp_no
-		where p.email_num = #{emailid}
-	</select>
-	
-	<select id="post_get" resultType="mail">
-		SELECT * FROM post
-		where email_num = #{emailid}
-	</select>
-	
-	<update id="post_upHit">
-		UPDATE post SET 
-		get_chk = 1,
-		chk_time = now()
-	    WHERE email_num = #{emailid} AND get_empno = #{get_empno}
-	</update>
-	
-	<insert id="post_getWrite" parameterType="mail">
-	  insert into post (send_empno, get_empno, subject, content)
-	  select #{send_empno}, e.emp_no, #{subject}, #{content}
-	  from emp e
-	  where e.name = #{get_empno}
-	</insert>
-			
-			
-	<!-- 받은사람no > 이름으로 불러오기 -->	
-	<!-- <select id="emp_post" resultType="mail">
-		select name
-		from emp e
-		inner join post p 
-		where e.emp_no = #{get_empno}
-	</select> -->
-   
-   	<!-- 목록에서 삭제 -->
-	<update id="post_hide" parameterType="hashmap">
-      UPDATE post
-         SET is_delete = 1
-      WHERE email_num IN (
-      <foreach collection="hideList" item="item" separator=",">
-         #{item}
-      </foreach>
-      )
-   </update>
-   
-   <select id="emp_find" resultType="emp">
-	SELECT * FROM emp
-	WHERE name = #{emp_no}
-   </select>
-   
-   <select id="emp_findList" resultType="hashmap">
-	SELECT * FROM emp
-	WHERE name = #{emp_no}
-   </select>
-   
-   
-   </mapper>
+		<select id="post_sendSerch" resultType="mail" parameterType="hashmap">
+			SELECT *
+			  FROM POST P
+			  LEFT JOIN EMP E
+				ON P.SEND_EMPNO = #{emp_no}
+			<where>
+				<if test="keyword != null and !keyword.equals('') and opt == 'e_name'">
+					E.NAME LIKE CONCAT('%',#{keyword},'%')
+				</if>
+				<if test="keyword != null and !keyword.equals('') and opt == 'subject'">
+					P.SUBJECT LIKE CONCAT('%',#{keyword},'%')
+				</if>
+				<if test="keyword != null and !keyword.equals('') and opt == 'content'">
+					P.CONTENT LIKE CONCAT('%',#{keyword},'%')
+				</if>
+			   AND E.IS_DELETE=0
+			</where>
+		</select>
+		
+		<!-- 보낸쪽지 리스트 -->
+		<select id="post_sendList" resultType="mail" parameterType="String">
+			SELECT *
+			  FROM POST P
+			  LEFT JOIN EMP E
+				ON P.GET_EMPNO = E.EMP_NO
+			 WHERE P.SEND_EMPNO = #{send_empno} AND P.IS_DELETE=0
+		</select>
+		
+		<!-- 받은쪽지 리스트 -->
+		<select id="post_getList" resultType="mail" parameterType="String">
+			SELECT *
+			  FROM POST P
+			  LEFT JOIN EMP E
+				ON P.SEND_EMPNO = E.EMP_NO
+			 WHERE P.GET_EMPNO = #{get_empno}
+			   AND P.IS_DELETE=0
+			 ORDER BY SEND_TIME DESC
+		</select>
+		
+		<insert id="post_sendWrite" parameterType="mail" useGeneratedKeys="true" keyColumn="idx" keyProperty="email_num">
+			INSERT INTO POST (SEND_EMPNO, GET_EMPNO, SUBJECT, CONTENT)
+			VALUES (#{send_empno}, #{get_empno}, #{subject}, #{content})
+		</insert>
+		
+		<select id="post_sendDetail" resultType="mail">
+			SELECT *
+			  FROM POST P
+			  LEFT JOIN EMP E
+				ON P.GET_EMPNO = E.EMP_NO
+			 WHERE P.EMAIL_NUM = #{emailid}
+		</select>
+		
+		<select id="post_GetDetail" resultType="mail">
+			SELECT *
+			  FROM POST P
+			  LEFT JOIN EMP E
+				ON P.SEND_EMPNO = E.EMP_NO
+			 WHERE P.EMAIL_NUM = #{emailid}
+		</select>
+		
+		<select id="post_get" resultType="mail">
+			SELECT *
+			  FROM POST P
+			  LEFT JOIN EMP E
+				ON P.SEND_EMPNO = E.EMP_NO
+			 WHERE P.EMAIL_NUM = #{emailid}
+		</select>
+		
+		<update id="post_upHit">
+			UPDATE POST 
+			   SET GET_CHK = 1
+				 , CHK_TIME = NOW()
+			 WHERE EMAIL_NUM = #{emailid} 
+			   AND GET_EMPNO = #{get_empno}
+		</update>
+		
+		<insert id="post_getWrite" parameterType="mail">
+			INSERT INTO POST (SEND_EMPNO, GET_EMPNO, SUBJECT, CONTENT)
+			VALUES (#{send_empno}, #{get_empno}, #{subject}, #{content})
+		</insert>
+		
+		<!-- 목록에서 삭제 -->
+		<update id="post_hide" parameterType="hashmap">
+			UPDATE POST
+			   SET IS_DELETE = 1
+			 WHERE EMAIL_NUM IN
+			<foreach collection="hideList" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</update>
+		
+		<select id="emp_find" resultType="emp">
+			SELECT *
+			  FROM EMP
+			 WHERE NAME = #{emp_no}
+		</select>
+		
+		<select id="emp_multi" parameterType="String" resultType="hashmap">
+			SELECT *
+			  FROM EMP
+			 WHERE NAME = #{get_empno}
+			   AND IS_DELETE = 0
+		</select>
+		
+		<select id="emp_multiList" resultType="hashmap">
+			SELECT *
+			  FROM EMP
+			 WHERE NAME = #{emp_no}
+		</select>
+		
+	</mapper>

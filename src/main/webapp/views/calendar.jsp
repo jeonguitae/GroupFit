@@ -238,6 +238,7 @@
 				    	    editable: false,
 				    	    eventLimit: true,
 				    	    events: [],
+			
 				    	    eventClick: function(info) {
 				    	      // 클릭한 이벤트의 정보를 변수에 저장
 				    	      eventId = info.event.id;
@@ -418,9 +419,24 @@
 				        url: '/events',
 				        data: eventData,
 				        success: function(response) {
+				        	
+				        	 // 해당 지점 정보에 따라 backgroundColor를 설정
+				            if (eventData.b_idx === '1') {
+				              eventData.backgroundColor = 'green';
+				            } else if (eventData.b_idx === '2') {
+				              eventData.backgroundColor = 'blue';
+				            } else if (eventData.b_idx === '3') {
+				              eventData.backgroundColor = 'orange';
+				            } else if (eventData.b_idx === '4') {
+				              eventData.backgroundColor = 'black';
+				            } else {
+				              eventData.backgroundColor = 'green'; // 기본적으로 지정할 색상
+				            }
+
 				          console.log("일정 등록 성공");
 				          calendar.addEvent(eventData);
 				          $('#event-modal').modal('hide');
+				          
 				        },
 				        error: function(e) {
 				          console.log(e);
@@ -453,6 +469,21 @@
 				          id: item.calendar_no // 각 이벤트의 고유 ID를 설정하여 식별합니다.
 				        };
 				        //console.log(newEvent);
+				        
+				          // 해당 지점 정보에 따라 backgroundColor를 설정
+				            if (item.b_idx === '1') {
+				              newEvent.backgroundColor = 'green';
+				            } else if (item.b_idx === '2') {
+				              newEvent.backgroundColor = 'blue';
+				            } else if (item.b_idx === '3') {
+				              newEvent.backgroundColor = 'orange';
+				            } else if (item.b_idx === '4') {
+				              newEvent.backgroundColor = 'black';
+				            } else {
+				              newEvent.backgroundColor = 'green'; // 기본적으로 지정할 색상
+				            }
+
+				        
 				        
 				        calendar.addEvent(newEvent);
 				      });
@@ -499,6 +530,19 @@
 				              id: item.calendar_no
 				            };
 				            console.log(newEvent);
+				            
+				            // 해당 지점 정보에 따라 backgroundColor를 설정
+				            if (item.b_idx === '1') {
+				              newEvent.backgroundColor = 'green';
+				            } else if (item.b_idx === '2') {
+				              newEvent.backgroundColor = 'blue';
+				            } else if (item.b_idx === '3') {
+				              newEvent.backgroundColor = 'orange';
+				            } else if (item.b_idx === '4') {
+				              newEvent.backgroundColor = 'black';
+				            } else {
+				              newEvent.backgroundColor = 'green'; // 기본적으로 지정할 색상
+				            }
 
 				            calendar.addEvent(newEvent);
 				          });
@@ -535,6 +579,19 @@
 				              id: item.calendar_no
 				            };
 				            console.log(newEvent);
+				            
+				            // 해당 지점 정보에 따라 backgroundColor를 설정
+				            if (item.b_idx === '1') {
+				              newEvent.backgroundColor = 'green';
+				            } else if (item.b_idx === '2') {
+				              newEvent.backgroundColor = 'blue';
+				            } else if (item.b_idx === '3') {
+				              newEvent.backgroundColor = 'orange';
+				            } else if (item.b_idx === '4') {
+				              newEvent.backgroundColor = 'black';
+				            } else {
+				              newEvent.backgroundColor = 'green'; // 기본적으로 지정할 색상
+				            }
 
 				            calendar.addEvent(newEvent);
 				          });

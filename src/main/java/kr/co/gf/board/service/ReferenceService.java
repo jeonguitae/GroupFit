@@ -107,24 +107,23 @@ public void upload(MultipartFile uploadFile,int board_num) {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-}
-
-public String selectName(String loginId) {
-	return dao.selectName(loginId);
-	
-}
-
-public String selectFile(String path) {
-	return dao.selectFile(path);
-	
-}
-
-public ArrayList<ReferenceDTO> detailFile(String idx) {
-	return dao.detailFile(idx);
-}
-
-
 	}
+
+	public String selectName(String loginId) {
+		return dao.selectName(loginId);
+		
+	}
+
+	public String selectFile(String path) {
+		return dao.selectFile(path);
+		
+	}
+
+	public ArrayList<ReferenceDTO> detailFile(String idx) {
+		return dao.detailFile(idx);
+	}
+
+}
 
 
 

@@ -1,5 +1,7 @@
 package kr.co.gf.commute.dao;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -19,6 +21,16 @@ public interface CommuteDAO {
 	int outdo(String emp_no, LocalTime now2, LocalDate day);
 
 	CommuteDTO wtime(String emp_no, LocalDate day);
+
+	String seltype(String emp_no);
+
+	//int selday(String emp_no, Date date);
+
+	String workdate(String emp_no);
+
+	int wtype(String emp_no, LocalDate now, String flag);
+
+	int wtypes(String emp_no, LocalDate now, String flags);
 
 	//CommuteDTO selectAll(String emp_no, LocalDate previousDay);
 

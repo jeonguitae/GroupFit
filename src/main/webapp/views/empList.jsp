@@ -66,7 +66,7 @@ div[class="table"]{
 			</c:if>
 			<c:if test="${sessionScope.loginEmp.position eq '대표'}">
 				<button class="btn btn-primary" onclick="location.href='empRepList.do'">지점별</button>
-				<button class="btn btn-primary" onclick="location.href='empRetire.go'">퇴사직원</button>
+				<button class="btn btn-primary" onclick="location.href='empLeaveList.go'">휴직직원</button>
 			</c:if>
 		</div>
 		<div class="table">
@@ -113,7 +113,7 @@ function hide() {
 	      },
 	      dataType: 'text',
 	      success: function(data){
-	         
+	    	  $('form').submit();
 	      },
 	      error: function(e){
 	         console.log(e);

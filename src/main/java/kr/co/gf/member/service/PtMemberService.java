@@ -120,14 +120,18 @@ public class PtMemberService {
 	    dto.setPt_date(params.get("date"));
 	    
 	    
-
+	    // 웨이트 일지 빼고 나머지 업데이트
 	    int success = dao.dailyptUpdate(dto);
+	    
+	    // 일지에 몸무게 입력하면 pt_mem 몸무게에 업데이트
 	    dao.updateupaf_weight(dto);
 
+	    // 일지 업데이트 성공시
 	    if (success == 1) {
 	        int dailypt_no = dto.getDailypt_no();
 	        logger.info("업데이트 웨이트 일지: " + dailypt_no);
 	        
+	        // 일지 삭제
 	        boolean deleteSuccess = dao.deletedaily_pt(dailypt_no);
 	        
 	        logger.info("{}",pt_name.size());
@@ -139,9 +143,10 @@ public class PtMemberService {
 	            String Muge = pt_kg.get(i);
 	            String Set = pt_set.get(i);
 	            //int weightNoValue = weightNoValueList.get(i);
-
+	            
+	            // 일지 삭제 성공 시 
 	            if (deleteSuccess) {
-	                // INSERT 작업 수행
+	                // 웨이트 일지 업데이트 작업 수행
 	                dao.insertNewWeight(dailypt_no, weightname, Muge, Set);
 	            
 	            }
@@ -154,14 +159,25 @@ public class PtMemberService {
 	}
 	
 	
-
-	public void dailyptdelete(String dailypt_no) {
+	// 삭제 할 때 상태가 결석이면 웨이트 일지가 없기 떄문에 결석 일 경우 추가
+	public String dailyptdelete(String dailypt_no, String mem_no) {
+		 
+		//PtMemberDTO dto = new PtMemberDTO();
+		
+		
 		int success = dao.weightptdelete(dailypt_no);
-		if(success == 1) {
+		
+		 PtMemberDTO dto = dao.getPtStateByDailyPtNo(dailypt_no);
+		
+		if(success == 1 || "결석".equals(dto.getPt_state())) {
 			dao.dailyptdelete(dailypt_no);
+			dao.plusptcount(mem_no);
 		}
 		
+		return "redirect:/dailyptt";
 	}
+	
+	
 
 	public HashMap<String, Object> ptmemberSearch(String ptmember, String searchInput) {
 		
@@ -171,7 +187,14 @@ public class PtMemberService {
 		        searchInput = "%" + searchInput + "%";
 		        logger.info("mem_no");
 		        logger.info("searchInput : " + searchInput);
-
+		        
+		        
+		        
+		if (ptmember.equals("member_name")) {
+			searchInput = "%" + searchInput + "%";
+		} else if (ptmember.equals("emp_nmae")) {
+			searchInput = "%" + searchInput + "%";
+		}
 
 				
 		ArrayList<PtMemberDTO> list = dao.ptmemSearch(ptmember,searchInput);
@@ -188,9 +211,9 @@ public class PtMemberService {
 
 	public ArrayList<MemberDTO> ptlist(String loginId) {
 		
-		int b_idx = dao.pt_b_idx(loginId);
+		//int b_idx = dao.pt_b_idx(loginId);
 		
-		return dao.ptlist(b_idx);
+		return dao.ptlist();
 		
 	}
 
@@ -214,6 +237,35 @@ public class PtMemberService {
 		if (submitcut == 1) {
 			page = "redirect:/dailyptt";
 		}
+		
+		return page;
+	}
+
+	
+	// 여기요 여기
+	public String updatesubmitcut(HashMap<String, String> params, ArrayList<String> pt_name, ArrayList<String> pt_kg, ArrayList<String> pt_set, String emp_no) {
+		
+		String page = "";
+		
+		PtMemberDTO dto = new PtMemberDTO();
+
+	    dto.setDailypt_no(Integer.parseInt(params.get("dailypt_no")));
+	    dto.setEmp_no(emp_no);
+	    dto.setMem_no(Integer.parseInt(params.get("mem_no")));
+	    dto.setAf_weight(params.get("af_weight"));
+	    dto.setAerobic(params.get("aerobic"));
+	    dto.setDiet(params.get("diet"));
+	    dto.setStr(params.get("etc"));
+	    dto.setPt_date(params.get("date"));
+		
+		
+		
+		// 수정 상태에서 결석 처리 하려고 했을 때 일지 삭제
+		int deletedailypt = dao.deletedailypt(params);
+		
+		int updatecut = dao.updatesubmitcut(params);
+		
+		page = "redirect:/dailyptt";
 		
 		return page;
 	}

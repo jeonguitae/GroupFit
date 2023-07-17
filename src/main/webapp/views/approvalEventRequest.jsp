@@ -17,11 +17,11 @@
 
 	#table1 {
 		border: 1px solid black;
-		border-collapse: collapse;
-		float: left;
-		margin-top: 5%;
-		margin-left: 5%;
-		position:absolute;
+	    border-collapse: collapse;
+	    float: left;
+	    margin-top: 4%;
+	    margin-left: 5%;
+	    position: absolute;
 	}
 	#table1 th{
 		border: 1px solid black;
@@ -62,7 +62,8 @@
 	    width: 30%;
 	    float: right;
 	    margin-right: 9%;
-	    margin-top: 2%;
+	    margin-top: 5%;
+	    margin-bottom: 4%;
 	}
 	
 	#table3 th {
@@ -172,9 +173,9 @@
 		<section class="content">      
 			<div class="container-fluid">
 			
-				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
-				<h5 id="aAp"><a href="approvalExpenseReport.go">지출결의서</a></h5>
 				<h5 id="aAp" style="text-decoration: underline; text-decoration-color:  skyblue; color: skyblue;"><a href="approvalEventRequest.go">이벤트신청</a></h5>
+				<h5 id="aAp"><a href="approvalExpenseReport.go">지출결의서</a></h5>
+				<h5 id="aAp"><a href="approvalVacationRequest.go">휴가신청</a></h5>
 				
 			
 				<div id="table1_div">
@@ -232,28 +233,28 @@
 				<table id="table2">
 					<tr>
 						<th>제목</th>
-						<td><input type="text" name="subject"/></td>
+						<td><input type="text" name="subject" id="subject"/></td>
 					</tr>
 					<tr>
 						<th>기간</th>
-						<td><input type="date" name="start_day"/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="finish_day"/></td>
+						<td><input type="date" name="start_day" id="start_day"/>&nbsp;&nbsp;~&nbsp;&nbsp;<input type="date" name="finish_day" id="finish_day"/></td>
 					</tr>
 					<tr>
 						<th>사유</th>
-						<td><textarea id="sa" name="reason"></textarea></td>
+						<td><textarea id="sa" name="reason" class="reason"></textarea></td>
 					</tr>
 					<tr>
 						<th>기타사항</th>
-						<td><textarea id="sa" name="etc"></textarea></td>
+						<td><textarea id="sa" name="etc" class="etc"></textarea></td>
 					</tr>
 					<tr>
 						<th>첨부파일</th>
-						<td><input type="file" name="files" multiple="multiple"/></td>
+						<td><input type="file" name="files" multiple="multiple" class="files"/></td>
 					</tr>
 				</table>
 				<div id="button_sin_mok">
 					<button type="submit" id="sin" formaction="approvalEventRequest.do">신청하기</button>
-					<button type="submit" id="mm" formaction="saveRequest.do">임시저장</button>
+					<button type="submit" id="mm" formaction="saveRequest.do" onclick="save()">임시저장</button>
 					<button type="button" id="mok" onclick="location.href='approvalList.do'">목록</button>
 				</div>
 				<input type="hidden" name="emp_no" value="${loginId}"/>
@@ -270,11 +271,10 @@
 </body>
 <script type="text/javascript">
 
-	var msg = "${msg}";
-	if (msg != "") {
-		alert(msg);
-	}
-
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
 	var currentDate = new Date();
 	var year = currentDate.getFullYear();
 	var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // 월이 한 자리 수일 경우 앞에 0을 추가하여 두 자리로 만듦
@@ -282,5 +282,12 @@
 	
 	var dateSpan = document.getElementById("date");
 	dateSpan.textContent = year + "-" + month + "-" + day;
+	
+	function save(){
+		if($('#subject').val()==null ){
+			alert("제목을 입력해주세요");
+		}
+	}
+	
 </script>
 </html>
