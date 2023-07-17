@@ -81,14 +81,34 @@ public class StatisController {
 		return map;
 	}
 	
+	//대표가 보는 개인 차트
 	@RequestMapping(value="/individualChart")
-	public String individualChart(Model model) {
+	public String individualChart(Model model, HttpSession session) {
 		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
-		list = service.empList();
-		model.addAttribute("empList",list);
-		list = service.branchList();
-		model.addAttribute("branchList",list);
-		return "individualChart";
+		EmpDTO empDTO = (EmpDTO) session.getAttribute("loginEmp");
+		String position = empDTO.getPosition();
+		String page="";
+		if(position.equals("대표")) {
+			page="individualChart";
+			list = service.empList();
+			model.addAttribute("empList",list);
+			list = service.branchList();
+			model.addAttribute("branchList",list);
+		}else if(position.equals("지점장")) {
+			page="branchIndividualChart";
+			String b_idx = empDTO.getB_idx();
+			logger.info("지점 번호 :"+b_idx);
+		    list = service.branchEmpList(b_idx);
+		    model.addAttribute("empList",list);
+		}else {
+			page="personalIndividualChart";
+		}
+		/*
+		 * ArrayList<StatisDTO> list = new ArrayList<StatisDTO>(); list =
+		 * service.empList(); model.addAttribute("empList",list); list =
+		 * service.branchList(); model.addAttribute("branchList",list);
+		 */
+		return page;
 	}
 	
 	@RequestMapping(value="/empList.ajax")
@@ -118,6 +138,7 @@ public class StatisController {
 		return map;
 	}
 	
+	// 지점장이 보는 개인 매출
 	@RequestMapping(value="/branchIndividualChart")
 	public String branchIndividualChart(Model model,HttpSession session) {
 		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
@@ -140,6 +161,7 @@ public class StatisController {
 		return map;
 	}
 	
+	//트레이너가 보는 개인 매출 페이지
 	@RequestMapping(value="personalIndividualChart")
 	public String personalIndividualChart() {
 		return "personalIndividualChart";
@@ -157,11 +179,14 @@ public class StatisController {
 	
 	@RequestMapping(value="/branchPersonal.ajax")
 	@ResponseBody
-	public HashMap<String, Object> branchPersonal(@RequestParam String formattedDate, @RequestParam String b_idx){
+	public HashMap<String, Object> branchPersonal(@RequestParam String formattedDate, @RequestParam String b_idx, HttpSession session){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+		EmpDTO empDTO = (EmpDTO) session.getAttribute("loginEmp");
+		String position = empDTO.getPosition();
+		
 		logger.info("출력할 지점, 달"+formattedDate+b_idx);
-		list = service.branchPersonal(formattedDate,b_idx);
+		list = service.branchPersonal(formattedDate,b_idx,position);
 		map.put("branchPersonal", list);
 		return map;
 	}

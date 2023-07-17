@@ -63,6 +63,9 @@ public interface PtMemberDAO {
 
 	PtMemberDTO getPtStateByDailyPtNo(String dailypt_no);
 
+	void submitcutminus(int mem_no);
+
+
 
 
 
