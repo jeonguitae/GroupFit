@@ -51,8 +51,8 @@
 							<label for="ticket-type" class="form-label">종류</label> <select
 								class="form-select" id="ticket-type" name="ticket_type">
 								<option selected value="none">이용권 종류 선택</option>
-								<option value="1">일반 회원권</option>
-								<option value="2">PT 회원권</option>
+								<option value="일반">일반 회원권</option>
+								<option value="pt">PT 회원권</option>
 							</select>
 						</div>
 						<div class="mb-3">
@@ -113,8 +113,8 @@
 							<label for="ticket-type" class="form-label">종류</label> <select
 								class="form-select" id="mticket_type" name="ticket_type">
 								<option selected value="none">이용권 종류 선택</option>
-								<option value="1">일반 회원권</option>
-								<option value="2">PT 회원권</option>
+								<option value="일반">일반 회원권</option>
+								<option value="pt">PT 회원권</option>
 							</select>
 						</div>
 						<div class="mb-3">
@@ -191,9 +191,16 @@
 				<div class="row">
 					<div class="col-12">
 						<div style="height: 50px">
+							<div class="float-left" style="display: flex">
+								<select class="form-select" id="filter_ticket_cnt">
+									<option value="10">10</option>
+									<option value="20">20</option>
+									<option value="30">30</option>
+								</select>
+							</div>
 							<div class="float-right">
 								<a class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#ticketAddModal" data-shuffle> 이용권 등록 </a>&nbsp;<a
+									data-bs-target="#ticketAddModal" data-shuffle> 이용권 등록 </a>&nbsp;&nbsp;<a
 									class="btn btn-danger" data-bs-toggle="modal"
 									data-bs-target="#ticketDelModal" data-shuffle> 이용권 삭제 </a>
 							</div>

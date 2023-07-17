@@ -9,7 +9,7 @@
 	</insert>
 	
 	<select id="ticketList" resultType="ticket">
-		select * from ticket natural join branch
+		select * from ticket natural join branch order by ticket_no asc
 	</select>
 	
 	<update id="ticketModify" parameterType="ticket">
