@@ -38,6 +38,15 @@
 
    	
    </update>
+  
+   
+    <update id="submitcutminus">
+   		    UPDATE pt_mem
+    SET count = count - 1
+    WHERE mem_no = #{mem_no}
+
+   	
+   </update>
    
    
     <update id="plusptcount">
