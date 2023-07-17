@@ -334,35 +334,37 @@ function listCall(page) {
 function listPrint(list){
 	console.log("listPrint 수행")
 	var content = '';
+	if(list.length > 0){
+		list.forEach(function(ticket,idx){
+			content += `<tr>
+									<td><input class="form-check-input"
+									style="margin-left: 0" type="checkbox"
+									value="
+									`+ticket.ticket_no+`"></td>
+								<td>`+ticket.ticket_no+`</td>`
+			content += `
+				<td><a type="button" href="#" data-bs-toggle="modal"
+					data-bs-target="#ticketModModal"
+					onclick="ticketModify(
+				`+ticket.ticket_no+`,
+				`+ticket.ticket_name+`,
+				`+ticket.b_idx+`,
+				`+ticket.b_name+`,
+				`+ticket.ticket_time+`,
+				`+ticket.ticket_price+`,
+				`+ticket.ticket_type+`
+				)">`+ticket.ticket_name+`</a></td>
+				<td>`+ticket.b_name+`</td>`
+			if (ticket.ticket_type=="일반"){
+				content += `<td>일반 회원권</td><td>`+ticket.ticket_time+`개월</td><td>`+ticket.ticket_price+`</td></tr>`
+			} else {
+				content += `<td>PT 회원권</td><td>`+ticket.ticket_time+`회</td><td>`+ticket.ticket_price+`</td></tr>`
+			}
+		});
+	} else {
+		content = "<tr><td colspan='7' style='text-align:center'>조회되는 이용권이 없습니다.</td></tr>"
+	}
 	
-	list.forEach(function(ticket,idx){
-		content += `<tr>
-								<td><input class="form-check-input"
-								style="margin-left: 0" type="checkbox"
-								value="
-								`+ticket.ticket_no+`"></td>
-							<td>`+ticket.ticket_no+`</td>`
-		content += `
-			<td><a type="button" href="#" data-bs-toggle="modal"
-				data-bs-target="#ticketModModal"
-				onclick="ticketModify(
-			`+ticket.ticket_no+`,
-			`+ticket.ticket_name+`,
-			`+ticket.b_idx+`,
-			`+ticket.b_name+`,
-			`+ticket.ticket_time+`,
-			`+ticket.ticket_price+`,
-			`+ticket.ticket_type+`
-			)">`+ticket.ticket_name+`</a></td>
-			<td>`+ticket.b_name+`</td>`
-		if (ticket.ticket_type=="일반"){
-			content += `<td>일반 회원권</td><td>`+ticket.ticket_time+`개월</td><td>`+ticket.ticket_price+`</td>
-			</tr>`
-		} else {
-			content += `<td>PT 회원권</td><td>`+ticket.ticket_time+`회</td><td>`+ticket.ticket_price+`</td>
-			</tr>`
-		}
-	});
 	
 	$('#ticketListBody').empty();
 	$('#ticketListBody').append(content);
