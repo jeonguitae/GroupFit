@@ -35,11 +35,11 @@
    		</select>
    		
    		<select id="empList">
-   			SELECT name,b_idx,emp_no FROM emp where position !='대표'
+   			SELECT name,b_idx,emp_no FROM emp where position !='대표' AND position!='지점장'
    		</select>
    		
    		<select id="branchEmpList" resultType="statisDTO">
-   			SELECT name,emp_no FROM emp where b_idx=#{param1}
+   			SELECT name,emp_no FROM emp where b_idx=#{param1} AND position!='지점장'
    		</select>
    		
    		<select id="individual" resultType="statisDTO">
