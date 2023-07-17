@@ -236,11 +236,11 @@
 													`${ticket.ticket_type}`
 													)">${ticket.ticket_name}</a></td>
 													<td>${ticket.b_name}</td>
-													<td><c:if test="${ticket.ticket_type eq 1}">일반 회원권</c:if>
-														<c:if test="${ticket.ticket_type eq 2}">PT 회원권</c:if></td>
+													<td><c:if test="${ticket.ticket_type eq '일반'}">일반 회원권</c:if>
+														<c:if test="${ticket.ticket_type eq 'pt'}">PT 회원권</c:if></td>
 													<td>${ticket.ticket_time}<c:if
-															test="${ticket.ticket_type eq 1}">개월</c:if> <c:if
-															test="${ticket.ticket_type eq 2}">회</c:if>
+															test="${ticket.ticket_type eq '일반'}">개월</c:if> <c:if
+															test="${ticket.ticket_type eq 'pt'}">회</c:if>
 													</td>
 													<td>${ticket.ticket_price}</td>
 												</tr>
