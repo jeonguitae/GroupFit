@@ -235,6 +235,10 @@ public class PtMemberService {
 		int submitcut =  dao.submitcut(dto);
 		
 		if (submitcut == 1) {
+			int mem_no = dto.getMem_no();
+			// 결석 할 때 pt_count -1
+			dao.submitcutminus(mem_no);
+			
 			page = "redirect:/dailyptt";
 		}
 		
