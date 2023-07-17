@@ -37,7 +37,7 @@ th{
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>신규직원 인적 정보 작성</h3>
-		<form action="empJoin.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+		<form action="empJoin.do" method="post" enctype="multipart/form-data" onsubmit="return valiJoinForm()">
 			<table class="table table-dark table-striped">
 				<tr>
 					<th>
@@ -99,7 +99,8 @@ th{
 					<th>*직급</th>
 					<td>
 						<select name="position" id="position">
-						    <option value="직원">직원</option>
+						    <option value="FC">FC</option>
+						    <option value="트레이너">트레이너</option>
 						    <option value="지점장">지점장</option>
 						    <option value="대표">대표</option>
 						</select>
@@ -145,7 +146,7 @@ function previewImage(input) {
     }
   }
   
-function validateForm() {
+function valiJoinForm() {
 	   var emp_no = document.getElementById('emp_no').value;
 	   var pw = document.getElementById('pw').value;
 	   var name = document.getElementById('name').value;
@@ -157,11 +158,6 @@ function validateForm() {
 	   var position = document.getElementById('position').value;
 	   var status = document.getElementById('status').value;
 	   var join_year = document.getElementById('join_year').value;
-	   
-	   if (emp_no.trim() == '') {
-	      alert('사내번호를 입력해주세요.');
-	      return false;
-	   }
 	   
 	   if (pw.trim() == '') {
 	      alert('비밀번호를 입력해주세요.');

@@ -27,10 +27,17 @@ public class MailController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
+	//보낸쪽지 검색
 	@RequestMapping(value="/postSendList.do")
-	public ModelAndView SendSerch(@RequestParam HashMap<String, String>params) {
-		logger.info("serch : " + params);
-		return service.post_sendSerch(params);
+	public ModelAndView SendSerch(@RequestParam HashMap<String, String>params, HttpSession session) {
+		
+		String loginId = params.get("emp_no");
+	    String sessionLoginId = (String) session.getAttribute("loginId");
+	    
+	    if (sessionLoginId != null && sessionLoginId.equals(loginId)) {
+	        logger.info("search : " + params);
+	   }
+	    return service.post_sendSerch(params);
 	}
 	
 	// 보낸 쪽지

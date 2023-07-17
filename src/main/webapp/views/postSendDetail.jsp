@@ -67,7 +67,6 @@
 								<textarea name="content" readonly>${post.content}</textarea> 
 							</td>
 						</tr>
-						<button type="button" onclick="location.href='./postGetWrite.go?emailid=${post.email_num}'">회신</button>	
 						<button type="button" onclick="location.href='./postSendList.go'">보낸쪽지 목록</button>	
 						<button type="button" onclick="location.href='./postGetList.go'">받은쪽지 목록</button>	
 					</table>
