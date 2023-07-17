@@ -132,17 +132,20 @@
 	
 	<update id="emp_update" parameterType="hashmap">
 		UPDATE emp SET 
-			  pw = #{newPw}
-			, name = #{name}
+			  name = #{name}
 			, gender = #{gender}
 			, birth = #{birth}
 			, phone = #{phone}
 			, email = #{email}
 			, position = #{position}
 			, status = #{status}
+		<if test="newPw != null and newPw != ''">
+			 , pw = #{newPw}
+		</if>
 		<if test="retire_year != null and retire_year != ''">
 			, retire_year = #{retire_year}
 		</if>
+
 			
 		WHERE emp_no = #{emp_no}
 	</update>

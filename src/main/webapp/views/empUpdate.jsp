@@ -39,8 +39,8 @@
 					<td><input type="text" name="emp_no" value="${emp.emp_no}" readonly /></td>
 				</tr>
 				<tr>
-					<th>*비밀번호</th>
-					<td><input type="text" name="pw" value="${emp.pw}" id="pw"/></td>
+					<th>비밀번호</th>
+					<td><input type="text" name="pw" value="" id="pw"/></td>
 				</tr>
 				<tr>
 					<th>*이름</th>
@@ -56,7 +56,6 @@
 						<input type="radio" value="여" name="gender"
 						<c:if test="${emp.gender eq '여'}">checked</c:if>
 						 />여
-						 ${emp.gender}
 					</td>
 				</tr>
 				<tr>
@@ -144,14 +143,10 @@ function test() {
 	var email = document.getElementById('email').value;
 	var b_idx = document.getElementById('b_idx').value;
 	var position = document.getElementById('position').value;
-   var status = document.getElementById('status').value;
-   var join_year = document.getElementById('join_year').value;
+   	var status = document.getElementById('status').value;
+   	var join_year = document.getElementById('join_year').value;
    
-   if (pw.trim() == '') {
-      alert('비밀번호를 입력해주세요.');
-      return false;
-   }
-   if (pw.length < 8) {
+   if (pw.trim() != '' && pw.length < 8) {
 	   alert('비밀번호는 8자리 이상 입력해주세요!');
 	   return false;
 	 }
