@@ -132,7 +132,7 @@
 	
 	<update id="emp_update" parameterType="hashmap">
 		UPDATE emp SET 
-			  pw = #{pw}
+			  pw = #{newPw}
 			, name = #{name}
 			, gender = #{gender}
 			, birth = #{birth}

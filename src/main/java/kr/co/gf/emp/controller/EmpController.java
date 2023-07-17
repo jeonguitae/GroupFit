@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.emp.service.EmpService;
@@ -109,9 +110,9 @@ public class EmpController {
 	
 	@RequestMapping(value="/empJoin.do")
 	public ModelAndView join(@RequestParam HashMap<String, String>params, MultipartFile file,
-							 HttpSession session, EmpDTO dto) {
+							 HttpSession session, EmpDTO dto, RedirectAttributes rattr) {
 		logger.info("params:"+params);
-		return service.emp_join(params, file, session, dto);
+		return service.emp_join(params, file, session, dto, rattr);
 	}
 	
 

@@ -21,7 +21,7 @@
 </head>
 <style>
 div[class="btn1"]{
-	margin-left: 1108px;
+	margin-left: 900px;
 }
 
 form[class="search"]{
@@ -75,39 +75,67 @@ div[class="table"]{
 				<div class="btn1">
 					<button onclick="location.href='./postSendWrite.go'">쪽지 작성</button>
 					<button onclick="hide()">쪽지 삭제</button>
+					<button onclick="location.href='./postWasteGetList.go'">휴지통</button>
 				</div>
-				<div class="table">
-					<table>
-						<thead>
-							<tr>
-								<th>삭제</th>
-								<th>제목</th>
-								<th>보낸사람</th>
-								<th>받은시간</th>
-								<th>읽은시간</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${list}" var="post">
+				<div class="card card-primary">
+					<div class="card-header">
+						<h4 class="card-title">받은 쪽지 리스트</h4>
+					</div>
+					<div class="card-body">
+						<table class="table">
+							<thead class="table-light">
 								<tr>
-									<td><input type="checkbox" name="chk" value="${post.email_num}"/></td>
-									<td><a href="postGetDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
-									<td>${post.name}</td>
-									<td>${post.send_time}</td>
-									<c:if test="${post.get_chk eq '1'}">
-									<td>${post.chk_time}</td>
-									</c:if>
-									<c:if test="${post.get_chk ne '1'}">
-									<td>안읽음</td>
-									</c:if>
+									<th>삭제</th>
+									<th>제목</th>
+									<th>보낸사람</th>
+									<th>받은시간</th>
+									<th>읽은시간</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach items="${list}" var="post">
+									<tr>
+										<td><input type="checkbox" name="chk" value="${post.email_num}"/></td>
+										<td><a href="postGetDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
+										<td>${post.name}</td>
+										<td>${post.send_time}</td>
+										<c:if test="${post.get_chk eq '1'}">
+										<td>${post.chk_time}</td>
+										</c:if>
+										<c:if test="${post.get_chk ne '1'}">
+										<td>안읽음</td>
+										</c:if>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
+<script>
+function hide() {
+	   var hideList = new Array();
+	   $("input[name=chk]:checked").each(function() {
+	      hideList.push($(this).val());
+	   });
+	   $.ajax({
+	      type: 'post',
+	      url: 'post_sendhide.ajax',
+	      data: {
+	         'hideList' : hideList
+	      },
+	      dataType: 'text',
+	      success: function(data){
+	    	  alert('삭제되었습니다!');
+	      },
+	      error: function(e){
+	         console.log(e);
+	      }
+	   });
+	}
+</script>
 </html>

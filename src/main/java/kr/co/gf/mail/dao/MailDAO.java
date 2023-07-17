@@ -38,4 +38,8 @@ public interface MailDAO {
 	List<HashMap<String, Object>> emp_multi(String get_empno);
 	
 	ArrayList<EmpDTO> emp_multiList(ArrayList<String> params);
+
+	ArrayList<MailDTO> post_sendWasteList(String send_empno);
+
+	ArrayList<MailDTO> post_getWasteList(String get_empno);
 }

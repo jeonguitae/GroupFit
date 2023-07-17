@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>보낸 쪽지함</title>
+<title>받은쪽지 휴지통</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -19,24 +19,6 @@
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
-<style>
-div[class="btn1"]{
-	margin-left: 900px;
-}
-
-form[class="search"]{
-	margin-left: 377px;
-}
-
-h1.headline{
-	margin-left: 640px;
-	margin-top: 20px;
-}
-
-div[class="table"]{
-	margin-left: 376px;
-}
-</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
 	<div class="content-wrapper" style="margin-top: 57.08px">
@@ -44,7 +26,7 @@ div[class="table"]{
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>보낸 쪽지함</h1>
+						<h1>받은쪽지 휴지통</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -60,44 +42,24 @@ div[class="table"]{
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<fieldset>
-					<form action="postSendList.do" class="search">
-					<input type="hidden" name="emp_no" value="${sessionScope.loginId}"/>
-						<select name="opt">
-							<option value="e_name">받은사람</option>
-							<option value="subject">제목</option>
-							<option value="content">내용</option>
-						</select>
-						<input type="text" name="keyword" value="" placeholder="검색어를 입력하세요"/>
-						<button>검색</button>
-					</form>
-				</fieldset>
-		
-				<div class="btn1">
-					<button onclick="location.href='./postSendWrite.go'">쪽지 작성</button>
-					<button onclick="hide()">쪽지 삭제</button>
-					<button onclick="location.href='./postWasteList.go'">휴지통</button>
-				</div>
 				<div class="card card-primary">
 					<div class="card-header">
-						<h4 class="card-title">보낸 쪽지 리스트</h4>
+						<h4 class="card-title">받은 쪽지 휴지통</h4>
 					</div>
-					<div class="card-body">
-						<table class="table">
-							<thead class="table-light">
+						<div class="card-body">
+							<table class="table">
+								<thead class="table-light">
 								<tr>
-									<th>삭제</th>
 									<th>제목</th>
-									<th>받은사람</th>
-									<th>보낸시간</th>
+									<th>보낸사람</th>
+									<th>받은시간</th>
 									<th>읽은시간</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${list}" var="post">
 									<tr>
-										<td><input type="checkbox" name="chk" value="${post.email_num}"/></td>
-										<td><a href="postSendDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
+										<td><a href="postGetDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
 										<td>${post.name}</td>
 										<td>${post.send_time}</td>
 										<c:if test="${post.get_chk eq '1'}">
@@ -117,31 +79,4 @@ div[class="table"]{
 		</section>
 	</div>
 </body>
-<script>
-function hide() {
-	   var hideList = new Array();
-	   $("input[name=chk]:checked").each(function() {
-	      hideList.push($(this).val());
-	   });
-	   $.ajax({
-	      type: 'post',
-	      url: 'post_sendhide.ajax',
-	      data: {
-	         'hideList' : hideList
-	      },
-	      dataType: 'text',
-	      success: function(data){
-	    	  alert('삭제되었습니다!');
-	      },
-	      error: function(e){
-	         console.log(e);
-	      }
-	   });
-	}
-var msg = "${msg}";
-if(msg != ""){
-   alert(msg);
-}
-
-</script>
 </html>
