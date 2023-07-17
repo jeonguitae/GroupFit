@@ -10,5 +10,4 @@
 	<select id="getEmp" resultType="emp">
 		SELECT * from emp natural join branch where emp_no = #{param1}
 	</select>
-	
 </mapper>
