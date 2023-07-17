@@ -143,11 +143,10 @@ public class MachineController {
 	@ResponseBody
 	public HashMap<String, Object> fix_content(HttpSession session, String mac_num){
 		
-		
 		return service.fix_content(mac_num);
 	}
 	
-	@RequestMapping(value="mac_status_cng.ajax.ajax")
+	@RequestMapping(value="mac_status_cng.ajax")
 	@ResponseBody
 	public HashMap<String, Object> mac_status_cng(HttpSession session, @RequestParam HashMap<String, String> params){
 		
