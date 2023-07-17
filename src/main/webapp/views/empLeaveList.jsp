@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>퇴직 직원 리스트</title>
+<title>휴직 직원 리스트</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -44,7 +44,7 @@ div[class="table"]{
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>퇴직 직원 리스트</h1>
+						<h1>휴직 직원 리스트</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -88,7 +88,7 @@ div[class="table"]{
 								<th>이름</th>
 								<th>지점</th>
 								<th>직급</th>
-								<th>퇴사일</th>
+								<th>휴직일</th>
 							</tr>
 						</thead>
 						<tbody>

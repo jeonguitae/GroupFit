@@ -12,7 +12,7 @@
 	<!-- getEvents 메서드에 대한 select 쿼리문 작성 -->
     <select id="calendarlist" resultType="kr.co.gf.calender.dto.CalenderDTO">
         <!-- 여기에 실제로 데이터베이스에서 일정 데이터를 조회하는 SQL 쿼리문 작성 -->
-        SELECT * FROM calendar;
+        SELECT * FROM calendar
     </select>
     
     <update id="updateEvent" parameterType="cal">

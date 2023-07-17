@@ -251,7 +251,7 @@
 
 							<div class="float-right">
 								<a class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#annualAddModal" data-shuffle onclick="annualAddModal(event)"> 연차/휴가 생성 </a>&nbsp;<a
+									data-bs-target="#annualAddModal" data-shuffle onclick="annualAddModal(event)"> 연차/휴가 생성 </a>&nbsp;&nbsp;<a
 									class="btn btn-secondary" data-bs-toggle="modal"
 									data-bs-target="#annualSubModal" data-shuffle onclick="annualSubModal(event)"> 연차/휴가 소진 </a>
 							</div>

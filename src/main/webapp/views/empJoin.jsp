@@ -37,7 +37,7 @@ th{
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>신규직원 인적 정보 작성</h3>
-		<form action="empJoin.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+		<form action="empJoin.do" method="post" enctype="multipart/form-data" onsubmit="return valiJoinForm()">
 			<table class="table table-dark table-striped">
 				<tr>
 					<th>
@@ -49,10 +49,14 @@ th{
 						<img id="preview" style="max-width: 200px; max-height: 200px;">
 					</td>
 				</tr>
-				<tr>
+<!-- 			<tr>
 					<th>*사내번호</th>
-					<td><input type="text" name="emp_no" id="emp_no"/></td>
-				</tr>
+					<td>
+						<input type="text" name="emp_no" id="emp_no"/>
+						<button id="idChk" type="button">중복확인</button>
+						<span id="msg"></span>
+					</td>
+				</tr> -->
 				<tr>
 					<th>*비밀번호</th>
 					<td><input type="password" name="pw" id="pw"/></td>
@@ -64,7 +68,7 @@ th{
 				<tr>
 					<th>*성별</th>
 					<td>
-						<input type="radio" value="남" name="gender" id="gender"/>남
+						<input type="radio" value="남" name="gender" />남
 						<input type="radio" value="여" name="gender" id="gender"/>여
 					</td>
 				</tr>
@@ -95,7 +99,8 @@ th{
 					<th>*직급</th>
 					<td>
 						<select name="position" id="position">
-						    <option value="직원">직원</option>
+						    <option value="FC">FC</option>
+						    <option value="트레이너">트레이너</option>
 						    <option value="지점장">지점장</option>
 						    <option value="대표">대표</option>
 						</select>
@@ -141,7 +146,7 @@ function previewImage(input) {
     }
   }
   
-function validateForm() {
+function valiJoinForm() {
 	   var emp_no = document.getElementById('emp_no').value;
 	   var pw = document.getElementById('pw').value;
 	   var name = document.getElementById('name').value;
@@ -154,15 +159,14 @@ function validateForm() {
 	   var status = document.getElementById('status').value;
 	   var join_year = document.getElementById('join_year').value;
 	   
-	   if (emp_no.trim() == '') {
-	      alert('사내번호를 입력해주세요.');
-	      return false;
-	   }
-	   
 	   if (pw.trim() == '') {
 	      alert('비밀번호를 입력해주세요.');
 	      return false;
 	   }
+	   if (pw.length < 8) {
+		   alert('비밀번호는 8자리 이상 입력해주세요!');
+		   return false;
+		 }
 	   if (name.trim() == '') {
 	      alert('이름을 입력해주세요.');
 	      return false;
@@ -199,8 +203,34 @@ function validateForm() {
 	      alert('입사일를 입력해주세요.');
 	      return false;
 	   }
-	   
 	   return true;
 	}
+
+$('#idChk').on('click',function(e){
+    
+    var emp_no = $('#emp_no').val();
+    
+    $.ajax({
+       type:'post',
+       url:'idChk.ajax',
+       data:{emp_no:emp_no},
+       dataType:'json',
+       success:function(data){
+          if(data.idChk == 0){
+             console.log('사용 가능한 사내번호');
+             $('#msg').css({'font-size':'8px', 'color':'darkgreen'});
+             $('#msg').html('사용 가능한 사내번호 입니다.');
+             overlayChk = true;
+          }else{
+             console.log('이미 사용 중인 사내번호');
+             $('#msg').css({'font-size':'8px', 'color':'red'});
+             $('#msg').html('이미 사용 중인 사내번호 입니다.');
+          }
+       },
+       error:function(e){
+          console.log(e);
+       }
+    });
+});
 </script>
 </html>

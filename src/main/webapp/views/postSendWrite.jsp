@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -12,13 +11,60 @@
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet"
-	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+	/* Add custom table styles here */
+	table {
+		width: 30%;
+		border-collapse: collapse;
+		border: 1px solid #ccc;
+	}
+	
+	th, td {
+		padding: 8px;
+		border-bottom: 1px solid #ccc;
+		text-align: left;
+	}
+	
+	th {
+		background-color: #3f6791;
+	}
+	
+	tbody tr:hover {
+		background-color: ##3f6791;
+	}
+	
+	input[type="text"], textarea {
+		width: 100%;
+		padding: 8px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+	
+	input.empFind {
+		width: 15%;
+		padding: 8px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+	}
+	
+	button {
+		background-color: #007bff;
+		color: #fff;
+		border: none;
+		padding: 8px 16px;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+	
+	button:hover {
+		background-color: #0056b3;
+	}
+</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
 	<div class="content-wrapper" style="margin-top: 57.08px">
@@ -26,7 +72,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>쪽지 쓰기</h1>
+						<h1>쪽지 작성하기</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -37,129 +83,120 @@
 					</div>
 				</div>
 			</div>
-			<!-- /.container-fluid -->
+		<!-- /.container-fluid -->
 		</section>
-<!-- Main content -->
+		<!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<form action="postSendWrite.do" method="post" enctype="multipart/form-data">
+	         	직원 찾기
+				<ul>
+					<li>
+						<input class="empFind" type="text" id="get_empno" name="get_empno" placeholder="직원이름을 입력하세요"/>
+						<button onclick="empFind()">찾기</button>
+					</li>         
+				</ul>
+				
+				<table>
+					<thead>
+						<tr>
+							<th>사내번호</th>
+							<th>직원이름</th>
+							<th>선택</th>
+						</tr>
+					</thead>
+					<tbody id ="list"></tbody>
+				</table>
+				<form id="sendForm" action="postSendWrite.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 					<table>
 						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
+						<input type="hidden" name="get_empno" value=""/>
 						<tr>
-							<th>*작성자</th>
-							<td><input type="text" value="${emp.name}" readonly/></td>
+							<th>*받는사람</th>
+							<td><input type="text" id="getEmpInfo" value="" readonly/></td>
 						</tr>
 						<tr>
 							<th>*제목</th>
-							<td><input type="text" name="subject"/></td>
-						</tr>
-						<tr>
-							<th>*받는사람 이름</th>
-							<td>
-								<p>
-									<input type="text" name="get_empno"/>
-									
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<th>*첨부파일</th>
-							<td><input type="file" name="post_photo"/></td>
+							<td><input type="text" id="subject" name="subject"/></td>
 						</tr>
 						<tr>
 							<th>*내용</th>
-							<td>
-								<textarea name="content"></textarea> 
-							</td>
+							<td><textarea id="content" name="content"></textarea></td>
 						</tr>
-						<input type="submit" value="보내기"/>
-						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
+						<button>보내기</button>
+						<button type="button" onclick="location.href='./postSendList.go'">목록</button>
 					</table>
 				</form>
-				
-				<div id="list">
-				
-				</div>
-
-				<button class="cng" onclick="openModal()">직원 찾기</button>&nbsp;
-				
-				<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
-				    <div class="modal-dialog" role="document">
-				      <div class="modal-content">
-				        <div class="modal-header">
-				          	<h5 class="modal-title" id="event-modal-label">직원 찾기</h5>
-				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				            <span aria-hidden="true">&times;</span>
-				          </button>
-				        </div>
-				        <div class="modal-body">
-				          <form id="event-form">
-				            <div class="form-group">
-				              <label for="event-name">직원 이름</label>
-				              <input type="text" class="form-control" id="emp_no" name="emp_no" placeholder="직원이름을 입력하세요">
-				            </div>
-				          </form>
-				        </div>
-				        
-				        <div class="modal-footer">
-				          <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-				          <button type="button" class="btn btn-primary" id="save-event-btn2">저장</button>
-				        </div>
-				      </div>
-				   </div>
-				</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
 <script>
+function empFind() {
+	var get_empno = $('#get_empno').val();
 
-openModal(page);
+	$.ajax({
+		type: 'post',
+		url: 'empNameFind.ajax',
+		data: { 'get_empno' : get_empno },
+		success: function(data) {
+			if (data.length > 0) { // 리스트로 결과를 받았으므로 길이로 확인
+				listDraw(data);
+			}
+			else{
+				alert('찾는 직원이 없습니다!');
+				$("#sendForm input[name=get_empno]").val('');
+				$("#getEmpInfo").val('');
+				$('#list').empty();
+			}
+		},
+		error: function(e) {
+			alert('직원찾기에 실패 했습니다.\r\n 다시 시도해 주세요!');
+			$("#sendForm input[name=get_empno]").val('');
+			$("#getEmpInfo").val('');
+			$('#list').empty();
+		}
+	});
+}
 
-function listPrint(list){
-	   var content="";
-	   list.forEach(function(item){
-	      content +='<tr>';
-	      content +='<td class="text-center col-md-1">'+item.emp_no+'</td>';
-	      content +='<td class="text-center col-md-1">'+item.name+'</td>';
-	      content +='</tr>';
-	   });
-	   $('#list').empty();
-	   $('#list').append(content);
+function listDraw(list) {
+	var content = '';
+	list.forEach(function(item, index) {
+		content += '<tr>';
+		content += '<td>' + item.emp_no + '</td>';
+		content += '<td>' + item.name + '</td>';
+		content += '<td><button type="button" onclick="setEmpInfo(\'' + item.emp_no + '\', \''+ item.name +'\')">선택</button></td>';
+		content += '</tr>';
+	});
+	$('#list').empty().append(content);
+}
+
+function setEmpInfo(emp_no, name) {
+	$("#sendForm input[name=get_empno]").val(emp_no);
+	var empInfo = name + " (" + emp_no + ")";
+	$("#getEmpInfo").val(empInfo);
+}
+
+function validateForm() {
+	   var getEmpInfo = document.getElementById('getEmpInfo').value;
+	   var subject = document.getElementById('subject').value;
+	   var content = document.getElementById('content').value;
+	   
+	   if (getEmpInfo.trim() == '') {
+	      alert('받는사람을 입력해주세요.');
+	      return false;
+	   }
+	   
+	   if (subject.trim() == '') {
+	      alert('제목을 입력해주세요.');
+	      return false;
+	   }
+	   if (content.trim() == '') {
+	      alert('내용을 입력해주세요.');
+	      return false;
+	   }
+
+	   return true;
 	}
-
-
-
-function openModal(page) {
-    $('#event-modal').modal('show');
-  }
-
-  
-$(document).on('click', '#save-event-btn2', function(page) {
-    // 데이터 추출
-    var emp_no = $('#emp_no').val();
-    
-    // AJAX 요청
-    $.ajax({
-      type: 'POST',
-      url: 'emp_find.ajax',
-      data: {
-    	  'emp_no' : emp_no
-      },
-      success: function(data) {
-        console.log(data.list);
-        listPrint(data.list);
-        openModal(page);
-      },
-      error: function(e) {
-        console.log(e);
-      }
-    });
-  });
-  
-$(document).on('click', '#event-modal.close, #event-modal .modal-footer .btn-secondary', function() {
-    $('#event-modal').modal('hide');
-  });
 </script>
 </html>
