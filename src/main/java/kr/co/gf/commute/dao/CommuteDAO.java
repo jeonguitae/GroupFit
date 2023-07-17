@@ -30,6 +30,8 @@ public interface CommuteDAO {
 
 	int wtype(String emp_no, LocalDate now, String flag);
 
+	int wtypes(String emp_no, LocalDate now, String flags);
+
 	//CommuteDTO selectAll(String emp_no, LocalDate previousDay);
 
 }

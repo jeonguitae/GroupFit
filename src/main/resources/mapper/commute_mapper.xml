@@ -47,4 +47,10 @@
   	UPDATE working SET w_type=#{flag} WHERE emp_no=#{emp_no} AND work_date=#{now}
   	</update>
   	
+  	<update id="wtypes">
+  	UPDATE working SET w_type=#{flags}
+  	WHERE emp_no=#{emp_no} AND work_date=#{now}
+  	</update>
+  	
+  	
    </mapper>
