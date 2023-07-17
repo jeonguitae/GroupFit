@@ -41,13 +41,9 @@ public class EmpService {
 	public void tempJoin(EmpDTO dto) {
 		logger.info("ID:" + dto.getEmp_no());
 		logger.info("PW:" + dto.getPw());
-
 		String encpass = encoder.encode(dto.getPw());
-
 		dto.setPw(encpass);
-
 		int row = dao.tempJoin(dto);
-
 	}
 
 	// 직원리스트검색

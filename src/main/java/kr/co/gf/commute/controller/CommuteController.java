@@ -125,7 +125,6 @@ public class CommuteController {
 				logger.info("계산 가기 직전 w_time은"+wtime);
 				
 				page = "redirect:/calculate.do";
-				
 			}
 		}
 		return page;	
@@ -133,7 +132,7 @@ public class CommuteController {
 	
 		@RequestMapping(value="/calculate.do") 
 		public String calculate(@ModelAttribute("wtime") String wtime, @ModelAttribute("come_time2") Time come_time2, 
-		@ModelAttribute("out_time2") Time out_time2, @ModelAttribute("emp_no")String emp_no,  @ModelAttribute("work_date") LocalDate now) {
+		@ModelAttribute("out_time2") Time out_time2, @ModelAttribute("emp_no")String emp_no,  @ModelAttribute("work_date") LocalDate now, Model model) {
 		
 			logger.info("calculate.do 로거1 : wtime, come_time, out_time"+wtime+come_time2+out_time2+emp_no);
 			logger.info("날짜 왔다"+now);
@@ -149,77 +148,28 @@ public class CommuteController {
 			//int day=cservice.selday(emp_no, date);
 			
 			cservice.calculate(wtime,come_time2,out_time2,emp_no,type,day,now);
-
-			//공통작업 : 퇴근 시간 최대 설정
-			//첫번째 경우의 수 : 평일
-/*			if (!day.equals("Saturday")) {
-				logger.info("4번 : 평일");
-				//두번째 경우의 수 : 오전
-				if (type.equals("오전")) {
-					logger.info("5번 : 오전 근무");
-					//1.최대/최소시간 설정 및 최대시간 설정 완료
-					//원래는 15
-					LocalTime out_time = out_time2.toLocalTime();
-					LocalTime maxtime = LocalTime.of(15, 0);
-					
-					LocalTime come_time = come_time2.toLocalTime();
-					LocalTime mintime = LocalTime.of(7, 0);
-					//13,15
-					LocalTime lower = LocalTime.of(15, 0);
-					LocalTime upper = LocalTime.of(16, 0);
-					
-					if (out_time.isAfter(maxtime)) {
-						out_time = maxtime;
-						logger.info("6번 : 퇴근 시간 최대로 설정 out_time은"+out_time);
-					//2.지각 아닌 경우(빨리옴)
-						if (mintime.isAfter(come_time)) {
-							//조퇴/결근 여부 확인 : 문제는 
-							if (out_time.isAfter(lower) && out_time.isBefore(upper)) {
-								String flag="조퇴";
-								logger.info("7번 결근은 아님");
-								int row=cservice.wtype(emp_no,out_time2,flag);
-								logger.info("8번 : 결근 update시 숫자는 "+row);
-							}
-								
-							}else {//결근인 경우
-								
-							}
-						}else {//지각인 경우
-							
-						}
-					}
-				}*/
-		
-
-			return null;
+			model.addAttribute("msg","퇴근 처리 되었습니다.");
+			String page = "main";
+			return page;
 		}
 	
 	@RequestMapping(value = "/wlist.do")
-	public String list(HttpSession session) {
+	public String list(HttpSession session, Model model) {
 		EmpDTO eDto = (EmpDTO) session.getAttribute("loginEmp");
 		String emp_no = eDto.getEmp_no();
+		
 		ArrayList<CommuteDTO> working = cservice.list(emp_no);
+		model.addAttribute("working",working);
+		model.addAttribute("emp_no",emp_no);
 		
 		String page="my_working";
-		//String page="redirect:/calculate.do";
 		return page;
-/*		ModelAndView mav = new ModelAndView("my_working");
+		/*ModelAndView mav = new ModelAndView("my_working");
 		mav.addObject("working", working);
-		return mav;*/
+		return mav;*/ 
 	}
+	
+	
 
-	/*
-	 * @RequestMapping(value = "/out.update") public String outupdate(HttpSession
-	 * session) { EmpDTO eDto = (EmpDTO) session.getAttribute("loginEmp"); String
-	 * emp_no = eDto.getEmp_no();
-	 * 
-	 * EmpDTO eDto2 = (EmpDTO) session.getAttribute("loginEmp"); String b_idx =
-	 * eDto2.getB_idx();
-	 * 
-	 * logger.info("out.do icin emp_no" + emp_no); logger.info("out do icin b_idx는"
-	 * + b_idx);
-	 * 
-	 * return null; }
-	 */
 
 }

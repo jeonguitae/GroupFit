@@ -47,14 +47,9 @@ public class LoginController {
 			session.setAttribute("loginEmp", service.getEmp(id));
 			logger.info("emp: " + session.getAttribute("loginEmp"));
 			
-			EmpDTO eDto=(EmpDTO) session.getAttribute("loginEmp");
-			String emp_no = eDto.getEmp_no();		
-			EmpDTO eDto2=(EmpDTO) session.getAttribute("loginEmp");
-			String b_idx= eDto2.getB_idx();
 			
-			int row=service.cometime(emp_no, b_idx);
-			logger.info("출결관리 insert 됐으므로 숫자"+row);
-		}else {
+		}
+			else {
 			rAttr.addFlashAttribute("msg", "사번 또는 비밀번호를 확인하세요");
 		}
 		

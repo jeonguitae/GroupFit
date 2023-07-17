@@ -11,8 +11,4 @@
 		SELECT * from emp natural join branch where emp_no = #{param1}
 	</select>
 	
-	<insert id="cometime">
-		INSERT INTO working(emp_no, b_idx)
-		VALUES(#{emp_no},#{b_idx})
-	</insert>
 </mapper>

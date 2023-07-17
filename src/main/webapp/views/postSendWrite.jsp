@@ -92,9 +92,10 @@
 				<ul>
 					<li>
 						<input class="empFind" type="text" id="get_empno" name="get_empno" placeholder="직원이름을 입력하세요"/>
+						<button onclick="empFind()">찾기</button>
 					</li>         
 				</ul>
-				<button onclick="empFind()">찾기</button>
+				
 				<table>
 					<thead>
 						<tr>
@@ -105,7 +106,7 @@
 					</thead>
 					<tbody id ="list"></tbody>
 				</table>
-				<form id="sendForm" action="postSendWrite.do" method="post" enctype="multipart/form-data">
+				<form id="sendForm" action="postSendWrite.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 					<table>
 						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
 						<input type="hidden" name="get_empno" value=""/>
@@ -115,11 +116,11 @@
 						</tr>
 						<tr>
 							<th>*제목</th>
-							<td><input type="text" name="subject"/></td>
+							<td><input type="text" id="subject" name="subject"/></td>
 						</tr>
 						<tr>
 							<th>*내용</th>
-							<td><textarea name="content"></textarea></td>
+							<td><textarea id="content" name="content"></textarea></td>
 						</tr>
 						<button>보내기</button>
 						<button type="button" onclick="location.href='./postSendList.go'">목록</button>
@@ -175,5 +176,27 @@ function setEmpInfo(emp_no, name) {
 	var empInfo = name + " (" + emp_no + ")";
 	$("#getEmpInfo").val(empInfo);
 }
+
+function validateForm() {
+	   var getEmpInfo = document.getElementById('getEmpInfo').value;
+	   var subject = document.getElementById('subject').value;
+	   var content = document.getElementById('content').value;
+	   
+	   if (getEmpInfo.trim() == '') {
+	      alert('받는사람을 입력해주세요.');
+	      return false;
+	   }
+	   
+	   if (subject.trim() == '') {
+	      alert('제목을 입력해주세요.');
+	      return false;
+	   }
+	   if (content.trim() == '') {
+	      alert('내용을 입력해주세요.');
+	      return false;
+	   }
+
+	   return true;
+	}
 </script>
 </html>
