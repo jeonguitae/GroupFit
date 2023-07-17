@@ -23,20 +23,16 @@
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>직원 프로필 수정하기</h3>
-		<form action="empUpdate.do" method="post" enctype="multipart/form-data">
+		<form action="empUpdate.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 			<table class="table table-dark table-striped">
 				<tr>
-					<c:choose>
-	                 <c:when test="${not empty emp.new_photo_name}">
-	                     <img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
-	                     <input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
-						 <img id="preview" style="max-width: 200px; max-height: 200px;">
-	                 </c:when>
-	                 <c:otherwise>
-	                     <img src="img/GroupFit_lg_2.png" alt="그룹핏"
-							 width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
-	                 </c:otherwise>
-	           		 </c:choose>
+					<c:if test="${emp.new_photo_name ne null}">
+						<img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
+					</c:if>
+					<input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
+					<img id="preview" style="max-width: 200px; max-height: 200px;">
+					<img src="img/GroupFit_lg_2.png" alt="그룹핏"
+						width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
 				</tr>
 				<tr>
 					<th>*사내번호</th>
@@ -44,35 +40,35 @@
 				</tr>
 				<tr>
 					<th>*비밀번호</th>
-					<td><input type="text" name="pw" value="${emp.pw}" /></td>
+					<td><input type="text" name="pw" value="${emp.pw}" id="pw"/></td>
 				</tr>
 				<tr>
 					<th>*이름</th>
-					<td><input type="text" name="name" value="${emp.name}" /></td>
+					<td><input type="text" name="name" value="${emp.name}" id="name" /></td>
 				</tr>
 				<tr>
 					<th>*성별</th>
 					<td>
-						<input type="radio" value="남" name="gender"
+						<input type="radio" value="남" name="gender" 
 						<c:if test="${emp.gender eq '남'}">checked</c:if>
 						 />남
 						
-						<input type="radio" value="여" name="gender"
+						<input type="radio" value="여" name="gender" id="gender"
 						<c:if test="${emp.gender eq '여'}">checked</c:if>
 						 />여
 					</td>
 				</tr>
 				<tr>
 					<th>*생년월일</th>
-					<td><input type="date" name="birth" value="${emp.birth}" /></td>
+					<td><input type="date" name="birth" value="${emp.birth}" id="birth"/></td>
 				</tr>
 				<tr>
 					<th>*연락처</th>
-					<td><input type="text" name="phone" value="${emp.phone}" /></td>
+					<td><input type="text" name="phone" value="${emp.phone}" id="phone"/></td>
 				</tr>
 				<tr>
 					<th>*이메일</th>
-					<td><input type="email" name="email" value="${emp.email}" /></td>
+					<td><input type="email" name="email" value="${emp.email}" id="email"/></td>
 				</tr>
 				<tr>
 					<th>*지점번호</th>
@@ -109,13 +105,13 @@
 				</tr>
 				<tr>
 					<th>*입사일자</th>
-					<td><input type="date" name="join_year" value="${emp.join_year}" /></td>
+					<td><input type="date" id="join_year" name="join_year" value="${emp.join_year}" /></td>
 				</tr>
 				<tr>
 					<th>*퇴사일자</th>
 					<td><input type="date" id="retire_year" name="retire_year"/></td>
 				</tr>
-				<input type="submit" value="등록"/>
+				<input type="submit" value="수정" >
 				<button type="button" onclick="location.href='./empList.go'">목록</button>	
 				<button type="button" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
 			</table>
@@ -137,5 +133,74 @@ function previewImage(input) {
       reader.readAsDataURL(input.files[0]);
     }
   }
+
+function validateForm() {
+	   
+	   var pw = document.getElementById('pw').value;
+	   var name = document.getElementById('name').value;
+	   var gender = document.getElementById('gender').value;
+	   var birth = document.getElementById('birth').value;
+	   var phone = document.getElementById('phone').value;
+	   var email = document.getElementById('email').value;
+	   var b_idx = document.getElementById('b_idx').value;
+	   var position = document.getElementById('position').value;
+	   var status = document.getElementById('status').value;
+	   var join_year = document.getElementById('join_year').value;
+	   var retire_year = document.getElementById('retire_year').value;
+	   
+	   
+	   if (pw.trim() == '') {
+	      alert('비밀번호를 입력해주세요.');
+	      return false;
+	   }
+	   
+	   if (pw.length < 8) {
+		   alert('비밀번호는 8자리 이상 입력해주세요!');
+		   return false;
+		 }
+	   if (name.trim() == '') {
+	      alert('이름을 입력해주세요.');
+	      return false;
+	   }
+	   if (gender == '') {
+	      alert('성별을 입력해주세요.');
+	      return false;
+	   }
+	   if (birth.trim() == '') {
+	      alert('생년월일을 입력해주세요.');
+	      return false;
+	   }
+	   if (phone.trim() == '') {
+	      alert('연락처를 입력해주세요.');
+	      return false;
+	   }
+	   if (email.trim() == '') {
+	      alert('이메일을 입력해주세요.');
+	      return false;
+	   }
+	   if (b_idx.trim() == '') {
+	      alert('지점을 입력해주세요.');
+	      return false;
+	   }
+	   if (position.trim() == '') {
+	      alert('지점을 입력해주세요.');
+	      return false;
+	   }
+	   if (status.trim() == '') {
+	      alert('재직상태를 입력해주세요.');
+	      return false;
+	   }
+	   if (join_year.trim() == '') {
+	      alert('입사일를 입력해주세요.');
+	      return false;
+	   }
+	   if (retire_year.trim() == '') {
+	      alert('퇴사일를 입력해주세요.');
+	      return false;
+	   }
+	   return true;
+	}
+
+
 </script>
 </html>

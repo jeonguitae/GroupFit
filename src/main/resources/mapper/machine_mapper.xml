@@ -61,4 +61,27 @@
 			INSERT INTO fixlist(mac_num, emp_no, fixed_content, b_idx)
 			VALUES(#{mac_num}, #{emp_no}, #{fixed_content}, #{b_idx})
 		</insert>
+		
+		<select id="fixedmaclist" resultType="machine">
+			SELECT m.mac_name, m.mac_num, f.fixed_date, f.emp_no
+			FROM machine m JOIN fixlist f
+			ON m.mac_num = f.mac_num 
+			WHERE m.b_idx = #{param1}
+		</select>
+		
+		<select id="fix_content" resultType="machine">
+			SELECT m.mac_name, m.mac_num, f.fixed_content, w.new_photo_name
+			FROM machine m
+			JOIN fixlist f ON m.mac_num = f.mac_num
+			JOIN wphoto w ON m.mac_num = w.board_num
+			WHERE w.c_idx = '5' AND m.mac_num = #{param1}
+		</select>
+		
+		<update id="mac_status_cng" parameterType="String">
+			UPDATE mac_chk SET mac_status = #{mac_status} WHERE mac_num = #{mac_num} AND b_idx = #{b_idx}
+		</update>
+		
+		<delete id="delete_fix_mac" parameterType="String">
+			DELETE FROM fixlist WHERE mac_num = #{mac_num} AND b_idx = #{b_idx}
+		</delete>
    </mapper>

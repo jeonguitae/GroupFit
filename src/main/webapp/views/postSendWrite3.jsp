@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회신 보내기</title>
+<title>쪽지 작성하기</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>회신 보내기</h1>
+						<h1>쪽지 쓰기</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -42,23 +42,17 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<form action="postGetWrite.do" method="post" enctype="multipart/form-data">
+				
+				<form action="postSendWrite.do" method="post" enctype="multipart/form-data">
 					<table>
-						<input type="hidden" name="send_empno" value="${post.get_empno}"/>
-<%-- 					<tr>
-							<th>*보내는사람</th>
+						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
+						<tr>
+							<th>*작성자</th>
 							<td><input type="text" value="${emp.name}" readonly/></td>
-						</tr> --%>
+						</tr>
 						<tr>
 							<th>*제목</th>
 							<td><input type="text" name="subject"/></td>
-						</tr>
-						<tr>
-							<th>*받는사람 이름</th>
-							<td>
-								<input type="hidden" name="get_empno" value="${post.send_empno}"/>
-								<input type="text" value="${post.name}"/>
-							</td>
 						</tr>
 						<tr>
 							<th>*내용</th>
@@ -66,8 +60,8 @@
 								<textarea name="content"></textarea> 
 							</td>
 						</tr>
-						<input class="btn btn-primary" type="submit" value="회신보내기"/>
-						<button class="btn btn-primary" type="button" onclick="location.href='./postSendList.go'">목록</button>	
+						<input type="submit" value="보내기"/>
+						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
 					</table>
 				</form>
 			</div>
@@ -76,5 +70,7 @@
 	</div>
 </body>
 <script>
+
+
 </script>
 </html>

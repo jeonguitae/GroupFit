@@ -138,10 +138,10 @@ public class EmpService {
 //	}
 
 	public ModelAndView emp_join(HashMap<String, String> params, MultipartFile file, HttpSession session, EmpDTO dto) {
-
+		dto.setEmp_no(dao.getEmpNo());
 		String encpass = encoder.encode(dto.getPw());
 		dto.setPw(encpass);
-
+		
 		int success = dao.emp_join(dto);
 		logger.info("success: " + success);
 
@@ -150,8 +150,7 @@ public class EmpService {
 
 		if (success > 0) {
 			msg = "직원등록에 성공했습니다.";
-			page = "redirect:/empDetail.do";
-
+			page = "redirect:/empDetail.go";
 			if (file != null && !file.isEmpty()) {
 				// 입력받은 파일 이름
 				String ori_photo_name = file.getOriginalFilename();
@@ -191,30 +190,23 @@ public class EmpService {
 		return dao.emp_photo(detailid);
 	}
 	
-	public void emp_update(MultipartFile file, HashMap<String, Object> params) {
-		
+	public ModelAndView emp_update(MultipartFile file, HashMap<String, Object> params) {
 		logger.info("params : " + params);
-	
 		int row = dao.emp_update(params);
 		logger.info("update row: " + row);
 		String emp_no = params.get("emp_no").toString();
-		
 		if (row > 0) {
-			logger.info("업로드할 file 있나요? :" + !file.isEmpty());
-		
-		if (!file.isEmpty()) {
-			// 기존 프로필 사진을 데이터베이스에서 삭제합니다.
-			dao.emp_removePhoto(emp_no);
-		
-			attachmentSave(emp_no, file, "직원사진");
-		}
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if (file != null && !file.getOriginalFilename().equals("")) {
+				// 기존 프로필 사진을 데이터베이스에서 삭제합니다.
+				dao.emp_removePhoto(emp_no);
+				attachmentSave(emp_no, file, "직원사진");
 			}
 		}
 		
+		ModelAndView mav = new ModelAndView();
+		String page = row > 0 ? "redirect:/empDetail.go?detailid="+emp_no : "redirect:/empList.go";
+		mav.setViewName(page);
+		return mav;
 	}
 	
 	private void attachmentSave(String emp_no, MultipartFile file, String cls) {
@@ -255,15 +247,23 @@ public class EmpService {
 	}
 
 	// 목록에서 삭제
-	public ModelAndView emp_hide(List<String> hideList) {
+	public void emp_hide(List<String> hideList) {
 		logger.info("hideservice");
 		dao.emp_hide(hideList);
-		String page = "redirect:/empList.go";
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName(page);
-		return mav;
 	}
+	
+    public HashMap<String, Object> emp_idChk(String emp_no) {
+        
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        logger.info("service emp+no");
+        int idChk = dao.emp_idChk(emp_no);
+        map.put("idChk", idChk);
+        return map;
+    }
 
-
+	public String emp_position(String loginId) {
+		
+		return dao.emp_position(loginId);
+	}
 
 }

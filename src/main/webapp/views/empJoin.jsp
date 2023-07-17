@@ -49,10 +49,14 @@ th{
 						<img id="preview" style="max-width: 200px; max-height: 200px;">
 					</td>
 				</tr>
-				<tr>
+<!-- 			<tr>
 					<th>*사내번호</th>
-					<td><input type="text" name="emp_no" id="emp_no"/></td>
-				</tr>
+					<td>
+						<input type="text" name="emp_no" id="emp_no"/>
+						<button id="idChk" type="button">중복확인</button>
+						<span id="msg"></span>
+					</td>
+				</tr> -->
 				<tr>
 					<th>*비밀번호</th>
 					<td><input type="password" name="pw" id="pw"/></td>
@@ -64,7 +68,7 @@ th{
 				<tr>
 					<th>*성별</th>
 					<td>
-						<input type="radio" value="남" name="gender" id="gender"/>남
+						<input type="radio" value="남" name="gender" />남
 						<input type="radio" value="여" name="gender" id="gender"/>여
 					</td>
 				</tr>
@@ -163,6 +167,10 @@ function validateForm() {
 	      alert('비밀번호를 입력해주세요.');
 	      return false;
 	   }
+	   if (pw.length < 8) {
+		   alert('비밀번호는 8자리 이상 입력해주세요!');
+		   return false;
+		 }
 	   if (name.trim() == '') {
 	      alert('이름을 입력해주세요.');
 	      return false;
@@ -199,8 +207,34 @@ function validateForm() {
 	      alert('입사일를 입력해주세요.');
 	      return false;
 	   }
-	   
 	   return true;
 	}
+
+$('#idChk').on('click',function(e){
+    
+    var emp_no = $('#emp_no').val();
+    
+    $.ajax({
+       type:'post',
+       url:'idChk.ajax',
+       data:{emp_no:emp_no},
+       dataType:'json',
+       success:function(data){
+          if(data.idChk == 0){
+             console.log('사용 가능한 사내번호');
+             $('#msg').css({'font-size':'8px', 'color':'darkgreen'});
+             $('#msg').html('사용 가능한 사내번호 입니다.');
+             overlayChk = true;
+          }else{
+             console.log('이미 사용 중인 사내번호');
+             $('#msg').css({'font-size':'8px', 'color':'red'});
+             $('#msg').html('이미 사용 중인 사내번호 입니다.');
+          }
+       },
+       error:function(e){
+          console.log(e);
+       }
+    });
+});
 </script>
 </html>
