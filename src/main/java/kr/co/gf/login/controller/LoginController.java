@@ -46,8 +46,6 @@ public class LoginController {
 			session.setAttribute("loginId", id);
 			session.setAttribute("loginEmp", service.getEmp(id));
 			logger.info("emp: " + session.getAttribute("loginEmp"));
-			
-			
 		}
 			else {
 			rAttr.addFlashAttribute("msg", "사번 또는 비밀번호를 확인하세요");
