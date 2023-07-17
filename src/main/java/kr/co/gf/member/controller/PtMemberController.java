@@ -113,6 +113,43 @@ public class PtMemberController {
 	}
 	
 	
+	// 여기요 여기 수정시 결석버튼이요
+	@RequestMapping(value="/updatesubmitcut")
+	public String updatesubmitcut(@RequestParam HashMap<String, String> params
+			,HttpServletRequest request
+			,HttpSession session) {
+		
+				// 로그인 한 트레이너 직번이 emp_no 에 들어가도록 세션
+				EmpDTO empDTO = (EmpDTO) session.getAttribute("loginEmp");
+				String emp_no = empDTO.getEmp_no();
+				
+				// pt_name 파라미터 처리
+			    String[] ptNameArray = request.getParameterValues("pt_name[]");
+			    ArrayList<String> pt_name = new ArrayList<>(Arrays.asList(ptNameArray));
+			    
+			    // pt_kg 파라미터 처리
+			    String[] ptKgArray = request.getParameterValues("pt_kg[]");
+			    ArrayList<String> pt_kg = new ArrayList<>(Arrays.asList(ptKgArray));
+			    
+			    // pt_set 파라미터 처리
+			    String[] ptSetArray = request.getParameterValues("pt_set[]");
+			    ArrayList<String> pt_set = new ArrayList<>(Arrays.asList(ptSetArray));
+				
+			    
+				/*
+				 * String[] weightNoValueArray =
+				 * request.getParameterValues("weight_no_value[]"); ArrayList<Integer>
+				 * weightNoValueList = new ArrayList<>(); for (String weightNoValue :
+				 * weightNoValueArray) { weightNoValueList.add(Integer.parseInt(weightNoValue));
+				 * }
+				 */
+		
+		return service.updatesubmitcut(params,pt_name,pt_kg,pt_set,emp_no);
+	}
+	
+	
+	
+	
 	@RequestMapping(value="/submitcut", method = {RequestMethod.GET, RequestMethod.POST})
 	public String submitcut(@RequestParam HashMap<String, String> params
 			,HttpSession session) {
@@ -133,19 +170,17 @@ public class PtMemberController {
 		String page = "redirect:/dailyptt";
 		
 		PtMemberDTO dto = service.dailyPtDetail(dailypt_no);
-		
+		 
 		model.addAttribute("dto", dto);
+		
 		
 		ArrayList<PtMemberDTO> list = new ArrayList<PtMemberDTO>();
 		list = service.weightList(dailypt_no);
 		model.addAttribute("weightList",list);
 		
-		for (PtMemberDTO dto2 : list) {
-		    System.out.println(dto.getWeight_no()); 
-		    // 나머지 필드에 대해서도 필요한 작업 수행
-		}
 
 		if(dto != null) {
+
 			page = "dailyPtDetail";
 		}
 		
@@ -220,10 +255,15 @@ public class PtMemberController {
 	
 	
 	@RequestMapping(value="/dailyptdelete.do")
-	public String delete(@RequestParam String dailypt_no) {
-		service.dailyptdelete(dailypt_no);
-		return "redirect:/dailyptt";
+	public String delete(@RequestParam String dailypt_no, @RequestParam String mem_no) {
+		//service.dailyptdelete(dailypt_no,mem_no);
+		logger.info("delete dailypt_no : "+dailypt_no);
+		return service.dailyptdelete(dailypt_no,mem_no);
 	}
+	
+	//return "redirect:/dailyptt";
+	
+	
 	
 	
 	
@@ -239,6 +279,9 @@ public class PtMemberController {
 		
 		return service.ptmemberSearch(ptmember, searchInput);
 	}
+	
+	
+	
 	
 	
 	

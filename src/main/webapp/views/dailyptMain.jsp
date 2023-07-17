@@ -67,11 +67,15 @@ tfoot td {
 						<div style="height: 50px">
 							<div class="float-left">
 								<div id="branchFilter">
+									
 									<!-- select 에서 체인지 이벤트 걸어주려고 id지정 -->
 									<select name="ptmember" id="ptmember" style="margin-left: 30px">
 										<option value="listAll">전체</option>
 										<option value="member_name">이름</option>
 										<option value="mem_no">회원번호</option>
+										<c:if test="${sessionScope.loginEmp.position eq '대표' }">
+										<option value="emp_name">트레이너</option>
+										</c:if>
 									</select>
 									<input type="text" id="searchInput" name="searchInput" value="">
 									<button id="searchButton" class="btn btn-outline-dark">검색</button>
