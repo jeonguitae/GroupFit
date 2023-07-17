@@ -44,8 +44,8 @@ public class StatisService {
 		return dao.individual(emp_no,year);
 	}
 
-	public ArrayList<StatisDTO> branchPersonal(String formattedDate, String b_idx) {
-		return dao.branchPersonal(formattedDate,b_idx);
+	public ArrayList<StatisDTO> branchPersonal(String formattedDate, String b_idx, String position) {
+		return dao.branchPersonal(formattedDate,b_idx,position);
 	}
 
 	public ArrayList<StatisDTO> memberAdmission(HashMap<String, String> params) {

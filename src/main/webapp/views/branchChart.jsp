@@ -66,6 +66,7 @@
 	var year = parseInt($('#year').text());
 	var b_idx="${sessionScope.loginEmp.b_idx}";
 	firstChart(year,b_idx);
+	var myChart;
 	
 	
 	
@@ -98,7 +99,7 @@
 	    var context = document
 	    			.getElementById('myChart')
 	                .getContext('2d');
-	    var myChart = new Chart(context, {
+	    myChart = new Chart(context, {
             type: 'line', // 차트의 형태
             data: { // 차트에 들어갈 데이터
                 labels: labels,
@@ -156,6 +157,7 @@
   		dataType:'json',
   		success:function(data){
   			console.log(data);
+  			myChart.destroy();
   			chartPrint(data.list);
   		},
   		error:function(e){
@@ -169,7 +171,7 @@
       console.log("${sessionScope.loginEmp.position}");
   	
       
-      
+      	
       
   	
     

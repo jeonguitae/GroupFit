@@ -82,6 +82,9 @@
 	var year = parseInt($('#year').text());
 	firstChart(year);
 	
+	var myChart;
+	var myChart2;
+	
 	
 	
 	function firstChart(year){
@@ -112,7 +115,7 @@
 	    var context = document
 	    			.getElementById('myChart')
 	                .getContext('2d');
-	    var myChart = new Chart(context, {
+	    myChart = new Chart(context, {
 	                type: 'line', // 차트의 형태
 	                data: { // 차트에 들어갈 데이터
 	                    labels: labels,
@@ -171,6 +174,7 @@
     		dataType:'json',
     		success:function(data){
     			console.log(data);
+    			myChart.destroy();
     			chartPrint(data.list);
     		},
     		error:function(e){
@@ -208,6 +212,7 @@
       		dataType:'json',
       		success:function(data){
       			console.log(data);
+      			myChart2.destroy();
       			branchChartPrint(data.list);
       		},
       		error:function(e){
@@ -281,7 +286,7 @@
   	    var context = document
   	    			.getElementById('myChart2')
   	                .getContext('2d');
-  	  var myChart = new Chart(context, {
+  	  myChart2 = new Chart(context, {
           type: 'line', // 차트의 형태
           data: { // 차트에 들어갈 데이터
               labels: labels,

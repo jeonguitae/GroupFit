@@ -35,11 +35,11 @@
    		</select>
    		
    		<select id="empList">
-   			SELECT name,b_idx,emp_no FROM emp where position !='대표'
+   			SELECT name,b_idx,emp_no FROM emp where position !='대표' AND position!='지점장'
    		</select>
    		
    		<select id="branchEmpList" resultType="statisDTO">
-   			SELECT name,emp_no FROM emp where b_idx=#{param1}
+   			SELECT name,emp_no FROM emp where b_idx=#{param1} AND position!='지점장'
    		</select>
    		
    		<select id="individual" resultType="statisDTO">
@@ -56,7 +56,7 @@
 			FROM emp AS e
 			LEFT JOIN registered_ticket AS rt ON e.emp_no = rt.emp_no and DATE_FORMAT(rt.purch_date, '%Y-%m') = #{param1}
 			LEFT JOIN ticket AS t ON rt.ticket_no = t.ticket_no
-			where `position` !='지점장' AND `position` !='대표' and e.b_idx=#{param2}
+			where `position` !='지점장' AND `position` !='대표' and e.b_idx=#{param2} AND e.position=#{param3}
 			GROUP BY e.name;
    		</select>
    		

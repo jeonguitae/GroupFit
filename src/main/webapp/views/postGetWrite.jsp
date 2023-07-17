@@ -42,7 +42,7 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<form action="postGetWrite.do" method="post" enctype="multipart/form-data">
+				<form action="postGetWrite.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 					<table>
 						<input type="hidden" name="send_empno" value="${post.get_empno}"/>
 <%-- 					<tr>
@@ -51,7 +51,7 @@
 						</tr> --%>
 						<tr>
 							<th>*제목</th>
-							<td><input type="text" name="subject"/></td>
+							<td><input id="subject" type="text" name="subject"/></td>
 						</tr>
 						<tr>
 							<th>*받는사람 이름</th>
@@ -63,7 +63,7 @@
 						<tr>
 							<th>*내용</th>
 							<td>
-								<textarea name="content"></textarea> 
+								<textarea id="content" name="content"></textarea> 
 							</td>
 						</tr>
 						<input class="btn btn-primary" type="submit" value="회신보내기"/>
@@ -76,5 +76,26 @@
 	</div>
 </body>
 <script>
+function setEmpInfo(emp_no, name) {
+	$("#sendForm input[name=get_empno]").val(emp_no);
+	var empInfo = name + " (" + emp_no + ")";
+	$("#getEmpInfo").val(empInfo);
+}
+
+function validateForm() {
+	   var subject = document.getElementById('subject').value;
+	   var content = document.getElementById('content').value;
+	   
+	   if (subject.trim() == '') {
+	      alert('제목을 입력해주세요.');
+	      return false;
+	   }
+	   if (content.trim() == '') {
+	      alert('내용을 입력해주세요.');
+	      return false;
+	   }
+
+	   return true;
+	}
 </script>
 </html>

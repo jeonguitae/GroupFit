@@ -47,4 +47,14 @@
   	UPDATE working SET w_type=#{flag} WHERE emp_no=#{emp_no} AND work_date=#{now}
   	</update>
   	
+  	<update id="wtypes">
+  	UPDATE working SET w_type=#{flags}
+  	WHERE emp_no=#{emp_no} AND work_date=#{now}
+  	</update>
+  	
+  	<insert id="cwrite">
+  	INSERT INTO cRequest(emp_no, comment, title, r_date, r_time) 
+  	VALUES(#{emp_no},#{comment},#{title},#{r_date},#{r_time})
+  	</insert>
+  	
    </mapper>

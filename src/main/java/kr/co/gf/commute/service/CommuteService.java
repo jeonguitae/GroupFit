@@ -5,6 +5,8 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -60,7 +62,7 @@ public class CommuteService {
 	}
 
 	
-	public void calculate(String wtime, Time come_time2, Time out_time2, String emp_no, String type, String day, LocalDate now) { 
+	public void calculate(String wtime, Time come_time2, Time out_time2, String emp_no, String type, String day, LocalDate now){ 
 		
 		logger.info("calculate 하기 위한 1번 로거 : wtime/come_time2/out_time2/emp_no/type/day/now은"+wtime+come_time2+out_time2+emp_no+type+day+now); 
 		//1.평일 오전
@@ -68,13 +70,13 @@ public class CommuteService {
 			logger.info("평일 오전");
 			//원래 15,13
 			LocalTime out_time = out_time2.toLocalTime();
-			LocalTime maxtime = LocalTime.of(17, 0);
+			LocalTime maxtime = LocalTime.of(15, 0);
 			
 			LocalTime come_time = come_time2.toLocalTime();
-			LocalTime mintime = LocalTime.of(15, 0);
+			LocalTime mintime = LocalTime.of(7, 0);
 			//13,15
-			LocalTime lower = LocalTime.of(17, 0);
-			LocalTime upper = LocalTime.of(18, 0);
+			LocalTime lower = LocalTime.of(13, 0);
+			LocalTime upper = LocalTime.of(15, 0);
 			
 			
 			//1번 : 지각 안 한 경우 
@@ -107,9 +109,23 @@ public class CommuteService {
 				if (out_time.isAfter(maxtime)) {
 					int row=cdao.wtype(emp_no,now,flag);
 					logger.info("1.지각만 한 경우");
-				}else {
-					logger.info("지각, 조퇴"+wtime);
-					
+				}else {//2. 지각+조퇴 /결근 가능
+					logger.info("2.지각, 조퇴"+wtime);
+					float w_time = Float.parseFloat(wtime);
+					if (w_time>4) {
+						logger.info("3.지각 조퇴 다 한 경우임");
+						
+						String[] array = {"지각","조퇴"};
+						String flags = Arrays.toString(array)
+								.replaceAll("\\[|\\]", ""); // 대괄호 제거
+						logger.info("flags"+flags); // 출력: 1, 2, 3, 4, 5
+						
+						int row=cdao.wtypes(emp_no, now, flags);
+					}else {
+						logger.info("4.결근");
+						flag="결근";
+						int row=cdao.wtype(emp_no,now,flag);
+					}
 				}
 				
 			}//지각한 경우 끝
@@ -119,63 +135,205 @@ public class CommuteService {
 
 	  //평일 오후
 	    if (!day.equals("Saturday")&&type.equals("오후")) {
-			logger.info("평일 오후");
-			//원래 15,13
-			LocalTime out_time = out_time2.toLocalTime();
-			LocalTime maxtime = LocalTime.of(23, 0);
-			
-			LocalTime come_time = come_time2.toLocalTime();
-			LocalTime mintime = LocalTime.of(15, 0);
-			//13,15
-			LocalTime lower = LocalTime.of(19, 0);
-			LocalTime upper = LocalTime.of(23, 0);
-			
-			
-			//1번 : 지각 안 한 경우 
-			if (mintime.isAfter(come_time)) {
-				String flag="출근";
-				//퇴근 시간 최대로 설정
-				if (out_time.isAfter(maxtime)) {
-					out_time = maxtime;
-					logger.info("1번 정상 출근"+out_time);
-					//1.출근
-					int row=cdao.wtype(emp_no,now,flag);
-				}//조퇴 내지는 결근
-				else {//2. 조퇴
-					if (out_time.isAfter(lower) && out_time.isBefore(upper)) {
-						flag="조퇴";
-						logger.info("2번 조퇴");
+			//1.평일 오후
+			if(!day.equals("Saturday")&&type.equals("오후")) { 
+				logger.info("평일 오후");
+				//19,23
+				LocalTime out_time = out_time2.toLocalTime();
+				LocalTime maxtime = LocalTime.of(23, 0);
+				
+				LocalTime come_time = come_time2.toLocalTime();
+				LocalTime mintime = LocalTime.of(15, 0);
+				
+				LocalTime lower = LocalTime.of(19, 0);
+				LocalTime upper = LocalTime.of(23, 0);
+				
+				
+				//1번 : 지각 안 한 경우 
+				if (mintime.isAfter(come_time)) {
+					String flag="출근";
+					//퇴근 시간 최대로 설정
+					if (out_time.isAfter(maxtime)) {
+						out_time = maxtime;
+						logger.info("1번 정상 출근"+out_time);
+						//1.출근
 						int row=cdao.wtype(emp_no,now,flag);
-						
-					}//3. 결근
-					if (out_time.isBefore(lower)) {
-						flag="결근";
+					}//조퇴 내지는 결근
+					else {//2. 조퇴
+						if (out_time.isAfter(lower) && out_time.isBefore(upper)) {
+							flag="조퇴";
+							logger.info("2번 조퇴");
+							int row=cdao.wtype(emp_no,now,flag);
+							
+						}//3. 결근
+						if (out_time.isBefore(lower)) {
+							flag="결근";
+							int row=cdao.wtype(emp_no,now,flag);
+						}			
+					}
+				}
+				//2번 : 지각 한 경우
+				else {
+					String flag="지각";
+					//1. 지각만 한 경우
+					if (out_time.isAfter(maxtime)) {
 						int row=cdao.wtype(emp_no,now,flag);
+						logger.info("1.지각만 한 경우");
+					}else {//2. 지각+조퇴 /결근 가능
+						logger.info("2.지각, 조퇴"+wtime);
+						float w_time = Float.parseFloat(wtime);
+						if (w_time>4) {
+							logger.info("3.지각 조퇴 다 한 경우임");
+							
+							String[] array = {"지각","조퇴"};
+							String flags = Arrays.toString(array)
+									.replaceAll("\\[|\\]", ""); // 대괄호 제거
+							logger.info("flags"+flags); // 출력: 1, 2, 3, 4, 5
+							
+							int row=cdao.wtypes(emp_no, now, flags);
+						}else {
+							logger.info("4.결근");
+							flag="결근";
+							int row=cdao.wtype(emp_no,now,flag);
+						}
 					}
 					
-				}
-			}
+				}//지각한 경우 끝
  	
-	  }
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
+	  } 
 	    //주말 오전
 	    if (day.equals("Saturday")&&type.equals("오전")) {
-	  
-	  } //주말 오후
+			//1.주말 오전
+			if(day.equals("Saturday")&&type.equals("오전")) { 
+				logger.info("주말 오전");
+				
+				LocalTime out_time = out_time2.toLocalTime();
+				LocalTime maxtime = LocalTime.of(14, 0);
+				
+				LocalTime come_time = come_time2.toLocalTime();
+				LocalTime mintime = LocalTime.of(9, 0);
+				//13,15
+				LocalTime lower = LocalTime.of(12, 0);
+				LocalTime upper = LocalTime.of(14, 0);
+				
+				
+				//1번 : 지각 안 한 경우 
+				if (mintime.isAfter(come_time)) {
+					String flag="출근";
+					//퇴근 시간 최대로 설정
+					if (out_time.isAfter(maxtime)) {
+						out_time = maxtime;
+						logger.info("1번 정상 출근"+out_time);
+						//1.출근
+						int row=cdao.wtype(emp_no,now,flag);
+					}//조퇴 내지는 결근
+					else {//2. 조퇴
+						if (out_time.isAfter(lower) && out_time.isBefore(upper)) {
+							flag="조퇴";
+							logger.info("2번 조퇴");
+							int row=cdao.wtype(emp_no,now,flag);
+							
+						}//3. 결근
+						if (out_time.isBefore(lower)) {
+							flag="결근";
+							int row=cdao.wtype(emp_no,now,flag);
+						}			
+					}
+				}
+				//2번 : 지각 한 경우
+				else {
+					String flag="지각";
+					//1. 지각만 한 경우
+					if (out_time.isAfter(maxtime)) {
+						int row=cdao.wtype(emp_no,now,flag);
+						logger.info("1.지각만 한 경우");
+					}else {//2. 지각+조퇴 /결근 가능
+						logger.info("2.지각, 조퇴"+wtime);
+						float w_time = Float.parseFloat(wtime);
+						if (w_time>3) {
+							logger.info("3.지각 조퇴 다 한 경우임");
+							
+							String[] array = {"지각","조퇴"};
+							String flags = Arrays.toString(array)
+									.replaceAll("\\[|\\]", ""); // 대괄호 제거
+							logger.info("flags"+flags); // 출력: 1, 2, 3, 4, 5
+							
+							int row=cdao.wtypes(emp_no, now, flags);
+						}else {
+							logger.info("4.결근");
+							flag="결근";
+							int row=cdao.wtype(emp_no,now,flag);
+						}
+					}
+					
+				}//지각한 경우 끝
+	  } 
+		//주말 오후
 	    if (day.equals("Saturday")&&type.equals("오후")) {
-	  
+			//1.주말 오후
+			if(!day.equals("Saturday")&&type.equals("오후")) { 
+				logger.info("주말 오후");
+				
+				LocalTime out_time = out_time2.toLocalTime();
+				LocalTime maxtime = LocalTime.of(19, 0);
+				
+				LocalTime come_time = come_time2.toLocalTime();
+				LocalTime mintime = LocalTime.of(14, 0);
+				//13,15
+				LocalTime lower = LocalTime.of(17, 0);
+				LocalTime upper = LocalTime.of(19, 0);
+				
+				
+				//1번 : 지각 안 한 경우 
+				if (mintime.isAfter(come_time)) {
+					String flag="출근";
+					//퇴근 시간 최대로 설정
+					if (out_time.isAfter(maxtime)) {
+						out_time = maxtime;
+						logger.info("1번 정상 출근"+out_time);
+						//1.출근
+						int row=cdao.wtype(emp_no,now,flag);
+					}//조퇴 내지는 결근
+					else {//2. 조퇴
+						if (out_time.isAfter(lower) && out_time.isBefore(upper)) {
+							flag="조퇴";
+							logger.info("2번 조퇴");
+							int row=cdao.wtype(emp_no,now,flag);
+							
+						}//3. 결근
+						if (out_time.isBefore(lower)) {
+							flag="결근";
+							int row=cdao.wtype(emp_no,now,flag);
+						}			
+					}
+				}
+				//2번 : 지각 한 경우
+				else {
+					String flag="지각";
+					//1. 지각만 한 경우
+					if (out_time.isAfter(maxtime)) {
+						int row=cdao.wtype(emp_no,now,flag);
+						logger.info("1.지각만 한 경우");
+					}else {//2. 지각+조퇴 /결근 가능
+						logger.info("2.지각, 조퇴"+wtime);
+						float w_time = Float.parseFloat(wtime);
+						if (w_time>3) {
+							logger.info("3.지각 조퇴 다 한 경우임");
+							
+							String[] array = {"지각","조퇴"};
+							String flags = Arrays.toString(array)
+									.replaceAll("\\[|\\]", ""); // 대괄호 제거
+							logger.info("flags"+flags); // 출력: 1, 2, 3, 4, 5
+							
+							int row=cdao.wtypes(emp_no, now, flags);
+						}else {
+							logger.info("4.결근");
+							flag="결근";
+							int row=cdao.wtype(emp_no,now,flag);
+						}
+					}
+					
+				}//지각한 경우 끝
 	  }
 	  
 	  
@@ -188,3 +346,11 @@ public class CommuteService {
 	 */
 
 }
+}
+}
+
+	public int cwrite(HashMap<String, String> params) {
+		return cdao.cwrite(params);
+	}
+}
+

@@ -150,8 +150,18 @@
 				
 				            <hr>
 				            
-
+				            
+					         	 <c:if test="${dto.pt_state eq '결석'}">
+								    <div style="border: 1px solid #ccc; padding: 10px; background-color: #f8f8f8; margin-bottom: 10px;">
+								        <p style="color: red;">결석된 회원입니다.</p>
+								    </div>
+								</c:if>
+								
+				           
+				           	<c:if test="${dto.pt_state ne '결석'}">
 				              <h5 >웨이트 운동</h5>
+				              
+						    
 				              <div id="weightExerciseContainer">
 						          	
 						          <div class="form-group">
@@ -210,13 +220,17 @@
                     <div class="form-group">
                         <textarea id="etc" name="etc" class="remarks" readonly>${dto.str}</textarea>
                     </div>
+                    
+                    </c:if>
 
                     <hr>
                     
 					<div class="submit-button">
 					<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
+					<c:if test="${dto.pt_state ne '결석'}">
 	                    <button type="submit"  class="btn btn-primary" onclick="location.href='./dailyptUpdate.go?dailypt_no=${dto.dailypt_no}'">수정</button>
-	                    <button type="submit" class="btn btn-danger" onclick="location.href='./dailyptdelete.do?dailypt_no=${dto.dailypt_no}'">삭제</button>
+	                </c:if>
+	                    <button id="deleteButton" type="button" class="btn btn-danger">삭제</button>
 	                </c:if>
 	                    <button type="submit" class="btn btn-primary" onclick="location.href='./dailyptt'" >리스트</button>
 	                </div>
@@ -232,7 +246,28 @@
 					</div>
 				</body>
 <script>
+document.getElementById('deleteButton').addEventListener('click', function() {
+	  if (confirm("정말로 삭제하시겠습니까?")) {
+	    var form = document.createElement('form');
+	    form.action = '/dailyptdelete.do';
+	    form.method = 'post';
 
+	    var dailyptNoInput = document.createElement('input');
+	    dailyptNoInput.type = 'hidden';
+	    dailyptNoInput.name = 'dailypt_no';
+	    dailyptNoInput.value = '${dto.dailypt_no}';
+	    form.appendChild(dailyptNoInput);
+
+	    var memNoInput = document.createElement('input');
+	    memNoInput.type = 'hidden';
+	    memNoInput.name = 'mem_no';
+	    memNoInput.value = '${dto.mem_no}';
+	    form.appendChild(memNoInput);
+
+	    document.body.appendChild(form);
+	    form.submit();
+	  }
+	});
 
 
 
