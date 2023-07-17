@@ -179,11 +179,14 @@ public class StatisController {
 	
 	@RequestMapping(value="/branchPersonal.ajax")
 	@ResponseBody
-	public HashMap<String, Object> branchPersonal(@RequestParam String formattedDate, @RequestParam String b_idx){
+	public HashMap<String, Object> branchPersonal(@RequestParam String formattedDate, @RequestParam String b_idx, HttpSession session){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
+		EmpDTO empDTO = (EmpDTO) session.getAttribute("loginEmp");
+		String position = empDTO.getPosition();
+		
 		logger.info("출력할 지점, 달"+formattedDate+b_idx);
-		list = service.branchPersonal(formattedDate,b_idx);
+		list = service.branchPersonal(formattedDate,b_idx,position);
 		map.put("branchPersonal", list);
 		return map;
 	}
