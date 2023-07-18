@@ -116,7 +116,7 @@
 				<table id="table2">
 					<tr>
 						<th>제목</th>
-						<td><input type="text" name="title" id=""title"" required/></td>
+						<td><input type="text" name="title" id="title" required/></td>
 					</tr>
 					<tr>
 						<th>일시</th>
