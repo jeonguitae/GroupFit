@@ -204,6 +204,10 @@
 										class="fas fa-edit nav-icon"></i>
 										<p>입장한 회원 리스트</p>
 								</a></li>
+								<li class="nav-item item-sub"><a href="memberStatis" class="nav-link"> <i
+										class="fas fa-edit nav-icon"></i>
+										<p>회원 통계</p>
+								</a></li>
 							</ul></li>
 						<c:if test="${sessionScope.loginEmp.position == '직원' ||sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 						<li class="nav-item">
@@ -321,16 +325,18 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="pages/charts/chartjs.move"
+								<li class="nav-item item-sub"><a href="individualChart"
 									class="nav-link"> <i class="fas fa-chart-line nav-icon"></i>
 										<p>개인 매출통계</p>
 								</a></li>
-								<li class="nav-item item-sub"><a href="pages/charts/flot.move"
+								<c:if test="${sessionScope.loginEmp.position == '지점장'}">
+								<li class="nav-item item-sub"><a href="branchChart"
 									class="nav-link"> <i class="fas fa-sitemap nav-icon"></i>
 										<p>지점 매출통계</p>
 								</a></li>
-								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
-								<li class="nav-item item-sub"><a href="pages/charts/inline.move"
+								</c:if>
+								<c:if test="${sessionScope.loginEmp.position == '대표'}">
+								<li class="nav-item item-sub"><a href="chart"
 									class="nav-link"> <i
 										class="fas fa-project-diagram nav-icon"></i>
 										<p>전체 매출통계</p>
