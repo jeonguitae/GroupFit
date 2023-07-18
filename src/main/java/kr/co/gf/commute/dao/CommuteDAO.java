@@ -41,6 +41,8 @@ public interface CommuteDAO {
 
 	HashMap<String, String> rdetail(int r_idx);
 
+	String w_type(String work_date, ArrayList<String> july_date);
+
 	//CommuteDTO selectAll(String emp_no, LocalDate previousDay);
 
 }

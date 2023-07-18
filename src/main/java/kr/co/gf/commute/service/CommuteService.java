@@ -1,5 +1,6 @@
 package kr.co.gf.commute.service;
 
+import java.io.File;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -363,6 +364,20 @@ public class CommuteService {
 
 	public HashMap<String, String> rdetail(int r_idx) {
 		return cdao.rdetail(r_idx);
+	}
+
+	public HashMap<String, Object> commutelist(ArrayList<String> july_date, String b_idx) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<String> list = new ArrayList<String>();
+		
+		for (String work_date : july_date) {
+			
+			String w_type = cdao.w_type(work_date, july_date);
+			list.add(w_type);
+		}		
+		
+		return map;
 	}
 }
 

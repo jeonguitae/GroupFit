@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -218,5 +219,15 @@ public class CommuteController {
 		return "center_commute";
 	}
 	
+	@RequestMapping(value="commutelist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> commutelist(
+			@RequestParam(value="july_date[]") ArrayList<String> july_date, HttpSession session){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		
+		return cservice.commutelist(july_date, b_idx);
+	}
 
 }
