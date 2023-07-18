@@ -108,7 +108,7 @@
 					<td><input type="date" id="join_year" name="join_year" value="${emp.join_year}" /></td>
 				</tr>
 				<tr>
-					<th>*퇴사일자</th>
+					<th>퇴사일자</th>
 					<td><input type="date" id="retire_year" name="retire_year"/></td>
 				</tr>
 				<input type="submit" value="수정" />

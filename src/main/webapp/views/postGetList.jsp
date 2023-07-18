@@ -61,9 +61,10 @@ div[class="table"]{
 		<section class="content">
 			<div class="container-fluid">
 				<fieldset>
-					<form action=".do" class="search">
+					<form action="postGetList.do" class="search">
+					<input type="hidden" name="emp_no" value="${sessionScope.loginId}"/>
 						<select name="opt">
-							<option value="send_empno">보낸사람</option>
+							<option value="e_name">보낸사람</option>
 							<option value="subject">제목</option>
 							<option value="content">내용</option>
 						</select>
