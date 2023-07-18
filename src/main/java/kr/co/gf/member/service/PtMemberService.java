@@ -171,6 +171,7 @@ public class PtMemberService {
 		
 		if(success == 1 || "결석".equals(dto.getPt_state())) {
 			dao.dailyptdelete(dailypt_no);
+			
 			dao.plusptcount(mem_no);
 		}
 		
@@ -272,6 +273,11 @@ public class PtMemberService {
 		page = "redirect:/dailyptt";
 		
 		return page;
+	}
+
+	public String ptdailydelete(ArrayList<String> memdelList) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

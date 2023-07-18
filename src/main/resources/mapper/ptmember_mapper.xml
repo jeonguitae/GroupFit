@@ -48,7 +48,7 @@
    	
    </update>
    
-   
+   <!-- 삭제 시 일지 count+! 해주기 -->
     <update id="plusptcount">
    		    UPDATE pt_mem
     SET count = count + 1
@@ -145,7 +145,7 @@
 
    </update>
    
-   
+   <!-- 삭제 시 웨이트 일지 먼저 삭제 -->
 	<delete id ="weightptdelete">
 	
 		DELETE FROM pt_weight WHERE dailypt_no = #{dailypt_no}
@@ -169,6 +169,7 @@
    </delete>
    
    
+   <!-- ptstate 출석,결석 select해오기 -->
    <select id="getPtStateByDailyPtNo" resultType="dailypt">
 	   		SELECT
 			    pt_state
@@ -179,7 +180,7 @@
 	</select>
    
 	
-	
+	<!-- 회원일지 삭제 웨이트 빼고 -->
    <delete id="dailyptdelete">
    
 		DELETE FROM daily_pt WHERE dailypt_no = #{dailypt_no}

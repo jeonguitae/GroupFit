@@ -264,6 +264,18 @@ public class PtMemberController {
 	//return "redirect:/dailyptt";
 	
 	
+	@RequestMapping(value="ptdailydel.ajax")
+	@ResponseBody
+	public String ptdailydelete(
+			@RequestParam(value="ptList[]") ArrayList<String> memdelList) {
+		
+		logger.info("memdelList : "+memdelList);
+		
+		return service.ptdailydelete(memdelList);
+	
+	}
+	
+	
 	
 	
 	
