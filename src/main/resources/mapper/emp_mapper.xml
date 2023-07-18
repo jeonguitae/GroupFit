@@ -123,6 +123,7 @@
 	<select id="emp_detail" resultType="emp">
 		SELECT * FROM emp e
 		LEFT JOIN wphoto w ON w.board_num = e.emp_no
+		LEFT JOIN branch b ON e.b_idx = b.b_idx
 		WHERE emp_no = #{param1}
 	</select>
 	
@@ -145,8 +146,6 @@
 		<if test="retire_year != null and retire_year != ''">
 			, retire_year = #{retire_year}
 		</if>
-
-			
 		WHERE emp_no = #{emp_no}
 	</update>
 	
@@ -181,7 +180,5 @@
     	FROM emp
     	WHERE emp_no = #{loginId}
     </select>
-    
-
 
 </mapper>

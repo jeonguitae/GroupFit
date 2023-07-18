@@ -31,13 +31,17 @@ public class MailController {
 	@RequestMapping(value="/postSendList.do")
 	public ModelAndView SendSerch(@RequestParam HashMap<String, String>params, HttpSession session) {
 		
-		String loginId = params.get("emp_no");
-	    String sessionLoginId = (String) session.getAttribute("loginId");
-	    
-	    if (sessionLoginId != null && sessionLoginId.equals(loginId)) {
 	        logger.info("search : " + params);
-	   }
+
 	    return service.post_sendSerch(params);
+	}
+	//받은쪽지 검색
+	@RequestMapping(value="/postGetList.do")
+	public ModelAndView GetSerch(@RequestParam HashMap<String, String>params, HttpSession session) {
+		
+		logger.info("search : " + params);
+		
+		return service.post_getSerch(params);
 	}
 	
 	// 보낸 쪽지

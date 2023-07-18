@@ -48,7 +48,7 @@
    	
    </update>
    
-   
+   <!-- 삭제 시 일지 count+! 해주기 -->
     <update id="plusptcount">
    		    UPDATE pt_mem
     SET count = count + 1
@@ -58,10 +58,19 @@
    </update>
    
    
+   <!-- 이건 등록했을 때 update 몸무게 -->
+   <update id="updateaf_weight">
+	    UPDATE pt_mem pm
+	    JOIN daily_pt dp ON pm.mem_no = dp.mem_no
+	    SET pm.weight = #{af_weight}
+	    WHERE pm.mem_no = #{mem_no}
+	</update>
    
    
-
-	<update id="updateaf_weight">
+   
+   
+	<!-- 이건 수정했을때 update 몸무게 -->
+	<update id="updateupaf_weight">
 	    UPDATE pt_mem pm
 	    JOIN daily_pt dp ON pm.mem_no = dp.mem_no
 	    SET pm.weight = #{af_weight}
@@ -145,7 +154,7 @@
 
    </update>
    
-   
+   <!-- 삭제 시 웨이트 일지 먼저 삭제 -->
 	<delete id ="weightptdelete">
 	
 		DELETE FROM pt_weight WHERE dailypt_no = #{dailypt_no}
@@ -169,6 +178,17 @@
    </delete>
    
    
+   <!-- 리스트에서 일지 삭제할 때 -->
+   <delete id="ptdailydelete">
+   
+	  DELETE FROM daily_pt
+	  WHERE dailypt_no = #{dailypt_no};
+	
+   
+   </delete>
+   
+   
+   <!-- ptstate 출석,결석 select해오기 -->
    <select id="getPtStateByDailyPtNo" resultType="dailypt">
 	   		SELECT
 			    pt_state
@@ -179,7 +199,7 @@
 	</select>
    
 	
-	
+	<!-- 회원일지 삭제 웨이트 빼고 -->
    <delete id="dailyptdelete">
    
 		DELETE FROM daily_pt WHERE dailypt_no = #{dailypt_no}

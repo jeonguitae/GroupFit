@@ -11,7 +11,7 @@
 	    FROM member m
         JOIN registered_ticket rt ON m.mem_no = rt.mem_no
         JOIN ticket t ON t.ticket_no = rt.ticket_no
-        WHERE rt.b_idx = #{param1}
+        WHERE rt.b_idx = #{param1} AND m.blind = 0
    </select>
    	
    <select id="branch" resultType="member">

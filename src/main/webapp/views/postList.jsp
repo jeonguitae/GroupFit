@@ -69,14 +69,14 @@ div[class="table"]{
 							<option value="content">내용</option>
 						</select>
 						<input type="text" name="keyword" value="" placeholder="검색어를 입력하세요"/>
-						<button>검색</button>
+						<button class="btn btn-secondary">검색</button>
 					</form>
 				</fieldset>
 		
 				<div class="btn1">
-					<button onclick="location.href='./postSendWrite.go'">쪽지 작성</button>
-					<button onclick="hide()">쪽지 삭제</button>
-					<button onclick="location.href='./postWasteList.go'">휴지통</button>
+					<button class="btn btn-primary" onclick="location.href='./postSendWrite.go'">쪽지 작성</button>
+					<button class="btn btn-danger" onclick="hide()">쪽지 삭제</button>
+					<button class="btn btn-secondary" onclick="location.href='./postWasteList.go'">휴지통</button>
 				</div>
 				<div class="card card-primary">
 					<div class="card-header">
@@ -141,6 +141,10 @@ function hide() {
 var msg = "${msg}";
 if(msg != ""){
    alert(msg);
+}
+
+function search(){
+	
 }
 
 </script>
