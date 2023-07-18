@@ -19,6 +19,15 @@
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+div[class="btn1"]{
+	margin-left: 1300px;
+	margin-bottom: 10px;
+}
+form[class="search"]{
+	margin-left: 20px;
+}
+</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
 	<div class="content-wrapper" style="margin-top: 57.08px">
@@ -43,7 +52,6 @@
 		<section class="content">
 			<div class="container-fluid">
 				<fieldset>
-					<h6 class="headline">지점을 선택하세요.</h6>
 					<form action="empRepList.do" class="search">
 						<select name="opt">
 							<option value="서초">서초</option>
@@ -51,15 +59,12 @@
 							<option value="역삼">역삼</option>
 							<option value="논현">논현</option>
 						</select>
-						<button>검색</button>
+						<button class="btn btn-secondary">검색</button>
 					</form>
 				</fieldset>
-			<div class="btn1">
-				<c:if test="${sessionScope.loginEmp.position eq '대표'}">
-					<button onclick="location.href='empJoin.go'">직원 등록</button>
-					<button onclick="hide()">직원 삭제</button>
-				</c:if>
-			</div>
+				<div class="btn1">
+				<button class="btn btn-secondary" onclick="location.href='empList.go'">목록</button>
+				</div>
 				<div class="card card-primary">
 							<div class="card-header">
 								<h4 class="card-title">지점 리스트</h4>
@@ -117,7 +122,5 @@ function hide() {
 	      }
 	   });
 	}
-
-
 </script>
 </html>
