@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>이용권 관리</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="plugins/pagination/jquery.twbsPagination.js" type="text/javascript"></script> 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
 <link rel="stylesheet"
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-<link rel="stylesheet" href="dist/css/adminlte.min.css">
+<link rel="stylesheet" href="dist/css/adminlte.min.css">  
 </head>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
@@ -192,7 +193,7 @@
 					<div class="col-12">
 						<div style="height: 50px">
 							<div class="float-left" style="display: flex">
-								<select class="form-select" id="filter_ticket_cnt">
+								<select class="form-select" id="pagePerNum">
 									<option value="10">10</option>
 									<option value="20">20</option>
 									<option value="30">30</option>
@@ -210,7 +211,6 @@
 								<h4 class="card-title">이용권 리스트</h4>
 							</div>
 							<div class="card-body">
-								<c:if test="${ticketList.size() > 0}">
 									<table class="table">
 										<thead class="table-light">
 											<tr>
@@ -223,7 +223,7 @@
 												<th>가격</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="ticketListBody">
 											<c:forEach items="${ticketList}" var="ticket"
 												varStatus="status">
 												<tr>
@@ -254,10 +254,13 @@
 											</c:forEach>
 										</tbody>
 									</table>
-								</c:if>
-								<c:if test="${ticketList.size() == 0}"><div style="text-align: center;">등록한 이용권이 없습니다. 이용권을 등록해 주세요.</div>
-								</c:if>
 							</div>
+						</div>
+						<!-- 	플러그인 사용	(twbsPagination)	-->
+						<div class="container">									
+							<nav aria-label="Page navigation" style="text-align:center; margin:0 auto">
+								<ul class="pagination" id="pagination" style="text-align:center; margin:0 auto; justify-content: center; align-items: center;"></ul>
+							</nav>					
 						</div>
 					</div>
 				</div>
@@ -267,6 +270,7 @@
 <script type="text/javascript">
 var checkArr = [];
 var evtCheck = 0;
+var showPage = 1;
 const myModalEl = document.getElementById('ticketDelModal')
 myModalEl.addEventListener('shown.bs.modal', event => {
 	checkArr = [];
@@ -285,6 +289,87 @@ myModalEl.addEventListener('shown.bs.modal', event => {
 		failReload(evtCheck);
 	}
 })
+
+listCall(showPage);
+$('#pagePerNum').change(function() {
+	listCall(showPage);
+	$('#pagination').twbsPagination('destroy');
+	// 페이지 처리 부분이 이미 만들어져버려서 pagePerNum이 변경되면 수정이 안된다.
+	// 그래서 pagePerNum이 변경되면 부수고 다시 만들어야 한다.
+})
+
+function listCall(page) {
+	$.ajax({
+		type:'post',
+		url:'ticketList.ajax',
+		data:{
+			'page': page,
+			'cnt': $('#pagePerNum').val()
+		},
+		dataType:'json',
+		success: function (data) {
+			console.log(data);
+			listPrint(data.list);
+			
+			// paging plugin 처리
+			$('#pagination').twbsPagination({
+				startPage: data.currPage,
+				totalPages: data.pages,
+				visiblePages: 5,
+				onPageClick: function(event,page){ // 페이지 클릭 시 동작되는 함수
+					console.log(event, page, showPage);
+					if(page!=showPage){
+						listCall(page);
+						showPage = page;
+					}
+				}
+			});
+		},
+		error: function (e) {
+			console.log(e);
+		}
+	})
+}
+
+function listPrint(list){
+	console.log("listPrint 수행")
+	var content = '';
+	if(list.length > 0){
+		list.forEach(function(ticket,idx){
+			content += `<tr>
+									<td><input class="form-check-input"
+									style="margin-left: 0" type="checkbox"
+									value="
+									`+ticket.ticket_no+`"></td>
+								<td>`+ticket.ticket_no+`</td>`
+			content += `
+				<td><a type="button" href="#" data-bs-toggle="modal"
+					data-bs-target="#ticketModModal"
+					onclick="ticketModify(
+				`+ticket.ticket_no+`,
+				`+ticket.ticket_name+`,
+				`+ticket.b_idx+`,
+				`+ticket.b_name+`,
+				`+ticket.ticket_time+`,
+				`+ticket.ticket_price+`,
+				`+ticket.ticket_type+`
+				)">`+ticket.ticket_name+`</a></td>
+				<td>`+ticket.b_name+`</td>`
+			if (ticket.ticket_type=="일반"){
+				content += `<td>일반 회원권</td><td>`+ticket.ticket_time+`개월</td><td>`+ticket.ticket_price+`</td></tr>`
+			} else {
+				content += `<td>PT 회원권</td><td>`+ticket.ticket_time+`회</td><td>`+ticket.ticket_price+`</td></tr>`
+			}
+		});
+	} else {
+		content = "<tr><td colspan='7' style='text-align:center'>조회되는 이용권이 없습니다.</td></tr>"
+	}
+	
+	
+	$('#ticketListBody').empty();
+	$('#ticketListBody').append(content);
+}
+
 function failReload(arg){
 	if (arg==1){
 		alert("최소 한 개 이상의 이용권을 선택해주세요.");

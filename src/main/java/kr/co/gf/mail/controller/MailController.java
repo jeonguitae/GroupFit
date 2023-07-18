@@ -144,4 +144,18 @@ public class MailController {
 	public HashMap<String, Object> empFind(@RequestParam String emp_no) {
 		return service.emp_find(emp_no);
 	}
+	
+	//보낸 휴지통
+	@RequestMapping(value="/postWasteList.go")
+	public ModelAndView sendWasteList(HttpSession session){
+		String send_empno = (String)session.getAttribute("loginId");
+		return service.post_sendWasteList(send_empno);
+	}
+	//받은 휴지통
+	@RequestMapping(value="/postWasteGetList.go")
+	public ModelAndView getWasteList(HttpSession session){
+		String get_empno = (String) session.getAttribute("loginId");
+		return service.post_getWasteList(get_empno);
+	}
+	
 }

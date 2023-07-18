@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kr.co.gf.commute.dto.CommuteDTO;
 
@@ -31,6 +32,8 @@ public interface CommuteDAO {
 	int wtype(String emp_no, LocalDate now, String flag);
 
 	int wtypes(String emp_no, LocalDate now, String flags);
+
+	int cwrite(HashMap<String, String> params);
 
 	//CommuteDTO selectAll(String emp_no, LocalDate previousDay);
 

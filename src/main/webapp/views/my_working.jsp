@@ -43,9 +43,9 @@
       <section class="content">
          <div class="container-fluid">
             <h1 class="forcenter">나의 근태관리</h1>
-               <!-- <div class="forbutton">
-                  <button onclick="location.href='nwrite.go'">작성</button>
-               </div> -->
+               <div class="togo">
+                  <button onclick="location.href='cwrite.go'">작성</button>
+               </div> 
     <table class="table second">
         <colgroup>
             <col width="15%"/>

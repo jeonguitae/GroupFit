@@ -6,6 +6,8 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,8 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -169,7 +173,18 @@ public class CommuteController {
 		return mav;*/ 
 	}
 	
+	@RequestMapping(value="/cwrite.go")
+	public String cwritego() {
+		String page="commute_request";
+		return page;
+	}
 	
+	@RequestMapping(value="/cwrite.do")
+	public String cwritedo(@RequestParam HashMap<String, String> params, Model model) {
+		int row=cservice.cwrite(params);
+		logger.info("cwritedo icin "+row);
+		return "my_working";
+	}
 
 
 }

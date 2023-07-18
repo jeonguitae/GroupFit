@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>쪽지 작성하기</title>
+<title>받은쪽지 휴지통</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>쪽지 쓰기</h1>
+						<h1>받은쪽지 휴지통</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -42,35 +42,41 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				
-				<form action="postSendWrite.do" method="post" enctype="multipart/form-data">
-					<table>
-						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
-						<tr>
-							<th>*작성자</th>
-							<td><input type="text" value="${emp.name}" readonly/></td>
-						</tr>
-						<tr>
-							<th>*제목</th>
-							<td><input type="text" name="subject"/></td>
-						</tr>
-						<tr>
-							<th>*내용</th>
-							<td>
-								<textarea name="content"></textarea> 
-							</td>
-						</tr>
-						<input type="submit" value="보내기"/>
-						<button type="button" onclick="location.href='./postSendList.go'">목록</button>	
-					</table>
-				</form>
+				<div class="card card-primary">
+					<div class="card-header">
+						<h4 class="card-title">받은 쪽지 휴지통</h4>
+					</div>
+						<div class="card-body">
+							<table class="table">
+								<thead class="table-light">
+								<tr>
+									<th>제목</th>
+									<th>보낸사람</th>
+									<th>받은시간</th>
+									<th>읽은시간</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${list}" var="post">
+									<tr>
+										<td><a href="postGetDetail.do?emailid=${post.email_num}">${post.subject}</a></td>
+										<td>${post.name}</td>
+										<td>${post.send_time}</td>
+										<c:if test="${post.get_chk eq '1'}">
+										<td>${post.chk_time}</td>
+										</c:if>
+										<c:if test="${post.get_chk ne '1'}">
+										<td>안읽음</td>
+										</c:if>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>
 	</div>
 </body>
-<script>
-
-
-</script>
 </html>
