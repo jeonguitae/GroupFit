@@ -212,7 +212,7 @@ public class CommuteController {
 		return "cf_detail";
 	}
 	
-	@RequestMapping(value = "/cenenter_commute.go")
+	@RequestMapping(value = "/center_commute.go")
 	public String cenenter_commute() {
 	
 		return "center_commute";

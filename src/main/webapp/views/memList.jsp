@@ -77,11 +77,12 @@ table thead th {
 									<option value="mem_no">회원번호</option>
 									<option value="name">이름</option>
 									<option value="pt_chk">pt여부</option>
+									<option value="blind">만료</option>
 								</select>
 								
 								<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
 								
-								<button onclick="memsearch()">검색</button>
+								<button class="btn btn-secondary" onclick="memsearch()">검색</button>
 									<button class="btn btn-primary" onclick="location.href='memWrite.go'">등록</button>
 									<button class="btn btn-danger" onclick="memdel()">삭제</button>
 							
@@ -109,6 +110,76 @@ table thead th {
 							</div>
 						</div>
 					</div>
+				</div>
+				
+				<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h5 class="modal-title" id="event-modal-label">기구 사진 등록</h5>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        
+				        <div class="modal-body">
+				          <form action="event-form">
+				          	<div class="form-group">
+				              <label for="event-name">회원 번호</label>
+				              <div id="mem_no">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="event-name">회원 이름</label>
+				              <div id="mem_name">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">회원 사진</label>
+				              <div id="mem_photo">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">판매자</label>
+				              <div id="emp_no">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">성별</label>
+				              <div id="gender">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">생년월일</label>
+				              <div id="birth">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">등록기간</label>
+				              <div id="duration">
+				              	
+				              </div>
+				            </div>
+				            
+					        <div class="modal-footer">
+					          <input type="button" id="close" class="btn btn-secondary" data-dismiss="modal" value="돌아가기"/>
+					        </div>
+				          </form>
+				        </div>
+				      </div>
+				   </div>
 				</div>
 			</div>
 			<!--/. container-fluid -->
@@ -155,7 +226,7 @@ function listDraw(memlist){
 			content += '<tr>';
 			content += '<td><input type="checkbox" value="'+item.mem_no+'"/></td>';
 			content+='<td>'+item.mem_no+'</td>';
-			content+='<td><a href="memdetail.go?mem_no='+item.mem_no+'">'+item.name+'</a></td>';
+			content+='<td><a onclick="openModal('+item.mem_no+')">'+item.name+'</a></td>';
 			content+='<td>'+item.start_date+'~'+item.end_date+'</td>';
 			content+='<td>'+chk_pt+'</td>';		
 			content += '</tr>';
@@ -228,5 +299,77 @@ function memsearch(){
 		}
 	});	
 }
+
+function openModal(mem_no) {
+	
+	$.ajax({
+	      type: 'get',
+	      url: 'mem_info.ajax',
+	      data: {
+	    	  'mem_no' : mem_no
+	      },
+	      success: function(data) {
+	    	meminfoDraw(data.dto);
+	      },
+	      error: function(e) {
+	        console.log(e);
+	      }
+	 });
+	
+    $('#event-modal').modal('show');
+}
+
+function meminfoDraw(meminfo){
+	
+	var mem_photo = '';
+	var duration = '';
+	
+	if(meminfo.new_photo_name.equals('')){
+		
+		mem_photo += '<div class="memprofile">';
+		mem_photo += '<div class="table">';
+		mem_photo += '<form action="memprofile.do?mem_no=' + meminfo.mem_no + '" method="post" enctype="multipart/form-data">';
+		mem_photo += '<table>';
+		mem_photo += '<tr>';
+		mem_photo += '<th>프로필 사진</th>';
+		mem_photo += '<td><input type="file" name="photo"/><button>전송</button></td>';
+		mem_photo += '</tr>';
+		mem_photo += '</table>';
+		mem_photo += '</form>';
+		mem_photo += '</div>';
+	}
+	
+	else{
+		
+		mem_photo = '<div><img width="100%" height="100%" src="/photo/' + meminfo.new_photo_name + '"></div>';
+	}
+	
+	duration = '<div>'+ meminfo.start_date +  ' ~ ' + meminfo.end_date +'</div>'
+	
+	$('#mem_no').empty();
+	$('#mem_no').append(meminfo.mem_no);
+	
+	$('#mem_name').empty();
+	$('#mem_name').append(meminfo.name);
+	
+	$('#mem_photo').empty();
+	$('#mem_photo').append(mem_photo);
+	
+	$('#emp_no').empty();
+	$('#emp_no').append(meminfo.emp_no);
+	
+	$('#gender').empty();
+	$('#gender').append(meminfo.gender);
+	
+	$('#birth').empty();
+	$('#birth').append(meminfo.birth);
+	
+	$('#duration').empty();
+	$('#duration').append(duration);
+}
+
+$(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
+    $('#event-modal').modal('hide');
+  });
 </script>
 </html>

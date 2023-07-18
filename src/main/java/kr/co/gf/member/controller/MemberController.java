@@ -142,30 +142,28 @@ public class MemberController {
 		return service.ptmemjoin(params);
 	}
 	
-	@RequestMapping(value="memdetail.go")
-	public String memdetail(String mem_no, Model model) {
-		
-		logger.info("mem_no" + mem_no);
-		
-		MemberDTO dto = service.memdetail(mem_no);
-		String new_photo_name = service.photomem(mem_no);
-		
-		logger.info("new_photo_name : " + new_photo_name);
-		
-		dto.setNew_photo_name(new_photo_name);
-		
-		String emp_name = service.mem_emp_name(dto.getEmp_no());
-		String b_name = service.mem_b_name(dto.getB_idx());
-		
-		dto.setEmp_name(emp_name);
-		dto.setB_name(b_name);
-		
-		logger.info("emp_name : " + emp_name);
-		logger.info("b_name : " + b_name);
-
-		model.addAttribute("dto", dto);
-		return "memdetail";
-	}
+	/*
+	 * @RequestMapping(value="memdetail.go") public String memdetail(String mem_no,
+	 * Model model) {
+	 * 
+	 * logger.info("mem_no" + mem_no);
+	 * 
+	 * MemberDTO dto = service.memdetail(mem_no); String new_photo_name =
+	 * service.photomem(mem_no);
+	 * 
+	 * logger.info("new_photo_name : " + new_photo_name);
+	 * 
+	 * dto.setNew_photo_name(new_photo_name);
+	 * 
+	 * String emp_name = service.mem_emp_name(dto.getEmp_no()); String b_name =
+	 * service.mem_b_name(dto.getB_idx());
+	 * 
+	 * dto.setEmp_name(emp_name); dto.setB_name(b_name);
+	 * 
+	 * logger.info("emp_name : " + emp_name); logger.info("b_name : " + b_name);
+	 * 
+	 * model.addAttribute("dto", dto); return "memdetail"; }
+	 */
 	
 	@RequestMapping(value="memprofile.do")
 	public String memprofile(String mem_no, MultipartFile photo) {
@@ -254,5 +252,12 @@ public class MemberController {
 		model.addAttribute("dto", dto);
 		
 		return "ptmemdetail";
+	}
+	
+	@RequestMapping(value="mem_info.ajax")
+	@ResponseBody
+	public HashMap<String, Object> mem_info(String mem_no){
+	
+		return service.mem_info(mem_no);
 	}
 }
