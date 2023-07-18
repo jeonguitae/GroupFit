@@ -173,7 +173,6 @@ function chartPrint(data){
     });
 }
 
-
 var currentDate = new Date();
 var currentYear = currentDate.getFullYear();
 var currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1을 해주고, padStart()로 두 자리로 만듭니다.
