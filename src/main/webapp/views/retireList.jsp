@@ -80,29 +80,34 @@ div[class="table"]{
 						<button onclick="location.href='empJoin.go'">퇴사직원</button>
 					</c:if>
 				</div>
-				<div class="table">
-					<table>
-						<thead>
-							<tr>
-								<th>사번</th>
-								<th>이름</th>
-								<th>지점</th>
-								<th>직급</th>
-								<th>퇴사일</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${list}" var="emp">
+				<div class="card card-primary">
+						<div class="card-header">
+							<h4 class="card-title">퇴사 직원 리스트</h4>
+						</div>
+						<div class="card-body">
+							<table class="table">
+								<thead class="table-light">
 								<tr>
-									<td>${emp.emp_no}</td>
-									<td><a href="empDetail.go?detailid=${emp.emp_no}">${emp.name}</a></td>
-									<td>${emp.b_name}</td>
-									<td>${emp.position}</td>
-									<td>${emp.retire_year}</td>
+									<th>사번</th>
+									<th>이름</th>
+									<th>지점</th>
+									<th>직급</th>
+									<th>퇴사일</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach items="${list}" var="emp">
+									<tr>
+										<td>${emp.emp_no}</td>
+										<td><a href="empDetail.go?detailid=${emp.emp_no}">${emp.name}</a></td>
+										<td>${emp.b_name}</td>
+										<td>${emp.position}</td>
+										<td>${emp.retire_year}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 <!--/. container-fluid -->

@@ -144,4 +144,26 @@ public class MailService {
 	public ArrayList<EmpDTO> emp_multiList(@RequestParam ArrayList<String> params) {
 		return dao.emp_multiList(params);
 	}
+
+	//보낸쪽지 휴지통
+	public ModelAndView post_sendWasteList(String send_empno) {
+		ArrayList<MailDTO> list = dao.post_sendWasteList(send_empno);
+		logger.info("list"+list);
+		
+		ModelAndView mav = new ModelAndView();
+		String page = "postWasteList";
+		mav.addObject("list",list);
+		mav.setViewName(page);
+		return mav;
+	}
+
+	public ModelAndView post_getWasteList(String get_empno) {
+		ArrayList<MailDTO> list = dao.post_getWasteList(get_empno);
+		ModelAndView mav = new ModelAndView();
+		String page = "postWasteGetList";
+		mav.addObject("list",list);
+		mav.setViewName(page);
+			
+		return mav;
+	}
 }

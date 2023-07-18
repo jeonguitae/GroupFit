@@ -29,7 +29,9 @@
 			  FROM POST P
 			  LEFT JOIN EMP E
 				ON P.GET_EMPNO = E.EMP_NO
-			 WHERE P.SEND_EMPNO = #{send_empno} AND P.IS_DELETE=0
+			 WHERE P.SEND_EMPNO = #{send_empno} 
+			   AND P.IS_DELETE=0
+			 ORDER BY SEND_TIME DESC
 		</select>
 		
 		<!-- 받은쪽지 리스트 -->
@@ -112,6 +114,28 @@
 			SELECT *
 			  FROM EMP
 			 WHERE NAME = #{emp_no}
+		</select>
+		
+		<!-- 보낸쪽지 휴지통 -->
+		<select id="post_sendWasteList" resultType="mail" parameterType="String">
+			SELECT *
+			  FROM POST P
+			  LEFT JOIN EMP E
+				ON P.GET_EMPNO = E.EMP_NO
+			 WHERE P.SEND_EMPNO = #{send_empno} 
+			   AND P.IS_DELETE=1
+			 ORDER BY SEND_TIME DESC
+		</select>
+		
+		<!-- 받은쪽지 휴지통 -->
+		<select id="post_getWasteList" resultType="mail" parameterType="String">
+			SELECT *
+			  FROM POST P
+			  LEFT JOIN EMP E
+				ON P.SEND_EMPNO = E.EMP_NO
+			 WHERE P.GET_EMPNO = #{get_empno}
+			   AND P.IS_DELETE= 1
+			 ORDER BY SEND_TIME DESC
 		</select>
 		
 	</mapper>
