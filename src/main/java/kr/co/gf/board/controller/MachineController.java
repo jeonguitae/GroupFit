@@ -69,7 +69,7 @@ public class MachineController {
 	}
 	
 	@RequestMapping(value="mac_photo_reg.do")
-	public String mac_photo_reg(HttpSession session, String mac_name, MultipartFile photo, Model model) {
+	public String mac_photo_reg(HttpSession session, String mac_name, MultipartFile photo, Model model, RedirectAttributes rattr) {
 		
 		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
 		String b_idx = dto.getB_idx();
@@ -78,7 +78,12 @@ public class MachineController {
 		
 		int row = service.mac_photo_reg(mac_num, photo);
 		
-		return "maclist";
+		if(row == 1) {
+			
+			rattr.addFlashAttribute("msg", "사진등록이 완료되었습니다");
+		}
+		
+		return "redirect:/maclist.go";
 	}
 	
 	@RequestMapping(value="maclist.ajax")

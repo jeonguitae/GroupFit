@@ -135,7 +135,7 @@ public class MachineService {
 		
 		LocalDate now = LocalDate.now();
 		
-		return dao.Fmaclist(b_idx);
+		return dao.Fmaclist(b_idx, now);
 	}
 
 	public HashMap<String, Object> mac_fixed(String emp_no, String mac_name, String fixed_content, String b_idx) {
