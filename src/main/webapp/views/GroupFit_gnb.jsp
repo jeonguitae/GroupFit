@@ -121,8 +121,7 @@
 					</div></li>
 
 				<!-- Messages Dropdown Menu -->
-				<li class="nav-item dropdown"><a class="nav-link"
-					data-toggle="dropdown" href="#"> <i
+				<li class="nav-item dropdown"><a class="nav-link" href="postGetList.go"> <i
 						class="far fa-regular fa-envelope"></i> <span
 						class="badge badge-danger navbar-badge">3</span>
 				</a></li>
