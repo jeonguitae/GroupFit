@@ -58,10 +58,6 @@
 							</td>
 						</tr>
 						<tr>
-							<th>첨부파일</th>
-							<td><input type="file" name="post_photo" readonly/></td>
-						</tr>
-						<tr>
 							<th>내용</th>
 							<td>
 								<textarea name="content" readonly>${post.content}</textarea> 

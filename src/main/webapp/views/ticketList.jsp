@@ -346,13 +346,13 @@ function listPrint(list){
 				<td><a type="button" href="#" data-bs-toggle="modal"
 					data-bs-target="#ticketModModal"
 					onclick="ticketModify(
-				`+ticket.ticket_no+`,
-				`+ticket.ticket_name+`,
-				`+ticket.b_idx+`,
-				`+ticket.b_name+`,
-				`+ticket.ticket_time+`,
-				`+ticket.ticket_price+`,
-				`+ticket.ticket_type+`
+				'`+ticket.ticket_no+`',
+				'`+ticket.ticket_name+`',
+				'`+ticket.b_idx+`',
+				'`+ticket.b_name+`',
+				'`+ticket.ticket_time+`',
+				'`+ticket.ticket_price+`',
+				'`+ticket.ticket_type+`'
 				)">`+ticket.ticket_name+`</a></td>
 				<td>`+ticket.b_name+`</td>`
 			if (ticket.ticket_type=="일반"){
@@ -380,10 +380,9 @@ function failReload(arg){
 	$("#ticket-type").change(function() {
 		$val = $("#ticket-type").val();
 		console.log($val)
-		if ($val == 1) {
+		if ($val == '일반') {
 			$("#basic-addon2").text("개월");
-		}
-		if ($val == 2) {
+		} else {
 			$("#basic-addon2").text("회");
 		}
 	})
@@ -391,17 +390,16 @@ function failReload(arg){
 	$("#mticket_type").change(function() {
 		$val = $("#mticket_type").val();
 		console.log($val)
-		if ($val == 1) {
+		if ($val == '일반') {
 			$("#basic-addon22").text("개월");
-		}
-		if ($val == 2) {
+		} else {
 			$("#basic-addon22").text("회");
 		}
-	})
+	});
 
 	function ticketModify(no, name, bidx, bname, time, price, type) {
 		console.log("이벤트");
-		console.log(name)
+		console.log(name, type)
 		$("#mticket_no").val(no);
 		$("#mticket_name").val(name);
 		$("#mbranch_name").val(bname);
@@ -409,6 +407,11 @@ function failReload(arg){
 		$("#mticket_count").val(time);
 		$("#mticket_price").val(price);
 		$("#mticket_type").val(type);
+		if (type == '일반') {
+			$("#basic-addon22").text("개월");
+		} else {
+			$("#basic-addon22").text("회");
+		}
 	}
 
 	function del() {

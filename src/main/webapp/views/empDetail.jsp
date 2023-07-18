@@ -74,8 +74,8 @@
 					<td><input type="email" name="email" value="${emp.email}" readonly/></td>
 				</tr>
 				<tr>
-					<th>*지점번호</th>
-					<td><input type="text" name="b_idx" value="${emp.b_idx}" readonly/></td>
+					<th>*지점</th>
+					<td><input type="text" name="b_name" value="${emp.b_name}" readonly/></td>
 				</tr>
 				<tr>
 					<th>*직급</th>
