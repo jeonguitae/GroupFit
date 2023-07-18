@@ -7,27 +7,29 @@
 <meta charset="UTF-8">
 <title>여기에 페이지 이름 입력</title>
 <style>
-/* table, th, td{
-		border: 1px solid white;
-		border-collapse: collapse;
-	} */
-	
-	div[class="btn1"]{
-		margin-left: 1108px;
-	}
-	
-	form[class="search"]{
-		margin-left: 514px;
-	}
-	
-	h1.headline{
-		margin-left: 640px;
-		margin-top: 20px;
-	}
-	
-	div[class="table"]{
-		margin-left: 513px;
-	}
+table {
+	width: 100%;
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid black;
+	padding: 5px 10px;
+	text-align: center;
+}
+
+tfoot td {
+	font-weight: bold;
+}
+
+.empty-data {
+	text-align: center;
+	padding: 10px;
+}
+table thead th {
+  text-align: center;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -44,13 +46,13 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body>
-   <jsp:include page="GroupFit_gnb.jsp" />
-   <div class="content-wrapper" style="margin-top: 57.08px">
-   <section class="content-header">
+	<jsp:include page="GroupFit_gnb.jsp" />
+	<div class="content-wrapper" style="margin-top: 57.08px">
+		<section class="content-header">
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>페이지 제목</h1>
+						<h1>MY PT 회원 리스트</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -62,61 +64,52 @@
 				</div>
 			</div>
 			<!-- /.container-fluid -->
-			</section>
-<!-- Main content -->
-      <section class="content">
-            <h1 class="headline">MY PT 회원 리스트</h1>
-			<form action="ptmemsearch.do" class="search">
-				<select name="sortting">
-					<option value="mem_no">회원번호</option>
-					<option value="name">이름</option>
-					<option value="gender">성별</option>
-				</select>
-				
-				<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
-				
-				<button>검색</button>
-			</form>	
-			
-		<div class="table">
-			<table>
-				<colgroup>
-					<col width="15%"/>
-					<col width="15%"/>
-					<col width="15%"/>
-					<col width="40%"/>
-					<col width="15%"/>
-				</colgroup>
-				<thead>
-					<tr>
-						<th>삭제</th>
-						<th>회원번호</th>
-						<th>이름</th>
-						<th>등록횟수 / 잔여횟수</th>
-						<th>성별</th>
-					</tr>
-				</thead>		
-				<tbody id="ptmemlist">
-					<%-- <c:if test="${list.size() == 0}">
-			               <tr>
-			               		<th colspan="5">조건에 해당하는 게시물이 없습니다.</th>
-			               </tr>
-		            </c:if>
-					<c:forEach items="${list}" var="bbs">
-							<tr>
-								<td>${bbs.mem_no}</td>
-								<td><a href="memDetail.do?mem_no=${bbs.mem_no}">${bbs.name}</a></td>
-								<td>${bbs.start_date} ~ ${bbs.end_date}</td>
-								<td>${bbs.start_date}</td>
-								<td><a href="memDel.do?mem_no=${bbs.mem_no}">삭제</a></td>
-							</tr>
-					</c:forEach> --%>
-				</tbody>
-			</table> 
-         </div>
-         <!--/. container-fluid -->
-      </section>
-   </div>
+		</section>
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div style="height: 50px">
+						
+							<form action="ptmemsearch.do" class="search">
+								<select name="sortting">
+									<option value="mem_no">회원번호</option>
+									<option value="name">이름</option>
+									<option value="gender">성별</option>
+								</select>
+								
+								<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
+								
+								<button>검색</button>
+							</form>		
+							
+						</div>
+						<div class="card card-primary">
+							<div class="card-header">
+								<h4 class="card-title">MY PT 회원 리스트</h4>
+							</div>
+							<div class="card-body">
+								<table class="table">
+									<thead class="table-light">
+										<tr>
+											<th>삭제</th>
+											<th>회원번호</th>
+											<th>이름</th>
+											<th>등록횟수 / 잔여횟수</th>
+											<th>성별</th>
+										</tr>
+									</thead>
+									<tbody id="ptmemlist"></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/. container-fluid -->
+		</section>
+	</div>
 </body>
 <script>
 
