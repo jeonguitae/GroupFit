@@ -54,7 +54,7 @@ public interface PtMemberDAO {
 
 	int submitcut(PtMemberDTO dto);
 
-	int updatesubmitcut(HashMap<String, String> params);
+	/* int updatesubmitcut(HashMap<String, String> params); */
 
 	int deletedailypt(HashMap<String, String> params);
 	

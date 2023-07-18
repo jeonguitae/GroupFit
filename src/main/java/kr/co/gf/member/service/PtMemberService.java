@@ -273,37 +273,35 @@ public class PtMemberService {
 		
 		return page;
 	}
-
 	
-	// 여기요 여기
-	public String updatesubmitcut(HashMap<String, String> params, ArrayList<String> pt_name, ArrayList<String> pt_kg, ArrayList<String> pt_set, String emp_no) {
-		
-		String page = "";
-		
-		PtMemberDTO dto = new PtMemberDTO();
 
-	    dto.setDailypt_no(Integer.parseInt(params.get("dailypt_no")));
-	    dto.setEmp_no(emp_no);
-	    dto.setMem_no(Integer.parseInt(params.get("mem_no")));
-	    dto.setAf_weight(params.get("af_weight"));
-	    dto.setAerobic(params.get("aerobic"));
-	    dto.setDiet(params.get("diet"));
-	    dto.setStr(params.get("etc"));
-	    dto.setPt_date(params.get("date"));
-		
-		
-		
-		// 수정 상태에서 결석 처리 하려고 했을 때 일지 삭제
-		int deletedailypt = dao.deletedailypt(params);
-		
-		int updatecut = dao.updatesubmitcut(params);
-		
-		page = "redirect:/dailyptt";
-		
-		return page;
-	}
-
-	
+	/*
+	 * // 여기요 여기 public String updatesubmitcut(HashMap<String, String> params,
+	 * ArrayList<String> pt_name, ArrayList<String> pt_kg, ArrayList<String> pt_set,
+	 * String emp_no) {
+	 * 
+	 * String page = "";
+	 * 
+	 * PtMemberDTO dto = new PtMemberDTO();
+	 * 
+	 * dto.setDailypt_no(Integer.parseInt(params.get("dailypt_no")));
+	 * dto.setEmp_no(emp_no); dto.setMem_no(Integer.parseInt(params.get("mem_no")));
+	 * dto.setAf_weight(params.get("af_weight"));
+	 * dto.setAerobic(params.get("aerobic")); dto.setDiet(params.get("diet"));
+	 * dto.setStr(params.get("etc")); dto.setPt_date(params.get("date"));
+	 * 
+	 * 
+	 * 
+	 * // 수정 상태에서 결석 처리 하려고 했을 때 일지 삭제 int deletedailypt =
+	 * dao.deletedailypt(params);
+	 * 
+	 * int updatecut = dao.updatesubmitcut(params);
+	 * 
+	 * page = "redirect:/dailyptt";
+	 * 
+	 * return page; }
+	 * 
+	 */
 
 	
 	
