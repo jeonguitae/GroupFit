@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -347,5 +348,9 @@ public class CommuteService {
 }
 }
 }
+
+	public int cwrite(HashMap<String, String> params) {
+		return cdao.cwrite(params);
+	}
 }
 

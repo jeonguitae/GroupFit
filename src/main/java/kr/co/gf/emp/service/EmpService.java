@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.gf.emp.dao.EmpDAO;
 import kr.co.gf.emp.dto.EmpDTO;
@@ -133,7 +134,8 @@ public class EmpService {
 //		
 //	}
 
-	public ModelAndView emp_join(HashMap<String, String> params, MultipartFile file, HttpSession session, EmpDTO dto) {
+	public ModelAndView emp_join(HashMap<String, String> params, MultipartFile file, HttpSession session, 
+								 EmpDTO dto, RedirectAttributes rattr) {
 		dto.setEmp_no(dao.getEmpNo());
 		String encpass = encoder.encode(dto.getPw());
 		dto.setPw(encpass);
@@ -141,7 +143,7 @@ public class EmpService {
 		int success = dao.emp_join(dto);
 		logger.info("success: " + success);
 
-		String msg = "회원등록에 실패하였습니다.";
+		String msg = "직원등록에 실패하였습니다.";
 		String page = "loginPage";
 
 		if (success > 0) {
@@ -171,7 +173,7 @@ public class EmpService {
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(page);
-		mav.addObject("msg", msg);
+		rattr.addAttribute("msg",msg);
 		mav.addObject("detailid", dto.getEmp_no());
 		return mav;
 	}
@@ -187,6 +189,11 @@ public class EmpService {
 	}
 	
 	public ModelAndView emp_update(MultipartFile file, HashMap<String, Object> params) {
+		logger.info("pw:"+params.get("pw"));
+		String encpass = encoder.encode(String.valueOf(params.get("pw")));
+		params.put("newPw", encpass);
+		//dto.setPw(encpass);
+		
 		logger.info("params : " + params);
 		int row = dao.emp_update(params);
 		logger.info("update row: " + row);
@@ -215,8 +222,8 @@ public class EmpService {
 	   try {
 	       byte[] bytes = file.getBytes();
 	       Path path = Paths.get("C:/upload/" + new_photo_name);
-	   Files.write(path, bytes);
-	   logger.info(new_photo_name + " upload 디렉토리에 저장 완료 !");
+		   Files.write(path, bytes);
+		   logger.info(new_photo_name + " upload 디렉토리에 저장 완료 !");
 	   		dao.emp_fileWrite(c_idx, ori_photo_name, new_photo_name, emp_no);
 	       } catch (IOException e) {
 	           e.printStackTrace();

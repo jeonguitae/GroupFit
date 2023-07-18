@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>대표 지점 리스트</h1>
+						<h1>지점 리스트</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -60,33 +60,38 @@
 					<button onclick="hide()">직원 삭제</button>
 				</c:if>
 			</div>
-			<div class="table">
-				<table>
-					<thead>
-						<tr>
-							<th>삭제</th>
-							<th>사번</th>
-							<th>이름</th>
-							<th>지점</th>
-							<th>직급</th>
-							<th>재직상태</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${list}" var="emp">
-							<tr>
-								<td><input type="checkbox" name="chk" value="${emp.emp_no}"/></td>
-								<td>${emp.emp_no}</td>
-								<td><a href="empDetail.do?detailid=${emp.emp_no}">${emp.name}</a></td>
-								<td>${emp.b_name}</td>
-								<td>${emp.position}</td>
-								<td>${emp.status}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+				<div class="card card-primary">
+							<div class="card-header">
+								<h4 class="card-title">지점 리스트</h4>
+							</div>
+							<div class="card-body">
+								<table class="table">
+									<thead class="table-light">
+								<tr>
+									<th>삭제</th>
+									<th>사번</th>
+									<th>이름</th>
+									<th>지점</th>
+									<th>직급</th>
+									<th>재직상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${list}" var="emp">
+									<tr>
+										<td><input type="checkbox" name="chk" value="${emp.emp_no}"/></td>
+										<td>${emp.emp_no}</td>
+										<td><a href="empDetail.do?detailid=${emp.emp_no}">${emp.name}</a></td>
+										<td>${emp.b_name}</td>
+										<td>${emp.position}</td>
+										<td>${emp.status}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</div>
 				</div>
+			</div>
 				<!--/. container-fluid -->
 		</section>
 	</div>

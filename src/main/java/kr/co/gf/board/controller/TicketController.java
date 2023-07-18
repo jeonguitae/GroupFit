@@ -28,8 +28,14 @@ public class TicketController {
 	@GetMapping(value="/ticket.go")
 	public ModelAndView ticketList() {
 		ModelAndView mav = new ModelAndView("ticketList");
-		mav.addObject("ticketList", service.ticketList());
+		//mav.addObject("ticketList", service.ticketList());
 		return mav;
+	}
+	
+	@PostMapping(value = "/ticketList.ajax")
+	public HashMap<String, Object> ticketDelete(int page, int cnt){
+		// array로 받을 경우 @RequestParam에 value를 반드시 명시해야 함
+		return service.ticketList(page, cnt);
 	}
 	
 	@PostMapping(value = "/ticket.regist")

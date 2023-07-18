@@ -6,47 +6,36 @@
 <meta charset="UTF-8">
 <title>직원리스트</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+   rel="stylesheet"
+   integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+   crossorigin="anonymous">
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+   href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
 <link rel="stylesheet"
-	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+   href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <style>
-/* 	table, th, td{
-		border : 1px solid black;
-		border-collapse: collapse;
-		padding : 5px 10px;
-	} */
+
 div[class="btn1"]{
-	margin-left: 1108px;
+	margin-left: 900px;
 }
 
 form[class="search"]{
 	margin-left: 377px;
 }
 
-h1.headline{
-	margin-left: 640px;
-	margin-top: 20px;
+.btn btn-primary{
+	display: inline;
 }
 
-div[class="table"]{
-	margin-left: 376px;
-}
 </style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
-			<h1 class="headline">직원 리스트</h1>
-			
 		<fieldset>
 			<form action="empList.do" class="search">
 				<select name="opt">
@@ -60,42 +49,46 @@ div[class="table"]{
 		</fieldset>
 		
 		<div class="btn1">
-			<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+			<c:if test="${sessionScope.loginEmp.position == '대표'}">
 			<button class="btn btn-primary" onclick="location.href='empJoin.go'">직원 등록</button>
-			<button class="btn btn-primary" onclick="hide()">직원 삭제</button>
+			&nbsp;<button class="btn btn-primary" onclick="hide()">직원 삭제</button>&nbsp;
 			</c:if>
 			<c:if test="${sessionScope.loginEmp.position eq '대표'}">
 				<button class="btn btn-primary" onclick="location.href='empRepList.do'">지점별</button>
-				<button class="btn btn-primary" onclick="location.href='empLeaveList.go'">휴직직원</button>
 			</c:if>
 		</div>
-		<div class="table">
-			<table>
-				<thead>
-					<tr>
-						<th>삭제</th>
-						<th>사번</th>
-						<th>이름</th>
-						<th>지점</th>
-						<th>직급</th>
-						<th>재직상태</th>
-						<th>입사일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${list}" var="emp">
+			<div class="card card-primary">
+					<div class="card-header">
+						<h4 class="card-title">직원 리스트</h4>
+					</div>
+					<div class="card-body">
+						<table class="table">
+							<thead class="table-light">
 						<tr>
-							<td><input type="checkbox" name="chk" value="${emp.emp_no}"/></td>
-							<td>${emp.emp_no}</td>
-							<td><a href="empDetail.go?detailid=${emp.emp_no}">${emp.name}</a></td>
-							<td>${emp.b_name}</td>
-							<td>${emp.position}</td>
-							<td>${emp.status}</td>
-							<td>${emp.join_year}</td>
+							<th>삭제</th>
+							<th>사번</th>
+							<th>이름</th>
+							<th>지점</th>
+							<th>직급</th>
+							<th>재직상태</th>
+							<th>입사일</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<c:forEach items="${list}" var="emp">
+							<tr>
+								<td><input type="checkbox" name="chk" value="${emp.emp_no}"/></td>
+								<td>${emp.emp_no}</td>
+								<td><a href="empDetail.go?detailid=${emp.emp_no}">${emp.name}</a></td>
+								<td>${emp.b_name}</td>
+								<td>${emp.position}</td>
+								<td>${emp.status}</td>
+								<td>${emp.join_year}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>
@@ -114,6 +107,7 @@ function hide() {
 	      dataType: 'text',
 	      success: function(data){
 	    	  $('form').submit();
+	    	  alert("삭제 되었습니다.");
 	      },
 	      error: function(e){
 	         console.log(e);

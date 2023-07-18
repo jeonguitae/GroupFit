@@ -41,10 +41,10 @@
 					<th>*사내번호</th>
 					<td><input type="text" name="emp_no" value="${emp.emp_no }" readonly/></td>
 				</tr>
-				<tr>
+				<%-- <tr>
 					<th>*비밀번호</th>
 					<td><input type="text" name="pw" value="${emp.pw}" readonly/></td>
-				</tr>
+				</tr> --%>
 				<tr>
 					<th>*이름</th>
 					<td><input type="text" name="name" value="${emp.name}" readonly/></td>
