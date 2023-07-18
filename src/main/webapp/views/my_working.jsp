@@ -44,7 +44,7 @@
          <div class="container-fluid">
             <h1 class="forcenter">나의 근태관리</h1>
                <div class="togo">
-                  <button onclick="location.href='cwrite.go'">작성</button>
+                  <button onclick="location.href='cwrite.go'">변경 요청서 작성</button>
                </div> 
     <table class="table second">
         <colgroup>

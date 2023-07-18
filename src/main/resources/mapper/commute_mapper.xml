@@ -53,8 +53,8 @@
   	</update>
   	
   	<insert id="cwrite">
-  	INSERT INTO cRequest(emp_no, comment, title, r_date, r_time) 
-  	VALUES(#{emp_no},#{comment},#{title},#{r_date},#{r_time})
+  	INSERT INTO cRequest(emp_no, comment, title, r_date, r_time, com_category) 
+  	VALUES(#{emp_no},#{comment},#{title},#{r_date},#{r_time},#{com_category})
   	</insert>
   	
    </mapper>

@@ -182,9 +182,11 @@ public class CommuteController {
 	@RequestMapping(value="/cwrite.do")
 	public String cwritedo(@RequestParam HashMap<String, String> params, Model model) {
 		int row=cservice.cwrite(params);
-		logger.info("cwritedo icin "+row);
+		if (row==1) {
+			model.addAttribute("msg","변경 요청서가 제출되었습니다.");
+		}
 		return "my_working";
 	}
-
+	
 
 }

@@ -13,10 +13,70 @@ public class CommuteDTO {
 	private String gtwork ;
 	private String w_time;
 	private String w_type;
+	private int r_idx;
+	private String comment;
+	private String title;
+	private Date r_date;
+	private Time r_time;
+	private Date reg_dage;
+	private String status;
+	private String com_category;
 	
 	
 	
 	
+	
+	
+	
+	
+	public int getR_idx() {
+		return r_idx;
+	}
+	public void setR_idx(int r_idx) {
+		this.r_idx = r_idx;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public Date getR_date() {
+		return r_date;
+	}
+	public void setR_date(Date r_date) {
+		this.r_date = r_date;
+	}
+	public Time getR_time() {
+		return r_time;
+	}
+	public void setR_time(Time r_time) {
+		this.r_time = r_time;
+	}
+	public Date getReg_dage() {
+		return reg_dage;
+	}
+	public void setReg_dage(Date reg_dage) {
+		this.reg_dage = reg_dage;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getCom_category() {
+		return com_category;
+	}
+	public void setCom_category(String com_category) {
+		this.com_category = com_category;
+	}
 	public String getW_type() {
 		return w_type;
 	}
