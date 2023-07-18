@@ -21,7 +21,7 @@ public interface StatisDAO {
 
 	ArrayList<StatisDTO> individual(String emp_no, String year);
 
-	ArrayList<StatisDTO> branchPersonal(String formattedDate, String b_idx);
+	ArrayList<StatisDTO> branchPersonal(String formattedDate, String b_idx, String position);
 
 	ArrayList<StatisDTO> memberAdmission(HashMap<String, String> params);
 
