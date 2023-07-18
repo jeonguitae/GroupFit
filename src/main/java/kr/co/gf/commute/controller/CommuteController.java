@@ -182,10 +182,40 @@ public class CommuteController {
 	@RequestMapping(value="/cwrite.do")
 	public String cwritedo(@RequestParam HashMap<String, String> params, Model model) {
 		int row=cservice.cwrite(params);
+		logger.info("params : " + params);
 		if (row==1) {
 			model.addAttribute("msg","변경 요청서가 제출되었습니다.");
 		}
 		return "my_working";
+	}
+	@RequestMapping(value="/centerlist.do")
+	public String clist(Model model) {
+		ArrayList<CommuteDTO> working = cservice.alllist();
+		model.addAttribute("working",working);
+		return "c_list";
+	}
+	@RequestMapping(value="/rlist.go")
+	public String rlist(Model model, HttpSession session) {
+		EmpDTO eDto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = eDto.getB_idx();
+		
+		ArrayList<CommuteDTO> working = cservice.rlist(b_idx);
+		model.addAttribute("working",working);
+		return "requestList";	
+	}
+	
+	@RequestMapping(value="/rdetail.do")
+	public String rdetail(@RequestParam int r_idx, Model model) {
+		HashMap<String, String> working = null;
+		working=cservice.rdetail(r_idx);
+		model.addAttribute("working",working);
+		return "cf_detail";
+	}
+	
+	@RequestMapping(value = "/cenenter_commute.go")
+	public String cenenter_commute() {
+	
+		return "center_commute";
 	}
 	
 

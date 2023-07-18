@@ -18,17 +18,25 @@ public class CommuteDTO {
 	private String title;
 	private Date r_date;
 	private Time r_time;
-	private Date reg_dage;
+	private Date reg_date;
 	private String status;
 	private String com_category;
+	private String name;
+	private String position;
 	
 	
-	
-	
-	
-	
-	
-	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
+	}
 	public int getR_idx() {
 		return r_idx;
 	}
@@ -59,11 +67,11 @@ public class CommuteDTO {
 	public void setR_time(Time r_time) {
 		this.r_time = r_time;
 	}
-	public Date getReg_dage() {
-		return reg_dage;
+	public Date getReg_date() {
+		return reg_date;
 	}
-	public void setReg_dage(Date reg_dage) {
-		this.reg_dage = reg_dage;
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
 	}
 	public String getStatus() {
 		return status;

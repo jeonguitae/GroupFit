@@ -352,5 +352,17 @@ public class CommuteService {
 	public int cwrite(HashMap<String, String> params) {
 		return cdao.cwrite(params);
 	}
+
+	public ArrayList<CommuteDTO> alllist() {
+		return cdao.alllist();
+	}
+
+	public ArrayList<CommuteDTO> rlist(String b_idx) {
+		return cdao.rlist(b_idx);
+	}
+
+	public HashMap<String, String> rdetail(int r_idx) {
+		return cdao.rdetail(r_idx);
+	}
 }
 
