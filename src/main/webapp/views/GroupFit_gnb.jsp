@@ -127,7 +127,7 @@
 						class="badge badge-danger navbar-badge">3</span>
 				</a></li>
 				<!-- Notifications Dropdown Menu -->
-				<li class="nav-item dropdown"><a class="nav-link"
+				<!-- <li class="nav-item dropdown"><a class="nav-link"
 					data-toggle="dropdown" href="#"> <i class="far fa-bell"></i> <span
 						class="badge badge-warning navbar-badge">2</span>
 				</a>
@@ -146,7 +146,7 @@
 						</a>
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item dropdown-footer">모든 알림 보기</a>
-					</div></li>
+					</div></li> -->
 				<!-- <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -240,7 +240,7 @@
 						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon fas fa-dumbbell"></i>
 								<p>
-									시설 관리 <span class="badge badge-info right"></span>
+									시설 관리 <i class="fas fa-angle-left right"></i>
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
@@ -249,11 +249,11 @@
 										<p>머신 관리</p>
 								</a></li>
 								<li class="nav-item item-sub"><a href="fixedmac.go" class="nav-link"> <i
-										class="nav-icon fas fa-dumbbell"></i>
+										class="nav-icon fas fa-tools"></i>
 										<p>수리신청 된 머신</p>
 								</a></li>
 								<li class="nav-item item-sub"><a href="loclist.go" class="nav-link"> <i
-										class="nav-icon fas fa-dumbbell"></i>
+										class="nav-icon fas fa-door-closed"></i>
 										<p>라커 관리</p>			
 								</a></li>
 						</ul></li>
@@ -367,10 +367,10 @@
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
-								<li class="nav-item item-sub"><a href="#"
+								<!-- <li class="nav-item item-sub"><a href="#"
 									class="nav-link"> <i class="far fa-calendar-check nav-icon"></i>
 										<p>휴가 신청</p>
-								</a></li>
+								</a></li> -->
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 								<li class="nav-item item-sub"><a href="annualList.go" class="nav-link"> <i
 										class="nav-icon far fa-calendar-check"></i>
