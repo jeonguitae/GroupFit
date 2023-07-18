@@ -143,5 +143,9 @@ if(msg != ""){
    alert(msg);
 }
 
+function search(){
+	
+}
+
 </script>
 </html>
