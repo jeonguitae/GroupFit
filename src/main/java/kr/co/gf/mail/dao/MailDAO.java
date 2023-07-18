@@ -13,6 +13,9 @@ public interface MailDAO {
 	//보낸쪽지 검색
 	ArrayList<MailDTO> post_sendSerch(HashMap<String, String> params);
 	
+	//받은쪽지 검색
+	ArrayList<MailDTO> post_getSerch(HashMap<String, String> params);
+	
 	//보낸 쪽지
 	ArrayList<MailDTO> post_sendList(String send_empno);
 	

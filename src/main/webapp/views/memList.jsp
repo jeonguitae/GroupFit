@@ -5,32 +5,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기에 페이지 이름 입력</title>
+<title>일반 회원 리스트</title>
 <style>
-/* table, th, td{
-		border: 1px solid white;
-		border-collapse: collapse;
-	} */
-	div[class="search"]{
-		margin-left: 377px;
-	}
-	
-	h1.headline{
-		margin-left: 640px;
-		margin-top: 20px;
-	}
-	
-	div[class="table"]{
-		margin-left: 376px;
-	}
-	
-	button.reg{
-		margin-left: 385px;
-	}
-	
-	button.del{
-		background-color: #e74c3c;
-	}
+table {
+	width: 100%;
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid black;
+	padding: 5px 10px;
+	text-align: center;
+}
+
+tfoot td {
+	font-weight: bold;
+}
+
+.empty-data {
+	text-align: center;
+	padding: 10px;
+}
+
+table thead th {
+  text-align: center;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -47,14 +47,13 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body>
-   <jsp:include page="GroupFit_gnb.jsp" />
-   
-   <div class="content-wrapper" style="margin-top: 57.08px">
+	<jsp:include page="GroupFit_gnb.jsp" />
+	<div class="content-wrapper" style="margin-top: 57.08px">
 		<section class="content-header">
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>페이지 제목</h1>
+						<h1>일반 회원 리스트</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -67,64 +66,54 @@
 			</div>
 			<!-- /.container-fluid -->
 		</section>
-
-<!-- Main content -->
-      <section class="content">
-            <h1 class="headline">일반 회원 리스트</h1>
-            	<div class="search">
-					<select name="sortting">
-						<option value="mem_no">회원번호</option>
-						<option value="name">이름</option>
-						<option value="pt_chk">pt여부</option>
-					</select>
-					
-					<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
-					
-					<button onclick="memsearch()">검색</button>
-					
-					<button class="reg" onclick="location.href='memWrite.go'">등록</button>
-					<button class="del" onclick="memdel()">삭제</button>
-				</div>	
-	
-		<div class="table">
-			<table>
-				<colgroup>
-					<col width="15%"/>
-					<col width="15%"/>
-					<col width="15%"/>
-					<col width="40%"/>
-					<col width="15%"/>
-				</colgroup>
-				<thead>
-					<tr>
-						<th>삭제</th>
-						<th>회원번호</th>
-						<th>이름</th>
-						<th>등록기간</th>
-						<th>피티 등록여부</th>
-					</tr>
-				</thead>		
-				<tbody id="memlist">
-					<%-- <c:if test="${list.size() == 0}">
-			               <tr>
-			               		<th colspan="5">조건에 해당하는 게시물이 없습니다.</th>
-			               </tr>
-		            </c:if>
-					<c:forEach items="${list}" var="bbs">
-							<tr>
-								<td>${bbs.mem_no}</td>
-								<td><a href="memDetail.do?mem_no=${bbs.mem_no}">${bbs.name}</a></td>
-								<td>${bbs.start_date} ~ ${bbs.end_date}</td>
-								<td>${bbs.start_date}</td>
-								<td><a href="memDel.do?mem_no=${bbs.mem_no}">삭제</a></td>
-							</tr>
-					</c:forEach> --%>
-				</tbody>
-			</table> 
-         </div>
-         <!--/. container-fluid -->
-      </section>
-   </div>
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div style="height: 50px">
+							<div class="search">
+								<select name="sortting">
+									<option value="mem_no">회원번호</option>
+									<option value="name">이름</option>
+									<option value="pt_chk">pt여부</option>
+								</select>
+								
+								<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
+								
+								<button onclick="memsearch()">검색</button>
+									<button class="btn btn-primary" onclick="location.href='memWrite.go'">등록</button>
+									<button class="btn btn-danger" onclick="memdel()">삭제</button>
+							
+							</div>	
+							
+							
+						</div>
+						<div class="card card-primary">
+							<div class="card-header">
+								<h4 class="card-title">일반 회원 리스트</h4>
+							</div>
+							<div class="card-body">
+								<table class="table">
+									<thead class="table-light">
+										<tr>
+											<th>삭제</th>
+											<th>회원번호</th>
+											<th>이름</th>
+											<th>등록기간</th>
+											<th>피티 등록여부</th>
+										</tr>
+									</thead>
+									<tbody id="memlist"></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/. container-fluid -->
+		</section>
+	</div>
 </body>
 <script>
 

@@ -3,12 +3,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="kr.co.gf.mail.dao.MailDAO">
-	
+		<!-- 보낸쪽지 검색 -->
 		<select id="post_sendSerch" resultType="mail" parameterType="hashmap">
 			SELECT *
 			  FROM POST P
 			  LEFT JOIN EMP E
-				ON P.SEND_EMPNO = #{emp_no}
+				ON P.GET_EMPNO = E.EMP_NO
 			<where>
 				<if test="keyword != null and !keyword.equals('') and opt == 'e_name'">
 					E.NAME LIKE CONCAT('%',#{keyword},'%')
@@ -19,7 +19,29 @@
 				<if test="keyword != null and !keyword.equals('') and opt == 'content'">
 					P.CONTENT LIKE CONCAT('%',#{keyword},'%')
 				</if>
-			   AND E.IS_DELETE=0
+			   AND P.IS_DELETE=0 
+			   AND P.SEND_EMPNO=#{emp_no}
+			</where>
+		</select>
+		
+		<!-- 받은쪽지 검색 -->
+		<select id="post_getSerch" resultType="mail" parameterType="hashmap">
+			SELECT *
+			  FROM POST P
+			  LEFT JOIN EMP E
+				ON P.SEND_EMPNO = E.EMP_NO
+			<where>
+				<if test="keyword != null and !keyword.equals('') and opt == 'e_name'">
+					E.NAME LIKE CONCAT('%',#{keyword},'%')
+				</if>
+				<if test="keyword != null and !keyword.equals('') and opt == 'subject'">
+					P.SUBJECT LIKE CONCAT('%',#{keyword},'%')
+				</if>
+				<if test="keyword != null and !keyword.equals('') and opt == 'content'">
+					P.CONTENT LIKE CONCAT('%',#{keyword},'%')
+				</if>
+			   AND P.IS_DELETE=0 
+			   AND P.GET_EMPNO=#{emp_no}
 			</where>
 		</select>
 		

@@ -26,7 +26,7 @@ public class StatisController {
 	
 	
 	@RequestMapping(value = "/chart")
-	public String chart(Model model) {
+	public String chart(Model model,HttpSession session) {
 		ArrayList<StatisDTO> list = new ArrayList<StatisDTO>();
 		list = service.branchList();
 		model.addAttribute("list",list);

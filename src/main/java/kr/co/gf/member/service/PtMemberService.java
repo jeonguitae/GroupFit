@@ -167,15 +167,44 @@ public class PtMemberService {
 		
 		int success = dao.weightptdelete(dailypt_no);
 		
-		 PtMemberDTO dto = dao.getPtStateByDailyPtNo(dailypt_no);
+		PtMemberDTO dto = dao.getPtStateByDailyPtNo(dailypt_no);
 		
 		if(success == 1 || "결석".equals(dto.getPt_state())) {
 			dao.dailyptdelete(dailypt_no);
+			
 			dao.plusptcount(mem_no);
 		}
 		
 		return "redirect:/dailyptt";
 	}
+	
+	
+
+	
+	public HashMap<String, Object> ptdailydelete(ArrayList<String> ptdailydel) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int delSize = ptdailydel.size();
+		int successCnt = 0;
+		for (String daily_pt : ptdailydel) {
+			 
+			// 늘어나는 일지 번호를 누적해서 삭제
+			successCnt += dao.ptdailydelete(daily_pt);
+			//successCnt += dao.wightdelete(daily_pt);
+			
+			//PtMemberDTO[] dtoArray = new PtMemberDTO[]{dao.getPtStateByDailyPtNo(dailypt_no)};
+			
+			//PtMemberDTO dto = dao.getPtStateByDailyPtNo2(ptdailydel);
+			//successCnt += dao.ptdailydelete(daily_pt);
+		}
+		map.put("msg","일지"+successCnt+" 개 삭제 했습니다.");
+		map.put("success", true);
+		
+		return map;
+	}
+	
+	
+	
 	
 	
 
@@ -244,35 +273,35 @@ public class PtMemberService {
 		
 		return page;
 	}
-
 	
-	// 여기요 여기
-	public String updatesubmitcut(HashMap<String, String> params, ArrayList<String> pt_name, ArrayList<String> pt_kg, ArrayList<String> pt_set, String emp_no) {
-		
-		String page = "";
-		
-		PtMemberDTO dto = new PtMemberDTO();
 
-	    dto.setDailypt_no(Integer.parseInt(params.get("dailypt_no")));
-	    dto.setEmp_no(emp_no);
-	    dto.setMem_no(Integer.parseInt(params.get("mem_no")));
-	    dto.setAf_weight(params.get("af_weight"));
-	    dto.setAerobic(params.get("aerobic"));
-	    dto.setDiet(params.get("diet"));
-	    dto.setStr(params.get("etc"));
-	    dto.setPt_date(params.get("date"));
-		
-		
-		
-		// 수정 상태에서 결석 처리 하려고 했을 때 일지 삭제
-		int deletedailypt = dao.deletedailypt(params);
-		
-		int updatecut = dao.updatesubmitcut(params);
-		
-		page = "redirect:/dailyptt";
-		
-		return page;
-	}
+	/*
+	 * // 여기요 여기 public String updatesubmitcut(HashMap<String, String> params,
+	 * ArrayList<String> pt_name, ArrayList<String> pt_kg, ArrayList<String> pt_set,
+	 * String emp_no) {
+	 * 
+	 * String page = "";
+	 * 
+	 * PtMemberDTO dto = new PtMemberDTO();
+	 * 
+	 * dto.setDailypt_no(Integer.parseInt(params.get("dailypt_no")));
+	 * dto.setEmp_no(emp_no); dto.setMem_no(Integer.parseInt(params.get("mem_no")));
+	 * dto.setAf_weight(params.get("af_weight"));
+	 * dto.setAerobic(params.get("aerobic")); dto.setDiet(params.get("diet"));
+	 * dto.setStr(params.get("etc")); dto.setPt_date(params.get("date"));
+	 * 
+	 * 
+	 * 
+	 * // 수정 상태에서 결석 처리 하려고 했을 때 일지 삭제 int deletedailypt =
+	 * dao.deletedailypt(params);
+	 * 
+	 * int updatecut = dao.updatesubmitcut(params);
+	 * 
+	 * page = "redirect:/dailyptt";
+	 * 
+	 * return page; }
+	 * 
+	 */
 
 	
 	

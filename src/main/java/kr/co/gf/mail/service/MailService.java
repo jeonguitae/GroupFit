@@ -27,9 +27,18 @@ public class MailService {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
+	//보낸쪽지 검색
 	public ModelAndView post_sendSerch(HashMap<String, String> params) {
 		ModelAndView mav = new ModelAndView("postList");
 		ArrayList<MailDTO> list = dao.post_sendSerch(params);
+		mav.addObject("list",list);
+		return mav;
+	}
+	
+	//받은쪽지 검색
+	public ModelAndView post_getSerch(HashMap<String, String> params) {
+		ModelAndView mav = new ModelAndView("postGetList");
+		ArrayList<MailDTO> list = dao.post_getSerch(params);
 		mav.addObject("list",list);
 		return mav;
 	}

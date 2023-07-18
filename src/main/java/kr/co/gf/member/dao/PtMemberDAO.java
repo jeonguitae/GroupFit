@@ -2,6 +2,7 @@ package kr.co.gf.member.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import kr.co.gf.member.dto.MemberDTO;
 import kr.co.gf.member.dto.PtMemberDTO;
@@ -33,7 +34,7 @@ public interface PtMemberDAO {
 
 	boolean deletedaily_pt(int dailypt_no);
 
-
+    // 웨이트 일지 먼저 삭제
 	int weightptdelete(String dailypt_no);
 
 
@@ -53,17 +54,23 @@ public interface PtMemberDAO {
 
 	int submitcut(PtMemberDTO dto);
 
-	int updatesubmitcut(HashMap<String, String> params);
+	/* int updatesubmitcut(HashMap<String, String> params); */
 
 	int deletedailypt(HashMap<String, String> params);
-
+	
+	// 회원일지 삭제 웨이트 빼고
 	void dailyptdelete(String dailypt_no);
-
+	
+	// 삭제 시 일지 count +1 해주기
 	void plusptcount(String mem_no);
 
+	//ptstate 출석,결석 select해오기
 	PtMemberDTO getPtStateByDailyPtNo(String dailypt_no);
 
 	void submitcutminus(int mem_no);
+	
+	//리스트에서 일지 삭제할 때 
+	int ptdailydelete(String daily_pt);
 
 
 

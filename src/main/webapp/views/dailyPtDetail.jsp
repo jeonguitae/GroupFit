@@ -232,7 +232,7 @@
 	                </c:if>
 	                    <button id="deleteButton" type="button" class="btn btn-danger">삭제</button>
 	                </c:if>
-	                    <button type="submit" class="btn btn-primary" onclick="location.href='./dailyptt'" >리스트</button>
+	                    <button type="submit" class="btn btn-primary" onclick="confirmAndNavigateToList()" >리스트</button>
 	                </div>
 	                
 				    <br>
@@ -271,7 +271,11 @@ document.getElementById('deleteButton').addEventListener('click', function() {
 
 
 
-
+function confirmAndNavigateToList() {
+	  if (confirm('리스트 페이지로 이동하시겠습니까?')) {
+	    location.href = './dailyptt';
+	  }
+	}
 
 
 
