@@ -207,6 +207,7 @@ public class CommuteController {
 	@RequestMapping(value="/rdetail.do")
 	public String rdetail(@RequestParam int r_idx, Model model) {
 		HashMap<String, String> working = null;
+		
 		working=cservice.rdetail(r_idx);
 		model.addAttribute("working",working);
 		return "cf_detail";

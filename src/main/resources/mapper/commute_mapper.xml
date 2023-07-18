@@ -70,10 +70,10 @@
    	</select>
    
    	<select id="rdetail" resultType="hashmap">
-   	SELECT w.come_time, w.out_time, w.w_type FROM working w
-    INNER JOIN cRequest c ON w.work_date = c.r_date
-    INNER JOIN emp e ON e.emp_no = w.emp_no
-	WHERE
-    c.r_idx = #{r_idx}
+   	SELECT c.r_idx, c.reg_date, c.title, c.com_category, c.status, e.emp_no, e.name, e.position, w.w_type
+	FROM cRequest c 
+	JOIN working w ON c.r_date = w.work_date AND w.emp_no = c.emp_no
+	join emp e on e.emp_no = w.emp_no
+	WHERE c.r_idx = #{r_idx}
    	</select>
    </mapper>
