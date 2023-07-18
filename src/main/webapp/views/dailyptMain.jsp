@@ -171,7 +171,8 @@ tfoot td {
 	function ptlistdraw(ptlist) {
 			
 		var content = '';
-		
+			
+			if(ptlist.length > 0){
 			ptlist.forEach(function(dailypt,index){
 				
 			content += '<tr>';
@@ -183,6 +184,10 @@ tfoot td {
 			content += '<td><input type="checkbox" value="'+ dailypt.dailypt_no +'"/></td>';
 			content += '</tr>';
 		});
+			
+		}else{
+			content = "<tr><td colspan='7' style='text-align:center'>등록된 일지가 없습니다.</td></tr>"
+		}
 		
 		$('#ptlist').empty();
 		$('#ptlist').append(content);
