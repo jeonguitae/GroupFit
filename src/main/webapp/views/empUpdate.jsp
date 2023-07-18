@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
@@ -23,7 +23,7 @@
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>직원 프로필 수정하기</h3>
-		<form action="empUpdate.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+		<form action="empUpdate.do" method="post" enctype="multipart/form-data" onsubmit="return test()">
 			<table class="table table-dark table-striped">
 				<tr>
 					<c:if test="${emp.new_photo_name ne null}">
@@ -39,8 +39,8 @@
 					<td><input type="text" name="emp_no" value="${emp.emp_no}" readonly /></td>
 				</tr>
 				<tr>
-					<th>*비밀번호</th>
-					<td><input type="text" name="pw" value="${emp.pw}" id="pw"/></td>
+					<th>비밀번호</th>
+					<td><input type="text" name="pw" value="" id="pw"/></td>
 				</tr>
 				<tr>
 					<th>*이름</th>
@@ -53,7 +53,7 @@
 						<c:if test="${emp.gender eq '남'}">checked</c:if>
 						 />남
 						
-						<input type="radio" value="여" name="gender" id="gender"
+						<input type="radio" value="여" name="gender"
 						<c:if test="${emp.gender eq '여'}">checked</c:if>
 						 />여
 					</td>
@@ -73,7 +73,7 @@
 				<tr>
 					<th>*지점번호</th>
 					<td>
-						<select name="b_idx" >
+						<select name="b_idx" id="b_idx">
 						    <option value="1" <c:if test="${emp.b_idx eq '1'}">selected="selected"</c:if> >서초</option>
 						    <option value="2" <c:if test="${emp.b_idx eq '2'}">selected="selected"</c:if> >방배</option>
 						    <option value="3" <c:if test="${emp.b_idx eq '3'}">selected="selected"</c:if> >역삼</option>
@@ -84,7 +84,7 @@
 				<tr>
 					<th>*직급</th>
 					<td>
-						<select name="position">
+						<select name="position" id="position">
 						    <option value="직원" <c:if test="${emp.position eq '직원'}">selected="selected"</c:if> >직원</option>
 						    <option value="지점장" <c:if test="${emp.position eq '지점장'}">selected="selected"</c:if> >지점장</option>
 						    <option value="대표" <c:if test="${emp.position eq '대표'}">selected="selected"</c:if > >대표</option>
@@ -95,7 +95,7 @@
 				<tr>
 					<th>*재직상태</th>
 					<td>
-					<select name="status">
+					<select name="status" id="status">
 					    <option value="재직" <c:if test="${emp.status eq '재직'}">selected="selected"</c:if> >재직</option>
 					    <option value="휴직" <c:if test="${emp.status eq '휴직'}">selected="selected"</c:if> >휴직</option>
 					    <option value="퇴직" <c:if test="${emp.status eq '퇴직'}">selected="selected"</c:if> >퇴직</option>
@@ -111,7 +111,7 @@
 					<th>*퇴사일자</th>
 					<td><input type="date" id="retire_year" name="retire_year"/></td>
 				</tr>
-				<input type="submit" value="수정" >
+				<input type="submit" value="수정" />
 				<button type="button" onclick="location.href='./empList.go'">목록</button>	
 				<button type="button" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
 			</table>
@@ -134,72 +134,60 @@ function previewImage(input) {
     }
   }
 
-function validateForm() {
-	   
-	   var pw = document.getElementById('pw').value;
-	   var name = document.getElementById('name').value;
-	   var gender = document.getElementById('gender').value;
-	   var birth = document.getElementById('birth').value;
-	   var phone = document.getElementById('phone').value;
-	   var email = document.getElementById('email').value;
-	   var b_idx = document.getElementById('b_idx').value;
-	   var position = document.getElementById('position').value;
-	   var status = document.getElementById('status').value;
-	   var join_year = document.getElementById('join_year').value;
-	   var retire_year = document.getElementById('retire_year').value;
-	   
-	   
-	   if (pw.trim() == '') {
-	      alert('비밀번호를 입력해주세요.');
-	      return false;
-	   }
-	   
-	   if (pw.length < 8) {
-		   alert('비밀번호는 8자리 이상 입력해주세요!');
-		   return false;
-		 }
-	   if (name.trim() == '') {
-	      alert('이름을 입력해주세요.');
-	      return false;
-	   }
-	   if (gender == '') {
-	      alert('성별을 입력해주세요.');
-	      return false;
-	   }
-	   if (birth.trim() == '') {
-	      alert('생년월일을 입력해주세요.');
-	      return false;
-	   }
-	   if (phone.trim() == '') {
-	      alert('연락처를 입력해주세요.');
-	      return false;
-	   }
-	   if (email.trim() == '') {
-	      alert('이메일을 입력해주세요.');
-	      return false;
-	   }
-	   if (b_idx.trim() == '') {
-	      alert('지점을 입력해주세요.');
-	      return false;
-	   }
-	   if (position.trim() == '') {
-	      alert('지점을 입력해주세요.');
-	      return false;
-	   }
-	   if (status.trim() == '') {
-	      alert('재직상태를 입력해주세요.');
-	      return false;
-	   }
-	   if (join_year.trim() == '') {
-	      alert('입사일를 입력해주세요.');
-	      return false;
-	   }
-	   if (retire_year.trim() == '') {
-	      alert('퇴사일를 입력해주세요.');
-	      return false;
-	   }
-	   return true;
-	}
+function test() {
+	var pw = document.getElementById('pw').value;
+	var name = document.getElementById('name').value;
+	var gender = $(":input:radio[name=gender]:checked").val();
+	var birth = document.getElementById('birth').value;
+	var phone = document.getElementById('phone').value;
+	var email = document.getElementById('email').value;
+	var b_idx = document.getElementById('b_idx').value;
+	var position = document.getElementById('position').value;
+   	var status = document.getElementById('status').value;
+   	var join_year = document.getElementById('join_year').value;
+   
+   if (pw.trim() != '' && pw.length < 8) {
+	   alert('비밀번호는 8자리 이상 입력해주세요!');
+	   return false;
+	 }
+   if (name.trim() == '') {
+      alert('이름을 입력해주세요.');
+      return false;
+   }
+   if (!gender) {
+      alert('성별을 입력해주세요.');
+      return false;
+   }
+   if (birth.trim() == '') {
+      alert('생년월일을 입력해주세요.');
+      return false;
+   }
+   if (phone.trim() == '') {
+      alert('연락처를 입력해주세요.');
+      return false;
+   }
+   if (email.trim() == '') {
+      alert('이메일을 입력해주세요.');
+      return false;
+   }
+   if (b_idx.trim() == '') {
+      alert('지점을 입력해주세요.');
+      return false;
+   }
+   if (position.trim() == '') {
+      alert('지점을 입력해주세요.');
+      return false;
+   }
+   if (status.trim() == '') {
+      alert('재직상태를 입력해주세요.');
+      return false;
+   }
+   if (join_year.trim() == '') {
+      alert('입사일를 입력해주세요.');
+      return false;
+   }
+   return true;
+}
 
 
 </script>

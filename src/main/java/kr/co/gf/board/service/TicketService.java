@@ -24,8 +24,22 @@ public class TicketService {
 		return dao.ticketRegist(dto);
 	}
 
-	public ArrayList<TicketDTO> ticketList() {
-		return dao.ticketList();
+	public HashMap<String, Object> ticketList(int page, int cnt) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int offset = cnt*(page-1);
+		
+		int total = dao.ticketTotalCount();
+		int range = total%cnt==0 ? total/cnt: total/cnt+1;
+		
+		page = page > range ? range : page;
+		
+		map.put("currPage", page);
+		map.put("pages", range);
+		map.put("list", dao.ticketList(cnt,offset));
+		
+		return map;
 	}
 
 	public int ticketModify(TicketDTO dto) {
