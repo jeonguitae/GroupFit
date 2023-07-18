@@ -167,7 +167,7 @@ public class PtMemberService {
 		
 		int success = dao.weightptdelete(dailypt_no);
 		
-		 PtMemberDTO dto = dao.getPtStateByDailyPtNo(dailypt_no);
+		PtMemberDTO dto = dao.getPtStateByDailyPtNo(dailypt_no);
 		
 		if(success == 1 || "결석".equals(dto.getPt_state())) {
 			dao.dailyptdelete(dailypt_no);
@@ -177,6 +177,34 @@ public class PtMemberService {
 		
 		return "redirect:/dailyptt";
 	}
+	
+	
+
+	
+	public HashMap<String, Object> ptdailydelete(ArrayList<String> ptdailydel) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int delSize = ptdailydel.size();
+		int successCnt = 0;
+		for (String daily_pt : ptdailydel) {
+			 
+			// 늘어나는 일지 번호를 누적해서 삭제
+			successCnt += dao.ptdailydelete(daily_pt);
+			//successCnt += dao.wightdelete(daily_pt);
+			
+			//PtMemberDTO[] dtoArray = new PtMemberDTO[]{dao.getPtStateByDailyPtNo(dailypt_no)};
+			
+			//PtMemberDTO dto = dao.getPtStateByDailyPtNo2(ptdailydel);
+			//successCnt += dao.ptdailydelete(daily_pt);
+		}
+		map.put("msg","일지"+successCnt+" 개 삭제 했습니다.");
+		map.put("success", true);
+		
+		return map;
+	}
+	
+	
+	
 	
 	
 
@@ -275,10 +303,7 @@ public class PtMemberService {
 		return page;
 	}
 
-	public String ptdailydelete(ArrayList<String> memdelList) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	
 	

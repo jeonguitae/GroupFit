@@ -266,12 +266,12 @@ public class PtMemberController {
 	
 	@RequestMapping(value="ptdailydel.ajax")
 	@ResponseBody
-	public String ptdailydelete(
-			@RequestParam(value="ptList[]") ArrayList<String> memdelList) {
+	public HashMap<String, Object> ptdailydelete(
+			@RequestParam(value="dailypt[]") ArrayList<String> ptdailydel) {
 		
-		logger.info("memdelList : "+memdelList);
+		logger.info("memdelList : "+ptdailydel);
 		
-		return service.ptdailydelete(memdelList);
+		return service.ptdailydelete(ptdailydel);
 	
 	}
 	

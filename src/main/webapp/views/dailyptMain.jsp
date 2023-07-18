@@ -84,11 +84,8 @@ tfoot td {
 							<div class="float-right">
 								<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
 									<button class="btn btn-primary" onclick="location.href='dailypt.go'">일지 등록</button>&nbsp;
-									<form id="deleteForm" action="dailyptdelete.do" method="post">
-										<input type="hidden" name="dailypt_no" id="dailypt_no" value="">
-										<input type="hidden" name="mem_no" id="mem_no" value="">
-										<button class="btn btn-danger" onclick="ptmemdel()">일지 삭제</button>
-									</form>
+									<button class="btn btn-danger" onclick="ptmemdel()">일지 삭제</button>
+									
 								</c:if>
 							</div>
 						</div>
@@ -221,12 +218,26 @@ tfoot td {
 			}	
 		});
 		
+		
+		 if (checkArr.length === 0) {
+		        alert('삭제할 일지를 선택해주세요.');
+		        return;
+		    }
+		
+		
+		 // 삭제 여부를 묻는 알림창을 띄우기
+	    var confirmed = confirm('선택한 회원 일지를 삭제하시겠습니까?');
+	    if (!confirmed) {
+	        return;
+	    }
+
+		
 		console.log(checkArr);
 			
 		$.ajax({
 			type:'get',
 			url:'ptdailydel.ajax',
-			data:{'dailypt':checkArr},
+			data:{'dailypt': checkArr},
 			dataType:'json',
 			success:function(data){
 				console.log(data);
@@ -241,7 +252,7 @@ tfoot td {
 		});
 		
 		
-		
+	}		
 
 
 	// 검색 버튼 클릭 시
@@ -270,5 +281,8 @@ tfoot td {
 			}
 		});
 	}
+	
+	
+	
 </script>
 </html>

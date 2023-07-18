@@ -68,6 +68,9 @@ public interface PtMemberDAO {
 	PtMemberDTO getPtStateByDailyPtNo(String dailypt_no);
 
 	void submitcutminus(int mem_no);
+	
+	//리스트에서 일지 삭제할 때 
+	int ptdailydelete(String daily_pt);
 
 
 

@@ -169,6 +169,16 @@
    </delete>
    
    
+   <!-- 리스트에서 일지 삭제할 때 -->
+   <delete id="ptdailydelete">
+   
+	  DELETE FROM daily_pt
+	  WHERE dailypt_no = #{dailypt_no};
+	
+   
+   </delete>
+   
+   
    <!-- ptstate 출석,결석 select해오기 -->
    <select id="getPtStateByDailyPtNo" resultType="dailypt">
 	   		SELECT
