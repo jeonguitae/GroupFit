@@ -39,8 +39,7 @@
 	  font-size: 14px;
 	}
 	.fc-day-header {
-	  background-color: black;
-	  color: white;
+	  color: black;
 	}
 
     #calendar {
@@ -83,7 +82,7 @@
 		<section class="content">
 			<div class="container-fluid">
 			<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
-				  <button onclick="openModal()">일정 등록</button>
+				  <button class="btn btn-primary" onclick="openModal()">일정 등록</button>
 			</c:if>
 			<!-- 필터링이요 -->
 			<div id="branchFilter">
@@ -233,12 +232,21 @@
 				    	  var eventEnd;
 				    	  
 				    	  calendar = new FullCalendar.Calendar(calendarEl, {
-				    	    plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
+				    	    plugins: ['interaction', 'dayGrid'],
 				    	    defaultDate: new Date(),
 				    	    editable: false,
 				    	    eventLimit: true,
 				    	    events: [],
-			
+				    	    header: {
+				    	        left: 'prev',
+				    	        center: 'title',
+				    	        right: 'today,next'
+				    	      },
+				    	    locale: 'ko',
+				    	  
+
+			         
+				    	    
 				    	    eventClick: function(info) {
 				    	      // 클릭한 이벤트의 정보를 변수에 저장
 				    	      eventId = info.event.id;
@@ -436,7 +444,7 @@
 				        	
 				        	 // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (eventData.b_idx === '1') {
-				              eventData.backgroundColor = 'green';
+				              eventData.backgroundColor = 'PowderBlue';
 				            } else if (eventData.b_idx === '2') {
 				              eventData.backgroundColor = 'blue';
 				            } else if (eventData.b_idx === '3') {
@@ -486,7 +494,7 @@
 				        
 				          // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (item.b_idx === '1') {
-				              newEvent.backgroundColor = 'green';
+				              newEvent.backgroundColor = 'PowderBlue';
 				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'blue';
 				            } else if (item.b_idx === '3') {
@@ -547,7 +555,7 @@
 				            
 				            // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (item.b_idx === '1') {
-				              newEvent.backgroundColor = 'green';
+				              newEvent.backgroundColor = 'PowderBlue';
 				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'blue';
 				            } else if (item.b_idx === '3') {
@@ -596,7 +604,7 @@
 				            
 				            // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (item.b_idx === '1') {
-				              newEvent.backgroundColor = 'green';
+				              newEvent.backgroundColor = 'PowderBlue';
 				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'blue';
 				            } else if (item.b_idx === '3') {

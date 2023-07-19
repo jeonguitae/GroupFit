@@ -85,11 +85,11 @@
 					<th>*직급</th>
 					<td>
 						<select name="position" id="position">
-						    <option value="직원" <c:if test="${emp.position eq '직원'}">selected="selected"</c:if> >직원</option>
+							<option value="FC" <c:if test="${emp.position eq 'FC'}">selected="selected"</c:if> >FC</option>
+						    <option value="트레이너" <c:if test="${emp.position eq '트레이너'}">selected="selected"</c:if> >트레이너</option>
 						    <option value="지점장" <c:if test="${emp.position eq '지점장'}">selected="selected"</c:if> >지점장</option>
 						    <option value="대표" <c:if test="${emp.position eq '대표'}">selected="selected"</c:if > >대표</option>
 						</select>
-					
 					</td>
 				</tr>
 				<tr>

@@ -39,7 +39,7 @@ public interface CommuteDAO {
 
 	ArrayList<CommuteDTO> rlist(String b_idx);
 
-	HashMap<String, String> rdetail(int r_idx);
+	CommuteDTO rdetail(String r_idx, String b_idx);
 
 	ArrayList<String> w_type(String emp_no, String b_idx);
 

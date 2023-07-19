@@ -3,6 +3,9 @@ package kr.co.gf.commute.dto;
 import java.sql.Date;
 import java.sql.Time;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("commute")
 public class CommuteDTO {
 
 	private String emp_no;

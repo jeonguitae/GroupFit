@@ -362,8 +362,8 @@ public class CommuteService {
 		return cdao.rlist(b_idx);
 	}
 
-	public HashMap<String, String> rdetail(int r_idx) {
-		return cdao.rdetail(r_idx);
+	public CommuteDTO rdetail(String r_idx, String b_idx) {
+		return cdao.rdetail(r_idx, b_idx);
 	}
 
 	public HashMap<String, Object> commutelist(String b_idx) {

@@ -64,7 +64,7 @@
             </tr>
         </thead>        
         <tbody>
-            <c:forEach items="${working}" var="working">
+            <%-- <c:forEach items="${working}" var="working"> --%>
                 <c:if test="${not empty sessionScope.loginId}">
                     <tr>
                         <td style="text-align: center;">${working.reg_date}</td> 
@@ -76,7 +76,7 @@
                         <td style="text-align: center;">${working.w_type}</td>
                     </tr>
                 </c:if>         
-            </c:forEach>
+            <%-- </c:forEach> --%>
         </tbody>
        </table>
        				<table id="table2">
@@ -98,8 +98,8 @@
 						<td style="text-align: center;">${working.comment}</td> 		
 					</tr>
 				</table>
-				<form action="rconfirm.do" method="post">				
-				
+				<form action="/rconfirm.do" method="post">				
+				<input type="hidden" name="r_idx" value="${r_idx}">
 				<h2>출퇴근 변경 요청 승인서</h2>
 				<table id="table3">
 					<tr>
@@ -109,7 +109,7 @@
 						
 					<tr>
 						<th>처리인</th>
-						<td><input type="text" name="position"/>지점장</td>
+						<td>지점장</td>
 					</tr>
 					<tr>
 						<th>의견</th>
@@ -119,6 +119,7 @@
 				
 				<div id="button_sin_mok">
 					<input type="button" onclick="location.href='/rlist.go'" value="이전"/>
+					<input type="submit"/>
 				</div>
 				<input type="hidden" name="emp_no" value="${loginId}"/>
 				</form>

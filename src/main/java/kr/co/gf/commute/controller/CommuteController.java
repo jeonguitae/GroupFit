@@ -176,7 +176,7 @@ public class CommuteController {
 	
 	@RequestMapping(value="/cwrite.go")
 	public String cwritego() {
-		String page="commute_request";
+		String page="c_request";
 		return page;
 	}
 	
@@ -206,10 +206,14 @@ public class CommuteController {
 	}
 	
 	@RequestMapping(value="/rdetail.do")
-	public String rdetail(@RequestParam int r_idx, Model model) {
-		HashMap<String, String> working = null;
+	public String rdetail(@RequestParam String r_idx, Model model, HttpSession session) {
 		
-		working=cservice.rdetail(r_idx);
+		EmpDTO eDto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = eDto.getB_idx();
+		
+		CommuteDTO working = cservice.rdetail(r_idx, b_idx);
+		/* working=cservice.rdetail(r_idx, b_idx); */
+		model.addAttribute("r_idx",r_idx);
 		model.addAttribute("working",working);
 		return "cf_detail";
 	}
@@ -220,6 +224,7 @@ public class CommuteController {
 		return "center_commute";
 	}
 	
+
 	@RequestMapping(value="commutelist.ajax")
 	@ResponseBody
 	public HashMap<String, Object> commutelist(
@@ -229,6 +234,17 @@ public class CommuteController {
 		String b_idx = dto.getB_idx();
 		
 		return cservice.commutelist(b_idx);
+	}
+	
+	@RequestMapping(value="/rconfirm.do")
+	public String rconfirm(@RequestParam HashMap<String, String> params) {
+		logger.info("rconfirm icin r_idx"+params);
+		String flag=params.get("status");
+		if (flag.equals("승인")) {
+			logger.info("승인 떠야 함");
+		}
+		else {}
+		return null;
 	}
 
 }
