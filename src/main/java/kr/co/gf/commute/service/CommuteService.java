@@ -366,16 +366,30 @@ public class CommuteService {
 		return cdao.rdetail(r_idx);
 	}
 
-	public HashMap<String, Object> commutelist(ArrayList<String> july_date, String b_idx) {
+	public HashMap<String, Object> commutelist(String b_idx) {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<String> list = new ArrayList<String>();
 		
-		for (String work_date : july_date) {
+		ArrayList<String> emp_name = cdao.emp_name_list(b_idx);
+		
+		int i = 0;
+		
+		for (String name : emp_name) {
 			
-			String w_type = cdao.w_type(work_date, july_date);
-			list.add(w_type);
-		}		
+			i += 1;
+			
+			logger.info("emp_name" + name);
+			
+			String emp_no = cdao.s_emp_no(name, b_idx);
+			logger.info("emp_no" + emp_no);
+			
+			ArrayList<String> w_type = cdao.w_type(emp_no, b_idx);
+			
+			map.put("name"+i, name);
+			map.put("w_type"+i, w_type);
+		}	
+		
+		map.put("i", i);
 		
 		return map;
 	}

@@ -223,12 +223,12 @@ public class CommuteController {
 	@RequestMapping(value="commutelist.ajax")
 	@ResponseBody
 	public HashMap<String, Object> commutelist(
-			@RequestParam(value="july_date[]") ArrayList<String> july_date, HttpSession session){
+			HttpSession session){
 		
 		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
 		String b_idx = dto.getB_idx();
 		
-		return cservice.commutelist(july_date, b_idx);
+		return cservice.commutelist(b_idx);
 	}
 
 }

@@ -5,9 +5,6 @@
 <html>
 <head>
 <style>
-	div.meminfo. div.memprofile{
-		float: center;
-	}
 </style>
 <meta charset="UTF-8">
 <title>여기에 페이지 이름 입력</title>
@@ -47,78 +44,76 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
+			
 				<h2>7월</h2>
-				<div class="header" style="display : flex;">
+			  	
+				<div id="header" style="display : flex;">
 					<div style="width: 100px; height: 30px; border: 1px solid white; text-align: center">직원이름</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">1</div>
-					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>
+					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">2</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">3</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">4</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">5</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">6</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">7</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">8</div>
-					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>
+					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">9</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">10</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">11</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">12</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">13</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">14</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">15</div>
-					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>
+					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">16</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">17</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">18</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">19</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">20</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">21</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">22</div>
-					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>
+					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">23</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">24</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">25</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">26</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">27</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">28</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">29</div>
-					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>
+					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">30</div>
 					<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">31</div>
 				</div>
 				
-				<div class="first_row" style="display : flex;">
-					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">2</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">3</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">4</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">5</div> -->
+				<div id="first_row" style="display : flex;">
+					
 				</div>
 				
 				<br/>
 				
-				<div class="second_row" style="display : flex;">
-					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">2</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">3</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">4</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">5</div> -->
+				<div id="second_row" style="display : flex;">
+					
 				</div>
 				
 				<br/>
 				
-				<div class="third_row" style="display : flex;">
-					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">2</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">3</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">4</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">5</div> -->
+				<div id="third_row" style="display : flex;">
+					
 				</div>
 				
 				<br/>
 				
-				<div class="fourth_row" style="display : flex;">
-					<!-- <div style="width: 150px; height: 150px; border: 1px solid white">1</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">2</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">3</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">4</div>
-					<div style="width: 150px; height: 150px; border: 1px solid white">5</div> -->
+				<div id="fourth_row" style="display : flex;">
+					
+				</div>
+				
+				<div id="fifth_row" style="display : flex;">
+					
+				</div>
+				
+				<div id="sixth_row" style="display : flex;">
+					
+				</div>
+				
+				<div id="seventh_row" style="display : flex;">
+					
 				</div>
 			</div>
 			<!--/. container-fluid -->
@@ -126,14 +121,9 @@
 	</div>
 </body>
 <script>
-
 commutelist();
 
-var july_date = ['2023-07-01', '2023-07-03', '2023-07-04', '2023-07-05', '2023-07-06'
-	, '2023-07-07', '2023-07-08', '2023-07-10', '2023-07-11', '2023-07-12', '2023-07-13'
-	, '2023-07-14', '2023-07-15', '2023-07-17', '2023-07-18', '2023-07-19', '2023-07-20'
-	, '2023-07-21', '2023-07-22', '2023-07-24', '2023-07-25', '2023-07-26', '2023-07-27'
-	, '2023-07-28', '2023-07-29', '2023-07-31'];
+var count = 0;
 
 function commutelist(){
 	
@@ -141,16 +131,522 @@ function commutelist(){
 		type:'get',
 		url:'commutelist.ajax',
 		data:{
-				'july_date' : july_date
-			},
+		},
 		dataType:'json',
 		success:function(data){
-			listDraw(data.list);
+			
+			count = data.i;
+			
+			for (var i = 1; i <= count; i++) {
+				console.log(data['w_type' + i], data['name' + i]);
+				commutelistDraw(data['w_type' + i], data['name' + i], i);
+			}
 		},
 		error:function(e){
 			console.log(e);
 		}
 	});	
+}
+function commutelistDraw(w_type, name, i){
+
+	var n_content = '<div style="width: 100px; height: 30px; border: 1px solid white; text-align: center">' + name + '</div>';
+	
+	var ele = '';
+	
+	if(i == 1){
+		
+		ele = '#first_row';
+		console.log(ele);
+	}
+	
+	if(i == 1){
+		
+		$('#first_row').append(n_content);
+		
+		var w_content = '';
+		var e_content = '';
+		
+		w_type.forEach(function(item,index){
+			
+			var status = '';
+			
+			if(item == '출근'){
+				
+				status = 'O';
+			}
+			
+			else if(item == '지각'){
+				
+				status = '△';
+			}
+			
+			else{
+				
+				status = 'X';
+			}
+			
+			if(index == 0 || index == 6 || index == 12){
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			}
+			
+			else{
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+			}
+			
+		});
+		
+
+		$('#first_row').append(w_content);
+		
+		var deEle = document.getElementById('first_row');
+		var deEleCount = deEle.childElementCount;
+		
+		console.log(deEleCount);
+		
+		var HeaderEle = document.getElementById('header');
+		var HeaderEleCount = HeaderEle.childElementCount;
+		
+		console.log(HeaderEleCount);
+		
+		console.log(HeaderEleCount - deEleCount);
+		
+		for (var i = 1; i <= HeaderEleCount - deEleCount; i++) {
+			  var e_content = '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			  $('#first_row').append(e_content);
+		}
+		
+	}
+	
+	if(i == 1){
+		
+		$('#first_row').append(n_content);
+		
+		var w_content = '';
+		var e_content = '';
+		
+		w_type.forEach(function(item,index){
+			
+			var status = '';
+			
+			if(item == '출근'){
+				
+				status = 'O';
+			}
+			
+			else if(item == '지각'){
+				
+				status = '△';
+			}
+			
+			else{
+				
+				status = 'X';
+			}
+			
+			if(index == 0 || index == 6 || index == 12){
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			}
+			
+			else{
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+			}
+			
+		});
+		
+
+		$('#first_row').append(w_content);
+		
+		var deEle = document.getElementById('first_row');
+		var deEleCount = deEle.childElementCount;
+		
+		console.log(deEleCount);
+		
+		var HeaderEle = document.getElementById('header');
+		var HeaderEleCount = HeaderEle.childElementCount;
+		
+		console.log(HeaderEleCount);
+		
+		console.log(HeaderEleCount - deEleCount);
+		
+		for (var i = 1; i <= HeaderEleCount - deEleCount; i++) {
+			  var e_content = '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			  $('#first_row').append(e_content);
+		}
+		
+	}
+	
+	if(i == 2){
+		
+		$('#second_row').append(n_content);
+		
+		var w_content = '';
+		var e_content = '';
+		
+		w_type.forEach(function(item,index){
+			
+			var status = '';
+			
+			if(item == '출근'){
+				
+				status = 'O';
+			}
+			
+			else if(item == '지각'){
+				
+				status = '△';
+			}
+			
+			else{
+				
+				status = 'X';
+			}
+			
+			if(index == 0 || index == 6 || index == 12){
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			}
+			
+			else{
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+			}
+			
+		});
+		
+	
+		$('#second_row').append(w_content);
+		
+		var deEle = document.getElementById('second_row');
+		var deEleCount = deEle.childElementCount;
+		
+		console.log(deEleCount);
+		
+		var HeaderEle = document.getElementById('header');
+		var HeaderEleCount = HeaderEle.childElementCount;
+		
+		console.log(HeaderEleCount);
+		
+		console.log(HeaderEleCount - deEleCount);
+		
+		for (var i = 1; i <= HeaderEleCount - deEleCount; i++) {
+			  var e_content = '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			  $('#second_row').append(e_content);
+		}
+		
+	}
+	
+	if(i == 3){
+			
+			$('#third_row').append(n_content);
+			
+			var w_content = '';
+			var e_content = '';
+			
+			w_type.forEach(function(item,index){
+				
+				var status = '';
+				
+				if(item == '출근'){
+					
+					status = 'O';
+				}
+				
+				else if(item == '지각'){
+					
+					status = '△';
+				}
+				
+				else{
+					
+					status = 'X';
+				}
+				
+				if(index == 0 || index == 6 || index == 12){
+					
+					w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+					w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+				}
+				
+				else{
+					
+					w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+				}
+				
+			});
+			
+	
+			$('#third_row').append(w_content);
+			
+			var deEle = document.getElementById('third_row');
+			var deEleCount = deEle.childElementCount;
+			
+			console.log(deEleCount);
+			
+			var HeaderEle = document.getElementById('header');
+			var HeaderEleCount = HeaderEle.childElementCount;
+			
+			console.log(HeaderEleCount);
+			
+			console.log(HeaderEleCount - deEleCount);
+			
+			for (var i = 1; i <= HeaderEleCount - deEleCount; i++) {
+				  var e_content = '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+				  $('#third_row').append(e_content);
+			}
+			
+		}
+		
+	if(i == 4){
+		
+		$('#fourth_row').append(n_content);
+		
+		var w_content = '';
+		var e_content = '';
+		
+		w_type.forEach(function(item,index){
+			
+			var status = '';
+			
+			if(item == '출근'){
+				
+				status = 'O';
+			}
+			
+			else if(item == '지각'){
+				
+				status = '△';
+			}
+			
+			else{
+				
+				status = 'X';
+			}
+			
+			if(index == 0 || index == 6 || index == 12){
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			}
+			
+			else{
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+			}
+			
+		});
+		
+	
+		$('#fourth_row').append(w_content);
+		
+		var deEle = document.getElementById('fourth_row');
+		var deEleCount = deEle.childElementCount;
+		
+		console.log(deEleCount);
+		
+		var HeaderEle = document.getElementById('header');
+		var HeaderEleCount = HeaderEle.childElementCount;
+		
+		console.log(HeaderEleCount);
+		
+		console.log(HeaderEleCount - deEleCount);
+		
+		for (var i = 1; i <= HeaderEleCount - deEleCount; i++) {
+			  var e_content = '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			  $('#fourth_row').append(e_content);
+		}
+		
+	}
+	
+	if(i == 5){
+		
+		$('#fifth_row').append(n_content);
+		
+		var w_content = '';
+		var e_content = '';
+		
+		w_type.forEach(function(item,index){
+			
+			var status = '';
+			
+			if(item == '출근'){
+				
+				status = 'O';
+			}
+			
+			else if(item == '지각'){
+				
+				status = '△';
+			}
+			
+			else{
+				
+				status = 'X';
+			}
+			
+			if(index == 0 || index == 6 || index == 12){
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			}
+			
+			else{
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+			}
+			
+		});
+		
+	
+		$('#fifth_row').append(w_content);
+		
+		var deEle = document.getElementById('fifth_row');
+		var deEleCount = deEle.childElementCount;
+		
+		console.log(deEleCount);
+		
+		var HeaderEle = document.getElementById('header');
+		var HeaderEleCount = HeaderEle.childElementCount;
+		
+		console.log(HeaderEleCount);
+		
+		console.log(HeaderEleCount - deEleCount);
+		
+		for (var i = 1; i <= HeaderEleCount - deEleCount; i++) {
+			  var e_content = '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			  $('#fifth_row').append(e_content);
+		}
+		
+	}
+	
+	if(i == 6){
+		
+		$('#sixth_row').append(n_content);
+		
+		var w_content = '';
+		var e_content = '';
+		
+		w_type.forEach(function(item,index){
+			
+			var status = '';
+			
+			if(item == '출근'){
+				
+				status = 'O';
+			}
+			
+			else if(item == '지각'){
+				
+				status = '△';
+			}
+			
+			else{
+				
+				status = 'X';
+			}
+			
+			if(index == 0 || index == 6 || index == 12){
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			}
+			
+			else{
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+			}
+			
+		});
+		
+	
+		$('#sixth_row').append(w_content);
+		
+		var deEle = document.getElementById('sixth_row');
+		var deEleCount = deEle.childElementCount;
+		
+		console.log(deEleCount);
+		
+		var HeaderEle = document.getElementById('header');
+		var HeaderEleCount = HeaderEle.childElementCount;
+		
+		console.log(HeaderEleCount);
+		
+		console.log(HeaderEleCount - deEleCount);
+		
+		for (var i = 1; i <= HeaderEleCount - deEleCount; i++) {
+			  var e_content = '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			  $('#sixth_row').append(e_content);
+		}
+		
+	}
+	
+	if(i == 7){
+		
+		$('#seventh_row').append(n_content);
+		
+		var w_content = '';
+		var e_content = '';
+		
+		w_type.forEach(function(item,index){
+			
+			var status = '';
+			
+			if(item == '출근'){
+				
+				status = 'O';
+			}
+			
+			else if(item == '지각'){
+				
+				status = '△';
+			}
+			
+			else{
+				
+				status = 'X';
+			}
+			
+			if(index == 0 || index == 6 || index == 12){
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			}
+			
+			else{
+				
+				w_content += '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center">' + status + '</div>';
+			}
+			
+		});
+		
+	
+		$('#seventh_row').append(w_content);
+		
+		var deEle = document.getElementById('seventh_row');
+		var deEleCount = deEle.childElementCount;
+		
+		console.log(deEleCount);
+		
+		var HeaderEle = document.getElementById('header');
+		var HeaderEleCount = HeaderEle.childElementCount;
+		
+		console.log(HeaderEleCount);
+		
+		console.log(HeaderEleCount - deEleCount);
+		
+		for (var i = 1; i <= HeaderEleCount - deEleCount; i++) {
+			  var e_content = '<div style="width: 30px; height: 30px; border: 1px solid white; text-align: center"></div>';
+			  $('#seventh_row').append(e_content);
+		}
+		
+	}
+	
 }
 </script>
 </html>
