@@ -1,5 +1,6 @@
 package kr.co.gf.board.dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,7 +28,7 @@ public interface MachineDAO {
 
 	int mac_status(String mac_num, String mac_status, String b_idx, String emp_no);
 
-	ArrayList<MachineDTO> Fmaclist(String b_idx);
+	ArrayList<MachineDTO> Fmaclist(String b_idx, LocalDate now);
 
 	int mac_fixed(String emp_no, String mac_num, String fixed_content, String b_idx);
 

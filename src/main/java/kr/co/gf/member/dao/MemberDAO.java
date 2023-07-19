@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import kr.co.gf.board.dto.MachineDTO;
 import kr.co.gf.member.dto.MemberDTO;
 
 @Mapper
@@ -100,6 +101,8 @@ public interface MemberDAO {
 	void memphotodel(String mem_no);
 
 	String del_new_file_name(String mem_no);
+
+	MemberDTO mem_info(String mem_no);
 
 	/* int memjoin(HashMap<String, String> params); */
 

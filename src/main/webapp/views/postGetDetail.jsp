@@ -19,6 +19,24 @@
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+h6{
+	margin: left 20px;
+}
+
+.card-header {
+    background-color: #3f6791;
+    border-bottom: 5px solid rgb(117 59 59 / 13%);
+    padding: 0.75rem 1.25rem;
+    position: relative;
+    font-weight: bold;
+    vertical-align: sub;
+}
+.container-fluid{
+	width: 40%;
+	margin-left: 20px;
+}
+</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
 	<div class="content-wrapper" style="margin-top: 57.08px">
@@ -42,7 +60,7 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-					<table>
+<%-- 					<table>
 						<tr>
 							<th>받은시간</th>
 							<td><input type="text" value="${post.send_time}" readonly/></td>
@@ -70,8 +88,45 @@
 						<button type="button" onclick="location.href='./postGetWrite.go?emailid=${post.email_num}'">회신</button>	
 						<button type="button" onclick="location.href='./postSendList.go'">보낸쪽지 목록</button>	
 						<button type="button" onclick="location.href='./postGetList.go'">받은쪽지 목록</button>	
-					</table>
-				</form>
+					</table> --%>
+				<div class="card card-primary card-outline">
+		            <div class="card-header">
+		              <h3 class="card-title" >${post.subject}</h3>
+		              <div class="card-tools">
+		                <a href="#" class="btn btn-tool" title="Previous"><i class="fas fa-chevron-left"></i></a>
+		                <a href="#" class="btn btn-tool" title="Next"><i class="fas fa-chevron-right"></i></a>
+		              </div>
+		            </div>
+		            <!-- /.card-header -->
+		            <div class="card-body p-0">
+		              <div class="mailbox-read-info">
+		                <br>
+		                <h6>보낸사람 이름: ${post.name}</h6> </br>
+		                <h6>받은 시간: ${post.send_time}</h6> </br>
+		                <h6>읽은 시간: ${post.chk_time}</h6>
+		              </div>
+		              <!-- /.mailbox-read-info -->
+
+		              
+		              <div class="mailbox-read-message">
+		              	${post.content}
+		              </div>
+		              <!-- /.mailbox-read-message -->
+		            </div>
+		            <!-- /.card-footer -->
+		            <div class="card-footer">
+		              <div class="float-right">
+		                <button type="button" class="btn btn-default"
+		                		onclick="location.href='./postGetWrite.go?emailid=${post.email_num}'">
+		                		<i class="fas fa-share"></i>회신</button>	
+		                <button type="button" class="btn btn-default"
+		                		onclick="location.href='./postSendList.go'"><i class="fas fa-share"></i>보낸쪽지</button>
+		                <button type="button" class="btn btn-default"
+		                		onclick="location.href='./postGetList.go'"><i class="fas fa-share"></i>받은쪽지</button>
+		              </div>
+		            </div>
+		            <!-- /.card-footer -->
+		          </div>
 			</div>
 			<!--/. container-fluid -->
 		</section>

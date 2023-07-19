@@ -53,8 +53,29 @@
   	</update>
   	
   	<insert id="cwrite">
-  	INSERT INTO cRequest(emp_no, comment, title, r_date, r_time) 
-  	VALUES(#{emp_no},#{comment},#{title},#{r_date},#{r_time})
+  	INSERT INTO cRequest(emp_no, comment, title, r_date, r_time, com_category) 
+  	VALUES(#{emp_no},#{comment},#{title},#{r_date},#{r_time},#{com_category})
   	</insert>
   	
+  	<select id="alllist" resultType="kr.co.gf.commute.dto.CommuteDTO">
+  	SELECT *FROM working 
+  	</select>
+  	
+   	<select id="rlist" resultType="kr.co.gf.commute.dto.CommuteDTO">
+    SELECT c.r_idx, c.reg_date, c.title, c.com_category, c.status, e.emp_no, e.name, e.position, w.w_type
+	FROM cRequest c 
+	JOIN working w ON c.r_date = w.work_date AND w.emp_no = c.emp_no
+	join emp e on e.emp_no = w.emp_no
+	WHERE c.status = '대기' AND e.b_idx = #{param1}; 
+   	</select>
+   
+   	<select id="rdetail" resultType="commute" parameterType="String">
+   	select c.reg_date, c.com_category, c.r_date, c.r_time, c.comment, c.emp_no
+	, w.come_time, w.out_time, w.w_type
+	, e.name, e.`position` 
+	from crequest c  
+	join working w on c.emp_no = w.emp_no and c.r_date = w.work_date 
+	join emp e on e.emp_no = w.emp_no 
+	where e.b_idx = #{b_idx}  and c.r_idx = #{r_idx};
+   	</select>
    </mapper>

@@ -175,16 +175,63 @@ public class CommuteController {
 	
 	@RequestMapping(value="/cwrite.go")
 	public String cwritego() {
-		String page="commute_request";
+		String page="c_request";
 		return page;
 	}
 	
 	@RequestMapping(value="/cwrite.do")
 	public String cwritedo(@RequestParam HashMap<String, String> params, Model model) {
 		int row=cservice.cwrite(params);
-		logger.info("cwritedo icin "+row);
+		logger.info("params : " + params);
+		if (row==1) {
+			model.addAttribute("msg","변경 요청서가 제출되었습니다.");
+		}
 		return "my_working";
 	}
-
+	@RequestMapping(value="/centerlist.do")
+	public String clist(Model model) {
+		ArrayList<CommuteDTO> working = cservice.alllist();
+		model.addAttribute("working",working);
+		return "c_list";
+	}
+	@RequestMapping(value="/rlist.go")
+	public String rlist(Model model, HttpSession session) {
+		EmpDTO eDto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = eDto.getB_idx();
+		
+		ArrayList<CommuteDTO> working = cservice.rlist(b_idx);
+		model.addAttribute("working",working);
+		return "requestList";	
+	}
+	
+	@RequestMapping(value="/rdetail.do")
+	public String rdetail(@RequestParam String r_idx, Model model, HttpSession session) {
+		
+		EmpDTO eDto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = eDto.getB_idx();
+		
+		CommuteDTO working = cservice.rdetail(r_idx, b_idx);
+		/* working=cservice.rdetail(r_idx, b_idx); */
+		model.addAttribute("r_idx",r_idx);
+		model.addAttribute("working",working);
+		return "cf_detail";
+	}
+	
+	@RequestMapping(value = "/center_commute.go")
+	public String cenenter_commute() {
+	
+		return "center_commute";
+	}
+	
+	@RequestMapping(value="/rconfirm.do")
+	public String rconfirm(@RequestParam HashMap<String, String> params) {
+		logger.info("rconfirm icin r_idx"+params);
+		String flag=params.get("status");
+		if (flag.equals("승인")) {
+			logger.info("승인 떠야 함");
+		}
+		else {}
+		return null;
+	}
 
 }

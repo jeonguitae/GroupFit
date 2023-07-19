@@ -36,7 +36,6 @@ public class ReferenceController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired ReferenceService service;
-	
 	@Value("${spring.servlet.multipart.location}") private String root;
 	
 	// 자료실 리스트 보기
@@ -123,8 +122,7 @@ public class ReferenceController {
 		logger.info("path 값"+path);
 		logger.info("idx 값"+idx);
 		
-		String newFileName = service.selectFile(path);
-		
+		String newFileName = service.selectFile(path); 
 		Resource body = new FileSystemResource(root+"/"+path);//BODY		
 		HttpHeaders header = new HttpHeaders();//Header
 		try {						

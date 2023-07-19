@@ -116,7 +116,7 @@
 				<table id="table2">
 					<tr>
 						<th>제목</th>
-						<td><input type="text" name="title" id=""title"" required/></td>
+						<td><input type="text" name="title" id="title" required/></td>
 					</tr>
 					<tr>
 						<th>일시</th>
@@ -125,12 +125,12 @@
 					</tr>
 					<tr>
 						<th>변경 요청 사안</th>
-						<td><input type="radio" name="request" value="출근" required/>출근</td>
-						<td><input type="radio" name="request" value="퇴근" required/>퇴근</td>	
+						<td><input type="radio" name="com_category" value="출근" required/>출근</td>
+						<td><input type="radio" name="com_category" value="퇴근" required/>퇴근</td>	
 					</tr>
 					<tr>
 						<th>변경 요청 사유</th>
-						<td><textarea id="sa" name="reason" class="reason" required></textarea></td>
+						<td><textarea id="sa" name="comment" class="reason" required></textarea></td>
 					</tr>
 				</table>
 				<div id="button_sin_mok">

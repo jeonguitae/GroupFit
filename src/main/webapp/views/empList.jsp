@@ -20,16 +20,15 @@
 <style>
 
 div[class="btn1"]{
-	margin-left: 900px;
+	margin-left: 1200px;
+	margin-bottom: 30px;
 }
 
 form[class="search"]{
-	margin-left: 377px;
+	margin-top: 50px;
+
 }
 
-.btn btn-primary{
-	display: inline;
-}
 
 </style>
 <body>
@@ -44,17 +43,17 @@ form[class="search"]{
 					<option value="position">직급</option>
 				</select>
 				<input type="text" name="keyword" value="" placeholder="검색어를 입력하세요"/>
-				<button>검색</button>
+				<button class="btn btn-secondary">검색</button>
 			</form>
 		</fieldset>
 		
 		<div class="btn1">
 			<c:if test="${sessionScope.loginEmp.position == '대표'}">
 			<button class="btn btn-primary" onclick="location.href='empJoin.go'">직원 등록</button>
-			&nbsp;<button class="btn btn-primary" onclick="hide()">직원 삭제</button>&nbsp;
+			&nbsp;<button class="btn btn-danger" onclick="hide()">직원 삭제</button>&nbsp;
 			</c:if>
 			<c:if test="${sessionScope.loginEmp.position eq '대표'}">
-				<button class="btn btn-primary" onclick="location.href='empRepList.do'">지점별</button>
+				<button class="btn btn-secondary" onclick="location.href='empRepList.do'">지점별</button>
 			</c:if>
 		</div>
 			<div class="card card-primary">

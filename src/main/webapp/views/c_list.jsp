@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기에 페이지 이름 입력</title>
+<title>센터 근태 관리</title>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
@@ -42,9 +42,12 @@
 <!-- Main content -->
       <section class="content">
          <div class="container-fluid">
-            <h1 class="forcenter">나의 근태관리</h1>
+            <h1 class="forcenter">센터 근태관리</h1>
                <div class="togo">
-                  <button onclick="location.href='cwrite.go'">변경 요청서 작성</button>
+                  <button onclick="location.href='rlist.go'">출퇴근 변경 요청 리스트</button>
+                  <button onclick="location.href='confirmlist.do'">출퇴근 변경 처리 내역</button>
+                  <button onclick="location.href='center_commute.go'">직원 출퇴근 내역</button>
+                  
                </div> 
     <table class="table second">
         <colgroup>

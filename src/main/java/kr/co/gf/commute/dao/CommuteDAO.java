@@ -35,6 +35,12 @@ public interface CommuteDAO {
 
 	int cwrite(HashMap<String, String> params);
 
+	ArrayList<CommuteDTO> alllist();
+
+	ArrayList<CommuteDTO> rlist(String b_idx);
+
+	CommuteDTO rdetail(String r_idx, String b_idx);
+
 	//CommuteDTO selectAll(String emp_no, LocalDate previousDay);
 
 }

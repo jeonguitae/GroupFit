@@ -21,21 +21,16 @@
 </head>
 <style>
 div[class="btn1"]{
-	margin-left: 1108px;
+	margin-left: 1300px;
+	margin-bottom: 20px;
 }
 
 form[class="search"]{
-	margin-left: 377px;
+	margin-top: 0px;
 }
 
-h1.headline{
-	margin-left: 640px;
-	margin-top: 20px;
-}
 
-div[class="table"]{
-	margin-left: 376px;
-}
+
 </style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
@@ -68,16 +63,14 @@ div[class="table"]{
 							<option value="position">직급</option>
 						</select>
 						<input type="text" name="keyword" value="" placeholder="검색어를 입력하세요"/>
-						<button>검색</button>
+						<button class="btn btn-secondary">검색</button>
 					</form>
 				</fieldset>
 				
 				<div class="btn1">
-					<button onclick="location.href='empJoin.go'">직원 등록</button>
-					<button onclick="hide()">직원 삭제</button>
 					<c:if test="${sessionScope.loginEmp.position eq '대표'}">
-						<button onclick="location.href='empRepList.do'">지점별</button>
-						<button onclick="location.href='empJoin.go'">퇴사직원</button>
+						<button class="btn btn-secondary" onclick="location.href='empRepList.do'">지점별</button>
+						<button class="btn btn-secondary" onclick="location.href='empList.go'">목록</button>
 					</c:if>
 				</div>
 				<div class="card card-primary">
