@@ -39,7 +39,7 @@ public interface CommuteDAO {
 
 	ArrayList<CommuteDTO> rlist(String b_idx);
 
-	HashMap<String, String> rdetail(int r_idx);
+	CommuteDTO rdetail(String r_idx, String b_idx);
 
 	//CommuteDTO selectAll(String emp_no, LocalDate previousDay);
 
