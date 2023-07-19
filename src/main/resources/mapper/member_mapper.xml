@@ -209,13 +209,20 @@
    </select>
    
    <select id="mem_info" resultType="member">
-   		SELECT m.mem_no, m.name, m.gender, m.birth, rt.start_date, rt.end_date
-   		,rt.emp_no, w.new_photo_name
+   		SELECT m.mem_no, m.name, m.gender, m.birth, rt.start_date, rt.end_date, rt.emp_no
    		FROM member m 
    		JOIN registered_ticket rt ON m.mem_no = rt.mem_no 
-   		JOIN wphoto w ON w.board_num = m.mem_no
-   		WHERE m.mem_no = #{param1} AND w.c_idx = 2
-   		
+   		WHERE m.mem_no = #{param1}
+   </select>
+   
+   <select id="ptmem_info" resultType="member">
+   		SELECT m.mem_no, m.name, m.gender, m.birth
+   		, rt.start_date, rt.end_date, rt.emp_no
+   		, p.count
+   		FROM member m 
+   		JOIN registered_ticket rt ON m.mem_no = rt.mem_no
+   		JOIN pt_mem p ON p.mem_no = rt.mem_no 
+   		WHERE m.mem_no = #{param1}
    </select>
    
    </mapper>

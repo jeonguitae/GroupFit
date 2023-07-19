@@ -41,6 +41,12 @@ public interface CommuteDAO {
 
 	CommuteDTO rdetail(String r_idx, String b_idx);
 
+	ArrayList<String> w_type(String emp_no, String b_idx);
+
+	ArrayList<String> emp_name_list(String b_idx);
+
+	String s_emp_no(String name, String b_idx);
+
 	//CommuteDTO selectAll(String emp_no, LocalDate previousDay);
 
 }
