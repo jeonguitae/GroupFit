@@ -358,7 +358,7 @@
 										<p>나의 근태관리</p>
 								</a></li>
 								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
-								<li class="nav-item item-sub"><a href="pages/charts/flot.move"
+								<li class="nav-item item-sub"><a href="/centerlist.do"
 									class="nav-link"> <i class="fas fa-check-double nav-icon"></i>
 										<p>지점 근태관리</p>
 								</a></li>

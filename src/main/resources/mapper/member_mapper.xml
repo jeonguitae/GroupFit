@@ -11,7 +11,7 @@
 	    FROM member m
         JOIN registered_ticket rt ON m.mem_no = rt.mem_no
         JOIN ticket t ON t.ticket_no = rt.ticket_no
-        WHERE rt.b_idx = #{param1}
+        WHERE rt.b_idx = #{param1} AND m.blind = 0
    </select>
    	
    <select id="branch" resultType="member">
@@ -77,11 +77,15 @@
    		SELECT ticket_type FROM ticket WHERE ticket_no = #{param1} AND b_idx = #{param2}
    </select>
    
-   <delete id="memdelete">
+   <!-- <delete id="memdelete">
    		DELETE FROM member WHERE mem_no = #{param1}
-   </delete>
+   </delete> -->
+   
+   <update id="memdelete">
+   		UPDATE member SET blind = 1 WHERE mem_no = #{param1}
+   </update>
  	
-   <select id="memdetail" resultType="member">
+   <!-- <select id="memdetail" resultType="member">
    		SELECT m.mem_no, m.name, m.birth, m.gender, m.phone, rt.start_date, rt.end_date, rt.emp_no, rt.b_idx, rt.ticket_no
    		FROM member m JOIN registered_ticket rt
    		WHERE m.mem_no = rt.mem_no AND m.mem_no = #{param1}
@@ -93,16 +97,16 @@
    
    <select id="mem_b_name" resultType="String">
    		SELECT b_name FROM branch WHERE b_idx = #{param1}
-   </select>
+   </select> -->
    
    <insert id="memprofile" parameterType="String">
    		INSERT INTO wphoto(c_idx, new_photo_name, ori_photo_name, board_num)
    		VALUES(2, #{new_photo_name}, #{ori_photo_name}, #{mem_no})
    </insert>
    
-   <select id="photomem" resultType="String">
+   <!-- <select id="photomem" resultType="String">
    		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 2
-   </select>
+   </select> -->
    
    <select id="ptmemlist" resultType="member">
    		SELECT m.mem_no, m.name, m.gender,
@@ -132,7 +136,10 @@
 			</if>
 			<if test="txt != null and !txt.equals('') and sortting == 'pt_chk'">
 				t.ticket_type = #{txt}
-			</if>					
+			</if>
+			<if test="sortting == 'blind'">
+				m.blind = 1
+			</if>							
 		</where>
    </select>
    
@@ -199,6 +206,23 @@
    
    <select id="del_new_file_name" resultType="String">
    		SELECT new_photo_name FROM wphoto WHERE board_num = #{param1} AND c_idx = 2
+   </select>
+   
+   <select id="mem_info" resultType="member">
+   		SELECT m.mem_no, m.name, m.gender, m.birth, rt.start_date, rt.end_date, rt.emp_no
+   		FROM member m 
+   		JOIN registered_ticket rt ON m.mem_no = rt.mem_no 
+   		WHERE m.mem_no = #{param1}
+   </select>
+   
+   <select id="ptmem_info" resultType="member">
+   		SELECT m.mem_no, m.name, m.gender, m.birth
+   		, rt.start_date, rt.end_date, rt.emp_no
+   		, p.count
+   		FROM member m 
+   		JOIN registered_ticket rt ON m.mem_no = rt.mem_no
+   		JOIN pt_mem p ON p.mem_no = rt.mem_no 
+   		WHERE m.mem_no = #{param1}
    </select>
    
    </mapper>

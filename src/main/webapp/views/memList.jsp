@@ -5,32 +5,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기에 페이지 이름 입력</title>
+<title>일반 회원 리스트</title>
 <style>
-/* table, th, td{
-		border: 1px solid white;
-		border-collapse: collapse;
-	} */
-	div[class="search"]{
-		margin-left: 377px;
-	}
-	
-	h1.headline{
-		margin-left: 640px;
-		margin-top: 20px;
-	}
-	
-	div[class="table"]{
-		margin-left: 376px;
-	}
-	
-	button.reg{
-		margin-left: 385px;
-	}
-	
-	button.del{
-		background-color: #e74c3c;
-	}
+table {
+	width: 100%;
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid black;
+	padding: 5px 10px;
+	text-align: center;
+}
+
+tfoot td {
+	font-weight: bold;
+}
+
+.empty-data {
+	text-align: center;
+	padding: 10px;
+}
+
+table thead th {
+  text-align: center;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -47,14 +47,13 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body>
-   <jsp:include page="GroupFit_gnb.jsp" />
-   
-   <div class="content-wrapper" style="margin-top: 57.08px">
+	<jsp:include page="GroupFit_gnb.jsp" />
+	<div class="content-wrapper" style="margin-top: 57.08px">
 		<section class="content-header">
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>페이지 제목</h1>
+						<h1>일반 회원 리스트</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -67,64 +66,118 @@
 			</div>
 			<!-- /.container-fluid -->
 		</section>
-
-<!-- Main content -->
-      <section class="content">
-            <h1 class="headline">일반 회원 리스트</h1>
-            	<div class="search">
-					<select name="sortting">
-						<option value="mem_no">회원번호</option>
-						<option value="name">이름</option>
-						<option value="pt_chk">pt여부</option>
-					</select>
-					
-					<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
-					
-					<button onclick="memsearch()">검색</button>
-					
-					<button class="reg" onclick="location.href='memWrite.go'">등록</button>
-					<button class="del" onclick="memdel()">삭제</button>
-				</div>	
-	
-		<div class="table">
-			<table>
-				<colgroup>
-					<col width="15%"/>
-					<col width="15%"/>
-					<col width="15%"/>
-					<col width="40%"/>
-					<col width="15%"/>
-				</colgroup>
-				<thead>
-					<tr>
-						<th>삭제</th>
-						<th>회원번호</th>
-						<th>이름</th>
-						<th>등록기간</th>
-						<th>피티 등록여부</th>
-					</tr>
-				</thead>		
-				<tbody id="memlist">
-					<%-- <c:if test="${list.size() == 0}">
-			               <tr>
-			               		<th colspan="5">조건에 해당하는 게시물이 없습니다.</th>
-			               </tr>
-		            </c:if>
-					<c:forEach items="${list}" var="bbs">
-							<tr>
-								<td>${bbs.mem_no}</td>
-								<td><a href="memDetail.do?mem_no=${bbs.mem_no}">${bbs.name}</a></td>
-								<td>${bbs.start_date} ~ ${bbs.end_date}</td>
-								<td>${bbs.start_date}</td>
-								<td><a href="memDel.do?mem_no=${bbs.mem_no}">삭제</a></td>
-							</tr>
-					</c:forEach> --%>
-				</tbody>
-			</table> 
-         </div>
-         <!--/. container-fluid -->
-      </section>
-   </div>
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div style="height: 50px">
+							<div class="search">
+								<select name="sortting">
+									<option value="mem_no">회원번호</option>
+									<option value="name">이름</option>
+									<option value="pt_chk">pt여부</option>
+									<option value="blind">만료</option>
+								</select>
+								
+								<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
+								
+								<button class="btn btn-secondary" onclick="memsearch()">검색</button>
+									<button class="btn btn-primary" onclick="location.href='memWrite.go'">등록</button>
+									<button class="btn btn-danger" onclick="memdel()">삭제</button>
+							
+							</div>	
+							
+							
+						</div>
+						<div class="card card-primary">
+							<div class="card-header">
+								<h4 class="card-title">일반 회원 리스트</h4>
+							</div>
+							<div class="card-body">
+								<table class="table">
+									<thead class="table-light">
+										<tr>
+											<th>삭제</th>
+											<th>회원번호</th>
+											<th>이름</th>
+											<th>등록기간</th>
+											<th>피티 등록여부</th>
+										</tr>
+									</thead>
+									<tbody id="memlist"></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h5 class="modal-title" id="event-modal-label">기구 사진 등록</h5>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        
+				        <div class="modal-body">
+				          <form action="event-form">
+				          	<div class="form-group">
+				              <label for="event-name">회원 번호</label>
+				              <div id="mem_no">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="event-name">회원 이름</label>
+				              <div id="mem_name">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">판매자</label>
+				              <div id="emp_no">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">성별</label>
+				              <div id="gender">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">생년월일</label>
+				              <div id="birth">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">등록기간</label>
+				              <div id="duration">
+				              	
+				              </div>
+				            </div>
+				            
+					        <div class="modal-footer">
+					          <input type="button" id="close" class="btn btn-secondary" data-dismiss="modal" value="돌아가기"/>
+					        </div>
+				          </form>
+				        </div>
+				      </div>
+				   </div>
+				</div>
+			</div>
+			<!--/. container-fluid -->
+		</section>
+	</div>
 </body>
 <script>
 
@@ -166,7 +219,7 @@ function listDraw(memlist){
 			content += '<tr>';
 			content += '<td><input type="checkbox" value="'+item.mem_no+'"/></td>';
 			content+='<td>'+item.mem_no+'</td>';
-			content+='<td><a href="memdetail.go?mem_no='+item.mem_no+'">'+item.name+'</a></td>';
+			content+='<td><a onclick="openModal('+item.mem_no+')">'+item.name+'</a></td>';
 			content+='<td>'+item.start_date+'~'+item.end_date+'</td>';
 			content+='<td>'+chk_pt+'</td>';		
 			content += '</tr>';
@@ -239,5 +292,53 @@ function memsearch(){
 		}
 	});	
 }
+
+function openModal(mem_no) {
+	
+	$.ajax({
+	      type: 'get',
+	      url: 'mem_info.ajax',
+	      data: {
+	    	  'mem_no' : mem_no
+	      },
+	      success: function(data) {
+	    	meminfoDraw(data.dto);
+	      },
+	      error: function(e) {
+	        console.log(e);
+	      }
+	 });
+	
+    $('#event-modal').modal('show');
+}
+
+function meminfoDraw(meminfo){
+
+	var duration = '';
+	
+	duration = '<div>'+ meminfo.start_date +  ' ~ ' + meminfo.end_date +'</div>'
+	
+	$('#mem_no').empty();
+	$('#mem_no').append(meminfo.mem_no);
+	
+	$('#mem_name').empty();
+	$('#mem_name').append(meminfo.name);
+	
+	$('#emp_no').empty();
+	$('#emp_no').append(meminfo.emp_no);
+	
+	$('#gender').empty();
+	$('#gender').append(meminfo.gender);
+	
+	$('#birth').empty();
+	$('#birth').append(meminfo.birth);
+	
+	$('#duration').empty();
+	$('#duration').append(duration);
+}
+
+$(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
+    $('#event-modal').modal('hide');
+  });
 </script>
 </html>

@@ -1,5 +1,6 @@
 package kr.co.gf.commute.service;
 
+import java.io.File;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -351,6 +352,55 @@ public class CommuteService {
 
 	public int cwrite(HashMap<String, String> params) {
 		return cdao.cwrite(params);
+	}
+
+	public ArrayList<CommuteDTO> alllist() {
+		return cdao.alllist();
+	}
+
+	public ArrayList<CommuteDTO> rlist(String b_idx) {
+		return cdao.rlist(b_idx);
+	}
+
+	public CommuteDTO rdetail(String r_idx, String b_idx) {
+		return cdao.rdetail(r_idx, b_idx);
+	}
+
+
+	public ArrayList<CommuteDTO> workingList(HashMap<String, String> params) {
+		return cdao.workingList(params);
+	}
+
+	public String come_time(HashMap<String, String> params) {
+		
+		return cdao.come_time(params);
+	}
+	public HashMap<String, Object> commutelist(String b_idx) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<String> emp_name = cdao.emp_name_list(b_idx);
+		
+		int i = 0;
+		
+		for (String name : emp_name) {
+			
+			i += 1;
+			
+			logger.info("emp_name" + name);
+			
+			String emp_no = cdao.s_emp_no(name, b_idx);
+			logger.info("emp_no" + emp_no);
+			
+			ArrayList<String> w_type = cdao.w_type(emp_no, b_idx);
+			
+			map.put("name"+i, name);
+			map.put("w_type"+i, w_type);
+		}	
+		
+		map.put("i", i);
+		
+		return map;
 	}
 }
 

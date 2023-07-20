@@ -19,6 +19,7 @@ public class EmpDTO {
 	private Date join_year;
 	private Date retire_year;
 	private String b_idx;
+	private String b_name;
 	private String new_photo_name;
 	private String ori_photo_name;
 	private int board_num;
@@ -42,14 +43,6 @@ public class EmpDTO {
 	}
 	public void setNew_photo_name(String new_photo_name) {
 		this.new_photo_name = new_photo_name;
-	}
-
-	private String b_name;
-	public String getB_name() {
-		return b_name;
-	}
-	public void setB_name(String b_name) {
-		this.b_name = b_name;
 	}
 	
 	public String getEmp_no() {
@@ -124,6 +117,12 @@ public class EmpDTO {
 	}
 	public void setRetire_year(Date retire_year) {
 		this.retire_year = retire_year;
+	}
+	public String getB_name() {
+		return b_name;
+	}
+	public void setB_name(String b_name) {
+		this.b_name = b_name;
 	}
 
 	

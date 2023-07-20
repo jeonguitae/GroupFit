@@ -39,8 +39,7 @@
 	  font-size: 14px;
 	}
 	.fc-day-header {
-	  background-color: black;
-	  color: white;
+	  color: black;
 	}
 
     #calendar {
@@ -83,7 +82,7 @@
 		<section class="content">
 			<div class="container-fluid">
 			<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
-				  <button onclick="openModal()">일정 등록</button>
+				  <button class="btn btn-primary" onclick="openModal()">일정 등록</button>
 			</c:if>
 			<!-- 필터링이요 -->
 			<div id="branchFilter">
@@ -233,12 +232,21 @@
 				    	  var eventEnd;
 				    	  
 				    	  calendar = new FullCalendar.Calendar(calendarEl, {
-				    	    plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
+				    	    plugins: ['interaction', 'dayGrid'],
 				    	    defaultDate: new Date(),
 				    	    editable: false,
 				    	    eventLimit: true,
 				    	    events: [],
-			
+				    	    header: {
+				    	        left: 'prev',
+				    	        center: 'title',
+				    	        right: 'today,next'
+				    	      },
+				    	    locale: 'ko',
+				    	  
+
+			         
+				    	    
 				    	    eventClick: function(info) {
 				    	      // 클릭한 이벤트의 정보를 변수에 저장
 				    	      eventId = info.event.id;
@@ -262,7 +270,7 @@
 				    	      // 수정하기 버튼 클릭 시
 				    	      $('#edit-event-btn').on('click', function() {
 				    	    	  
-				    	    	  
+					    		
 				    	        // 수정 정보를 상세보기 모달에서 가져옵니다.
 				    	        // title.val 은 변경한거 없으니까 그냥 가져오고
 				    	        var editEventTitle = $('#event-detail-title').val();
@@ -295,7 +303,7 @@
 				    	          // 수정 모달을 닫습니다.
 				    	          $('#edit-event-modal').modal('hide');
 				    	        });
-				    	      });
+				    	      });  
 				    	    }
 				    	  });
 
@@ -314,7 +322,12 @@
 				    	  // 수정하기 버튼 클릭 시
 				    	  $('#submit-edit-event-btn').on('click', function() {
 				    		  
-
+				    		  // 확인 메시지를 띄웁니다.
+				    		  var isConfirmed = confirm('일정을 수정하시겠습니까?');
+				    		  
+				    		  
+				    		// 사용자가 확인 버튼을 눌렀을 경우에만 서버로 일정 수정 정보를 전송합니다.
+				    		if (isConfirmed) {
 				    	    // 수정 정보를 서버로 전송합니다.
 				    	    $.ajax({
 				    	      url: '/updatecalendar', // 수정 정보를 전송할 서버 엔드포인트 URL을 입력하세요.
@@ -345,13 +358,21 @@
 				    	      }
 				    	      
 				    	    });
+				    		  }
+				    	    
 				    	  });
+				    	  
+				    	  
 				    	  
 				    	  // 일정 삭제요
 				    	  $(document).on('click', '#delete-event-btn', function() {
 				    		  // 삭제할 이벤트의 ID를 가져옵니다.
 				    		  //var eventId = eventId;
-
+				    		  
+				    		  // 확인 메시지를 띄웁니다.
+				    		  var isConfirmed = confirm('일정을 삭제하시겠습니까?');
+				    		 
+							if(isConfirmed){
 				    		  // 서버로 삭제 요청을 보냅니다.
 				    		  $.ajax({
 				    		    url: '/deletecalendar', // 삭제 요청을 전송할 서버 엔드포인트 URL을 입력하세요.
@@ -373,6 +394,7 @@
 				    		      // 예: 오류 메시지 표시 등
 				    		    }
 				    		  });
+							}
 				    		});
 				    	});
 				 
@@ -422,7 +444,7 @@
 				        	
 				        	 // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (eventData.b_idx === '1') {
-				              eventData.backgroundColor = 'green';
+				              eventData.backgroundColor = 'PowderBlue';
 				            } else if (eventData.b_idx === '2') {
 				              eventData.backgroundColor = 'blue';
 				            } else if (eventData.b_idx === '3') {
@@ -472,7 +494,7 @@
 				        
 				          // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (item.b_idx === '1') {
-				              newEvent.backgroundColor = 'green';
+				              newEvent.backgroundColor = 'PowderBlue';
 				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'blue';
 				            } else if (item.b_idx === '3') {
@@ -533,7 +555,7 @@
 				            
 				            // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (item.b_idx === '1') {
-				              newEvent.backgroundColor = 'green';
+				              newEvent.backgroundColor = 'PowderBlue';
 				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'blue';
 				            } else if (item.b_idx === '3') {
@@ -582,7 +604,7 @@
 				            
 				            // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (item.b_idx === '1') {
-				              newEvent.backgroundColor = 'green';
+				              newEvent.backgroundColor = 'PowderBlue';
 				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'blue';
 				            } else if (item.b_idx === '3') {

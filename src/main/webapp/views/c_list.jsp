@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기에 페이지 이름 입력</title>
+<title>센터 근태 관리</title>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
@@ -42,13 +42,13 @@
 <!-- Main content -->
       <section class="content">
          <div class="container-fluid">
-            <h1 class="forcenter">나의 근태관리</h1>
+            <h1 class="forcenter">센터 근태관리</h1>
                <div class="togo">
-                  <button onclick="location.href='cwrite.go'">변경 요청서 작성</button>
+                  <button onclick="location.href='rlist.go'">출퇴근 변경 요청 리스트</button>
+                  <button onclick="location.href='confirmlist.do'">출퇴근 변경 처리 내역</button>
+                  <button onclick="location.href='center_commute.go'">직원 출퇴근 내역</button>
+                  
                </div> 
-               <button style="margin-left:36%" id="prevMonth" onclick="monthChange(-1)"><</button>
-				  <span id="formattedDate"></span>
-			  <button id="nextMonth" onclick="monthChange(1)">></button>
     <table class="table second">
         <colgroup>
             <col width="15%"/>
@@ -68,7 +68,7 @@
                 <th>출결 상태</th>
             </tr>
         </thead>        
-        <tbody id="list">
+        <tbody>
             <c:if test="${working eq null}">
                 <tr>
                     <th id="forblack" style="text-align:center;" colspan="6">근태내역이 없습니다.</th>
@@ -99,102 +99,4 @@
       </section>
    </div>
 </body>
-
-<script>
-
-var currentDate = new Date();
-var currentYear = currentDate.getFullYear();
-var currentMonth = currentDate.getMonth();
-var year = $('#formattedDate').text();
-var emp_no = "${sessionScope.loginEmp.emp_no}";
-console.log(emp_no);
-
-function updateFormattedDate() {
-  var formattedDateElement = document.getElementById("formattedDate");
-  formattedDateElement.textContent = formatDate(currentYear, currentMonth);
-  year = $('#formattedDate').text();
-  $.ajax({
-		type:'get',
-		url:'workingList.ajax',
-		data:{
-			'year':year,
-			"emp_no":emp_no
-		},
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			listPrint(data.workList);
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-}
-
-function formatDate(year, month) {
-  var formattedYear = year;
-  var formattedMonth = String(month + 1).padStart(2, '0');
-  return formattedYear + "-" + formattedMonth;
-}
-
-function monthChange(change) {
-  currentMonth += change;
-
-  if (currentMonth < 0) {
-    currentMonth = 11;
-    currentYear -= 1;
-  } else if (currentMonth > 11) {
-    currentMonth = 0;
-    currentYear += 1;
-  }
-  
- 
-
-  // 현재 연도인 경우 다음 달로 이동하는 버튼을 비활성화합니다.
-  var nextMonthButton = document.getElementById("nextMonth");
-  if (nextMonthButton) {
-    nextMonthButton.disabled = (currentYear === new Date().getFullYear() && currentMonth === new Date().getMonth());
-  }
-
-  updateFormattedDate();
-}
-
-var nextMonthButton = document.getElementById("nextMonth");
-if (nextMonthButton) {
-  nextMonthButton.disabled = (currentYear === new Date().getFullYear() && currentMonth === new Date().getMonth());
-}
-
-// 초기 날짜 설정
-updateFormattedDate();
-
-function listPrint(data){
-	var content ='';
-	console.log(data.length);
-	if(data.length==0){
-		content='근태내역이 없습니다.';
-	}else{
-		data.forEach(function(item,idx){
-			content +='<tr>';
-			content +='<td>'+item.emp_no+'</td>';
-			content +='<td>'+item.work_date+'</td>';
-			content +='<td>'+item.come_time+'</td>';
-			content +='<td>'+item.out_time+'</td>';
-            content +='<td>'+item.time_difference+'</td>'; 
-            if(item.w_type=="계산"){
-				content +='<td>결근</td>';
-			}else{
-				content +='<td>'+item.w_type+'</td>';
-			}
-			content +='</tr>';
-		});
-}
-	$('#list').empty();
-	$('#list').append(content);
-}
-	
-
-
-
-
-</script>
 </html>

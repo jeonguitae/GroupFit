@@ -84,10 +84,8 @@ tfoot td {
 							<div class="float-right">
 								<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
 									<button class="btn btn-primary" onclick="location.href='dailypt.go'">일지 등록</button>&nbsp;
-									<form id="deleteForm" action="dailyptdelete.do" method="post">
-										<input type="hidden" name="dailypt_no" id="dailypt_no" value="">
-										<button class="btn btn-danger" onclick="deleteSelectedRows()">일지 삭제</button>
-									</form>
+									<button class="btn btn-danger" onclick="ptmemdel()">일지 삭제</button>
+									
 								</c:if>
 							</div>
 						</div>
@@ -104,7 +102,7 @@ tfoot td {
 											<th>운동일자</th>
 											<th>트레이너</th>
 											<th>출석여부</th>
-											<th><input type="checkbox" id="selectAll" onclick="toggleAllCheckboxes()"></th>
+											<th>삭제</th>
 										</tr>
 									</thead>
 									<tbody id="ptlist"></tbody>
@@ -119,7 +117,7 @@ tfoot td {
 	</div>
 </body>
 <script>
-	function toggleAllCheckboxes() {
+	/* function toggleAllCheckboxes() {
 		const checkboxes = document.getElementsByClassName('rowCheckbox');
 		const selectAllCheckbox = document.getElementById('selectAll');
 		for (let i = 0; i < checkboxes.length; i++) {
@@ -131,6 +129,7 @@ tfoot td {
 		const checkboxes = document.getElementsByClassName('rowCheckbox');
 		const deleteForm = document.getElementById('deleteForm');
 		const dailyptNoInput = document.getElementById('dailypt_no');
+		const dailyptNoInput = document.getElementById('mem_no');
 
 		// 선택된 행의 dailypt_no 값을 배열로 저장
 		const selectedRows = [];
@@ -146,8 +145,9 @@ tfoot td {
 		// form을 제출하여 서버로 데이터 전송
 		deleteForm.submit();
 	}
-
+ */
 	
+ 
 	$(document).ready(function() {
 		// 페이지 로드 시 초기 데이터 호출
 		ptlist();
@@ -171,7 +171,8 @@ tfoot td {
 	function ptlistdraw(ptlist) {
 			
 		var content = '';
-		
+			
+			if(ptlist.length > 0){
 			ptlist.forEach(function(dailypt,index){
 				
 			content += '<tr>';
@@ -180,14 +181,83 @@ tfoot td {
 			content += '<td>' + dailypt.pt_date + '</td>';
 			content += '<td>' + dailypt.emp_name + '</td>';
 			content += '<td>' + dailypt.pt_state + '</td>';
-			content += '<td><input type="checkbox" class="rowCheckbox" name="deleteRow[]" value="' + dailypt.dailypt_no + '"></td>';
+			content += '<td><input type="checkbox" value="'+ dailypt.dailypt_no +'"/></td>';
 			content += '</tr>';
 		});
+			
+		}else{
+			content = "<tr><td colspan='7' style='text-align:center'>등록된 일지가 없습니다.</td></tr>"
+		}
 		
 		$('#ptlist').empty();
 		$('#ptlist').append(content);
 	
 	}
+	
+	
+	
+	
+	$('#all').click(function(e){	
+		var $chk = $('input[type="checkbox"]');
+		console.log($chk);
+		if($(this).is(':checked')){
+			$chk.prop('checked',true);
+		}else{
+			$chk.prop('checked',false);
+		}	
+	});
+
+	
+	
+	
+	
+	function ptmemdel(){
+		
+		var checkArr = [];
+		
+		$('input[type="checkbox"]:checked').each(function(idx,item){		
+			//checkbox 에 value 를 지정하지 않으면 기본값을 on 으로 스스로 지정한다.
+			if($(this).val()!='on'){
+				//console.log(idx,$(this).val());
+				checkArr.push($(this).val());
+			}	
+		});
+		
+		
+		 if (checkArr.length === 0) {
+		        alert('삭제할 일지를 선택해주세요.');
+		        return;
+		    }
+		
+		
+		 // 삭제 여부를 묻는 알림창을 띄우기
+	    var confirmed = confirm('선택한 회원 일지를 삭제하시겠습니까?');
+	    if (!confirmed) {
+	        return;
+	    }
+
+		
+		console.log(checkArr);
+			
+		$.ajax({
+			type:'get',
+			url:'ptdailydel.ajax',
+			data:{'dailypt': checkArr},
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				if(data.success){
+					alert(data.msg);
+					ptlist();
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}		
+		});
+		
+		
+	}		
 
 
 	// 검색 버튼 클릭 시
@@ -216,5 +286,8 @@ tfoot td {
 			}
 		});
 	}
+	
+	
+	
 </script>
 </html>

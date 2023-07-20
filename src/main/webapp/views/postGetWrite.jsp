@@ -19,6 +19,24 @@
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+h6{
+	margin: left 20px;
+}
+
+.card-header {
+    background-color: #3f6791;
+    border-bottom: 5px solid rgb(117 59 59 / 13%);
+    padding: 0.75rem 1.25rem;
+    position: relative;
+    font-weight: bold;
+    vertical-align: sub;
+}
+.container-fluid{
+	width: 40%;
+	margin-left: 20px;
+}
+</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
 	<div class="content-wrapper" style="margin-top: 57.08px">
@@ -42,13 +60,9 @@
 <!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-				<form action="postGetWrite.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+ <%-- 				<form action="postGetWrite.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 					<table>
 						<input type="hidden" name="send_empno" value="${post.get_empno}"/>
-<%-- 					<tr>
-							<th>*보내는사람</th>
-							<td><input type="text" value="${emp.name}" readonly/></td>
-						</tr> --%>
 						<tr>
 							<th>*제목</th>
 							<td><input id="subject" type="text" name="subject"/></td>
@@ -69,6 +83,30 @@
 						<input class="btn btn-primary" type="submit" value="회신보내기"/>
 						<button class="btn btn-primary" type="button" onclick="location.href='./postSendList.go'">목록</button>	
 					</table>
+				</form>  --%>
+				<form action="postGetWrite.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+					<div class="card-body">
+						<input type="hidden" name="send_empno" value="${post.get_empno}"/>
+						<input type="hidden" name="get_empno" value="${post.send_empno}"/>
+			                <div class="form-group">
+			                  <input class="form-control" placeholder="To:" value="${post.name}" readonly/>
+			                </div>
+			                <div class="form-group">
+			                  <input class="form-control" placeholder="Subject:" id="subject" name="subject">
+			                </div>
+			                <div class="form-group">
+			                    <textarea id="compose-textarea" name="content" class="form-control" style="height: 300px">
+			                    </textarea>
+			                </div>
+			              </div>
+			              <!-- /.card-body -->
+			              <div class="card-footer">
+			                <div class="float-right">
+			                  <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i>보내기</button>
+			                  <button class="btn btn-default" type="button" onclick="location.href='./postGetList.go'">
+			                <i class="fas fa-times"></i>목록</button>
+			                </div>
+		              </div>
 				</form>
 			</div>
 			<!--/. container-fluid -->
@@ -84,7 +122,7 @@ function setEmpInfo(emp_no, name) {
 
 function validateForm() {
 	   var subject = document.getElementById('subject').value;
-	   var content = document.getElementById('content').value;
+	   var content = document.getElementById('compose-textarea').value;
 	   
 	   if (subject.trim() == '') {
 	      alert('제목을 입력해주세요.');

@@ -17,53 +17,11 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <style>
-	/* Add custom table styles here */
-	table {
-		width: 30%;
-		border-collapse: collapse;
-		border: 1px solid #ccc;
-	}
-	
-	th, td {
-		padding: 8px;
-		border-bottom: 1px solid #ccc;
-		text-align: left;
-	}
-	
-	th {
-		background-color: #3f6791;
-	}
-	
-	tbody tr:hover {
-		background-color: ##3f6791;
-	}
-	
-	input[type="text"], textarea {
-		width: 100%;
-		padding: 8px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-	}
-	
-	input.empFind {
-		width: 15%;
-		padding: 8px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-	}
-	
-	button {
-		background-color: #007bff;
-		color: #fff;
-		border: none;
-		padding: 8px 16px;
-		border-radius: 4px;
-		cursor: pointer;
-	}
-	
-	button:hover {
-		background-color: #0056b3;
-	}
+.container-fluid{
+	width: 40%;
+	margin-left: 20px;
+}
+
 </style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
@@ -92,7 +50,7 @@
 				<ul>
 					<li>
 						<input class="empFind" type="text" id="get_empno" name="get_empno" placeholder="직원이름을 입력하세요"/>
-						<button onclick="empFind()">찾기</button>
+						<button onclick="empFind()" class="btn btn-primary"><i class="far fa-envelope"></i>직원찾기</button>
 					</li>         
 				</ul>
 				
@@ -106,7 +64,7 @@
 					</thead>
 					<tbody id ="list"></tbody>
 				</table>
-				<form id="sendForm" action="postSendWrite.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+<%-- 				<form id="sendForm" action="postSendWrite.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 					<table>
 						<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
 						<input type="hidden" name="get_empno" value=""/>
@@ -125,6 +83,31 @@
 						<button>보내기</button>
 						<button type="button" onclick="location.href='./postSendList.go'">목록</button>
 					</table>
+				</form> --%>
+				<form id="sendForm" action="postSendWrite.do" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+			<div class="card-body">
+				<input type="hidden" name="send_empno" value="${emp.emp_no}"/>
+				<input type="hidden" name="get_empno" value=""/>
+                <div class="form-group">
+                  <input class="form-control" placeholder="To:" id="getEmpInfo" value="">
+                </div>
+                <div class="form-group">
+                  <input class="form-control" placeholder="Subject:" id="subject" name="subject">
+                </div>
+                <div class="form-group">
+                    <textarea id="compose-textarea" name="content" class="form-control" style="height: 300px">
+                      
+                    </textarea>
+                </div>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <div class="float-right">
+                  <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i>보내기</button>
+                  <button class="btn btn-default" type="button" onclick="location.href='./postSendList.go'">
+                <i class="fas fa-times"></i>목록</button>
+                </div>
+              </div>
 				</form>
 			</div>
 			<!--/. container-fluid -->
@@ -180,7 +163,7 @@ function setEmpInfo(emp_no, name) {
 function validateForm() {
 	   var getEmpInfo = document.getElementById('getEmpInfo').value;
 	   var subject = document.getElementById('subject').value;
-	   var content = document.getElementById('content').value;
+	   var content = document.getElementById('compose-textarea').value;
 	   
 	   if (getEmpInfo.trim() == '') {
 	      alert('받는사람을 입력해주세요.');
