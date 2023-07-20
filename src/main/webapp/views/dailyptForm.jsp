@@ -77,13 +77,12 @@
 	    resize: none;
 	}
 	
-	.submit-button {
-    
-    justify-content: center;
-   
-}
+
+
+
 
 .submit-button button {
+	display: flex;
     margin: 0 auto;
 }
 
@@ -141,7 +140,7 @@
 					        <div class="form-group">
 					        <div class="mb-3">
 							  <label for="formGroupExampleInput" class="form-label">날짜</label>
-							  <input type="date" class="form-control" id="formGroupExampleInput" name="date" placeholder="Example input placeholder">
+							  <input type="date" class="form-control" id="date" name="date" placeholder="Example input placeholder">
 							</div>
 							</div>
 							
@@ -270,6 +269,7 @@
                         
                         <textarea id="diet" name="diet" class="diet-journal"></textarea>
                     </div> -->
+                    
                     <div class="form-group">
                      <div class="mb-3">
 					  <label for="formGroupExampleInput" class="form-label">식단 일지</label>
@@ -287,12 +287,7 @@
                     </div>
                      -->
                     
-                    <div class="form-group">
-                    <div class="mb-3">
-					  <label for="formGroupExampleInput" class="form-label">특이 사항</label>
-					  <textarea id="etc" name="etc" class="form-control" placeholder="특이 사항을 입력해 주세요"></textarea>
-					</div>
-					</div>
+                    
 
                     <hr>
                

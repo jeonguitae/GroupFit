@@ -20,10 +20,10 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 <style>
   .form-group {
-        display: flex;
-        flex-direction: row;
+        
+       
         align-items: center;
-        margin-bottom: 10px;
+       
     }
 
     .form-group label {
@@ -36,7 +36,7 @@
     .form-group input[type="number"],
     .form-group input[type="date"],
     .form-group textarea {
-        flex: 2;
+        flex: 1;
         background-color: transparent;
         border: 1px solid white;
         color: white; /* 글자 색상을 하얀색(흰색)으로 설정 */
@@ -122,21 +122,30 @@
 				    <div class="container">
 
 				    
-					    <div style="display: flex; justify-content: space-between; align-items: center;">
+					    <div style="justify-content: space-between; align-items: center;">
 					        <h3 style="margin: 0;">회원pt일지 상세보기</h3>
 
 					        <br>
 					        
-					        <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
+					        <%-- <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
 					            <label for="date">날짜 : </label>
 					            <input type="date" id="date" name="date" value="${dto.pt_date}" readonly> 
-					        </div>
+					        </div> --%>
+					        
+					        
+					        <div class="form-group">
+					        <div class="mb-3">
+							  <label for="date" class="form-label">날짜</label>
+							  <input type="date" class="form-control" id="date" name="date" value="${dto.pt_date}" readonly>
+							</div>
+							</div>
+							
 					        
 					    </div>
 					           
 				            <hr>
 				            <!-- 회원 정보 -->
-				            <div class="form-group">
+				           <%--  <div class="form-group">
 
 				                <label for="memberNumber">회원 번호 : </label>
 				                <input type="text" id="mem_no" name="mem_no" value="${dto.mem_no}" readonly>
@@ -146,7 +155,28 @@
 				                
 				                <label for="weight">몸무게 : </label>
 				                <input type="number" id="af_weight" name="af_weight" value="${dto.af_weight}" readonly>
-				            </div>
+				            </div> --%>
+				            
+				            
+				            <div class="form-group">
+							  <div class="row">
+							    <div class="col">
+							      <label for="memberNumber">회원 번호</label>
+							      <input type="text" id="mem_no" name="mem_no" class="form-control" value="${dto.mem_no}" readonly>
+							    </div>
+							    <div class="col">
+							      <label for="name">이름</label>
+							      <input type="text" id="name" name="name" class="form-control" value="${dto.member_name}" readonly>
+							    </div>
+							    <div class="col">
+							      <label for="weight">몸무게</label>
+							      <input type="number" id="af_weight" name="af_weight" class="form-control" value="${dto.af_weight}" readonly>
+							    </div>
+							  </div>
+							</div>
+				            
+				            
+				            
 				
 				            <hr>
 				            
@@ -163,8 +193,29 @@
 				              
 						    
 				              <div id="weightExerciseContainer">
+				              
+				              
+				              
+				              <div class="form-group">
+							        <div class="row">
+							          <div class="col-4">
+							            <label for="weightExerciseName">운동명</label>
+							            <input type="text" id="pt_name" name="pt_name[]" class="form-control" value="${weightList[0].pt_name}" readonly>
+							          </div>
+							          <div class="col-4">
+							            <label for="setCount">무게</label>
+							            <input type="number" id="pt_kg" name="pt_kg[]" class="form-control" value="${weightList[0].pt_kg}" readonly>
+							          </div>
+							          <div class="col-4">
+							            <label for="repCount">SET수</label>
+							            <input type="number" id="pt_set" name="pt_set[]" class="form-control" value="${weightList[0].pt_set}" readonly>
+							          </div>
+							        </div>
+							      </div>
+							      
+							      
 						          	
-						          <div class="form-group">
+						         <%--  <div class="form-group">
 								        <label for="weightExerciseName">운동명 : </label>
 								        <input type="text" id="pt_name1" name="pt_name[]" value="${weightList[0].pt_name}" readonly>
 
@@ -175,10 +226,31 @@
 								        <input type="number" id="pt_set1" name="pt_set[]" value="${weightList[0].pt_set}" readonly>
 								         
     
-								    </div>
+								    </div> --%>
+								    
+								    
+								    <c:forEach var="weight" items="${weightList}" begin="1" varStatus="loop">
+								     <div class="form-group">
+								        <div class="row">
+								          <div class="col-4">
+								            <label for="weightExerciseName">운동명</label>
+								            <input type="text" id="pt_name${loop.index + 1}" name="pt_name[]" class="form-control" value="${weight.pt_name}" readonly>
+								          </div>
+								          <div class="col-4">
+								            <label for="setCount">무게</label>
+								            <input type="number" id="pt_kg${loop.index + 1}" name="pt_kg[]" class="form-control" value="${weight.pt_kg}" readonly>
+								          </div>
+								          <div class="col-4">
+								            <label for="repCount">SET수</label>
+								            <input type="number" id="pt_set${loop.index + 1}" name="pt_set[]" class="form-control" value="${weight.pt_set}" readonly>
+								          </div>
+								        </div>
+								      </div>
+								      </c:forEach>
+								    
 													           
 						           <!-- 추가된 운동 정보를 가져와서 폼을 생성 -->
-								      <c:forEach var="weight" items="${weightList}" begin="1" varStatus="loop">
+								     <%--  <c:forEach var="weight" items="${weightList}" begin="1" varStatus="loop">
 								        <div class="form-group">
 								            <label for="weightExerciseName">운동명 : </label>
 								            <input type="text" id="pt_name${loop.index + 1}" name="pt_name[]" value="${weight.pt_name}" readonly>
@@ -190,36 +262,62 @@
 								            <input type="number" id="pt_set${loop.index + 1}" name="pt_set[]" value="${weight.pt_set}" readonly>
 								          
 								        </div>
-								    </c:forEach>
+								    </c:forEach> --%>
 						    </div>
 				
 				            <hr>
 				
 				           <!-- 유산소 운동 -->
-                    <h5>유산소 운동</h5>
+                   <%--  <h5>유산소 운동</h5>
                     <br>
                     <div class="form-group"> 
                         <textarea id="aerobic" name="aerobic" class="aerobic-exercise" readonly>${dto.aerobic}</textarea>
+                    </div> --%>
+                    
+                    
+                    <div class="form-group">
+                    <div class="mb-3">
+					  <label for="formGroupExampleInput" class="form-label">유산소 운동</label>
+					  <textarea id="aerobic" name="aerobic" class="form-control" readonly>${dto.aerobic}</textarea>
+					</div>
                     </div>
 
                     <hr>
 
                     <!-- 식단 일지 -->
-                    <h5>식단 일지</h5>
+                    <%-- <h5>식단 일지</h5>
                     <br>
                     <div class="form-group">
                         
                         <textarea id="diet" name="diet" class="diet-journal" readonly>${dto.diet}</textarea>
-                    </div>
+                    </div> --%>
+                    
+                    
+                     <div class="form-group">
+                     <div class="mb-3">
+					  <label for="formGroupExampleInput" class="form-label">식단 일지</label>
+					  <textarea id="diet" name="diet" class="form-control" readonly>${dto.diet}</textarea>
+					</div>
+					</div>
 
                     <hr>
 
                     <!-- 특이 사항 -->
-                    <h5>특이 사항</h5>
+                    <%-- <h5>특이 사항</h5>
                     <br>
                     <div class="form-group">
                         <textarea id="etc" name="etc" class="remarks" readonly>${dto.str}</textarea>
-                    </div>
+                    </div> --%>
+                    
+                    
+                    <div class="form-group">
+                    <div class="mb-3">
+					  <label for="formGroupExampleInput" class="form-label">특이 사항</label>
+					  <textarea id="etc" name="etc" class="form-control" readonly>${dto.str}</textarea>
+					</div>
+					</div>
+                    
+                    
                     
                     </c:if>
 
