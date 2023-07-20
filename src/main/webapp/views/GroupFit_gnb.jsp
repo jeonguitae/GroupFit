@@ -161,11 +161,10 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a type="button" class="brand-link" data-bs-toggle="modal"
-				data-bs-target="#exampleModal"> <img
+			<a type="button" class="brand-link" href="/main"> <img
 				src="img/GroupFit_lg_2.png" alt="GroupFit Logo"
 				class="brand-image img-circle elevation-3"
-				style="background-color: transparent; transform: scale(1.1); opacity: .8">
+				style="background-color: transparent; transform: scale(1.1); opacity: .8"> <!-- data-bs-toggle="modal" data-bs-target="#exampleModal" -->
 				<span class="brand-text font-weight-light">GroupFit</span>
 			</a>
 
