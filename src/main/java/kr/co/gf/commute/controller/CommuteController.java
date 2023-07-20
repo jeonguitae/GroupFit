@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -232,6 +233,23 @@ public class CommuteController {
 		}
 		else {}
 		return null;
+	}
+	
+	
+	@RequestMapping(value = "/workingList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> workingList(HttpSession session, Model model,@RequestParam HashMap<String, String> params) {
+		logger.info("월 변경시 넘어오는 값: "+params);
+		ArrayList<CommuteDTO> list = cservice.workingList(params);
+		
+		//String come_time = cservice.come_time(params);
+		//logger.info("come_time" + come_time);
+		logger.info("list",list);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("workList", list);
+		return map;
+		
 	}
 
 }

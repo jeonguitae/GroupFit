@@ -78,4 +78,12 @@
 	join emp e on e.emp_no = w.emp_no 
 	where e.b_idx = #{b_idx}  and c.r_idx = #{r_idx};
    	</select>
+   	
+   	<select id="workingList" parameterType="hashmap" resultType="commute">
+   		SELECT emp_no,b_idx,come_time,out_time,work_date,w_type,SEC_TO_TIME(TIME_TO_SEC(out_time) - TIME_TO_SEC(come_time)) AS time_difference FROM working WHERE emp_no=#{emp_no} AND DATE_FORMAT(work_date, '%Y-%m') =#{year}
+   	</select>
+   	
+   	<select id="come_time" resultType="String">
+   		SELECT come_time FROM working WHERE emp_no=#{emp_no} AND DATE_FORMAT(work_date, '%Y-%m') =#{year}s
+   	</select>
    </mapper>
