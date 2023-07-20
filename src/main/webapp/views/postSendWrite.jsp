@@ -17,6 +17,10 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <style>
+.container-fluid{
+	width: 40%;
+	margin-left: 20px;
+}
 
 </style>
 <body>

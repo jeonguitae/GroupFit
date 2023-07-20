@@ -19,6 +19,14 @@
    href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+
+	    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+</style>
 <body>
    <jsp:include page="GroupFit_gnb.jsp" />
    
@@ -27,7 +35,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>페이지 제목</h1>
+						<h1>pt 회원정보 입력</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -43,55 +51,107 @@
 <!-- Main content -->
       <section class="content">
          <div class="container-fluid">
-            pt 회원정보 입력
-         </div>
-         	<div class="table 1">
-			         	<table>
-			         		<tr>
+           	
+           		<div class="container">
+         
+         		<div class="table 1">
+         	
+         	
+         			<div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">회원번호</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" name="mem_no" value="${mem_no}" readonly="readonly">
+							    </div>
+							  </div>
+         	
+			         	
+			         		<%-- <tr>
 			         			<th>회원번호</th>
 			         				<td>
 			         					<input type="text" name="mem_no" value="${mem_no}" readonly="readonly"/>
 			         				</td>
-			         		</tr>
+			         		</tr> --%>
 			         		
-			         		<tr>
+			         		
+			         		<div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">등록한 이용권 번호</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" name="ticket_no" value="${ticket_no}" readonly="readonly">
+							    </div>
+							  </div>
+							  
+			         		
+			         		<%-- <tr>
 			         			<th>등록한 이용권 번호</th>
 			         				<td>
 			         					<input type="text" name="ticket_no" value="${ticket_no}" readonly="readonly"/>
 			         				</td>
-			         		</tr>
+			         		</tr> --%>
 			         		
+			         		
+			         		<div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">현재 체중</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" name="weight" value="">
+							    </div>
+							  </div>
+			         		
+			         		
+			         		<!-- 
 			         		<tr>
 			         			<th>현재 체중</th>
 			         				<td>
 			         					<input type="text" name="weight" value=""/>
 			         				</td>
 			         		</tr>
-			         		
+			         		 -->
+			         		 
+			         		 
+			         		 <div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">목표</label>
+							    <div class="col-sm-10">
+							      <textarea class="form-control" name="goal"></textarea>
+							    </div>
+							  </div>
+			         		 
+			         	<!-- 	 
 			         		<tr>
 			         			<th>목표</th>
 			         				<td>
 			         					<textarea name="goal"></textarea>
 			         				</td>
-			         		</tr>
+			         		</tr> -->
 			         		
-			         		<tr>
-			         			<th>특이사항</th>
-			         				<td>
-			         					<textarea name="str"></textarea>
-			         				</td>
-			         		</tr>
 			         		
-			         		<tr>
+			         		 <div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">특이사항</label>
+							    <div class="col-sm-10">
+							      <textarea class="form-control" name="str"></textarea>
+							    </div>
+							  </div>
+			         		
+			         		
+			         		
+			         		<div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">잔여pt횟수</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" name="ticket_time" value="${ticket_time}" readonly="readonly">
+							    </div>
+							  </div>
+			         		
+			         		
+			         		<%-- <tr>
 			         			<th>잔여pt횟수</th>
 			         				<td>
 			         					<input type="text" name="ticket_time" value="${ticket_time}" readonly="readonly"/>
 			         				</td>
-			         		</tr>
-			         	</table>
+			         		</tr> --%>
+			         	
 			        </div>
-		         	<button onclick="ptmemjoin()">등록</button>
-					<input type="button" onclick="location.href='/memlist.go'" value="이전"/>
+		         	<button class="btn btn-primary" onclick="ptmemjoin()">등록</button>
+					<input type="button" class="btn btn-primary" onclick="location.href='/memlist.go'" value="이전"/>
+     			</div>
+     			</div>
       </section>
    </div>
 </body>

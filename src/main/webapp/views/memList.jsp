@@ -139,13 +139,6 @@ table thead th {
 				            </div>
 				            
 				            <div class="form-group">
-				              <label for="start-datetime">회원 사진</label>
-				              <div id="mem_photo">
-				              	
-				              </div>
-				            </div>
-				            
-				            <div class="form-group">
 				              <label for="start-datetime">판매자</label>
 				              <div id="emp_no">
 				              	
@@ -320,29 +313,8 @@ function openModal(mem_no) {
 }
 
 function meminfoDraw(meminfo){
-	
-	var mem_photo = '';
+
 	var duration = '';
-	
-	if(meminfo.new_photo_name.equals('')){
-		
-		mem_photo += '<div class="memprofile">';
-		mem_photo += '<div class="table">';
-		mem_photo += '<form action="memprofile.do?mem_no=' + meminfo.mem_no + '" method="post" enctype="multipart/form-data">';
-		mem_photo += '<table>';
-		mem_photo += '<tr>';
-		mem_photo += '<th>프로필 사진</th>';
-		mem_photo += '<td><input type="file" name="photo"/><button>전송</button></td>';
-		mem_photo += '</tr>';
-		mem_photo += '</table>';
-		mem_photo += '</form>';
-		mem_photo += '</div>';
-	}
-	
-	else{
-		
-		mem_photo = '<div><img width="100%" height="100%" src="/photo/' + meminfo.new_photo_name + '"></div>';
-	}
 	
 	duration = '<div>'+ meminfo.start_date +  ' ~ ' + meminfo.end_date +'</div>'
 	
@@ -351,9 +323,6 @@ function meminfoDraw(meminfo){
 	
 	$('#mem_name').empty();
 	$('#mem_name').append(meminfo.name);
-	
-	$('#mem_photo').empty();
-	$('#mem_photo').append(mem_photo);
 	
 	$('#emp_no').empty();
 	$('#emp_no').append(meminfo.emp_no);

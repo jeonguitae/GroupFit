@@ -224,6 +224,18 @@ public class CommuteController {
 		return "center_commute";
 	}
 	
+
+	@RequestMapping(value="commutelist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> commutelist(
+			HttpSession session){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		
+		return cservice.commutelist(b_idx);
+	}
+	
 	@RequestMapping(value="/rconfirm.do")
 	public String rconfirm(@RequestParam HashMap<String, String> params) {
 		logger.info("rconfirm icin r_idx"+params);
