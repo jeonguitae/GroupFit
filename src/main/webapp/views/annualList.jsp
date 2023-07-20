@@ -57,7 +57,7 @@
 						<div class="mb-3">
 							<label for="ticket-type" class="form-label">구분</label> <select
 								class="form-select" id="annual_type" name="annual_kind">
-								<option selected value="none">연차/휴가 종류 선택</option>
+								<option selected value="">연차/휴가 종류 선택</option>
 								<option value="연차">연차</option>
 								<option value="휴가">휴가</option>
 							</select>
@@ -492,6 +492,8 @@
 					alert("연차/휴가 부여에 실패했습니다.");
 				}
 			});
+		} else {
+			alert("필요 항목을 모두 선택 및 입력해주세요.");
 		}
 	}
 	function annualSub() {
