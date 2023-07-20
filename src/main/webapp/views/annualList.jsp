@@ -57,7 +57,7 @@
 						<div class="mb-3">
 							<label for="ticket-type" class="form-label">구분</label> <select
 								class="form-select" id="annual_type" name="annual_kind">
-								<option selected value="none">연차/휴가 종류 선택</option>
+								<option selected value="">연차/휴가 종류 선택</option>
 								<option value="연차">연차</option>
 								<option value="휴가">휴가</option>
 							</select>
@@ -173,6 +173,7 @@
 						<option value="연차">연차</option>
 						<option value="휴가">휴가</option>
 					</select>
+					<br><br>
 					<table class="table">
 						<thead>
 							<tr style="text-align: center;" id="detail_list_header">
@@ -183,12 +184,13 @@
 						</thead>
 						<tbody>
 							<tr style="text-align: center; font-size: 16pt">
-								<td id="detail_annual_add">15</td>
-								<td id="detail_annual_sub">5</td>
-								<td id="detail_annual_sum">10</td>
+								<td id="detail_annual_add">0</td>
+								<td id="detail_annual_sub">0</td>
+								<td id="detail_annual_sum">0</td>
 							</tr>
 						</tbody>
 					</table>
+					<br>
 					<div style="text-align: center; font-size: 18px; font-weight: 600">지급/사용 이력</div>
 					<table class="table">
 						<thead>
@@ -241,12 +243,12 @@
 									<option value="1">1년 미만</option>
 									<option value="2">1년 이상</option>
 									<option value="3">전체</option>
-								</select>&nbsp; <select class="form-select" id="filter_attendance_rate">
+								</select>&nbsp; <!-- <select class="form-select" id="filter_attendance_rate">
 									<option selected>출석률</option>
 									<option value="1">지난달 근태 100%</option>
 									<option value="2">작년 근태 80% 이상</option>
 									<option value="3">전체</option>
-								</select>
+								</select> -->
 							</div>
 
 							<div class="float-right">
@@ -271,8 +273,8 @@
 												<th>직급</th>
 												<th>입사일</th>
 												<th>근속연수</th>
-												<th>작년근태</th>
-												<th>지난달근태</th>
+												<!-- <th>작년근태</th>
+												<th>지난달근태</th> -->
 												<th>발생휴가</th>
 												<th>차감휴가</th>
 												<th>잔여휴가</th>
@@ -290,8 +292,8 @@
 													<td>${dto.position}</td>
 													<td>${dto.join_year}</td>
 													<td><fmt:formatNumber value="${dto.work_year/365}" pattern="0.000"/></td>
-													<td></td>
-													<td></td>
+													<!-- <td></td>
+													<td></td> -->
 													<td>
 														<c:if test="${empty dto.annualAdd}">0</c:if>
 														<c:if test="${not empty dto.annualAdd}">${dto.annualAdd}</c:if>
@@ -384,7 +386,8 @@
 						content += '<td>' + dto.position + '</td>';
 						content += '<td>' + dto.join_year + '</td>';
 						content += '<td>' + (dto.work_year/365).toFixed(3) + '</td>';
-						content += '<td></td><td></td><td>';
+						/* content += '<td></td><td></td>'; */
+						content += '<td>';
 						if(dto.annualAdd == null){
 							content += '0';
 						} else{
@@ -417,7 +420,7 @@
 				}
 				else {
 					$("#empAnnualList").empty();
-					$("#empAnnualList").html('<tr><td colspan="12" style="text-align:center">검색되는 직원이 없습니다.<td><tr>');
+					$("#empAnnualList").html('<tr><td colspan="10" style="text-align:center">검색되는 직원이 없습니다.<td><tr>');
 				}
 				
 			},
@@ -490,6 +493,8 @@
 					alert("연차/휴가 부여에 실패했습니다.");
 				}
 			});
+		} else {
+			alert("필요 항목을 모두 선택 및 입력해주세요.");
 		}
 	}
 	function annualSub() {
@@ -564,7 +569,7 @@
 							content += "<tr><td>" + "<button type='button' class='btn btn-secondary btn-sm' disabled>사용</button>" + "</td>";
 						}
 						content += "<td>" + item.annual_date.substring(0,10) + "</td>";
-						content += "<td>" + item.annual_type + "</td>";
+						content += "<td>" + item.annual_kind + "</td>";
 						content += "<td>" + item.annual_time + "</td></tr>";
 					});
 					$("#detail_list").empty();

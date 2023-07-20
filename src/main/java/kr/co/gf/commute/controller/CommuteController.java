@@ -246,5 +246,22 @@ public class CommuteController {
 		else {}
 		return null;
 	}
+	
+	
+	@RequestMapping(value = "/workingList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> workingList(HttpSession session, Model model,@RequestParam HashMap<String, String> params) {
+		logger.info("월 변경시 넘어오는 값: "+params);
+		ArrayList<CommuteDTO> list = cservice.workingList(params);
+		
+		//String come_time = cservice.come_time(params);
+		//logger.info("come_time" + come_time);
+		logger.info("list",list);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("workList", list);
+		return map;
+		
+	}
 
 }

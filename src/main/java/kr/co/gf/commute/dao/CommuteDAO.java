@@ -41,6 +41,11 @@ public interface CommuteDAO {
 
 	CommuteDTO rdetail(String r_idx, String b_idx);
 
+
+	ArrayList<CommuteDTO> workingList(HashMap<String, String> params);
+
+	String come_time(HashMap<String, String> params);
+
 	ArrayList<String> w_type(String emp_no, String b_idx);
 
 	ArrayList<String> emp_name_list(String b_idx);

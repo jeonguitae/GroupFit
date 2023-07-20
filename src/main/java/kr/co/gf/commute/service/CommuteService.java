@@ -366,6 +366,15 @@ public class CommuteService {
 		return cdao.rdetail(r_idx, b_idx);
 	}
 
+
+	public ArrayList<CommuteDTO> workingList(HashMap<String, String> params) {
+		return cdao.workingList(params);
+	}
+
+	public String come_time(HashMap<String, String> params) {
+		
+		return cdao.come_time(params);
+	}
 	public HashMap<String, Object> commutelist(String b_idx) {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();

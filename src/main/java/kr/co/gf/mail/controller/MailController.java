@@ -162,4 +162,9 @@ public class MailController {
 		return service.post_getWasteList(get_empno);
 	}
 	
+	@GetMapping(value="/unreadMailCount.ajax")
+	public HashMap<String, Object> unreadMailCount(@RequestParam String emp_no) {
+		return service.unreadMailCount(emp_no);
+	}
+	
 }

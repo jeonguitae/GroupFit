@@ -78,7 +78,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">취소</button>
-						<button type="submit" class="btn btn-primary">등록</button>
+						<button type="button" class="btn btn-primary" onclick="add()">등록</button>
 					</div>
 				</form>
 			</div>
@@ -140,7 +140,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">취소</button>
-						<button type="submit" class="btn btn-primary">변경</button>
+						<button type="button" class="btn btn-primary" onclick="mod()">변경</button>
 					</div>
 				</form>
 			</div>
@@ -412,6 +412,67 @@ function failReload(arg){
 		} else {
 			$("#basic-addon22").text("회");
 		}
+	}
+	
+	function add() {
+		if($("#ticket_name").val() != "" && $("#ticket-type").val() != "" && $("#ticket-count").val() != "" & $("#ticket-price").val() != ""){
+		
+		$.ajax({
+			type : 'post',
+			url : 'ticket.regist',
+			data : {
+				'b_idx' : $("#branch_idx").val(),
+				'ticket_name' : $("#ticket_name").val(),
+				'ticket_type' : $("#ticket-type").val(),
+				'ticket_time' : $("#ticket-count").val(),
+				'ticket_price' : $("#ticket-price").val()
+			},
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+				if (data.success) {
+					alert("이용권 등록에 성공했습니다.");
+					location.reload();
+				}
+			},
+			error : function(e) {
+				alert("이용권 등록에 실패했습니다.");
+			}
+		});
+	} else {
+		alert("필요 항목을 모두 선택 및 입력해주세요.");
+	}
+	}
+	
+	function mod() {
+		if($("#mticket_name").val() != "" && $("#mticket_type").val() != "" && $("#mticket_count").val() != "" & $("#mticket_price").val() != ""){
+		
+		$.ajax({
+			type : 'post',
+			url : 'ticket.modify',
+			data : {
+				'ticket_no' : $("#mticket_no").val(),
+				'b_idx' : $("#mbranch_idx").val(),
+				'ticket_name' : $("#mticket_name").val(),
+				'ticket_type' : $("#mticket_type").val(),
+				'ticket_time' : $("#mticket_count").val(),
+				'ticket_price' : $("#mticket_price").val()
+			},
+			dataType : 'json',
+			success : function(data) {
+				console.log(data);
+				if (data.success) {
+					alert("이용권 변경에 성공했습니다.");
+					location.reload();
+				}
+			},
+			error : function(e) {
+				alert("이용권 변경에 실패했습니다.");
+			}
+		});
+	} else {
+		alert("필요 항목을 모두 선택 및 입력해주세요.");
+	}
 	}
 
 	function del() {
