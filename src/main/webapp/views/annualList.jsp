@@ -243,12 +243,12 @@
 									<option value="1">1년 미만</option>
 									<option value="2">1년 이상</option>
 									<option value="3">전체</option>
-								</select>&nbsp; <select class="form-select" id="filter_attendance_rate">
+								</select>&nbsp; <!-- <select class="form-select" id="filter_attendance_rate">
 									<option selected>출석률</option>
 									<option value="1">지난달 근태 100%</option>
 									<option value="2">작년 근태 80% 이상</option>
 									<option value="3">전체</option>
-								</select>
+								</select> -->
 							</div>
 
 							<div class="float-right">
@@ -273,8 +273,8 @@
 												<th>직급</th>
 												<th>입사일</th>
 												<th>근속연수</th>
-												<th>작년근태</th>
-												<th>지난달근태</th>
+												<!-- <th>작년근태</th>
+												<th>지난달근태</th> -->
 												<th>발생휴가</th>
 												<th>차감휴가</th>
 												<th>잔여휴가</th>
@@ -292,8 +292,8 @@
 													<td>${dto.position}</td>
 													<td>${dto.join_year}</td>
 													<td><fmt:formatNumber value="${dto.work_year/365}" pattern="0.000"/></td>
-													<td></td>
-													<td></td>
+													<!-- <td></td>
+													<td></td> -->
 													<td>
 														<c:if test="${empty dto.annualAdd}">0</c:if>
 														<c:if test="${not empty dto.annualAdd}">${dto.annualAdd}</c:if>
@@ -386,7 +386,8 @@
 						content += '<td>' + dto.position + '</td>';
 						content += '<td>' + dto.join_year + '</td>';
 						content += '<td>' + (dto.work_year/365).toFixed(3) + '</td>';
-						content += '<td></td><td></td><td>';
+						/* content += '<td></td><td></td>'; */
+						content += '<td>';
 						if(dto.annualAdd == null){
 							content += '0';
 						} else{
@@ -419,7 +420,7 @@
 				}
 				else {
 					$("#empAnnualList").empty();
-					$("#empAnnualList").html('<tr><td colspan="12" style="text-align:center">검색되는 직원이 없습니다.<td><tr>');
+					$("#empAnnualList").html('<tr><td colspan="10" style="text-align:center">검색되는 직원이 없습니다.<td><tr>');
 				}
 				
 			},
