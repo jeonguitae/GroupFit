@@ -173,6 +173,7 @@
 						<option value="연차">연차</option>
 						<option value="휴가">휴가</option>
 					</select>
+					<br><br>
 					<table class="table">
 						<thead>
 							<tr style="text-align: center;" id="detail_list_header">
@@ -183,12 +184,13 @@
 						</thead>
 						<tbody>
 							<tr style="text-align: center; font-size: 16pt">
-								<td id="detail_annual_add">15</td>
-								<td id="detail_annual_sub">5</td>
-								<td id="detail_annual_sum">10</td>
+								<td id="detail_annual_add">0</td>
+								<td id="detail_annual_sub">0</td>
+								<td id="detail_annual_sum">0</td>
 							</tr>
 						</tbody>
 					</table>
+					<br>
 					<div style="text-align: center; font-size: 18px; font-weight: 600">지급/사용 이력</div>
 					<table class="table">
 						<thead>
@@ -564,7 +566,7 @@
 							content += "<tr><td>" + "<button type='button' class='btn btn-secondary btn-sm' disabled>사용</button>" + "</td>";
 						}
 						content += "<td>" + item.annual_date.substring(0,10) + "</td>";
-						content += "<td>" + item.annual_type + "</td>";
+						content += "<td>" + item.annual_kind + "</td>";
 						content += "<td>" + item.annual_time + "</td></tr>";
 					});
 					$("#detail_list").empty();

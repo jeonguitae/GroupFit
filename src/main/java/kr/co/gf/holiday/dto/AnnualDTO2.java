@@ -11,7 +11,7 @@ public class AnnualDTO2 {
 	private int annual_no;
 	private String emp_no;
 	private int annual_modifier;
-	private String annual_type;
+	private String annual_kind;
 	private Timestamp annual_date;
 	private int annual_time;
 	
@@ -20,6 +20,12 @@ public class AnnualDTO2 {
 	}
 	public void setAnnual_no(int annual_no) {
 		this.annual_no = annual_no;
+	}
+	public String getAnnual_kind() {
+		return annual_kind;
+	}
+	public void setAnnual_kind(String annual_kind) {
+		this.annual_kind = annual_kind;
 	}
 	public String getEmp_no() {
 		return emp_no;
@@ -32,12 +38,6 @@ public class AnnualDTO2 {
 	}
 	public void setAnnual_modifier(int annual_modifier) {
 		this.annual_modifier = annual_modifier;
-	}
-	public String getAnnual_type() {
-		return annual_type;
-	}
-	public void setAnnual_type(String annual_type) {
-		this.annual_type = annual_type;
 	}
 	public Timestamp getAnnual_date() {
 		return annual_date;

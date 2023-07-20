@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,19 +40,34 @@ public class TicketController {
 	}
 	
 	@PostMapping(value = "/ticket.regist")
-	public ModelAndView ticketRegist(TicketDTO dto, RedirectAttributes rAttr) {
+	public HashMap<String, Object> ticketRegist(int b_idx, String ticket_name, String ticket_type, int ticket_time, int ticket_price) {
+		TicketDTO dto = new TicketDTO();
+		dto.setB_idx(b_idx);
+		dto.setTicket_name(ticket_name);
+		dto.setTicket_type(ticket_type);
+		dto.setTicket_price(ticket_price);
+		dto.setTicket_time(ticket_time);
 		int row = service.ticketRegist(dto);
-		String msg = (row == 1) ? "이용권 등록에 성공했습니다." : "이용권 등록에 실패했습니다.";
-		rAttr.addFlashAttribute("msg", msg);
-		return new ModelAndView("redirect:/ticket.go");
+		//String msg = (row == 1) ? "이용권 등록에 성공했습니다." : "이용권 등록에 실패했습니다.";
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(row==1) map.put("success", true);
+		return map;
 	}
 	
 	@PostMapping(value = "/ticket.modify")
-	public ModelAndView ticketModify(TicketDTO dto, RedirectAttributes rAttr) {
+	public HashMap<String, Object> ticketModify(int ticket_no, int b_idx, String ticket_name, String ticket_type, int ticket_time, int ticket_price) {
+		TicketDTO dto = new TicketDTO();
+		dto.setTicket_no(ticket_no);
+		dto.setB_idx(b_idx);
+		dto.setTicket_name(ticket_name);
+		dto.setTicket_type(ticket_type);
+		dto.setTicket_price(ticket_price);
+		dto.setTicket_time(ticket_time);
 		int row = service.ticketModify(dto);
-		String msg = (row == 1) ? "이용권 변경에 성공했습니다." : "이용권 변경에 실패했습니다.";
-		rAttr.addFlashAttribute("msg", msg);
-		return new ModelAndView("redirect:/ticket.go");
+		//String msg = (row == 1) ? "이용권 변경에 성공했습니다." : "이용권 변경에 실패했습니다.";
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(row==1) map.put("success", true);
+		return map;
 	}
 	
 	@GetMapping(value = "/ticket.delete")
