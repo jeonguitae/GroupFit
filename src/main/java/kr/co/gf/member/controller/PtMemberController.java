@@ -249,5 +249,12 @@ public class PtMemberController {
 
 		return service.ptmemberSearch(ptmember, searchInput);
 	}
+	
+	
+	
+	
+	
+	
+	
 
 }

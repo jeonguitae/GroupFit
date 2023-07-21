@@ -54,16 +54,16 @@
 		<!-- Main content -->
 		<section class="content">
 	<div style="display: flex; align-items: center;">
-	<h3>전체 매출</h3>
-		<button style="margin-left: 24%;" onclick="yearChange(-1)"><</button>
-		<span id="year" style="margin: 0 10px;">2023</span>
-		<button id="nextYear" onclick="yearChange(1)" disabled>></button>
+	<h3 style="position: relative; top:50px;">전체 매출</h3>
+		<button style="margin-left: 17%; position: relative; top:100px;" onclick="yearChange(-1)"><</button>
+		<span id="year" style="margin: 0 10px; position: relative; top:100px;">2023</span>
+		<button id="nextYear" style="position: relative; top:100px;" onclick="yearChange(1)" disabled>></button>
 	</div>
 
 	<div class="container-fluid" style="display: flex;">
 		<!-- 첫 번째 그래프 컨테이너 -->
 		<div style="flex: 1; max-width: 50%;">
-			<canvas id="myChart" style="width: 100%; height: 500px; margin-top:5%;"></canvas>
+			<canvas id="myChart" style="width: 100%; height: 480px; margin-top:10%;"></canvas>
 		</div>
 
 		<!-- 회원 수 추이 부분 -->
@@ -88,6 +88,35 @@
 		</div>
 	</div>
 </section>
+	<br/>
+	<h3>대기 결재 문서</h3>
+	<table class="table table-bordered table-hover dataTable dtr-inline">
+			<thead>
+				<tr>
+			 		<th>no</th>
+			 		<th>결재구분</th>
+			 		<th>제목</th>
+			 		<th>신청자</th>
+			 		<th>기안일</th>
+					<td>처리상태</td>
+				</tr>
+			</thead>
+			<tbody>
+				<c:if test="${StayList.size() == 0}">
+					<tr><th colspan="6">결재신청이 없습니다.</th></tr>
+				</c:if>
+				<c:forEach items="${StayList}" var="stay">
+					<tr>
+						<td>${stay.a_idx}</td>
+						<td>${stay.approval}</td>
+						<td><a href="eventDetail.do?a_idx=${stay.a_idx}&approval=${stay.approval}">${stay.subject}</a></td>
+						<td>${stay.name }</td>
+						<td>${stay.write_date}</td>
+						<td>${stay.state}</td>
+					</tr>			
+				</c:forEach>
+			</tbody>
+		</table>
 		
 	</div>
 </body>
