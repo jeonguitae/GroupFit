@@ -122,8 +122,8 @@
 
 				<!-- Messages Dropdown Menu -->
 				<li class="nav-item dropdown"><a class="nav-link" href="postGetList.go"> <i
-						class="far fa-regular fa-envelope"></i> <span
-						class="badge badge-danger navbar-badge">3</span>
+						class="far fa-regular fa-envelope"></i>
+						<span id="unreadMailCount" style="visibility:hidden" class="badge badge-danger navbar-badge"></span>
 				</a></li>
 				<!-- Notifications Dropdown Menu -->
 				<!-- <li class="nav-item dropdown"><a class="nav-link"
@@ -161,11 +161,10 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a type="button" class="brand-link" data-bs-toggle="modal"
-				data-bs-target="#exampleModal"> <img
+			<a type="button" class="brand-link" href="/main"> <img
 				src="img/GroupFit_lg_2.png" alt="GroupFit Logo"
 				class="brand-image img-circle elevation-3"
-				style="background-color: transparent; transform: scale(1.1); opacity: .8">
+				style="background-color: transparent; transform: scale(1.1); opacity: .8"> <!-- data-bs-toggle="modal" data-bs-target="#exampleModal" -->
 				<span class="brand-text font-weight-light">GroupFit</span>
 			</a>
 
@@ -364,7 +363,7 @@
 								</a></li>
 								</c:if>
 							</ul></li>
-						
+						<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 						<li class="nav-item"><a href="#" class="nav-link"> <i
 								class="nav-icon far fa-calendar-check"></i>
 								<p>
@@ -376,13 +375,14 @@
 									class="nav-link"> <i class="far fa-calendar-check nav-icon"></i>
 										<p>휴가 신청</p>
 								</a></li> -->
-								<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
+								
 								<li class="nav-item item-sub"><a href="annualList.go" class="nav-link"> <i
 										class="nav-icon far fa-calendar-check"></i>
 										<p>직원 연차관리</p>
 								</a></li>
-								</c:if>
+								
 							</ul></li>
+						</c:if>
 					</ul>
 				</nav>
 			</div>
@@ -412,6 +412,33 @@
 	<!-- <script src="dist/js/pages/dashboard2.js"></script> -->
 </body>
 <script>
+	mailCount();
+	console.log(${sessionScope.loginEmp.emp_no});
+
+	function mailCount(){
+		$.ajax({
+			type : 'get',
+			url : 'unreadMailCount.ajax',
+			data : {
+				'emp_no' : ${sessionScope.loginEmp.emp_no}
+			},
+			dataType : 'json',
+			success : function(data) {
+				console.log("안 읽은 메일 수: " + data.mailcount);
+				if (data.success) {
+					if(data.mailcount >= 1){
+						console.log("안 읽은 메일이 있습니다.")
+						$("#unreadMailCount").css("visibility", "visible");
+						$("#unreadMailCount").html(data.mailcount);
+					}
+				}
+			},
+			error : function(e) {
+				console.log("메일 카운트를 받아오는데 실패했습니다.");
+			}
+		});
+	}
+
 	var msg = "${msg}";
 	 
 	if(msg != ""){

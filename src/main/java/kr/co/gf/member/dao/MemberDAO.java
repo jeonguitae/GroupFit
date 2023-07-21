@@ -96,13 +96,15 @@ public interface MemberDAO {
 
 	ArrayList<MemberDTO> entermemlist(int b_idx, LocalDate now);
 
-	MemberDTO ptmemdetail(String mem_no);
+	/* MemberDTO ptmemdetail(String mem_no); */
 
 	void memphotodel(String mem_no);
 
 	String del_new_file_name(String mem_no);
 
 	MemberDTO mem_info(String mem_no);
+
+	MemberDTO ptmem_info(String mem_no);
 
 	/* int memjoin(HashMap<String, String> params); */
 

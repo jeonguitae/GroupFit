@@ -160,4 +160,8 @@
 			 ORDER BY SEND_TIME DESC
 		</select>
 		
+		<select id="unreadMailCount">
+			SELECT COUNT(*) from post where get_empno = #{param1} and get_chk = 0;
+		</select>
+		
 	</mapper>

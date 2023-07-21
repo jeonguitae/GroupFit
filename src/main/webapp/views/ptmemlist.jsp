@@ -106,6 +106,76 @@ table thead th {
 						</div>
 					</div>
 				</div>
+				
+				<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h5 class="modal-title" id="event-modal-label">기구 사진 등록</h5>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        
+				        <div class="modal-body">
+				          <form action="event-form">
+				          	<div class="form-group">
+				              <label for="event-name">회원 번호</label>
+				              <div id="mem_no">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="event-name">회원 이름</label>
+				              <div id="mem_name">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">판매자</label>
+				              <div id="emp_no">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">성별</label>
+				              <div id="gender">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">생년월일</label>
+				              <div id="birth">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">등록기간</label>
+				              <div id="duration">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">잔여 pt횟수</label>
+				              <div id="pt_count">
+				              	
+				              </div>
+				            </div>
+				            
+					        <div class="modal-footer">
+					          <input type="button" id="close" class="btn btn-secondary" data-dismiss="modal" value="돌아가기"/>
+					        </div>
+				          </form>
+				        </div>
+				      </div>
+				   </div>
+				</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>
@@ -138,7 +208,7 @@ function listDraw(ptmemlist){
 		content += '<tr>';
 		content += '<td><input type="checkbox" value="'+item.mem_no+'"/></td>';
 		content += '<td>'+item.mem_no+'</td>';
-		content += '<td><a href="ptmemdetail.go?mem_no='+item.mem_no+'">'+item.name+'</a></td>';
+		content += '<td><a onclick="openModal('+item.mem_no+')">'+item.name+'</a></td>';
 		content += '<td>'+item.ticket_time+' / '+item.count+'</td>';	
 		content += '<td>'+item.gender+'</td>';
 		content += '</tr>';
@@ -189,5 +259,56 @@ function memdel(){
 	});
 	
 }
+
+function openModal(mem_no) {
+	
+	$.ajax({
+	      type: 'get',
+	      url: 'ptmem_info.ajax',
+	      data: {
+	    	  'mem_no' : mem_no
+	      },
+	      success: function(data) {
+	    	ptmeminfoDraw(data.dto);
+	      },
+	      error: function(e) {
+	        console.log(e);
+	      }
+	 });
+	
+    $('#event-modal').modal('show');
+}
+
+function ptmeminfoDraw(ptmeminfo){
+
+	var duration = '';
+	
+	duration = '<div>'+ ptmeminfo.start_date +  ' ~ ' + ptmeminfo.end_date +'</div>'
+	
+	$('#mem_no').empty();
+	$('#mem_no').append(ptmeminfo.mem_no);
+	
+	$('#mem_name').empty();
+	$('#mem_name').append(ptmeminfo.name);
+	
+	$('#emp_no').empty();
+	$('#emp_no').append(ptmeminfo.emp_no);
+	
+	$('#gender').empty();
+	$('#gender').append(ptmeminfo.gender);
+	
+	$('#birth').empty();
+	$('#birth').append(ptmeminfo.birth);
+	
+	$('#duration').empty();
+	$('#duration').append(duration);
+	
+	$('#pt_count').empty();
+	$('#pt_count').append(ptmeminfo.count);
+}
+
+$(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
+    $('#event-modal').modal('hide');
+  });
 </script>
 </html>

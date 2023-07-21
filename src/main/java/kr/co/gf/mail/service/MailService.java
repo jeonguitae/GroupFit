@@ -175,4 +175,12 @@ public class MailService {
 			
 		return mav;
 	}
+
+	public HashMap<String, Object> unreadMailCount(String emp_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int cnt = dao.unreadMailCount(emp_no);
+		if (cnt >= 0) map.put("success", true);
+		map.put("mailcount", cnt);
+		return map;
+	}
 }

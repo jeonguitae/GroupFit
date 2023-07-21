@@ -27,8 +27,7 @@ public class CommuteDTO {
 	private String name;
 	private String position;
 	private String opinion;
-	
-	
+	private String time_difference;
 	
 	
 	public String getOpinion() {
@@ -36,6 +35,13 @@ public class CommuteDTO {
 	}
 	public void setOpinion(String opinion) {
 		this.opinion = opinion;
+	}
+	
+	public String getTime_difference() {
+		return time_difference;
+	}
+	public void setTime_difference(String time_difference) {
+		this.time_difference = time_difference;
 	}
 	public String getName() {
 		return name;

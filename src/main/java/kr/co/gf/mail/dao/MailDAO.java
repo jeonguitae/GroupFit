@@ -45,4 +45,6 @@ public interface MailDAO {
 	ArrayList<MailDTO> post_sendWasteList(String send_empno);
 
 	ArrayList<MailDTO> post_getWasteList(String get_empno);
+
+	int unreadMailCount(String emp_no);
 }

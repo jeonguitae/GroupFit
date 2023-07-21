@@ -10,6 +10,12 @@
 		margin: 5px;
 	}
 	
+	    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+	
 	/* div[class="table 1"]{
 		z-index: 1;
 	}
@@ -74,105 +80,129 @@
       <section class="content">
          <div class="container-fluid">
          		<h2>회원정보 등록</h2>
+         			<div class="container">
+         			
 	         		<div class="table 1">
-			         	<table>
-			         		<tr>
-			         			<th>이름</th>
-		         				<td>
-		         					<input type="text" name="name" value=""/>
-		         				</td>
-			         		</tr>
+			         	
+
 			         		
-			         		<tr>
-			         			<th>생년월일</th>
-		         				<td>
-		         					<input type="date" name="birth">
-		         				</td>
-			         		</tr>
-			         		
-			         		<tr>
-			         			<th>성별</th>
-		         				<td>
-		         					<input type="radio" name="gender" value="남자"/>남자
-		         					&nbsp; &nbsp; &nbsp; &nbsp;
-		         					<input type="radio" name="gender" value="여자"/>여자
-		         				</td>
-			         		</tr>
-			         		
-			         		<tr>
-			         			<th>연락처</th>
-		         				<td>
-		         					<input type="text" name="phone" value=""/>
-		         				</td>
-			         		</tr>
-			         		
-			         		<tr>
-								<th>라커 번호</th>
-								<td>
-									<select name="loc_no">
-										<c:forEach items="${locker}" var="name">
-											<option value="${name.loc_no}">${name.loc_no}
-										</c:forEach>
-									</select>
-								</td>
-							</tr>
-			         	</table>
-			        </div>
-		         	<button onclick="memjoin()">등록</button>
-					<input type="button" onclick="location.href='/memlist.go'" value="이전"/>
-		        
+			         		<div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">이름</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" name="name">
+							    </div>
+							  </div>
+							  
+							  <div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">생년월일</label>
+							    <div class="col-sm-10">
+							      <input type="date" class="form-control" name="birth">
+							    </div>
+							  </div>
+							  
+							  
+							  <div class="row mb-3">
+								  <label for="name" class="col-sm-2 col-form-label">성별</label>
+								  <div class="col-sm-10">
+								    <div class="form-check form-check-inline">
+								      <input class="form-check-input" type="radio" name="gender" value="여자" id="inlineRadio1">
+								      <label class="form-check-label" for="inlineRadio1">여자</label>
+								    </div>
+								    <div class="form-check form-check-inline">
+								      <input class="form-check-input" type="radio" name="gender" value="남자" id="inlineRadio2">
+								      <label class="form-check-label" for="inlineRadio2">남자</label>
+								    </div>
+								  </div>
+								</div>
+								
+								
+								<div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">연락처</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" name="phone">
+							    </div>
+							  </div>
+							  
+							  
+							  <div class="row mb-3">
+			         		  <label for="loc_no" class="col-sm-2 col-form-label">라커 번호</label>
+								  <div class="col-sm-10">
+								    <select class="form-select" name="loc_no" id="loc_no">
+								      <c:forEach items="${locker}" var="name">
+								        <option value="${name.loc_no}">${name.loc_no}</option>
+								      </c:forEach>
+								    </select>
+								  </div>
+								</div>
+							</div>
+							
+		         	<button class="btn btn-primary" onclick="memjoin()">등록</button>
+					<input type="button" class="btn btn-primary" onclick="location.href='/memlist.go'" value="이전"/>
+	
 	         	<hr/>
 	         	
 		         	<h2>이용권 등록</h2>
 			         	<div class="table 2">
-				         	<table>
-								<tr>
-									<th>이용권</th>
-										<td>
-											<select name="ticket_name">
-												<c:forEach items="${ticket}" var="name">
-													<option value="${name.ticket_name}">${name.ticket_name}
-												</c:forEach>
-											</select>
-										</td>
-								</tr>
+			         	
+
+			         		<div class="row mb-3">
+			         		  <label for="loc_no" class="col-sm-2 col-form-label">이용권</label>
+								  <div class="col-sm-10">
+								    <select class="form-select" name="ticket_name">
+								     	<c:forEach items="${ticket}" var="name">
+											<option value="${name.ticket_name}">${name.ticket_name}
+										</c:forEach>
+								    </select>
+								  </div>
+								</div>
+							
+
 								
-								<tr>
-									<th>판매자(사번)</th>
-									<td>
-										<input type="text" name="emp_no" value="${sessionScope.loginId}" readonly="readonly"/>
-									</td>
-								</tr>
+								<div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">판매자(사번)</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" name="emp_no" value="${sessionScope.loginId}" readonly="readonly">
+							    </div>
+							  </div>
+							  
+
+								<div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">회원번호</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" name="mem_no" value="" readonly="readonly">
+							    </div>
+							  </div>
 								
-								<tr>
-									<th>회원번호</th>
-									<td>
-										<input type="text" name="mem_no" value="" readonly="readonly"/>
-									</td>
-								</tr>
+
 								
-								<tr>
-									<th>이용권 시작일자</th>
-									<td>
-										<input type="date" name="start_date">
-									</td>
-								</tr>
+								<div class="row mb-3">
+							    <label for="name" class="col-sm-2 col-form-label">이용권 시작일자</label>
+							    <div class="col-sm-10">
+							      <input type="date" class="form-control" name="start_date">
+							    </div>
+							  </div>
 								
-								<tr>
-									<th>지점</th>
-									<td>
-										<select name="branch">
-											<c:forEach items="${branch}" var="name">
-												<option value="${name.b_name}">${name.b_name}
-											</c:forEach>
-										</select>
-									</td>
-								</tr>
-							</table>
+
+								
+								<div class="row mb-3">
+			         		  <label for="loc_no" class="col-sm-2 col-form-label">지점</label>
+								  <div class="col-sm-10">
+								    <select class="form-select" name="branch">
+								     	<c:forEach items="${branch}" var="name">
+											<option value="${name.b_name}">${name.b_name}
+										</c:forEach>
+								    </select>
+								  </div>
+								</div>
+							
+
+							
 						</div>
-						<button onclick="ticketjoin()">등록</button>
-						<input type="button" onclick="location.href='/memlist.go'" value="이전">
+						<button class="btn btn-primary" onclick="ticketjoin()">등록</button>
+						<input type="button" class="btn btn-primary" onclick="location.href='/memlist.go'" value="이전">
          			</div>
+         		</div> 
+         	
          <!--/. container-fluid -->
       </section>
    </div>

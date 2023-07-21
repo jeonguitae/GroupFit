@@ -96,4 +96,23 @@
    	on c.emp_no = e.emp_no
    	WHERE c.status='승인' or c.status='반려' ORDER BY r_idx DESC
    	</select>
-   </mapper>
+   	
+   	<select id="workingList" parameterType="hashmap" resultType="commute">
+   		SELECT emp_no,b_idx,come_time,out_time,work_date,w_type,SEC_TO_TIME(TIME_TO_SEC(out_time) - TIME_TO_SEC(come_time)) AS time_difference FROM working WHERE emp_no=#{emp_no} AND DATE_FORMAT(work_date, '%Y-%m') =#{year}
+   	</select>
+   	
+   	<select id="come_time" resultType="String">
+   		SELECT come_time FROM working WHERE emp_no=#{emp_no} AND DATE_FORMAT(work_date, '%Y-%m') =#{year}s
+	</select>
+   	<select id="w_type">
+   		SELECT w_type FROM working WHERE b_idx = #{param2} AND emp_no = #{param1}
+   	</select>
+   	
+   	<select id="emp_name_list" resultType="String">
+   		SELECT name FROM emp WHERE b_idx = #{param1}
+   	</select>
+   	
+   	<select id="s_emp_no" resultType="String">
+   		SELECT emp_no FROM emp WHERE name = #{param1} AND b_idx = #{param2}
+   	</select>
+  </mapper>

@@ -47,20 +47,20 @@
 	<select id="annualDetail" resultType="HashMap">
 		select sum(case when annual_modifier = 1 then annual_time end) as annual_add, 
 			sum(case when annual_modifier = 2 then annual_time end) as annual_sub
-		from annual where emp_no = #{param1} and annual_type = #{param2}
+		from annual where emp_no = #{param1} and annual_kind = #{param2}
 	</select>
 	
 	<select id="annualDetailList" resultType="annual2">
-		select * from annual where emp_no = #{param1} and annual_type = #{param2}
+		select * from annual where emp_no = #{param1} and annual_kind = #{param2}
 	</select>
 	
 	<insert id="annualAdd" parameterType="annual">
-		insert into annual(emp_no, annual_modifier, annual_type, annual_time)
+		insert into annual(emp_no, annual_modifier, annual_kind, annual_time)
 			values(#{param1}, 1, #{param2}, #{param3})
 	</insert>
 	
 	<insert id="annualSub" parameterType="annual">
-		insert into annual(emp_no, annual_modifier, annual_type, annual_time)
+		insert into annual(emp_no, annual_modifier, annual_kind, annual_time)
 			values(#{param1}, 2, #{param2}, #{param3})
 	</insert>
 </mapper>

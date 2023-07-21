@@ -391,16 +391,27 @@ public class MemberService {
 		return map;
 	}
 
-	public MemberDTO ptmemdetail(String mem_no) {
-		
-		return dao.ptmemdetail(mem_no);
-	}
+	/*
+	 * public MemberDTO ptmemdetail(String mem_no) {
+	 * 
+	 * return dao.ptmemdetail(mem_no); }
+	 */
 
 	public HashMap<String, Object> mem_info(String mem_no) {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		MemberDTO dto = dao.mem_info(mem_no);
+		map.put("dto", dto);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> ptmem_info(String mem_no) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		MemberDTO dto = dao.ptmem_info(mem_no);
 		map.put("dto", dto);
 		
 		return map;

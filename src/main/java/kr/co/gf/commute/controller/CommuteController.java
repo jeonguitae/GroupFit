@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -226,6 +227,18 @@ public class CommuteController {
 		return "center_commute";
 	}
 	
+
+	@RequestMapping(value="commutelist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> commutelist(
+			HttpSession session){
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = dto.getB_idx();
+		
+		return cservice.commutelist(b_idx);
+	}
+	
 	@RequestMapping(value="/rconfirm.do")
 	public String rconfirm(@RequestParam HashMap<String, String> params, Model model) {
 		
@@ -255,6 +268,23 @@ public class CommuteController {
 		model.addAttribute("msg",msg);
 		String page = "redirect:/rlist.go";
 		return page;
+	}
+	
+	
+	@RequestMapping(value = "/workingList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> workingList(HttpSession session, Model model,@RequestParam HashMap<String, String> params) {
+		logger.info("월 변경시 넘어오는 값: "+params);
+		ArrayList<CommuteDTO> list = cservice.workingList(params);
+		
+		//String come_time = cservice.come_time(params);
+		//logger.info("come_time" + come_time);
+		logger.info("list",list);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("workList", list);
+		return map;
+		
 	}
 
 	@RequestMapping(value="/confirmlist.do")

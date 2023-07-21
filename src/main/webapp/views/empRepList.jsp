@@ -86,7 +86,7 @@ form[class="search"]{
 									<tr>
 										<td><input type="checkbox" name="chk" value="${emp.emp_no}"/></td>
 										<td>${emp.emp_no}</td>
-										<td><a href="empDetail.do?detailid=${emp.emp_no}">${emp.name}</a></td>
+										<td><a href="empDetail.go?detailid=${emp.emp_no}">${emp.name}</a></td>
 										<td>${emp.b_name}</td>
 										<td>${emp.position}</td>
 										<td>${emp.status}</td>

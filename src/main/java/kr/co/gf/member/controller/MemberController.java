@@ -239,25 +239,33 @@ public class MemberController {
 		return service.entermemlist(loginId);
 	}
 	
-	@GetMapping(value="ptmemdetail.go")
-	public String ptmemdetailgo(String mem_no, Model model) {
-	
-		MemberDTO dto = service.ptmemdetail(mem_no);
-		String new_photo_name = service.photomem(mem_no);
-		
-		logger.info("new_photo_name : " + new_photo_name);
-		
-		dto.setNew_photo_name(new_photo_name);
-
-		model.addAttribute("dto", dto);
-		
-		return "ptmemdetail";
-	}
+	/*
+	 * @GetMapping(value="ptmemdetail.go") public String ptmemdetailgo(String
+	 * mem_no, Model model) {
+	 * 
+	 * MemberDTO dto = service.ptmemdetail(mem_no); String new_photo_name =
+	 * service.photomem(mem_no);
+	 * 
+	 * logger.info("new_photo_name : " + new_photo_name);
+	 * 
+	 * dto.setNew_photo_name(new_photo_name);
+	 * 
+	 * model.addAttribute("dto", dto);
+	 * 
+	 * return "ptmemdetail"; }
+	 */
 	
 	@RequestMapping(value="mem_info.ajax")
 	@ResponseBody
 	public HashMap<String, Object> mem_info(String mem_no){
 	
 		return service.mem_info(mem_no);
+	}
+	
+	@RequestMapping(value="ptmem_info.ajax")
+	@ResponseBody
+	public HashMap<String, Object> ptmem_info(String mem_no){
+	
+		return service.ptmem_info(mem_no);
 	}
 }
