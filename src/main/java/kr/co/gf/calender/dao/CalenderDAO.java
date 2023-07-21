@@ -1,5 +1,6 @@
 package kr.co.gf.calender.dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,10 @@ public interface CalenderDAO {
 
 
 	ArrayList<CalenderDTO> selectedBranch(String b_idx, String branch);
+
+
+
+	ArrayList<CalenderDTO> traincalender(LocalDate currentDate);
 
 	
 

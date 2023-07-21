@@ -1,5 +1,7 @@
 package kr.co.gf.main.controller;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.http.Cookie;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.gf.calender.dto.CalenderDTO;
+import kr.co.gf.calender.service.CalenderService;
 import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.statistics.dto.StatisDTO;
 import kr.co.gf.statistics.service.StatisService;
@@ -22,6 +26,8 @@ import kr.co.gf.statistics.service.StatisService;
 public class MainController {
 	@Autowired StatisService sService;
 	Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@Autowired CalenderService calservice;
 	
 	// default context path로 요청 시 main으로 redirect
 	@GetMapping(value="/")
@@ -45,6 +51,15 @@ public class MainController {
 				ArrayList<StatisDTO> list = sService.branchList();
 				mav.addObject("branchList",list);
 				mav.setViewName("leaderMain");
+				
+			}else if(position.equals("트레이너")) {
+				
+				mav.setViewName("trainmain");
+				LocalDate currentDate = LocalDate.now();
+				logger.info("오늘날짜 : "+currentDate);
+				ArrayList<CalenderDTO> list = calservice.traincalender(currentDate);
+				mav.addObject("calendarlist",list);
+				
 				
 			}else {
 				
