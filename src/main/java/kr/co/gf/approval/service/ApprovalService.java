@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.gf.approval.dao.ApprovalDAO;
 import kr.co.gf.approval.dto.ApprovalDTO;
+import kr.co.gf.statistics.dto.StatisDTO;
 
 @Service
 @MapperScan("kr.co.gf.approval.dao")
@@ -330,6 +331,10 @@ public void upload(MultipartFile uploadFile,String a_idx) {
 	    // 파일해야돼...
 
 		return page;
+	}
+
+	public ArrayList<StatisDTO> StayList() {
+		return dao.StayList();
 	}
 
 }
