@@ -1,11 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기에 페이지 이름 입력</title>
+<title>트레이너 메인 페이지</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet"
+	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+<link rel="stylesheet" href="dist/css/adminlte.min.css">
+</head>
 <style>
 table {
 	width: 100%;
@@ -27,24 +38,7 @@ tfoot td {
 	text-align: center;
 	padding: 10px;
 }
-table thead th {
-  text-align: center;
-}
 </style>
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link
-   href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-   rel="stylesheet"
-   integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-   crossorigin="anonymous">
-<link rel="stylesheet"
-   href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-<link rel="stylesheet"
-   href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-<link rel="stylesheet" href="dist/css/adminlte.min.css">
-</head>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
 	<div class="content-wrapper" style="margin-top: 57.08px">
@@ -52,7 +46,7 @@ table thead th {
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>MY PT 회원 리스트</h1>
+						<h1>트레이너 메인</h1>
 					</div>
 					<div class="col-sm-6">
 						<ol class="breadcrumb float-sm-right">
@@ -68,47 +62,58 @@ table thead th {
 		<!-- Main content -->
 		<section class="content">
 			<div class="container-fluid">
-			
-				<div class="row">
-					<div class="col-12">
-						<div style="height: 50px">
-						
-							<form action="ptmemsearch.do" class="search">
-								<select name="sortting">
-									<option value="mem_no">회원번호</option>
-									<option value="name">이름</option>
-									<option value="gender">성별</option>
-								</select>
-								
-								<input type="text" name="txt" value="" placeholder="검색어를 입력하세요"/>
-								
-								<button>검색</button>
-							</form>		
-							
-						</div>
-						<div class="card card-primary">
-							<div class="card-header">
-								<h4 class="card-title">MY PT 회원 리스트</h4>
-							</div>
-							<div class="card-body">
-								<table class="table">
-									<thead class="table-light">
-										<tr>
-											<th>삭제</th>
-											<th>회원번호</th>
-											<th>이름</th>
-											<th>등록횟수 / 잔여횟수</th>
-											<th>성별</th>
-										</tr>
-									</thead>
-									<tbody id="ptmemlist"></tbody>
-								</table>
-							</div>
-						</div>
-					</div>
+			<!--/. container-fluid -->
+			<h3 id="year_month" style="margin-left:35%";></h3>
+			<div style="width: 1000px; height: 500px;">
+				<!--차트가 그려질 부분-->
+				<canvas id="myChart2"></canvas>
 				</div>
-				
-				<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
+			<!--/. container-fluid -->
+		
+		<table>
+		    <c:choose>
+		       <c:when test="${empty calendarlist}">
+		         <tr>
+		           <td colspan="2">오늘 일정이 없습니다.</td>
+		         </tr>
+		       </c:when>
+		       <c:otherwise>
+		         <c:forEach var="calendarlist" items="${calendarlist}">
+		           <tr>
+		             <th>회원이름</th>
+		             <td>
+		               <input type="text" name="event_name" value="${calendarlist.event_name}" readonly="readonly"/>
+		             </td>
+		           </tr>
+		           <tr>
+		             <th>시작시간</th>
+		             <td>
+		               <input type="text" name="start_time" value="${calendarlist.start_time}" readonly="readonly"/>
+		             </td>
+		           </tr>
+		           <tr>
+		             <th>종료시간</th>
+		             <td>
+		               <input type="text" name="end_time" value="${calendarlist.end_time}" readonly="readonly"/>
+		             </td>
+		           </tr>
+		         </c:forEach>
+		       </c:otherwise>
+		     </c:choose>
+   		</table>
+   		<table>
+   			<thead class="table-light">
+					<tr>
+						<th>회원번호</th>
+						<th>이름</th>
+						<th>등록횟수 / 잔여횟수</th>
+						<th>성별</th>
+					</tr>
+					</thead>
+			<tbody id="ptmemlist"></tbody>
+   		</table>
+   		
+   		<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
 				    <div class="modal-dialog" role="document">
 				      <div class="modal-content">
 				        <div class="modal-header">
@@ -177,12 +182,95 @@ table thead th {
 				      </div>
 				   </div>
 				</div>
-			</div>
-			<!--/. container-fluid -->
-		</section>
+				</div>
+				</section>
+				
 	</div>
 </body>
 <script>
+var currentDate = new Date();
+var currentYear = currentDate.getFullYear();
+var currentMonth = String(currentDate.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1을 해주고, padStart()로 두 자리로 만듭니다.
+
+var formattedDate = currentYear + "-" + currentMonth;
+
+var b_idx="${sessionScope.loginEmp.b_idx}";
+
+console.log("Current Year-Month:", formattedDate);
+
+secondChart(formattedDate,b_idx);
+
+function secondChart(formattedDate,b_idx){
+		$.ajax({
+  		type:'get',
+  		url:'branchPersonal.ajax',
+  		data:{
+  			'formattedDate':formattedDate,
+  			'b_idx':b_idx
+  		},
+  		dataType:'json',
+  		success:function(data){
+  			console.log(data);
+  			branchPersonalChartPrint(data.branchPersonal);
+  		},
+  		error:function(e){
+  			console.log(e);
+  		}
+  	});
+	}
+	
+function branchPersonalChartPrint(data){
+	labels=[];
+	datasets=[];
+	data.forEach(function(item,index){
+		labels.push(item.name);
+		datasets.push(item.personal_totalsales)
+	});
+    var context = document
+    			.getElementById('myChart2')
+                .getContext('2d');
+    myChart2 = new Chart(context, {
+        type: 'line', // 차트의 형태
+        data: { // 차트에 들어갈 데이터
+            labels: labels,
+            datasets: [
+                { //데이터
+                    label: '직원매출', //차트 제목
+                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                    data: datasets,
+                    backgroundColor: [
+                        'rgba(255, 159, 164, 0.2)'
+                    ],
+                    borderColor: [
+                        // 경계선 색상
+                        'rgba(50, 205, 50, 1)'
+                    ],
+                    borderWidth: 2, //경계선 굵기
+                    pointBorderColor: 'rgba(144, 238, 144, 1)'
+                }
+            ]
+        },
+        options: {
+            scales: {
+            	xAxes: [{
+            	      ticks: {
+            	        fontColor: 'rgba(255, 255, 255, 1)', // x축 눈금 레이블 색상 (흰색)
+            	      },
+            	    }],
+            	    yAxes: [{
+            	      ticks: {
+            	        fontColor: 'rgba(255, 255, 255, 1)',
+            	        beginAtZero: true// y축 눈금 레이블 색상 (흰색)
+            	      },
+            	    }],
+            }
+        }
+    });
+}
+$('#year_month').html(formattedDate);
+
+
+
 
 ptmemlist();
 
@@ -207,7 +295,6 @@ function listDraw(ptmemlist){
 	ptmemlist.forEach(function(item,index){
 		
 		content += '<tr>';
-		content += '<td><input type="checkbox" value="'+item.mem_no+'"/></td>';
 		content += '<td>'+item.mem_no+'</td>';
 		content += '<td><a onclick="openModal('+item.mem_no+')">'+item.name+'</a></td>';
 		content += '<td>'+item.ticket_time+' / '+item.count+'</td>';	
@@ -218,48 +305,6 @@ function listDraw(ptmemlist){
 	$('#ptmemlist').append(content);
 }
 
-$('#all').click(function(e){	
-	var $chk = $('input[type="checkbox"]');
-	console.log($chk);
-	if($(this).is(':checked')){
-		$chk.prop('checked',true);
-	}else{
-		$chk.prop('checked',false);
-	}	
-});
-
-function memdel(){
-	
-	var checkArr = [];
-	
-	$('input[type="checkbox"]:checked').each(function(idx,item){		
-		//checkbox 에 value 를 지정하지 않으면 기본값을 on 으로 스스로 지정한다.
-		if($(this).val()!='on'){
-			//console.log(idx,$(this).val());
-			checkArr.push($(this).val());
-		}	
-	});
-	
-	console.log(checkArr);
-		
-	$.ajax({
-		type:'get',
-		url:'memdel.ajax',
-		data:{'delList':checkArr},
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			if(data.success){
-				alert(data.msg);
-				memlist();
-			}
-		},
-		error:function(e){
-			console.log(e);
-		}		
-	});
-	
-}
 
 function openModal(mem_no) {
 	
@@ -279,6 +324,7 @@ function openModal(mem_no) {
 	
     $('#event-modal').modal('show');
 }
+
 
 function ptmeminfoDraw(ptmeminfo){
 
@@ -308,8 +354,11 @@ function ptmeminfoDraw(ptmeminfo){
 	$('#pt_count').append(ptmeminfo.count);
 }
 
+
 $(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
     $('#event-modal').modal('hide');
   });
+
+
 </script>
 </html>

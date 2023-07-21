@@ -24,7 +24,7 @@
    </select>
    
    <select id="pdetail" resultType="kr.co.gf.board.dto.NoticeDTO">
-   	SELECT *FROM wphoto WHERE board_num=#{n_idx} AND c_idx=5
+   	SELECT *FROM wphoto WHERE board_num=#{n_idx} AND c_idx=3
    </select>
    
    <update id="hit">

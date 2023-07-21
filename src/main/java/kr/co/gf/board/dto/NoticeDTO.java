@@ -10,7 +10,7 @@ public class NoticeDTO {
 	private String title;
 	private String content;
 	private Date reg_date;
-	private String hit;
+	private int hit;
 	private String fix;
 	
 	private int c_idx;
@@ -91,11 +91,11 @@ public class NoticeDTO {
 		this.reg_date = reg_date;
 	}
 
-	public String getHit() {
+	public int getHit() {
 		return hit;
 	}
 
-	public void setHit(String hit) {
+	public void setHit(int hit) {
 		this.hit = hit;
 	}
 

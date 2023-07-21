@@ -190,14 +190,16 @@
 										class="fas fa-user nav-icon"></i>
 										<p>전체 회원</p>
 								</a></li>
-								<li class="nav-item item-sub"><a href="ptmemlist.go" class="nav-link"> <i
-										class="fas fa-running nav-icon"></i>
-										<p>PT 회원</p>
-								</a></li>
-								<li class="nav-item item-sub"><a href="dailyptt" class="nav-link"> <i
-										class="fas fa-edit nav-icon"></i>
-										<p>PT 회원일지</p>
-								</a></li>
+								<c:if test="${sessionScope.loginEmp.position == '트레이너'}">
+									<li class="nav-item item-sub"><a href="ptmemlist.go" class="nav-link"> <i
+											class="fas fa-running nav-icon"></i>
+											<p>PT 회원</p>
+									</a></li>
+									<li class="nav-item item-sub"><a href="dailyptt" class="nav-link"> <i
+											class="fas fa-edit nav-icon"></i>
+											<p>PT 회원일지</p>
+									</a></li>
+								</c:if>
 								<li class="nav-item item-sub"><a href="entermemlist.go" class="nav-link"> <i
 										class="fas fa-edit nav-icon"></i>
 										<p>입장한 회원 리스트</p>

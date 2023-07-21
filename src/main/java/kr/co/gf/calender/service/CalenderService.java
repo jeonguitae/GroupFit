@@ -1,6 +1,6 @@
 package kr.co.gf.calender.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +70,13 @@ public class CalenderService {
 	public ArrayList<CalenderDTO> selectedBranch(String b_idx, String branch) {
 		
 		return dao.selectedBranch(b_idx, branch);
+	}
+
+
+
+	public ArrayList<CalenderDTO> traincalender(LocalDate currentDate) {
+		
+		return dao.traincalender(currentDate);
 	}
 
 		
