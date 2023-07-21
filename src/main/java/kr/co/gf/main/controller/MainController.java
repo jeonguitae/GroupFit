@@ -39,13 +39,15 @@ public class MainController {
 		if (session.getAttribute("loginId") != null && !session.getAttribute("loginId").equals("")) {
 			EmpDTO empDTO = (EmpDTO) session.getAttribute("loginEmp");
 			String position = empDTO.getPosition();
+			
 			if(position.equals("FC")) {
 				mav.setViewName("fcMain");
 			}else if(position.equals("대표")) {
 				ArrayList<StatisDTO> list = sService.branchList();
 				mav.addObject("branchList",list);
 				mav.setViewName("leaderMain");
-				
+			}else if(position.equals("지점장")) {
+				mav.setViewName("branchManagerMain");
 			}else {
 				
 				mav.setViewName("main");
