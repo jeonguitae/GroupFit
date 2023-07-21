@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,35 +72,44 @@ tfoot td {
 			<!--/. container-fluid -->
 		
 		<table>
+		
 		    <c:choose>
 		       <c:when test="${empty calendarlist}">
+		       
 		         <tr>
 		           <td colspan="2">오늘 일정이 없습니다.</td>
 		         </tr>
+		         
 		       </c:when>
+		       
 		       <c:otherwise>
-		         <c:forEach var="calendarlist" items="${calendarlist}">
-		           <tr>
-		             <th>회원이름</th>
-		             <td>
-		               <input type="text" name="event_name" value="${calendarlist.event_name}" readonly="readonly"/>
-		             </td>
-		           </tr>
-		           <tr>
-		             <th>시작시간</th>
-		             <td>
-		               <input type="text" name="start_time" value="${calendarlist.start_time}" readonly="readonly"/>
-		             </td>
-		           </tr>
-		           <tr>
-		             <th>종료시간</th>
-		             <td>
-		               <input type="text" name="end_time" value="${calendarlist.end_time}" readonly="readonly"/>
-		             </td>
-		           </tr>
-		         </c:forEach>
+		       
+
+		         
+		          <c:forEach var="calendarlist" items="${calendarlist}">
+					<div class="form-group">
+						     
+					<div class="row">
+						<div class="col-4">
+						<label for="event_name">회원이름</label>
+						<input type="text" name="event_name" class="form-control" value="${calendarlist.event_name}" readonly>
+					</div>
+					<div class="col-4">
+						<label for="start_time">시작시간</label>
+						<input type="text" name="start_time" class="form-control" value="${fn:substring(calendarlist.start_time, 11, 16)}" readonly>
+					</div>
+					<div class="col-4">
+						<label for="end_time">종료시간</label>
+						<input type="text" name="end_time" class="form-control" value="${fn:substring(calendarlist.end_time, 11, 16)}" readonly>
+					</div>
+					</div>
+					</div>
+								     
+					</c:forEach>
 		       </c:otherwise>
+		       
 		     </c:choose>
+		     
    		</table>
    		<table>
    			<thead class="table-light">
