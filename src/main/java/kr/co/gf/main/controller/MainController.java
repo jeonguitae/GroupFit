@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+
+import kr.co.gf.approval.service.ApprovalService;
+
 import kr.co.gf.calender.dto.CalenderDTO;
 import kr.co.gf.calender.service.CalenderService;
+
 import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.statistics.dto.StatisDTO;
 import kr.co.gf.statistics.service.StatisService;
@@ -25,6 +29,7 @@ import kr.co.gf.statistics.service.StatisService;
 @RestController
 public class MainController {
 	@Autowired StatisService sService;
+	@Autowired ApprovalService aService;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired CalenderService calservice;
@@ -50,6 +55,8 @@ public class MainController {
 			}else if(position.equals("대표")) {
 				ArrayList<StatisDTO> list = sService.branchList();
 				mav.addObject("branchList",list);
+				ArrayList<StatisDTO> StayList = aService.StayList();
+				mav.addObject("StayList",StayList);
 				mav.setViewName("leaderMain");
 				
 			}else if(position.equals("트레이너")) {
