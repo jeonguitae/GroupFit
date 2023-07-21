@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,10 +77,12 @@ public class CommuteController {
 			int row2=cservice.comedo(emp_no, b_idx);
 			logger.info("12331 : " + emp_no + b_idx);
 			logger.info("3번 로거 출근처리했으면 row2는"+row2);
+			model.addAttribute("msg","출근처리 되었습니다.");
+
 		}else {
 			model.addAttribute("msg","이미 출근처리 되었습니다.");
 		}
-		String page = "main";
+		String page = "redirect:/main";
 		return page;
 	}
 	
@@ -164,6 +166,7 @@ public class CommuteController {
 		String emp_no = eDto.getEmp_no();
 		
 		ArrayList<CommuteDTO> working = cservice.list(emp_no);
+		logger.info("wlist왜 안 뜸?"+working);
 		model.addAttribute("working",working);
 		model.addAttribute("emp_no",emp_no);
 		
@@ -225,6 +228,8 @@ public class CommuteController {
 		CommuteDTO working = cservice.rdetail(r_idx, b_idx);
 		/* working=cservice.rdetail(r_idx, b_idx); */
 		model.addAttribute("r_idx",r_idx);
+		String emp_no=working.getEmp_no();
+		model.addAttribute("emp_no는"+emp_no);
 		model.addAttribute("working",working);
 		return "cf_detail";
 	}
@@ -248,14 +253,34 @@ public class CommuteController {
 	}
 	
 	@RequestMapping(value="/rconfirm.do")
-	public String rconfirm(@RequestParam HashMap<String, String> params) {
-		logger.info("rconfirm icin r_idx"+params);
+	public String rconfirm(@RequestParam HashMap<String, String> params, Model model) {
+		
 		String flag=params.get("status");
+		String com_category=params.get("com_category");
+		String r_date=params.get("r_date");
+		String r_time=params.get("r_time");
+		String r_idx=params.get("r_idx");
+		String opinion=params.get("opinion");
+		String emp_no=params.get("emp_no");
+
 		if (flag.equals("승인")) {
 			logger.info("승인 떠야 함");
+			String words="승인";
+			int row=cservice.upStatus(r_idx, words ,opinion);
+			if (com_category.equals("출근")) {
+				int row2=cservice.upWorking(r_time, r_date, emp_no);
+			}else {//퇴근
+				int row3=cservice.upOuttime(r_time, r_date, emp_no);
+			}
 		}
-		else {}
-		return null;
+		else {//반려
+			String words="반려";
+			int row4=cservice.upStatus(r_idx, words ,opinion);
+		}
+		String msg="제출이 완료되었습니다.";
+		model.addAttribute("msg",msg);
+		String page = "redirect:/rlist.go";
+		return page;
 	}
 	
 	
@@ -274,5 +299,32 @@ public class CommuteController {
 		return map;
 		
 	}
+
+	@RequestMapping(value="/confirmlist.do")
+	public String confirmlist(Model model) {
+		ArrayList<CommuteDTO> working=cservice.confirmlist();
+		model.addAttribute("working",working);
+		return "confirm_list";
+	}
+	@RequestMapping(value="/cdetail.do")
+	public String cdetail(String r_idx, HttpSession session, Model model) {
+		EmpDTO eDto = (EmpDTO) session.getAttribute("loginEmp");
+		String b_idx = eDto.getB_idx();
+		
+		CommuteDTO working = cservice.rdetail(r_idx, b_idx);
+		
+		model.addAttribute("working", working);
+		return "confirm_detail";	
+	}
+	
+	@RequestMapping(value="/myclist.go")
+	public String myclistgo(@RequestParam String emp_no, Model model) {
+		logger.info("변경 요청 내역 가기 icin emp_no"+emp_no);
+		ArrayList<CommuteDTO> working=cservice.confirmlist();
+		model.addAttribute("working",working);
+		model.addAttribute("emp_no", emp_no);	
+		return "my_req_list";		
+	}
+	
 
 }

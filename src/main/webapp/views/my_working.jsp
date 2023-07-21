@@ -44,7 +44,8 @@
          <div class="container-fluid">
             <h1 class="forcenter">나의 근태관리</h1>
                <div class="togo">
-                  <button onclick="location.href='cwrite.go'">변경 요청서 작성</button>
+               <a href="cwrite.go" id="detail">변경 요청 신청</a>
+               <a href="myclist.go?emp_no=${emp_no}">변경 요청 내역</a>
                </div> 
                <button style="margin-left:36%" id="prevMonth" onclick="monthChange(-1)"><</button>
 				  <span id="formattedDate"></span>
@@ -60,12 +61,11 @@
         </colgroup>
         <thead>
             <tr>
-                <th>사내번호</th>
-                <th>날짜</th>
-                <th>출근 시간</th>
-                <th>퇴근 시간</th>
-                <th>근무 시간</th>
-                <th>출결 상태</th>
+                <th style="text-align: center;">날짜</th>
+                <th style="text-align: center;">출근 시간</th>
+                <th style="text-align: center;">퇴근 시간</th>
+                <th style="text-align: center;">근무 시간</th>
+                <th style="text-align: center;">출결 상태</th>
             </tr>
         </thead>        
         <tbody id="list">
@@ -82,7 +82,6 @@
             <c:forEach items="${working}" var="working">
                 <c:if test="${not empty sessionScope.loginId}">
                     <tr>
-                        <td style="text-align: center;">${working.emp_no}</td> 
                         <td style="text-align: center;">${working.work_date}</td>
                         <td style="text-align: center;">${working.come_time}</td>
                         <!--<td style="text-align: center;"><a href="ndetail.do?n_idx=${bbs.n_idx}&flag='detail'" id="detail">${bbs.title}</a></td>  -->
@@ -94,6 +93,7 @@
             </c:forEach>
         </tbody>
        </table>
+      <input type="hidden" name="emp_no" value="${working.emp_no}"/>
          </div>
          <!--/. container-fluid -->
       </section>
