@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>출퇴근 변경 요청 리스트</title>
+<title>센터 근태 관리</title>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link
@@ -42,49 +42,49 @@
 <!-- Main content -->
       <section class="content">
          <div class="container-fluid">
-            <h1 class="forcenter">출퇴근 변경 요청 리스트</h1>
+            <h1 class="forcenter">센터 근태관리</h1>
                <div class="togo">
-                  <button onclick="location.href='confirmlist.do'">출퇴근 변경 처리 내역</button>
+                  <button onclick="location.href='rlist.go'">출퇴근 변경 요청 리스트</button>
+                  <button onclick="location.href='center_commute.go'">직원 출퇴근 내역</button>
+                  
                </div> 
     <table class="table second">
         <colgroup>
-            <col width="25%"/>
-            <col width="35%"/>
-            <col width="10%"/>
-            <col width="10%"/>
-            <col width="10%"/>
-            <col width="10%"/>
+            <col width="30%"/>
+            <col width="14%"/>
+            <col width="14%"/>
+            <col width="14%"/>
+            <col width="14%"/>
         </colgroup>
         <thead>
             <tr>
-                <th style="text-align: center;">요청일</th>
-                <th style="text-align: center;">제목</th>
-                <th style="text-align: center;">이름</th>
-                <th style="text-align: center;">직위</th>
-                <th style="text-align: center;">수정 요청 사항</th>
-                <th style="text-align: center;">상태</th>
+                <th>요청일</th>
+                <th>이름</th>
+                <th>직위</th>
+                <th>수정 요청 사항</th>
+                <th>처리 상태</th>
             </tr>
         </thead>        
         <tbody>
             <c:if test="${working eq null}">
                 <tr>
-                    <th id="forblack" style="text-align:center;" colspan="6">근태내역이 없습니다.</th>
+                    <th id="forblack" style="text-align:center;" colspan="6">처리내역이 없습니다.</th>
                 </tr>
             </c:if>
             <c:if test="${working.size() == 0}">
                <tr>
-               <th colspan="6">요청내역이 없습니다.</th>
+               <th colspan="6">처리 내역이 없습니다.</th>
                </tr>
             </c:if>
-            <c:forEach items="${working}" var="dto">
+            <c:forEach items="${working}" var="working">
                 <c:if test="${not empty sessionScope.loginId}">
                     <tr>
-                        <td style="text-align: center;">${dto.reg_date}</td> 
-                        <td style="text-align: center;"><a href="rdetail.do?r_idx=${dto.r_idx}" id="detail">${dto.title}</a></td>         
-                        <td style="text-align: center;">${dto.name}</td>
-                        <td style="text-align: center;">${dto.position}</td>      
-                        <td style="text-align: center;">${dto.com_category}</td>                                        
-                        <td style="text-align: center;">${dto.status}</td>
+                        <td style="text-align: center;">${working.reg_date}</td> 
+                        <td style="text-align: center;"><a href="cdetail.do?r_idx=${working.r_idx}" id="detail">${working.name}</a></td>
+                        <td style="text-align: center;">${working.position}</td>
+                        <!--<td style="text-align: center;"><a href="ndetail.do?n_idx=${bbs.n_idx}&flag='detail'" id="detail">${bbs.title}</a></td>  -->
+                        <td style="text-align: center;">${working.com_category}</td>
+                        <td style="text-align: center;">${working.status}</td>
                     </tr>
                 </c:if>         
             </c:forEach>
@@ -95,13 +95,4 @@
       </section>
    </div>
 </body>
-<script type="text/javascript">
-
-var msg = "${msg}";
-if(msg != ""){
-	alert(msg);
-}
-
-	
-</script>
 </html>

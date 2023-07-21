@@ -364,5 +364,22 @@ public class CommuteService {
 	public CommuteDTO rdetail(String r_idx, String b_idx) {
 		return cdao.rdetail(r_idx, b_idx);
 	}
+
+	public int upStatus(String r_idx, String words, String opinion) {
+		return cdao.upStatus(r_idx, words , opinion);
+		
+	}
+
+	public int upWorking(String r_time, String r_date, String emp_no) {
+		return cdao.upWorking(r_time, r_date, emp_no);
+	}
+
+	public int upOuttime(String r_time, String r_date, String emp_no) {
+		return cdao.upOuttime(r_time, r_date, emp_no);
+	}
+
+	public ArrayList<CommuteDTO> confirmlist() {
+		return cdao.confirmlist();
+	}
 }
 

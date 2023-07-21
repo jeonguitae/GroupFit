@@ -41,6 +41,14 @@ public interface CommuteDAO {
 
 	CommuteDTO rdetail(String r_idx, String b_idx);
 
+	int upStatus(String r_idx, String words, String opinion);
+
+	int upWorking(String r_time, String r_date, String emp_no);
+
+	int upOuttime(String r_time, String r_date, String emp_no);
+
+	ArrayList<CommuteDTO> confirmlist();
+
 	//CommuteDTO selectAll(String emp_no, LocalDate previousDay);
 
 }
