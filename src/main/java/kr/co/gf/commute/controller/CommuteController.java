@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,10 +77,12 @@ public class CommuteController {
 			int row2=cservice.comedo(emp_no, b_idx);
 			logger.info("12331 : " + emp_no + b_idx);
 			logger.info("3번 로거 출근처리했으면 row2는"+row2);
+			model.addAttribute("msg","출근처리 되었습니다.");
+
 		}else {
 			model.addAttribute("msg","이미 출근처리 되었습니다.");
 		}
-		String page = "main";
+		String page = "redirect:/main";
 		return page;
 	}
 	
@@ -165,6 +166,7 @@ public class CommuteController {
 		String emp_no = eDto.getEmp_no();
 		
 		ArrayList<CommuteDTO> working = cservice.list(emp_no);
+		logger.info("wlist왜 안 뜸?"+working);
 		model.addAttribute("working",working);
 		model.addAttribute("emp_no",emp_no);
 		
@@ -301,7 +303,17 @@ public class CommuteController {
 		CommuteDTO working = cservice.rdetail(r_idx, b_idx);
 		
 		model.addAttribute("working", working);
-		return "confirm_detail";
-		
+		return "confirm_detail";	
 	}
+	
+	@RequestMapping(value="/myclist.go")
+	public String myclistgo(@RequestParam String emp_no, Model model) {
+		logger.info("변경 요청 내역 가기 icin emp_no"+emp_no);
+		ArrayList<CommuteDTO> working=cservice.confirmlist();
+		model.addAttribute("working",working);
+		model.addAttribute("emp_no", emp_no);	
+		return "my_req_list";		
+	}
+	
+
 }

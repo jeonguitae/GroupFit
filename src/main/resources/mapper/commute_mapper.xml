@@ -4,13 +4,13 @@
    <mapper namespace="kr.co.gf.commute.dao.CommuteDAO">
    
    <select id="list" resultType="kr.co.gf.commute.dto.CommuteDTO">
-   	SELECT *FROM working WHERE emp_no=#{emp_no}
+   	SELECT * FROM working WHERE emp_no=#{emp_no}
    </select>
    
 <!--    <select id="selectAll" resultType="kr.co.gf.commute.dto.CommuteDTO">
    	SELECT come_time, out_time FROM working WHERE emp_no=#{emp_no} AND work_date=#{previousDay}
    </select> -->
-   
+             
    <select id="count" resultType="int">
    	SELECT count(come_time) FROM working WHERE emp_no=#{emp_no} AND work_date=#{now}
    </select>
