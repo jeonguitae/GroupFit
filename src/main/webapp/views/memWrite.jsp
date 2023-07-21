@@ -134,10 +134,8 @@
 								    </select>
 								  </div>
 								</div>
+							</div>
 							
-							
-							
-			        </div>
 		         	<button class="btn btn-primary" onclick="memjoin()">등록</button>
 					<input type="button" class="btn btn-primary" onclick="location.href='/memlist.go'" value="이전"/>
 	
