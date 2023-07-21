@@ -18,22 +18,34 @@
 	href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
+<style>
+.filebox input[type="file"] {
+	background-color: #367c36;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+</style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
-
 	<div class="content-wrapper" style="margin-top: 57.08px">
 		<h3>직원 프로필 수정하기</h3>
 		<form action="empUpdate.do" method="post" enctype="multipart/form-data" onsubmit="return test()">
 			<table class="table table-dark table-striped">
+				<div class="filebox">
 				<tr>
 					<c:if test="${emp.new_photo_name ne null}">
 						<img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
 					</c:if>
 					<input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
 					<img id="preview" style="max-width: 200px; max-height: 200px;">
-					<img src="img/GroupFit_lg_2.png" alt="그룹핏"
-						width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
 				</tr>
+				</div>
 				<tr>
 					<th>*사내번호</th>
 					<td><input type="text" name="emp_no" value="${emp.emp_no}" readonly /></td>
@@ -111,9 +123,9 @@
 					<th>퇴사일자</th>
 					<td><input type="date" id="retire_year" name="retire_year"/></td>
 				</tr>
-				<input type="submit" value="수정" />
-				<button type="button" onclick="location.href='./empList.go'">목록</button>	
-				<button type="button" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
+				<input type="submit" class="btn btn-primary" value="수정" />
+				<button type="button" class="btn btn-danger" onclick="location.href='./empList.go'">목록</button>	
+				<button type="button" class="btn btn-secondary" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
 			</table>
 		</form>
 	</div>

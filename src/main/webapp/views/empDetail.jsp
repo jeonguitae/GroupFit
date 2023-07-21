@@ -97,8 +97,8 @@
 				</c:if>
 				<br>
 				<button type="button" class="btn btn-primary" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">수정</button>
-				<button type="button" class="btn btn-primary" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
-				<button type="button" class="btn btn-primary" onclick="location.href='./empList.go'">목록</button>	
+				<button type="button" class="btn btn-danger" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
+				<button type="button" class="btn btn-secondary" onclick="location.href='./empList.go'">목록</button>	
 			</table>
 		</div>
 </body>
