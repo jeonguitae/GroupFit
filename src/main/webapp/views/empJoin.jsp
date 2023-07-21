@@ -90,7 +90,7 @@ th{
 						<td>
 							<select name="b_idx" id="b_idx">
 							    <option value="1">서초</option>
-							    <option value="2">방배</option>
+							    <option value="2">강남</option>
 							    <option value="3">역삼</option>
 							    <option value="4">논현</option>
 							</select>			
