@@ -94,7 +94,6 @@ function updateFormattedDate() {
 		dataType:'json',
 		success:function(data){
 			console.log(data);
-			myChart.destroy();
 			chartPrint(data.entryList);
 		},
 		error:function(e){
