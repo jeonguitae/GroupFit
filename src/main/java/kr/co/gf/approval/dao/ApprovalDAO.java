@@ -3,6 +3,7 @@ package kr.co.gf.approval.dao;
 import java.util.ArrayList;
 
 import kr.co.gf.approval.dto.ApprovalDTO;
+import kr.co.gf.statistics.dto.StatisDTO;
 
 public interface ApprovalDAO {
 
@@ -55,6 +56,8 @@ public interface ApprovalDAO {
 	int eventUpdateUp(ApprovalDTO dto);
 
 	void eventUpdateDown(ApprovalDTO dto);
+
+	ArrayList<StatisDTO> StayList();
 
 	
 

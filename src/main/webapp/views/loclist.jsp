@@ -154,6 +154,69 @@
 				      </div>
 				   </div>
 				</div>
+				
+				<div class="modal fade" id="event-modal3" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
+				    <div class="modal-dialog" role="document">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          	<h5 class="modal-title" id="event-modal-label">기구 사진 등록</h5>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				            <span aria-hidden="true">&times;</span>
+				          </button>
+				        </div>
+				        
+				        <div class="modal-body">
+				          <form action="event-form">
+				          	<div class="form-group">
+				              <label for="event-name">회원 번호</label>
+				              <div id="mem_no">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="event-name">회원 이름</label>
+				              <div id="mem_name">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">판매자</label>
+				              <div id="emp_no">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">성별</label>
+				              <div id="gender">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">생년월일</label>
+				              <div id="birth">
+				              	
+				              </div>
+				            </div>
+				            
+				            <div class="form-group">
+				              <label for="start-datetime">등록기간</label>
+				              <div id="duration">
+				              	
+				              </div>
+				            </div>
+				            
+					        <div class="modal-footer">
+					          <input type="button" id="close" class="btn btn-secondary" data-dismiss="modal" value="돌아가기"/>
+					        </div>
+				          </form>
+				        </div>
+				      </div>
+				   </div>
+				</div>
 			</div>
 			<!--/. container-fluid -->
 		</section>
@@ -202,7 +265,7 @@ function loclistDraw(loclist){
 						+ item.loc_no + '<hr/>' 
 						+ '<span id="'+item.loc_num+'">'+item.status +'</span><br/>' 
 						+ name 
-						+ '<a href="memdetail.go?mem_no=' + item.mem_no + '">' + mem_no
+						+ '<a onclick="openModal3('+mem_no+')">'+mem_no+'</a>';
 						+ '</div>';
 				console.log(index);
 			if(index >= 0 && index <= 4){
@@ -258,6 +321,10 @@ function openModal2() {
     $('#event-modal2').modal('show');
   }
   
+function openModal3() {
+    $('#event-modal3').modal('show');
+  }
+  
 $(document).on('click', '#save-event-btn', function() {
     // 데이터 추출
     var loc_no = $('#loc_no').val();
@@ -284,6 +351,10 @@ $(document).on('click', '#save-event-btn', function() {
   
 $(document).on('click', '#event-modal .close, #event-modal .modal-footer .btn-secondary', function() {
     $('#event-modal').modal('hide');
+  });
+  
+$(document).on('click', '#event-modal3 .close, #event-modal3 .modal-footer .btn-secondary', function() {
+    $('#event-modal3').modal('hide');
   });
   
 $(document).on('click', '#save-event-btn2', function() {
@@ -314,5 +385,49 @@ $(document).on('click', '#event-modal2 .close, #event-modal2 .modal-footer .btn-
     $('#event-modal2').modal('hide');
   });
 
+
+function openModal3(mem_no) {
+	
+	$.ajax({
+	      type: 'get',
+	      url: 'mem_info.ajax',
+	      data: {
+	    	  'mem_no' : mem_no
+	      },
+	      success: function(data) {
+	    	meminfoDraw(data.dto);
+	      },
+	      error: function(e) {
+	        console.log(e);
+	      }
+	 });
+	
+    $('#event-modal3').modal('show');
+}
+
+function meminfoDraw(meminfo){
+
+	var duration = '';
+	
+	duration = '<div>'+ meminfo.start_date +  ' ~ ' + meminfo.end_date +'</div>'
+	
+	$('#mem_no').empty();
+	$('#mem_no').append(meminfo.mem_no);
+	
+	$('#mem_name').empty();
+	$('#mem_name').append(meminfo.name);
+	
+	$('#emp_no').empty();
+	$('#emp_no').append(meminfo.emp_no);
+	
+	$('#gender').empty();
+	$('#gender').append(meminfo.gender);
+	
+	$('#birth').empty();
+	$('#birth').append(meminfo.birth);
+	
+	$('#duration').empty();
+	$('#duration').append(duration);
+}
 </script>
 </html>

@@ -79,8 +79,6 @@
 	
 
 
-
-
 .submit-button button {
 	display: flex;
     margin: 0 auto;
@@ -286,6 +284,13 @@
                         <textarea id="etc" name="etc" class="remarks"></textarea>
                     </div>
                      -->
+                     
+                      <div class="form-group">
+                     <div class="mb-3">
+					  <label for="formGroupExampleInput" class="form-label">특이 사항</label>
+					  <textarea id="etc" name="etc" class="form-control" placeholder="특이 사항을 입력해 주세요"></textarea>
+					</div>
+					</div>
                     
                     
 

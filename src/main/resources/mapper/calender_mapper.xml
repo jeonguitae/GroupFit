@@ -46,8 +46,10 @@
     <select id="CalendarBranchList" resultType="kr.co.gf.calender.dto.CalenderDTO">
          	SELECT * FROM branch;
     </select>
+    
+    <select id="traincalender" resultType="kr.co.gf.calender.dto.CalenderDTO">
+         	select event_name, start_time, end_time from calendar where DATE_FORMAT(start_time,'%Y-%m-%d')=#{param1}
+    </select> 
 	
-	
-   
-   
+
    </mapper>

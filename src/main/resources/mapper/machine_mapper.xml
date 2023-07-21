@@ -54,8 +54,7 @@
 			SELECT DISTINCT m.mac_name, mc.mac_status
 			FROM machine m
 			JOIN mac_chk mc ON m.mac_num = mc.mac_num
-			JOIN fixlist f ON f.mac_num = m.mac_num
-			WHERE m.b_idx = #{param1} AND mc.mac_status = '수리필요' AND f.fixed_date = #{param2}
+			WHERE m.b_idx = #{param1} AND mc.mac_status = '수리필요' AND mc.chk_date = #{param2}
 		</select>
 		
 		<insert id="mac_fixed" parameterType="String">

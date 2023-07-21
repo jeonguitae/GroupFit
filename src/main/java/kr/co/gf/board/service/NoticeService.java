@@ -67,7 +67,7 @@ public class NoticeService {
 			
 			NoticeDTO dto = new NoticeDTO();
 			String c_Content=dto.setC_Content("공지사항");
-			int c_idx=dto.setC_idx(5);
+			int c_idx=dto.setC_idx(3);
 			logger.info("가져온 공지사항 번호는 "+c_idx);
 		
 			String oriName= photo.getOriginalFilename(); 
