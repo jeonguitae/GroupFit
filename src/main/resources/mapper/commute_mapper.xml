@@ -4,13 +4,13 @@
    <mapper namespace="kr.co.gf.commute.dao.CommuteDAO">
    
    <select id="list" resultType="kr.co.gf.commute.dto.CommuteDTO">
-   	SELECT *FROM working WHERE emp_no=#{emp_no}
+   	SELECT * FROM working WHERE emp_no=#{emp_no}
    </select>
    
 <!--    <select id="selectAll" resultType="kr.co.gf.commute.dto.CommuteDTO">
    	SELECT come_time, out_time FROM working WHERE emp_no=#{emp_no} AND work_date=#{previousDay}
    </select> -->
-   
+             
    <select id="count" resultType="int">
    	SELECT count(come_time) FROM working WHERE emp_no=#{emp_no} AND work_date=#{now}
    </select>
@@ -66,12 +66,11 @@
 	FROM cRequest c 
 	JOIN working w ON c.r_date = w.work_date AND w.emp_no = c.emp_no
 	join emp e on e.emp_no = w.emp_no
-	WHERE c.status = '대기' AND e.b_idx = #{param1}; 
+	WHERE c.status = '대기' AND e.b_idx = #{param1} ORDER BY r_idx DESC
    	</select>
    
    	<select id="rdetail" resultType="commute" parameterType="String">
-   	select c.reg_date, c.com_category, c.r_date, c.r_time, c.comment, c.emp_no
-	, w.come_time, w.out_time, w.w_type
+   	select c.*, w.come_time, w.out_time, w.w_type
 	, e.name, e.`position` 
 	from crequest c  
 	join working w on c.emp_no = w.emp_no and c.r_date = w.work_date 
@@ -79,7 +78,25 @@
 	where e.b_idx = #{b_idx}  and c.r_idx = #{r_idx};
    	</select>
    	
-
+   	<update id="upStatus">
+   	UPDATE cRequest SET status=#{param2}, opinion=#{param3} WHERE r_idx=#{param1}
+   	</update>
+   	
+   	<update id="upWorking">
+   	UPDATE working SET come_time=#{param1} WHERE work_date=#{r_date} AND emp_no=#{emp_no}
+   	</update>
+   	
+   	<update id="upOuttime">
+   	UPDATE working SET out_time=#{param1} WHERE work_date=#{r_date} AND emp_no=#{emp_no}
+   	</update>
+   	
+   	<select id="confirmlist">
+   	SELECT c.r_idx, c.reg_date, c.com_category, c.status, e.name, e.position FROM cRequest c 
+   	JOIN emp e
+   	on c.emp_no = e.emp_no
+   	WHERE c.status='승인' or c.status='반려' ORDER BY r_idx DESC
+   	</select>
+   	
    	<select id="workingList" parameterType="hashmap" resultType="commute">
    		SELECT emp_no,b_idx,come_time,out_time,work_date,w_type,SEC_TO_TIME(TIME_TO_SEC(out_time) - TIME_TO_SEC(come_time)) AS time_difference FROM working WHERE emp_no=#{emp_no} AND DATE_FORMAT(work_date, '%Y-%m') =#{year}
    	</select>

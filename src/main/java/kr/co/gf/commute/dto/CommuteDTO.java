@@ -26,8 +26,16 @@ public class CommuteDTO {
 	private String com_category;
 	private String name;
 	private String position;
+	private String opinion;
 	private String time_difference;
 	
+	
+	public String getOpinion() {
+		return opinion;
+	}
+	public void setOpinion(String opinion) {
+		this.opinion = opinion;
+	}
 	
 	public String getTime_difference() {
 		return time_difference;

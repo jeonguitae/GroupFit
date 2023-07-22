@@ -79,6 +79,7 @@
             <%-- </c:forEach> --%>
         </tbody>
        </table>
+       <h2>출퇴근 변경 처리서</h2>
        				<table id="table2">
 					<tr>
 						<th>제목</th>
@@ -97,9 +98,8 @@
 						<th>변경 요청 사유</th>
 						<td style="text-align: center;">${working.comment}</td> 		
 					</tr>
-				</table>
-				<form action="/rconfirm.do" method="post">				
-				<input type="hidden" name="r_idx" value="${r_idx}">
+				</table>			
+				<input type="hidden" name="r_idx" value="${working.r_idx}">
 				<input type="hidden" name="com_category" value="${working.com_category}">
 				<input type="hidden" name="r_date" value="${working.r_date}">				
 				<input type="hidden" name="r_time" value="${working.r_time}">
@@ -109,23 +109,22 @@
 				<table id="table3">
 					<tr>
 						<th>처리</th>
-						<td><input type="radio" name="status" value="승인" />승인</td>
-						<td><input type="radio" name="status" value="반려" />반려</td>
+						<td style="text-align: center;">${working.status}</td>						
 					<tr>
 						<th>처리인</th>
 						<td>지점장</td>
 					</tr>
 					<tr>
 						<th>의견</th>
-						<td><textarea id="sa" name="opinion" class="reason" required></textarea></td>
+						<td style="text-align: center;">${working.opinion}</td>						
 					</tr>
 				</table>
 				
 				<div id="button_sin_mok">
-					<input type="button" onclick="location.href='/rlist.go'" value="이전"/>
+					<input type="button" onclick="location.href='/confirmlist.do'" value="이전"/>
 					<input type="submit"/>
 				</div>
-				</form>
+				
          </div>
          <!--/. container-fluid -->
       </section>
