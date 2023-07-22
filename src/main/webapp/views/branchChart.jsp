@@ -37,7 +37,7 @@
 		<!-- Main content -->
 		<h3 style="margin-left:70%">${branchName}점</h3>
 		<section class="content">
-			  <button style="margin-left:36%" onclick="yearChange(-1)"><</button>
+			  <button style="margin-left:36%" onclick="yearChange(-1)"></button>
 			  <span id="year">2023</span>
 			  <button id="nextYear" onclick="yearChange(1)" disabled>></button>
 			  

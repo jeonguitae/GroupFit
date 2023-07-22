@@ -50,6 +50,7 @@ public class MainController {
 		if (session.getAttribute("loginId") != null && !session.getAttribute("loginId").equals("")) {
 			EmpDTO empDTO = (EmpDTO) session.getAttribute("loginEmp");
 			String position = empDTO.getPosition();
+			
 			if(position.equals("FC")) {
 				mav.setViewName("fcMain");
 			}else if(position.equals("대표")) {
@@ -58,6 +59,8 @@ public class MainController {
 				ArrayList<StatisDTO> StayList = aService.StayList();
 				mav.addObject("StayList",StayList);
 				mav.setViewName("leaderMain");
+			}else if(position.equals("지점장")) {
+				mav.setViewName("branchManagerMain");
 				
 			}else if(position.equals("트레이너")) {
 				
@@ -66,8 +69,6 @@ public class MainController {
 				logger.info("오늘날짜 : "+currentDate);
 				ArrayList<CalenderDTO> list = calservice.traincalender(currentDate);
 				mav.addObject("calendarlist",list);
-				
-				
 			}else {
 				
 				mav.setViewName("main");
