@@ -17,7 +17,7 @@
 		  FROM annual
 		  WHERE YEAR(annual_date) = YEAR(CURDATE()) and annual_modifier = 2
 		  GROUP BY emp_no
-		) b ON e.emp_no = b.emp_no order by e.emp_no asc
+		) b ON e.emp_no = b.emp_no order by e.emp_no desc
 	</select>
 	
 	<select id="annualList2" resultType="annual">
@@ -41,7 +41,7 @@
 		<if test = "filter_work_year == 2">
 			where DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) >= 365
 		</if>
-		order by e.emp_no;
+		order by e.emp_no desc
 	</select>
 	
 	<select id="annualDetail" resultType="HashMap">

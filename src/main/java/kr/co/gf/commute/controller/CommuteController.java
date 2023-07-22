@@ -208,6 +208,17 @@ public class CommuteController {
 		return "requestList";	
 	}
 	
+	@RequestMapping(value="/rlist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> rlistAjax(HttpSession session) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		EmpDTO dto = (EmpDTO) session.getAttribute("loginEmp");
+		ArrayList<CommuteDTO> working = cservice.rlist(dto.getB_idx());
+		map.put("rlist",working);
+		return map;	
+	}
+	
 	@RequestMapping(value="/rdetail.do")
 	public String rdetail(@RequestParam String r_idx, Model model, HttpSession session) {
 		
