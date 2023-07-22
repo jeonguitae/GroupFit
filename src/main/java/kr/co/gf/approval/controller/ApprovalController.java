@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.jni.Mmap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -160,6 +162,19 @@ public class ApprovalController {
 				return service.approvalExpectedList(loginId);
 			}
 			return new ModelAndView("redirect:/" );
+		}
+		
+		@RequestMapping(value="/approvalExpectedList.ajax")
+		@ResponseBody
+		public HashMap<String, Object> approvalExpectedListAjax(HttpSession session) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			String loginId = (String)session.getAttribute("loginId");
+			String position = service.position(loginId);
+			if (loginId != null && !loginId.equals("") && position.equals("지점장") || position.equals("대표")) {
+				logger.info("ajax 결재 리스트 불러오기");
+				map.put("alist", service.approvalExpectedListAjax(loginId));
+			}
+			return map;
 		}
 	
 	// 임시저장 문서함
