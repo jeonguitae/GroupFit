@@ -76,16 +76,45 @@
 	
 
 
-
-.submit-button button {
+/* .submit-button button {
 	display: flex;
     margin: 0 auto;
+} */
+
+.submit-button button {
+    margin: 0 5px; /* 버튼 사이의 간격을 5px로 설정 */
 }
 
-.form-group .removeExerciseButton {
-    display: flex;
-    align-items: center;
-  }
+.removeExerciseButton {
+  display: flex;
+  align-items: center;
+ 
+  background-color: transparent; /* 배경색을 투명색으로 설정 */
+  color: white; /* 글자 색상을 흰색으로 설정 */
+  border: none; /* 버튼 테두리 제거 */
+  cursor: pointer; /* 커서 모양을 포인터로 변경하여 마우스 호버 효과를 나타냅니다. */
+}
+
+/* 버튼 컨테이너에 대한 스타일 */
+.removeExerciseButtonContainer {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+}
+
+/* /삭제 버튼 스타일 
+.removeExerciseButton {
+  margin-left: 10px;
+}
+ */
+ 
+/* 폼과 버튼을 감싸는 컨테이너에 대한 스타일 */
+.weight-exercise {
+  margin-bottom: 15px; /* 원래 폼과 버튼이 있는 폼의 간격을 조절합니다. */
+}
+
+
+
 
 </style>
 </head>
@@ -111,10 +140,12 @@
 					<div class="submit-button">
 				    <form id="dailyptForm" method="post">
 			
-				    
-					    <div style="justify-content: space-between; align-items: center;">
-					        <h3 style="margin: 0;">회원pt일지</h3>
-					        
+				    <div class="card card-primary">
+							<div class="card-header">
+								<h4 class="card-title">회원pt일지</h4>
+							</div>
+					</div>
+					   
 					        
 					        <div id="branchFilter">
 									  <select name="daily_pt" id="daily_pt" style = "margin-right : 30px" onchange="selectName()">
@@ -134,17 +165,7 @@
 							</div>
 							
 							
-							
-							
-					     
-					       <!--  <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
-					            <label for="date">날짜 : </label>
-					            <input type="date" id="date" name="date">
-					        </div> -->
-					        
-					        
-					    </div>
-					    
+
 				            <hr>
 					           
 				           <div class="form-group">
@@ -165,82 +186,45 @@
 							</div>
 				            
 				            
-				           
-				            <hr>
-				            
-				            <!-- 회원 정보 -->
-				            <!-- <div class="form-group">
-				            
-
-				                <label for="memberNumber">회원 번호 : </label>
-				                <input type="text" id="mem_no" name="mem_no">
-				                
-				                <label for="name">이름 : </label>
-				                <input type="text" id="name" name="name">
-				                
-				                <label for="weight">몸무게 : </label>
-				                <input type="number" id="af_weight" name="af_weight">
-				            </div> -->
-				
 				            <hr>
 				            
 				            
 				            <h5 >웨이트 운동</h5>
 				             <div id="weightExerciseContainer">
-							    <div class="form-group add-exercise-container" style="display: flex; justify-content: flex-end;">
-						           <button type="button" class="btn btn-light add-exercise-button" id="addWeightExercise">운동 추가</button>
-						        </div>
-						        
-					             <div class="form-group">
-							        <div class="row">
-							          <div class="col-4">
-							            <label for="weightExerciseName">운동명</label>
-							            <input type="text" id="pt_name" name="pt_name[]" class="form-control">
-							          </div>
-							          <div class="col-4">
-							            <label for="setCount">무게</label>
-							            <input type="number" id="pt_kg" name="pt_kg[]" class="form-control">
-							          </div>
-							          <div class="col-4">
-							            <label for="repCount">SET수</label>
-							            <input type="number" id="pt_set" name="pt_set[]" class="form-control">
-							          </div>
+							    <div class="form-group add-exercise-container">
+							        <div style="display: flex; justify-content: flex-end;">
+							            <button type="button" class="btn btn-light add-exercise-button" id="addWeightExercise">운동 추가</button>
+							            
 							        </div>
-							      </div>
+							    </div>
+						        
+					             <div class="form-group weight-exercise"> <!-- weight-exercise 클래스 추가 -->
+  <div class="form-group weight-exercise"> <!-- weight-exercise 클래스 추가 -->
+  <div class="row">
+    <div class="col-4">
+      <label for="pt_name">운동명</label>
+      <input type="text" name="pt_name[]" class="form-control">
+    </div>
+    <div class="col-4">
+      <label for="pt_kg">무게</label>
+      <input type="number" name="pt_kg[]" class="form-control">
+    </div>
+    <div class="col-4">
+      <label for="pt_set">SET 수</label>
+      <input type="number" name="pt_set[]" class="form-control">
+    </div>
+    <!-- 삭제 버튼이 없는 폼이므로 비어있는 div를 추가 -->
+    <div class="col-2"></div>
+  </div>
+</div>
+</div>
 							    </div>
   
-								
-				            
 
-
-				             <!-- <h5 >웨이트 운동</h5>
-						        <div id="weightExerciseContainer">
-							          <div class="form-group add-exercise-container">
-						                <button type="button" class="btn btn-primary add-exercise-button" id="addWeightExercise">운동 추가</button>
-						            </div>
-						            <div class="form-group">
-						                <label for="weightExerciseName">운동명 : </label>
-						                <input type="text" id="pt_name" name="pt_name[]">
-						                
-						                <label for="setCount">무게 : </label>
-						                <input type="number" id="pt_kg" name="pt_kg[]">
-						                
-						                <label for="repCount">SET수 : </label>
-						                <input type="number" id="pt_set" name="pt_set[]">
-						            </div>
-						
-						        </div> -->
 				
 				            <hr>
 				
-				           <!-- 유산소 운동 -->
-                    <!-- <h5>유산소 운동</h5>
-                    <br>
-                    <div class="form-group">
-                       
-                        <textarea id="aerobic" name="aerobic" class="aerobic-exercise"></textarea>
-                    </div> -->
-                    
+
                     <div class="form-group">
                     <div class="mb-3">
 					  <label for="formGroupExampleInput" class="form-label">유산소 운동</label>
@@ -251,13 +235,7 @@
 
                     <hr>
 
-                    <!-- 식단 일지 -->
-                    <!-- <h5>식단 일지</h5>
-                    <br>
-                    <div class="form-group">
-                        
-                        <textarea id="diet" name="diet" class="diet-journal"></textarea>
-                    </div> -->
+
                     
                     <div class="form-group">
                      <div class="mb-3">
@@ -268,13 +246,7 @@
 
                     <hr>
 
-                    <!-- 특이 사항 -->
-                   <!--  <h5>특이 사항</h5>
-                    <br>
-                    <div class="form-group">
-                        <textarea id="etc" name="etc" class="remarks"></textarea>
-                    </div>
-                     -->
+
                      
                       <div class="form-group">
                      <div class="mb-3">
@@ -284,7 +256,7 @@
 					</div>
                     
                     
-
+	
                     <hr>
                
 			          <div class="submit-button" style="display: flex; justify-content: space-between;">
@@ -293,8 +265,9 @@
 					    <button type="button" class="btn btn-primary" onclick="confirmAndNavigateToList()">리스트</button>
 					</div>
 	                
+	                
 										    
-					    <br>
+					
 				        </form>
 				        
 				      
@@ -317,30 +290,32 @@
 function addWeightExercise() {
   var container = document.getElementById('weightExerciseContainer');
   var newExercise = document.createElement('div');
-  newExercise.classList.add('form-group');
+  newExercise.classList.add('form-group', 'weight-exercise');
   newExercise.innerHTML = `
-	  <div class="row">
+    <div class="row">
       <div class="col-4">
-        <label for="pt_name">운동명 : </label>
+        <label for="pt_name">운동명</label>
         <input type="text" name="pt_name[]" class="form-control">
       </div>
       <div class="col-4">
-        <label for="pt_kg">무게 : </label>
+        <label for="pt_kg">무게</label>
         <input type="number" name="pt_kg[]" class="form-control">
       </div>
       <div class="col-4">
-        <label for="pt_set">SET 수 : </label>
-        <input type="number" name="pt_set[]" class="form-control"> 
+        <label for="pt_set">SET 수</label>
+        <input type="number" name="pt_set[]" class="form-control">
+      </div>
+      <div class="col-2 removeExerciseButtonContainer">
+        <button type="button" class="removeExerciseButton">x</button>
       </div>
     </div>
-      <button type="button" class="btn btn-light removeExerciseButton">x</button>
   `;
   container.appendChild(newExercise);
 
   // 새로운 삭제 버튼에 이벤트 핸들러 등록
   var removeButton = newExercise.querySelector('.removeExerciseButton');
   removeButton.addEventListener('click', function() {
-    var exerciseContainer = this.parentNode;
+    var exerciseContainer = this.parentNode.parentNode;
     exerciseContainer.remove();
   });
 }
