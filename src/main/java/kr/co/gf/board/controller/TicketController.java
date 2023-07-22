@@ -3,6 +3,8 @@ package kr.co.gf.board.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.gf.board.dto.TicketDTO;
 import kr.co.gf.board.service.TicketService;
+import kr.co.gf.emp.dto.EmpDTO;
 
 @RestController
 public class TicketController {
@@ -34,9 +37,20 @@ public class TicketController {
 	}
 	
 	@PostMapping(value = "/ticketList.ajax")
-	public HashMap<String, Object> ticketDelete(int page, int cnt){
+	public HashMap<String, Object> ticketDelete(int page, int cnt, String sort, String branch, HttpSession session){
 		// array로 받을 경우 @RequestParam에 value를 반드시 명시해야 함
-		return service.ticketList(page, cnt);
+		EmpDTO dto = (EmpDTO)session.getAttribute("loginEmp");
+		
+		if(dto.getPosition().equals("대표")) {
+			return service.ticketList(page, cnt, sort, branch);
+		}
+		return service.ticketList(page, cnt, sort, dto.getB_idx());
+	}
+	
+	@PostMapping(value = "/ticketBranchList.ajax")
+	public ArrayList<EmpDTO> ticketBranchList(){
+		// array로 받을 경우 @RequestParam에 value를 반드시 명시해야 함
+		return service.ticketBranchList();
 	}
 	
 	@PostMapping(value = "/ticket.regist")

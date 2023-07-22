@@ -178,10 +178,10 @@
 						<h1>이용권 관리</h1>
 					</div>
 					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
+						<!-- <ol class="breadcrumb float-sm-right">
 							<li class="breadcrumb-item"><a href="main">메인</a></li>
 							<li class="breadcrumb-item active">이용권 관리</li>
-						</ol>
+						</ol> -->
 					</div>
 				</div>
 			</div>
@@ -193,10 +193,16 @@
 					<div class="col-12">
 						<div style="height: 50px">
 							<div class="float-left" style="display: flex">
-								<select class="form-select" id="pagePerNum">
+								<select class="form-select" id="pagePerNum" style="width:70px">
 									<option value="10">10</option>
 									<option value="20">20</option>
 									<option value="30">30</option>
+								</select>&nbsp;
+								<select class="form-select" id="sorting" style="width:120px">
+									<option value="desc">내림차순</option>
+									<option value="asc">오름차순</option>
+								</select>&nbsp;
+								<select class="form-select" id="sortingBranch" style="width:auto; display:none">
 								</select>
 							</div>
 							<div class="float-right">
@@ -264,6 +270,7 @@
 						</div>
 					</div>
 				</div>
+				</div>
 		</section>
 	</div>
 </body>
@@ -288,15 +295,52 @@ myModalEl.addEventListener('shown.bs.modal', event => {
 		evtCheck += 1
 		failReload(evtCheck);
 	}
-})
+});
 
-listCall(showPage);
 $('#pagePerNum').change(function() {
+	paging();
+});
+
+$('#sorting').change(function() {
+	paging();
+});
+
+$('#sortingBranch').change(function() {
+	paging();
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("페이지 로딩 완료!");
+    $.ajax({
+		type:'post',
+		url:'ticketBranchList.ajax',
+		data:{},
+		dataType:'json',
+		success: function (data) {
+			$('#sortingBranch').empty();
+			data.forEach(function(dto,idx){
+				if (dto.b_idx == "${sessionScope.loginEmp.b_idx}"){
+					$('#sortingBranch').append(`<option value="`+dto.b_idx+`" selected>`+dto.b_name+`</option>`);
+				} else {
+					$('#sortingBranch').append(`<option value="`+dto.b_idx+`">`+dto.b_name+`</option>`);
+				}
+			});
+			if ("대표" == "${sessionScope.loginEmp.position}"){
+				$('#sortingBranch').css("display", "block");
+			}
+			paging();
+			//listCall(showPage);
+		},
+		error: function (e) {
+			console.log(e);
+		}
+	})
+  });
+
+function paging(){
 	listCall(showPage);
 	$('#pagination').twbsPagination('destroy');
-	// 페이지 처리 부분이 이미 만들어져버려서 pagePerNum이 변경되면 수정이 안된다.
-	// 그래서 pagePerNum이 변경되면 부수고 다시 만들어야 한다.
-})
+}
 
 function listCall(page) {
 	$.ajax({
@@ -304,7 +348,9 @@ function listCall(page) {
 		url:'ticketList.ajax',
 		data:{
 			'page': page,
-			'cnt': $('#pagePerNum').val()
+			'cnt': $('#pagePerNum').val(),
+			'sort': $('#sorting').val(),
+			'branch': $('#sortingBranch').val()
 		},
 		dataType:'json',
 		success: function (data) {
