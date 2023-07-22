@@ -47,17 +47,14 @@
         justify-content: flex-end;
         align-items: center;
     }
-
-    .aerobic-exercise,
-    .diet-journal,
-    .remarks {
-        width: 100%;
-        min-height: 150px;
-        background-color: transparent; /* 투명 배경색 */
-        border: 1px solid white; /* 테두리 스타일 유지 */
-        color: white; /* 글자 색상을 하얀색(흰색)으로 설정 */
+    
+        .add-exercise-button {
+        margin-left: 10px;
+        margin-right: 0;
     }
     
+
+
     .container {
         max-width: 800px;
         margin: 0 auto;
@@ -65,7 +62,7 @@
     
     
 	.aerobic-exercise,
-	.diet-journal,
+	.diet-journal, 
 	.remarks {
 	    width: 100%;
 	    min-height: 200px;
@@ -77,6 +74,7 @@
 	    resize: none;
 	}
 	
+
 
 
 .submit-button button {
@@ -100,13 +98,6 @@
 					<div class="col-sm-6">
 						<h1></h1>
 					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a href="#">메인</a></li>
-							<li class="breadcrumb-item active">뎁스1</li>
-							<li class="breadcrumb-item active">뎁스2</li>
-						</ol>
-					</div>
 				</div>
 			</div>
 			<!-- /.container-fluid -->
@@ -126,7 +117,7 @@
 					        
 					        
 					        <div id="branchFilter">
-									  <select name="daily_pt" id="daily_pt" style = "margin-left : 30px" onchange="selectName()">
+									  <select name="daily_pt" id="daily_pt" style = "margin-right : 30px" onchange="selectName()">
 							            <c:forEach items="${dailypt}" var="item">
 							               <option value="${item.mem_no}">${item.member_name}</option>
 							            </c:forEach>
@@ -196,7 +187,7 @@
 				            
 				            <h5 >웨이트 운동</h5>
 				             <div id="weightExerciseContainer">
-							    <div class="form-group add-exercise-container">
+							    <div class="form-group add-exercise-container" style="display: flex; justify-content: flex-end;">
 						           <button type="button" class="btn btn-light add-exercise-button" id="addWeightExercise">운동 추가</button>
 						        </div>
 						        
@@ -296,11 +287,11 @@
 
                     <hr>
                
-			             <div class="submit-button">
-	                    <button type="submit" id="insertButton" class="btn btn-primary" formaction="/dailyptWrite.do" >등록</button>
-	                     <button type="submit" id="absentButton" formaction="/submitcut" class="btn btn-primary">결석</button>
-	                    <button type="button" class="btn btn-primary" onclick="confirmAndNavigateToList()" >리스트</button>
-	                </div>
+			          <div class="submit-button" style="display: flex; justify-content: space-between;">
+					    <button type="submit" id="insertButton" class="btn btn-primary" formaction="/dailyptWrite.do">등록</button>
+					    <button type="submit" id="absentButton" formaction="/submitcut" class="btn btn-primary">결석</button>
+					    <button type="button" class="btn btn-primary" onclick="confirmAndNavigateToList()">리스트</button>
+					</div>
 	                
 										    
 					    <br>
