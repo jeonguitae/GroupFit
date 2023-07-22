@@ -466,13 +466,13 @@
 				        	
 				        	 // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (eventData.b_idx === '1') {
-				              eventData.backgroundColor = 'PowderBlue';
-				            } else if (eventData.b_idx === '2') {
 				              eventData.backgroundColor = 'blue';
-				            } else if (eventData.b_idx === '3') {
+				            } else if (eventData.b_idx === '2') {
 				              eventData.backgroundColor = 'orange';
-				            } else if (eventData.b_idx === '4') {
+				            } else if (eventData.b_idx === '3') {
 				              eventData.backgroundColor = 'black';
+				            } else if (eventData.b_idx === '4') {
+				              eventData.backgroundColor = 'green';
 				            } else {
 				              eventData.backgroundColor = 'green'; // 기본적으로 지정할 색상
 				            }
@@ -516,13 +516,13 @@
 				        
 				          // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (item.b_idx === '1') {
-				              newEvent.backgroundColor = 'PowderBlue';
-				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'blue';
-				            } else if (item.b_idx === '3') {
+				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'orange';
-				            } else if (item.b_idx === '4') {
+				            } else if (item.b_idx === '3') {
 				              newEvent.backgroundColor = 'black';
+				            } else if (item.b_idx === '4') {
+				              newEvent.backgroundColor = 'green';
 				            } else {
 				              newEvent.backgroundColor = 'green'; // 기본적으로 지정할 색상
 				            }
@@ -577,13 +577,13 @@
 				            
 				            // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (item.b_idx === '1') {
-				              newEvent.backgroundColor = 'PowderBlue';
-				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'blue';
-				            } else if (item.b_idx === '3') {
+				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'orange';
-				            } else if (item.b_idx === '4') {
+				            } else if (item.b_idx === '3') {
 				              newEvent.backgroundColor = 'black';
+				            } else if (item.b_idx === '4') {
+				              newEvent.backgroundColor = 'green';
 				            } else {
 				              newEvent.backgroundColor = 'green'; // 기본적으로 지정할 색상
 				            }
@@ -626,13 +626,13 @@
 				            
 				            // 해당 지점 정보에 따라 backgroundColor를 설정
 				            if (item.b_idx === '1') {
-				              newEvent.backgroundColor = 'PowderBlue';
-				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'blue';
-				            } else if (item.b_idx === '3') {
+				            } else if (item.b_idx === '2') {
 				              newEvent.backgroundColor = 'orange';
-				            } else if (item.b_idx === '4') {
+				            } else if (item.b_idx === '3') {
 				              newEvent.backgroundColor = 'black';
+				            } else if (item.b_idx === '4') {
+				              newEvent.backgroundColor = 'green';
 				            } else {
 				              newEvent.backgroundColor = 'green'; // 기본적으로 지정할 색상
 				            }

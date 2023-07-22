@@ -19,26 +19,6 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <style>
-table {
-	width: 100%;
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th, td {
-	border: 1px solid black;
-	padding: 5px 10px;
-	text-align: center;
-}
-
-tfoot td {
-	font-weight: bold;
-}
-
-.empty-data {
-	text-align: center;
-	padding: 10px;
-}
 </style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp" />
@@ -49,73 +29,104 @@ tfoot td {
 					<div class="col-sm-6">
 						<h1>트레이너 메인</h1>
 					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="main">메인</a></li>
+							<li class="breadcrumb-item active">트레이너 메인 페이지</li>
+						</ol>
+					</div>
 					
 				</div>
 			</div>
 			<!-- /.container-fluid -->
-		</section>
-		<!-- Main content -->
-		<section class="content">
+			</section>
+			
+			<section class="content">
 			<div class="container-fluid">
-			<!--/. container-fluid -->
-			<h3 id="year_month" style="margin-left:35%";></h3>
-			<div style="width: 1000px; height: 500px;">
-				<!--차트가 그려질 부분-->
-				<canvas id="myChart2"></canvas>
-				</div>
-			<!--/. container-fluid -->
-		
-		<table>
-		
-		    <c:choose>
-		       <c:when test="${empty calendarlist}">
-		       
-		         <tr>
-		           <td colspan="2">오늘 일정이 없습니다.</td>
-		         </tr>
-		         
-		       </c:when>
-		       
-		       <c:otherwise>
-		       
+				<div class="row">
+					<div class="col-12">
+						<div class="card card-primary">
+							<div class="card-header">
+								<h4 class="card-title">트레이너 매출</h4>
+							</div>
+							<div class="card-body" id="branch-card-body">
+								<div style="">
+									<div class="float-left" style="display: flex">
+										<h3 style="">${sessionScope.loginEmp.b_name}점</h3>
+									</div>
 
-		         
-		          <c:forEach var="calendarlist" items="${calendarlist}">
-					<div class="form-group">
-						     
-					<div class="row">
-						<div class="col-4">
-						<label for="event_name">회원이름</label>
-						<input type="text" name="event_name" class="form-control" value="${calendarlist.event_name}" readonly>
-					</div>
-					<div class="col-4">
-						<label for="start_time">시작시간</label>
-						<input type="text" name="start_time" class="form-control" value="${fn:substring(calendarlist.start_time, 11, 16)}" readonly>
-					</div>
-					<div class="col-4">
-						<label for="end_time">종료시간</label>
-						<input type="text" name="end_time" class="form-control" value="${fn:substring(calendarlist.end_time, 11, 16)}" readonly>
-					</div>
-					</div>
-					</div>
-								     
-					</c:forEach>
-		       </c:otherwise>
-		       
-		     </c:choose>
-		     
-   		</table>
-   		<table>
-   			<thead class="table-light">
-					<tr>
-						<th>회원번호</th>
-						<th>이름</th>
-						<th>등록횟수 / 잔여횟수</th>
-						<th>성별</th>
-					</tr>
-					</thead>
-			<tbody id="ptmemlist"></tbody>
-   		</table>
+									<div class="float-right">
+										<div style="display: flex">
+											<button class="btn btn-info" onclick="yearChange(-1)">&laquo;</button>
+											&nbsp; <span id="year_month" style="font-size: 17pt">2023</span>&nbsp;
+											<button class="btn btn-info" id="nextYear"
+												onclick="yearChange(1)" disabled>&raquo;</button>
+										</div>
+
+									</div>
+								</div>
+
+
+
+								<div class="container-fluid">
+									<div style="">
+										<!--차트가 그려질 부분-->
+										<canvas id="myChart2"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+			 				
+						
+						<div style="display:flex">
+						<div class="card card-primary"  style="width:50%">
+							<div class="card-header">
+								<h4 class="card-title">오늘 일정</h4>
+							</div>
+							<div class="card-body" id="branch-card-body">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>회원이름</th>
+											<th>시작시간</th>
+											<th>종료시간</th>
+										</tr>
+									</thead>
+									<tbody>
+										  <c:forEach var="calendarlist" items="${calendarlist}">
+									        <tr>
+									            <td>${calendarlist.event_name}</td>
+									            <td>${fn:substring(calendarlist.start_time, 11, 16)}</td>
+									            <td>${fn:substring(calendarlist.end_time, 11, 16)}</td>
+									        </tr>
+									    </c:forEach>
+									
+										
+									</tbody>
+								</table>
+								</div>
+							</div>&nbsp;&nbsp;
+							<div class="card card-primary"  style="width:50%">
+							<div class="card-header">
+								<h4 class="card-title">PT 회원</h4>
+							</div>
+							<div class="card-body" id="branch-card-body">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>회원번호</th>
+											<th>이름</th>
+											<th>등록횟수 / 잔여횟수</th>
+											<th>성별</th>
+										</tr>
+									</thead>
+									<tbody id="ptmemlist"></tbody>
+								</table>
+							</div>
+						
+							
+							
+					
    		
    		<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
 				    <div class="modal-dialog" role="document">
@@ -187,6 +198,10 @@ tfoot td {
 				   </div>
 				</div>
 				</div>
+				</div>
+				</div>
+			</div>
+			</div>
 				</section>
 				
 	</div>
