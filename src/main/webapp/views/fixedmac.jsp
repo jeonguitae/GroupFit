@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기에 페이지 이름 입력</title>
+<title>수리신청 된 머신</title>
 <style>
 /* table, th, td{
 		border: 1px solid white;
@@ -65,22 +65,16 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>페이지 제목</h1>
+						<h1>수리신청 된 머신</h1>
 					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a href="#">메인</a></li>
-							<li class="breadcrumb-item active">뎁스1</li>
-							<li class="breadcrumb-item active">뎁스2</li>
-						</ol>
-					</div>
+					
 				</div>
 			</div>
 			<!-- /.container-fluid -->
 		</section>
 
 <!-- Main content -->
-      <section class="content">
+      <!-- <section class="content">
             <h1 class="headline">수리신청 된 머신</h1>
             	<div class="search">
 					<select name="sortting">
@@ -102,22 +96,47 @@
 					</tr>
 				</thead>		
 				<tbody id="fixedmaclist">
-					<%-- <c:if test="${list.size() == 0}">
-			               <tr>
-			               		<th colspan="5">조건에 해당하는 게시물이 없습니다.</th>
-			               </tr>
-		            </c:if>
-					<c:forEach items="${list}" var="bbs">
-							<tr>
-								<td>${bbs.mem_no}</td>
-								<td><a href="memDetail.do?mem_no=${bbs.mem_no}">${bbs.name}</a></td>
-								<td>${bbs.start_date} ~ ${bbs.end_date}</td>
-								<td>${bbs.start_date}</td>
-								<td><a href="memDel.do?mem_no=${bbs.mem_no}">삭제</a></td>
-							</tr>
-					</c:forEach> --%>
 				</tbody>
-			</table> 
+			</table>  -->
+			
+			<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div style="height: 50px">
+							<div class="float-left">
+							
+								<div class="search">
+									<select name="sortting">
+										<option value="mac_num">기구이름</option>
+									</select>
+									
+									<input type="text" name="txt" value="" placeholder="기구이름을 입력하세요"/>
+									
+									<button onclick="macsearch()">검색</button>
+								</div>	
+								
+							</div>
+
+						</div>
+						<div class="card card-primary">
+							<div class="card-header">
+								<h4 class="card-title">일지 리스트</h4>
+							</div>
+							<div class="card-body">
+								<table class="table">
+									<thead class="table-light">
+										<tr>
+											<th style="text-align: center;">기구이름</th>
+											<th style="text-align: center;">신청일</th>
+											<th style="text-align: center;">신청자</th>
+										</tr>
+									</thead>
+									<tbody id="ptlist"></tbody>
+								</table>
+							</div>
+			
+			
 			
 			<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-labelledby="event-modal-label">
 				    <div class="modal-dialog" role="document">
@@ -171,6 +190,10 @@
 				   </div>
 				</div>
          </div>
+         </div>
+         </div>
+         </div>
+        
          <!--/. container-fluid -->
       </section>
    </div>

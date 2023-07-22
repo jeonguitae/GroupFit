@@ -46,13 +46,13 @@
       max-width: 900px;
       margin: 0 auto;
     }
-
+/* 
     .fixed-top-button {
       position: fixed;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
-    }
+    } */
     .fc-event {
       cursor: pointer;
     }
@@ -67,24 +67,23 @@
 					<div class="col-sm-6">
 						<h1>일정 관리</h1>
 					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a href="#">메인</a></li>
-							<li class="breadcrumb-item active">뎁스1</li>
-							<li class="breadcrumb-item active">뎁스2</li>
-						</ol>
-					</div>
+					
 				</div>
 			</div>
 			<!-- /.container-fluid -->
 		</section>
 		<!-- Main content -->
+		
 		<section class="content">
 			<div class="container-fluid">
-			<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
-				  <button class="btn btn-primary" onclick="openModal()">일정 등록</button>
-			</c:if>
+				<div class="row">
+					<div class="col-12">
+						<div style="height: 50px">
+			
+		
+			
 			<!-- 필터링이요 -->
+			
 			<div id="branchFilter">
 				<c:if test="${sessionScope.loginEmp.position eq '대표' }">
 					  <select name="branch" id="branch" style = "margin-left : 30px">
@@ -95,6 +94,20 @@
 			           </select>
 			    </c:if>
 			</div>
+			
+			
+			<div class="float-right">
+			<c:if test="${sessionScope.loginEmp.position eq '트레이너' }">
+				  <button class="btn btn-primary" onclick="openModal()">일정 등록</button>
+			</c:if>
+			</div>
+			
+			</div>
+			
+			<div class="card card-primary">
+							<div class="card-header">
+								<h4 class="card-title">이번 달 일정</h4>
+							</div>
 				  <!-- <button onclick="ck()">이벤트 확인</button> -->
 				
 				  <div id='calendar'></div>
@@ -215,6 +228,15 @@
 				    </div>
 				  </div>
 				</div>
+				
+				
+				
+				</div>
+				
+				</div>
+				</div>
+			
+				
 				
 				
 				
