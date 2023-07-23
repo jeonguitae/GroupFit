@@ -19,37 +19,57 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <style>
-
+.empBtn{
+	text-align: center;
+}
 </style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
+		<section class="content">
+        <div class="container-fluid">
 		<h3>직원 프로필 상세보기</h3>
-			<table class="table table-dark table-striped">
-				<tr>
-					<c:choose>
-	                 <c:when test="${not empty emp.new_photo_name}">
-	                     <img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
-	                 </c:when>
-	                 <c:otherwise>
-	                     <img width="90px" height="90px" src="img/GroupFit_lg_2.png" />
-	                 </c:otherwise>
-	           		 </c:choose>
-				</tr>
-				<tr>
-					<th>*사내번호</th>
-					<td><input type="text" name="emp_no" value="${emp.emp_no }" readonly/></td>
-				</tr>
-				<%-- <tr>
-					<th>*비밀번호</th>
-					<td><input type="text" name="pw" value="${emp.pw}" readonly/></td>
-				</tr> --%>
-				<tr>
-					<th>*이름</th>
-					<td><input type="text" name="name" value="${emp.name}" readonly/></td>
-				</tr>
-				<tr>
+			<div class="container">
+				<div class="row mb-3">
+					   <label for="name" class="col-sm-2 col-form-label">
+						직원 사진
+						</label>
+					   <div class="col-sm-10">
+						<c:choose>
+		                 <c:when test="${not empty emp.new_photo_name}">
+		                     <img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
+		                 </c:when>
+		                 <c:otherwise>
+		                     <img width="90px" height="90px" src="img/GroupFit_lg_2.png" />
+		                 </c:otherwise>
+		           		</c:choose>
+					   </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*사내번호</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="emp_no" value="${emp.emp_no }" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*이름</label>
+					  <div class="col-sm-10">
+					    <input  class="form-control"type="text" name="name" value="${emp.name}" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*성별</label>
+					  <div class="col-sm-10">
+					  	<input type="radio" value="남" name="gender"
+						<c:if test="${emp.gender eq '남'}">checked</c:if>
+						 readonly/>남
+						<input type="radio" value="여" name="gender"
+						<c:if test="${emp.gender eq '여'}">checked</c:if>
+						 readonly/>여
+					  </div>
+				</div>
+<%-- 				<tr>
 					<th>*성별</th>
 					<td>
 						<input type="radio" value="남" name="gender"
@@ -60,46 +80,73 @@
 						<c:if test="${emp.gender eq '여'}">checked</c:if>
 						 readonly/>여
 					</td>
-				</tr>
-				<tr>
-					<th>*생년월일</th>
-					<td><input type="text" name="birth" value="${emp.birth}" readonly/></td>
-				</tr>
-				<tr>
-					<th>*연락처</th>
-					<td><input type="text" name="phone" value="${emp.phone}" readonly/></td>
-				</tr>
-				<tr>
-					<th>*이메일</th>
-					<td><input type="email" name="email" value="${emp.email}" readonly/></td>
-				</tr>
-				<tr>
-					<th>*지점</th>
-					<td><input type="text" name="b_name" value="${emp.b_name}" readonly/></td>
-				</tr>
-				<tr>
-					<th>*직급</th>
-					<td><input type="text" name="position" value="${emp.position}" readonly/></td>
-				</tr>
-				<tr>
-					<th>*재직상태</th>
-					<td><input type="text" name="status" value="${emp.status}" readonly/></td>
-				</tr>
-				<tr>
-					<th>*입사일자</th>
-					<td><input type="text" name="join_year" value="${emp.join_year}" readonly/></td>
-				</tr>
+				</tr> --%>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*생년월일</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="birth" value="${emp.birth}" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*연락처</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="phone" value="${emp.phone}" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*이메일</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="email" name="email" value="${emp.email}" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*지점</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="b_name" value="${emp.b_name}" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*직급</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="position" value="${emp.position}" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*재직상태</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="status" value="${emp.status}" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*재직상태</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="status" value="${emp.status}" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*입사일자</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="join_year" value="${emp.join_year}" readonly/>
+					  </div>
+				</div>
 				<c:if test="${emp.status eq '퇴직'}">
-				<tr>
-					<th>*퇴사일자</th>
-					<td><input type="text" name="retire_year" value="${emp.retire_year}" readonly/></td>
-				</tr>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*퇴사일자</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="retire_year" value="${emp.retire_year}" readonly/>
+					  </div>
+				</div>
 				</c:if>
 				<br>
+				<div class="empBtn">
 				<button type="button" class="btn btn-primary" onclick="location.href='./empUpdate.go?detailid=${emp.emp_no}'">수정</button>
 				<button type="button" class="btn btn-danger" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
-				<button type="button" class="btn btn-secondary" onclick="location.href='./empList.go'">목록</button>	
+				<button type="button" class="btn btn-secondary" onclick="location.href='./empList.go'">목록</button>
+				</div>	
 			</table>
+			</div>
+		</div>
+		</section>
 		</div>
 </body>
 <script>

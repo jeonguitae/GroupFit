@@ -103,13 +103,7 @@
 					<div class="col-sm-6">
 						<h1></h1>
 					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a href="#">메인</a></li>
-							<li class="breadcrumb-item active">뎁스1</li>
-							<li class="breadcrumb-item active">뎁스2</li>
-						</ol>
-					</div>
+					
 				</div>
 			</div>
 			<!-- /.container-fluid -->
@@ -120,19 +114,18 @@
 				
    
 				    <div class="container">
-
+						
+						<div class="card card-primary">
+						    <div class="card-header">
+						        <h4 class="card-title">${dto.member_name} 님의 일지</h4>
+						    </div>
+						</div>
 				    
-					    <div style="justify-content: space-between; align-items: center;">
+					  <!--   <div style="justify-content: space-between; align-items: center;">
 					        <h3 style="margin: 0;">회원pt일지 상세보기</h3>
+ -->
+					          
 
-					        <br>
-					        
-					        <%-- <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
-					            <label for="date">날짜 : </label>
-					            <input type="date" id="date" name="date" value="${dto.pt_date}" readonly> 
-					        </div> --%>
-					        
-					        
 					        <div class="form-group">
 					        <div class="mb-3">
 							  <label for="date" class="form-label">날짜</label>
@@ -141,22 +134,11 @@
 							</div>
 							
 					        
-					    </div>
+					   
 					           
 				            <hr>
 				            <!-- 회원 정보 -->
-				           <%--  <div class="form-group">
 
-				                <label for="memberNumber">회원 번호 : </label>
-				                <input type="text" id="mem_no" name="mem_no" value="${dto.mem_no}" readonly>
-				                
-				                <label for="name">이름 : </label>
-				                <input type="text" id="name" name="name" value="${dto.member_name}" readonly>
-				                
-				                <label for="weight">몸무게 : </label>
-				                <input type="number" id="af_weight" name="af_weight" value="${dto.af_weight}" readonly>
-				            </div> --%>
-				            
 				            
 				            <div class="form-group">
 							  <div class="row">
@@ -214,20 +196,7 @@
 							      </div>
 							      
 							      
-						          	
-						         <%--  <div class="form-group">
-								        <label for="weightExerciseName">운동명 : </label>
-								        <input type="text" id="pt_name1" name="pt_name[]" value="${weightList[0].pt_name}" readonly>
 
-								        <label for="setCount">무게 : </label>
-								        <input type="number" id="pt_kg1" name="pt_kg[]" value="${weightList[0].pt_kg}" readonly>
-
-								        <label for="repCount">SET수 : </label>
-								        <input type="number" id="pt_set1" name="pt_set[]" value="${weightList[0].pt_set}" readonly>
-								         
-    
-								    </div> --%>
-								    
 								    
 								    <c:forEach var="weight" items="${weightList}" begin="1" varStatus="loop">
 								     <div class="form-group">
@@ -250,31 +219,13 @@
 								    
 													           
 						           <!-- 추가된 운동 정보를 가져와서 폼을 생성 -->
-								     <%--  <c:forEach var="weight" items="${weightList}" begin="1" varStatus="loop">
-								        <div class="form-group">
-								            <label for="weightExerciseName">운동명 : </label>
-								            <input type="text" id="pt_name${loop.index + 1}" name="pt_name[]" value="${weight.pt_name}" readonly>
-								   
-								            <label for="setCount">무게 : </label>
-								            <input type="number" id="pt_kg${loop.index + 1}" name="pt_kg[]" value="${weight.pt_kg}" readonly>
-
-								            <label for="repCount">SET수 : </label>
-								            <input type="number" id="pt_set${loop.index + 1}" name="pt_set[]" value="${weight.pt_set}" readonly>
-								          
-								        </div>
-								    </c:forEach> --%>
+				
 						    </div>
 				
 				            <hr>
 				
 				           <!-- 유산소 운동 -->
-                   <%--  <h5>유산소 운동</h5>
-                    <br>
-                    <div class="form-group"> 
-                        <textarea id="aerobic" name="aerobic" class="aerobic-exercise" readonly>${dto.aerobic}</textarea>
-                    </div> --%>
-                    
-                    
+        
                     <div class="form-group">
                     <div class="mb-3">
 					  <label for="formGroupExampleInput" class="form-label">유산소 운동</label>
@@ -285,13 +236,7 @@
                     <hr>
 
                     <!-- 식단 일지 -->
-                    <%-- <h5>식단 일지</h5>
-                    <br>
-                    <div class="form-group">
-                        
-                        <textarea id="diet" name="diet" class="diet-journal" readonly>${dto.diet}</textarea>
-                    </div> --%>
-                    
+         
                     
                      <div class="form-group">
                      <div class="mb-3">
@@ -303,12 +248,7 @@
                     <hr>
 
                     <!-- 특이 사항 -->
-                    <%-- <h5>특이 사항</h5>
-                    <br>
-                    <div class="form-group">
-                        <textarea id="etc" name="etc" class="remarks" readonly>${dto.str}</textarea>
-                    </div> --%>
-                    
+    
                     
                     <div class="form-group">
                     <div class="mb-3">
@@ -374,10 +314,6 @@ function confirmAndNavigateToList() {
 	    location.href = './dailyptt';
 	  }
 	}
-
-
-
-
 
 
 </script>

@@ -89,18 +89,22 @@
 	</div>
 </section>
 	<br/>
-	<h3>대기 결재 문서</h3>
-	<table class="table table-bordered table-hover dataTable dtr-inline">
-			<thead>
-				<tr>
-			 		<th>no</th>
-			 		<th>결재구분</th>
-			 		<th>제목</th>
-			 		<th>신청자</th>
-			 		<th>기안일</th>
-					<td>처리상태</td>
-				</tr>
-			</thead>
+	<div class="card card-primary"  style="width:100%">
+							<div class="card-header">
+								<h4 class="card-title">결재 리스트</h4>
+							</div>
+							<div class="card-body" id="branch-card-body">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>No.</th>
+											<th>결재구분</th>
+											<th>제목</th>
+											<th>신청자</th>
+											<th>기안일</th>
+											<th>처리상태</th>
+										</tr>
+									</thead>
 			<tbody>
 				<c:if test="${StayList.size() == 0}">
 					<tr><th colspan="6">결재신청이 없습니다.</th></tr>

@@ -156,7 +156,7 @@
 			</div>
 			<div class="checkbox mb-3">
 				<a href="#" type="button" data-bs-toggle="modal"
-					data-bs-target="#joinModal"> 계정이 없으십니까? </a>
+					data-bs-target="#joinModal" style="display:none"> 계정이 없으십니까? </a>
 			</div>
 
 			<input hidden="1" type="button" value="회원가입" onclick="location.href='join.go'"/>

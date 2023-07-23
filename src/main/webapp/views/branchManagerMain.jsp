@@ -29,13 +29,12 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1>지점장 메인 페이지</h1>
 					</div>
 					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a href="main">메인</a></li>
-							<li class="breadcrumb-item active">지점장 메인 페이지</li>
-						</ol>
+						<!-- <ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="main"></a></li>
+							<li class="breadcrumb-item active"></li>
+						</ol> -->
 					</div>
 				</div>
 			</div>
@@ -57,10 +56,11 @@
 									</div>
 
 									<div class="float-right">
-										<div style = "display:flex">
-											<button class="btn btn-info" onclick="yearChange(-1)" >&laquo;</button>&nbsp;
-											<span id="year" style="font-size: 17pt">2023</span>&nbsp;
-											<button class="btn btn-info" id="nextYear" onclick="yearChange(1)" disabled>&raquo;</button>
+										<div style="display: flex">
+											<button class="btn btn-info" onclick="yearChange(-1)">&laquo;</button>
+											&nbsp; <span id="year" style="font-size: 17pt">2023</span>&nbsp;
+											<button class="btn btn-info" id="nextYear"
+												onclick="yearChange(1)" disabled>&raquo;</button>
 										</div>
 
 									</div>
@@ -76,6 +76,51 @@
 								</div>
 							</div>
 						</div>
+						<div style="display:flex">
+						<div class="card card-primary"  style="width:50%">
+							<div class="card-header">
+								<h4 class="card-title">출퇴근 변경 요청</h4>
+							</div>
+							<div class="card-body" id="branch-card-body">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>요청일</th>
+											<th>제목</th>
+											<th>이름</th>
+											<th>직급</th>
+											<th>수정 요청 사항</th>
+											<th>상태</th>
+										</tr>
+									</thead>
+									<tbody id="rlistTbody">
+									</tbody>
+								</table>
+							</div>
+						</div> &nbsp;&nbsp;
+						<div class="card card-primary"  style="width:50%">
+							<div class="card-header">
+								<h4 class="card-title">결재 리스트</h4>
+							</div>
+							<div class="card-body" id="branch-card-body">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>No.</th>
+											<th>결재구분</th>
+											<th>제목</th>
+											<th>신청자</th>
+											<th>기안일</th>
+											<th>처리상태</th>
+										</tr>
+									</thead>
+									<tbody id="alistTbody">
+									</tbody>
+								</table>
+							</div>
+						</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -87,6 +132,73 @@
 	var b_idx = "${sessionScope.loginEmp.b_idx}";
 	firstChart(year, b_idx);
 	var myChart;
+	
+	getrList();
+	getaList();
+	
+	function getrList(){
+		$.ajax({
+			type : 'post',
+			url : 'rlist.ajax',
+			data : {},
+			dataType : 'json',
+			success : function(data) {
+				console.log(data.rlist);
+				content = ""
+				if(data.rlist.length > 0){
+					data.rlist.forEach(function(dto, index){
+						content += `<tr>
+												<th>`+ dto.reg_date +`</th>
+												<th><a href="rdetail.do?r_idx=`+ dto.r_idx +`" id="detail">`+ dto.title +`</th>
+												<th>`+ dto.name +`</th>
+												<th>`+ dto.position +`</th>
+												<th>`+ dto.com_category +`</th>
+												<th>`+ dto.status +`</th>
+											</tr>`;
+					});
+				} else {
+					content = `<tr><th colspan="6" style="text-align:center;">출퇴근 변경 요청이 없습니다.</th></tr>` 
+				}
+				$("#rlistTbody").html(content);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
+	
+	function getaList(){
+		console.log("getaList 실행");
+		$.ajax({
+			type : 'post',
+			url : 'approvalExpectedList.ajax',
+			data : {},
+			dataType : 'json',
+			success : function(data) {
+				console.log("데이터: " + data.alist, data.alist.length);
+				content = ""
+				if(data.alist.length > 0){
+					data.alist.forEach(function(dto, index){
+						content += `<tr>
+												<th>`+ dto.a_idx +`</th>
+												<th>`+ dto.approval +`</th>
+												<th><a href="eventDetail.do?a_idx=`+expected.a_idx+`&approval=`+expected.approval+`">`+ dto.subject +`</th>
+												<th>`+ dto.name +`</th>
+												<th>`+ dto.write_date +`</th>
+												<th>`+ dto.state +`</th>
+											</tr>`;
+					});
+				} else {
+					content = `<tr><th colspan="6" style="text-align:center;">결재 요청이 없습니다.</th></tr>` 
+				}
+				$("#alistTbody").html(content);
+			},
+			error : function(e) {
+				console.log("alist 불러오기 실패");
+				console.log(e);
+			}
+		});
+	}
 
 	function firstChart(year, b_idx) {
 		$.ajax({

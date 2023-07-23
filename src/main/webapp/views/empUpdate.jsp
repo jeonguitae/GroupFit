@@ -19,115 +19,138 @@
 <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <style>
-.filebox input[type="file"] {
-	background-color: #367c36;
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	border: 0;
+.empBtn{
+	text-align: center;
 }
 </style>
 <body>
 	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
 	<div class="content-wrapper" style="margin-top: 57.08px">
+		<section class="content">
+        <div class="container-fluid">
 		<h3>직원 프로필 수정하기</h3>
 		<form action="empUpdate.do" method="post" enctype="multipart/form-data" onsubmit="return test()">
+			<div class="container">
 			<table class="table table-dark table-striped">
-				<div class="filebox">
-				<tr>
-					<c:if test="${emp.new_photo_name ne null}">
-						<img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
-					</c:if>
-					<input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
-					<img id="preview" style="max-width: 200px; max-height: 200px;">
-				</tr>
+				<div class="row mb-3">
+					   <label for="name" class="col-sm-2 col-form-label">
+						직원 사진
+						</label>
+					   <div class="col-sm-10">
+							<c:if test="${emp.new_photo_name ne null}">
+								<img width="90px" height="90px" src="/photo/${emp.new_photo_name}">
+							</c:if>
+							<input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
+							<img id="preview" style="max-width: 200px; max-height: 200px;">
+					   </div>
 				</div>
-				<tr>
-					<th>*사내번호</th>
-					<td><input type="text" name="emp_no" value="${emp.emp_no}" readonly /></td>
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td><input type="text" name="pw" value="" id="pw"/></td>
-				</tr>
-				<tr>
-					<th>*이름</th>
-					<td><input type="text" name="name" value="${emp.name}" id="name" /></td>
-				</tr>
-				<tr>
-					<th>*성별</th>
-					<td>
-						<input type="radio" value="남" name="gender" 
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*사내번호</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="emp_no" value="${emp.emp_no }" readonly/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">비밀번호</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="pw" value="" id="pw"/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*이름</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="name" value="${emp.name}" id="name" />
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*성별</label>
+					  <div class="col-sm-10">
+					  	<input type="radio" value="남" name="gender"
 						<c:if test="${emp.gender eq '남'}">checked</c:if>
 						 />남
-						
 						<input type="radio" value="여" name="gender"
 						<c:if test="${emp.gender eq '여'}">checked</c:if>
 						 />여
-					</td>
-				</tr>
-				<tr>
-					<th>*생년월일</th>
-					<td><input type="date" name="birth" value="${emp.birth}" id="birth"/></td>
-				</tr>
-				<tr>
-					<th>*연락처</th>
-					<td><input type="text" name="phone" value="${emp.phone}" id="phone"/></td>
-				</tr>
-				<tr>
-					<th>*이메일</th>
-					<td><input type="email" name="email" value="${emp.email}" id="email"/></td>
-				</tr>
-				<tr>
-					<th>*지점번호</th>
-					<td>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*생년월일</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="date" name="birth" value="${emp.birth}" id="birth"/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*연락처</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="phone" value="${emp.phone}" id="phone"/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*연락처</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="text" name="phone" value="${emp.phone}" id="phone"/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*이메일</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="email" name="email" value="${emp.email}" id="email"/>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*지점번호</label>
+					  <div class="col-sm-10">
 						<select name="b_idx" id="b_idx">
 						    <option value="1" <c:if test="${emp.b_idx eq '1'}">selected="selected"</c:if> >서초</option>
 						    <option value="2" <c:if test="${emp.b_idx eq '2'}">selected="selected"</c:if> >방배</option>
 						    <option value="3" <c:if test="${emp.b_idx eq '3'}">selected="selected"</c:if> >역삼</option>
 						    <option value="4" <c:if test="${emp.b_idx eq '4'}">selected="selected"</c:if> >논현</option>
-						</select>			
-					</td>
-				</tr>
-				<tr>
-					<th>*직급</th>
-					<td>
+						</select>		
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*직급</label>
+					  <div class="col-sm-10">
 						<select name="position" id="position">
 							<option value="FC" <c:if test="${emp.position eq 'FC'}">selected="selected"</c:if> >FC</option>
 						    <option value="트레이너" <c:if test="${emp.position eq '트레이너'}">selected="selected"</c:if> >트레이너</option>
 						    <option value="지점장" <c:if test="${emp.position eq '지점장'}">selected="selected"</c:if> >지점장</option>
 						    <option value="대표" <c:if test="${emp.position eq '대표'}">selected="selected"</c:if > >대표</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>*재직상태</th>
-					<td>
+						</select>	
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*재직상태</label>
+					  <div class="col-sm-10">
 					<select name="status" id="status">
 					    <option value="재직" <c:if test="${emp.status eq '재직'}">selected="selected"</c:if> >재직</option>
 					    <option value="휴직" <c:if test="${emp.status eq '휴직'}">selected="selected"</c:if> >휴직</option>
 					    <option value="퇴직" <c:if test="${emp.status eq '퇴직'}">selected="selected"</c:if> >퇴직</option>
 					</select>	
-					
-					</td>
-				</tr>
-				<tr>
-					<th>*입사일자</th>
-					<td><input type="date" id="join_year" name="join_year" value="${emp.join_year}" /></td>
-				</tr>
-				<tr>
-					<th>퇴사일자</th>
-					<td><input type="date" id="retire_year" name="retire_year"/></td>
-				</tr>
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*입사일자</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="date" id="join_year" name="join_year" value="${emp.join_year}" />
+					  </div>
+				</div>
+				<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">퇴사일자</label>
+					  <div class="col-sm-10">
+					    <input class="form-control" type="date" id="retire_year" name="retire_year"/>
+					  </div>
+				</div>
+				<div class="empBtn">
 				<input type="submit" class="btn btn-primary" value="수정" />
 				<button type="button" class="btn btn-danger" onclick="location.href='./empList.go'">목록</button>	
 				<button type="button" class="btn btn-secondary" onclick="location.href='./empDelete.do?detailid=${emp.emp_no}'">삭제</button>
+				</div>
 			</table>
+			</div>
 		</form>
+	</div>
+	</section>
 	</div>
 </body>
 <script>

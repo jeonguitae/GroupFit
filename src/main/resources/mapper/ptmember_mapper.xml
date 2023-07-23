@@ -221,7 +221,7 @@
 				where
 				
 				<if test="ptmember.equals('mem_no')">
-		            m.name LIKE #{searchInput}
+		            m.mem_no LIKE #{searchInput}
 		        </if>
 				 <if test="ptmember.equals('member_name')">
 		            m.name LIKE #{searchInput}

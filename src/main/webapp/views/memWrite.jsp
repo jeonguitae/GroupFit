@@ -105,11 +105,11 @@
 								  <label for="name" class="col-sm-2 col-form-label">성별</label>
 								  <div class="col-sm-10">
 								    <div class="form-check form-check-inline">
-								      <input class="form-check-input" type="radio" name="gender" value="여자" id="inlineRadio1">
+								      <input class="form-check-input" type="radio" name="gender" value="여" id="inlineRadio1">
 								      <label class="form-check-label" for="inlineRadio1">여자</label>
 								    </div>
 								    <div class="form-check form-check-inline">
-								      <input class="form-check-input" type="radio" name="gender" value="남자" id="inlineRadio2">
+								      <input class="form-check-input" type="radio" name="gender" value="남" id="inlineRadio2">
 								      <label class="form-check-label" for="inlineRadio2">남자</label>
 								    </div>
 								  </div>

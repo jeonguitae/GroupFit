@@ -12,7 +12,7 @@ public interface AnnualDAO {
 
 	ArrayList<AnnualDTO> annualList();
 	
-	ArrayList<AnnualDTO> annualList2(String filter_work_year);
+	ArrayList<AnnualDTO> annualList2(String filter_work_year, int cnt, int offset, String sort, String string);
 
 	int annualAdd(String emp_no, String annualType, String annualTime);
 	
@@ -21,5 +21,7 @@ public interface AnnualDAO {
 	HashMap<String, String> annualDetail(String emp_no, String annual_type);
 
 	ArrayList<AnnualDTO2> annualDetailList(String emp_no, String annual_type);
+
+	int annualTotalCount(String filter_work_year, String string);
 
 }

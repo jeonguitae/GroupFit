@@ -50,6 +50,7 @@
     .add-exercise-button {
         margin-left: 10px;
         margin-right: 0;
+        background-color: transparent;
     }
 
     .aerobic-exercise,
@@ -92,10 +93,18 @@
     margin: 0 auto;
 }
 
-.form-group .removeExerciseButton {
-   display: flex;
-    align-items: center;
+/* 버튼 컨테이너에 대한 스타일 */
+.removeExerciseButton {
+  display: flex;
+   color: white; /* 글자 색상을 흰색으로 설정 */
+  border: none; /* 버튼 테두리 제거 */
+  cursor: pointer;
+  align-items: center;
+  background-color: transparent;
 }
+
+
+
 </style>
 </head>
 <body>
@@ -107,13 +116,7 @@
 					<div class="col-sm-6">
 						<h1></h1>
 					</div>
-					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
-							<li class="breadcrumb-item"><a href="#">메인</a></li>
-							<li class="breadcrumb-item active">뎁스1</li>
-							<li class="breadcrumb-item active">뎁스2</li>
-						</ol>
-					</div>
+
 				</div>
 			</div>
 			<!-- /.container-fluid -->
@@ -128,16 +131,11 @@
 				    <form id="dailyptForm" method="post">
 				    	<input type="hidden" name="dailypt_no" value="${dto.dailypt_no}"/>
 				    
-					    <div style="justify-content: space-between; align-items: center;">
-					        <h3 style="margin: 0;">회원pt일지</h3>
-					        
-					        <br>
-
-					        <%-- <div class="form-group" style="margin-bottom: 0; display: flex; align-items: center;">
-					            <label for="date">날짜 : </label>
-					            <input type="date" id="date" name="date" value="${dto.pt_date}">
-					        </div> --%>
-					        
+					    <div class="card card-primary">
+						    <div class="card-header">
+						        <h4 class="card-title">${dto.member_name} 님의 일지</h4>
+						    </div>
+						</div>
 					        
 					        <div class="form-group">
 					        <div class="mb-3">
@@ -146,32 +144,21 @@
 							</div>
 							</div>
 					        
-					    </div>
+					    
 					           
 				            <hr>
-				            <!-- 회원 정보 -->
-				           <%--  <div class="form-group">
-
-				                <label for="memberNumber">회원 번호 : </label>
-				                <input type="text" id="mem_no" name="mem_no" value="${dto.mem_no}">
-				                
-				                <label for="name">이름 : </label>
-				                <input type="text" id="name" name="name" value="${dto.member_name}">
-				                
-				                <label for="weight">몸무게 : </label>
-				                <input type="number" id="af_weight" name="af_weight" value="${dto.af_weight}">
-				            </div> --%>
+				        
 				            
 				            
 				            <div class="form-group">
 							  <div class="row">
 							    <div class="col">
 							      <label for="memberNumber">회원 번호</label>
-							      <input type="text" id="mem_no" name="mem_no" class="form-control" value="${dto.mem_no}">
+							      <input type="text" id="mem_no" name="mem_no" class="form-control" value="${dto.mem_no}" readonly>
 							    </div>
 							    <div class="col">
 							      <label for="name">이름</label>
-							      <input type="text" id="name" name="name" class="form-control" value="${dto.member_name}">
+							      <input type="text" id="name" name="name" class="form-control" value="${dto.member_name}" readonly>
 							    </div>
 							    <div class="col">
 							      <label for="weight">몸무게</label>
@@ -192,23 +179,7 @@
 						                <button type="button" class="btn btn-light add-exercise-button" id="addWeightExercise">운동 추가</button>
 						          	</div>
 						          	
-						          <%-- <div class="form-group">
-						          	<input type="hidden" name="weight_no[]" value="${weightList[0].weight_no}"/>
-
-								        <label for="weightExerciseName">운동명 : </label>
-								        <input type="text" id="pt_name1" name="pt_name[]" value="${weightList[0].pt_name}">
-
-								        <label for="setCount">무게 : </label>
-								        <input type="number" id="pt_kg1" name="pt_kg[]" value="${weightList[0].pt_kg}">
-
-								        <label for="repCount">SET수 : </label>
-								        <input type="number" id="pt_set1" name="pt_set[]" value="${weightList[0].pt_set}">
-
-								   		
-								   		<!-- weight_no 값을 따로 전송 -->
-    									<input type="hidden" name="weight_no_value[]" value="${weightList[0].weight_no}">
-    									
-								    </div> --%>
+						     
 								    
 								    
 								    <div class="form-group">
@@ -237,25 +208,7 @@
 								    
 													           
 						           <!-- 추가된 운동 정보를 가져와서 폼을 생성 -->
-								      <%-- <c:forEach var="weight" items="${weightList}" begin="1" varStatus="loop">
-								 
-								        <div class="form-group">
-								        	<input type="hidden" name="weight_no[]" value="${weight.weight_no}"/>
-								            <label for="weightExerciseName">운동명 : </label>
-								            <input type="text" id="pt_name${loop.index + 1}" name="pt_name[]" value="${weight.pt_name}">
-								   
-								            <label for="setCount">무게 : </label>
-								            <input type="number" id="pt_kg${loop.index + 1}" name="pt_kg[]" value="${weight.pt_kg}">
-
-								            <label for="repCount">SET수 : </label>
-								            <input type="number" id="pt_set${loop.index + 1}" name="pt_set[]" value="${weight.pt_set}">
-								            <button type="button" class="btn btn-light removeExerciseButton">삭제</button>
-								        	<!-- weight_no 값을 따로 전송 -->
-        									<input type="hidden" name="weight_no_value[]" value="${weight.weight_no}">
-        									
-    	
-								        </div>
-								    </c:forEach> --%>
+								      
 								    
 								    
 								    <c:forEach var="weight" items="${weightList}" begin="1" varStatus="loop">
@@ -276,10 +229,11 @@
 							            <label for="repCount">SET수</label>
 							            <input type="number" id="pt_set${loop.index + 1}" name="pt_set[]" class="form-control" value="${weight.pt_set}">
 							          </div>
-							          <button type="button" class="btn btn-light removeExerciseButton">삭제</button>
 							          <!-- weight_no 값을 따로 전송 -->
         							<input type="hidden" name="weight_no_value[]" value="${weight.weight_no}">
+							          
 							        </div>
+							          <button type="button" class="removeExerciseButton">x</button>
 							      </div>
 								   </c:forEach>
 								    
@@ -291,12 +245,7 @@
 				            <hr>
 				
 				           <!-- 유산소 운동 -->
-                    <%-- <h5>유산소 운동</h5>
-                    <br>
-                    <div class="form-group">
-                        <textarea id="aerobic" name="aerobic" class="aerobic-exercise">${dto.aerobic}</textarea>
-                    </div> --%>
-                    
+               
                     
                     <div class="form-group">
                     <div class="mb-3">
@@ -311,14 +260,7 @@
                     <hr>
 
                     <!-- 식단 일지 -->
-                   <%--  <h5>식단 일지</h5>
-                    <br>
-                    <div class="form-group">
-                        
-                        <textarea id="diet" name="diet" class="diet-journal">${dto.diet}</textarea>
-                    </div>
-                     --%>
-                    
+          
                     <div class="form-group">
                      <div class="mb-3">
 					  <label for="formGroupExampleInput" class="form-label">식단 일지</label>
@@ -332,12 +274,7 @@
                     <hr>
 
                     <!-- 특이 사항 -->
-                   <%--  <h5>특이 사항</h5>
-                    <br>
-                    <div class="form-group">
-                        <textarea id="etc" name="etc" class="remarks">${dto.str}</textarea>
-                    </div> --%>
-                    
+          
                     
                     <div class="form-group">
                     <div class="mb-3">
@@ -356,9 +293,10 @@
 	                </div>
 	                
 				    <br>
-				
+					
 				        </form>
 				    </div>
+				    
 				
 				
 							</div>
@@ -386,7 +324,7 @@ function addWeightExercise() {
 	        <input type="number" name="pt_set[]" class="form-control"> 
 	      </div>
 	    </div>
-	      <button type="button" class="btn btn-light removeExerciseButton">x</button>
+	      <button type="button" class="removeExerciseButton">x</button>
 	  `;
 	  container.appendChild(newExercise);
 
