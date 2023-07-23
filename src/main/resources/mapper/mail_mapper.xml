@@ -161,7 +161,7 @@
 		</select>
 		
 		<select id="unreadMailCount">
-			SELECT COUNT(*) from post where get_empno = #{param1} and get_chk = 0;
+			SELECT COUNT(*) FROM POST WHERE GET_EMPNO = #{param1} AND GET_CHK = 0;
 		</select>
 		
 	</mapper>

@@ -6,14 +6,13 @@
 <title>Insert title here</title>
 <style>
 
-h3{
+ h3{
 	text-align: center;
 }
 
-th{
+.empBtn{
 	text-align: center;
 }
-
 .btn btn-primary{
 	text-align: center;
 }
@@ -36,96 +35,111 @@ th{
 	<jsp:include page="GroupFit_gnb.jsp"></jsp:include>
 
 	<div class="content-wrapper" style="margin-top: 57.08px">
+	      <section class="content">
+         <div class="container-fluid">
 		<h3>신규직원 인적 정보 작성</h3>
 		<form action="empJoin.do" method="post" enctype="multipart/form-data" onsubmit="return valiJoinForm()">
-			<div class="card-body">
-				<table class="table">
-					<tr>
-						<th>
-							<img src="img/GroupFit_lg_2.png" alt="그룹핏"
+			<div class="container">
+					<div class="row mb-3">
+					   <label for="name" class="col-sm-2 col-form-label">
+					   	<img src="img/GroupFit_lg_2.png" alt="그룹핏"
 								 width="90px" height="90px" onerror="this.src='img/GroupFit_lg_2.png'"/>
-						</th>
-						<td>
-							<input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
-							<img id="preview" style="max-width: 200px; max-height: 200px;">
-						</td>
-					</tr>
-	<!-- 			<tr>
-						<th>*사내번호</th>
-						<td>
-							<input type="text" name="emp_no" id="emp_no"/>
-							<button id="idChk" type="button">중복확인</button>
-							<span id="msg"></span>
-						</td>
-					</tr> -->
-					<tr>
-						<th>*비밀번호</th>
-						<td><input type="password" name="pw" id="pw"/></td>
-					</tr>
-					<tr>
-						<th>*이름</th>
-						<td><input type="text" name="name" id="name"/></td>
-					</tr>
-					<tr>
-						<th>*성별</th>
-						<td>
-							<input type="radio" value="남" name="gender" />남
-							<input type="radio" value="여" name="gender" id="gender"/>여
-						</td>
-					</tr>
-					<tr>
-						<th>*생년월일</th>
-						<td><input type="date" name="birth" id="birth"/></td>
-					</tr>
-					<tr>
-						<th>*연락처</th>
-						<td><input type="text" name="phone" id="phone"/></td>
-					</tr>
-					<tr>
-						<th>*이메일</th>
-						<td><input type="email" name="email" id="email"/></td>
-					</tr>
-					<tr>
-						<th>*지점</th>
-						<td>
-							<select name="b_idx" id="b_idx">
+						</label>
+					   <div class="col-sm-10">
+					     <input type="file" name="file" multiple="multiple" onchange="previewImage(this)"/>
+						 <img id="preview" style="max-width: 200px; max-height: 200px;">
+					   </div>
+					 </div>
+					 <div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*비밀번호</label>
+					  <div class="col-sm-10">
+					    <input type="password" class="form-control" name="pw" id="pw"/>
+					  </div>
+					</div>
+					<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*이름</label>
+					  <div class="col-sm-10">
+					    <input type="text" class="form-control" name="name" id="name"/>
+					  </div>
+					</div>
+					<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">성별</label>
+					  <div class="col-sm-10">
+					    <div class="form-check form-check-inline">
+					      <input class="form-check-input" type="radio" name="gender" value="남">
+					      <label class="form-check-label" for="inlineRadio1">남자</label>
+					    </div>
+					    <div class="form-check form-check-inline">
+					      <input class="form-check-input" type="radio" name="gender" value="여" id="gender">
+					      <label class="form-check-label" for="inlineRadio2">여자</label>
+					    </div>
+					  </div>
+					</div>
+					<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*생년월일</label>
+					  <div class="col-sm-10">
+					    <input type="date" class="form-control" name="birth" id="birth"/>
+					  </div>
+					</div>
+					<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*연락처</label>
+					  <div class="col-sm-10">
+					    <input type="text" class="form-control" name="phone" id="phone"/>
+					  </div>
+					</div>
+					<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*이메일</label>
+					  <div class="col-sm-10">
+					    <input type="email" class="form-control" name="email" id="email"/>
+					  </div>
+					</div>
+					<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*지점</label>
+					  <div class="col-sm-10">
+					    	<select name="b_idx" id="b_idx">
 							    <option value="1">서초</option>
 							    <option value="2">강남</option>
 							    <option value="3">역삼</option>
 							    <option value="4">논현</option>
-							</select>			
-						</td>
-					</tr>
-					<tr>
-						<th>*직급</th>
-						<td>
+							</select>	
+					  </div>
+					</div>
+					<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*직급</label>
+					  <div class="col-sm-10">
 							<select name="position" id="position">
 							    <option value="FC">FC</option>
 							    <option value="트레이너">트레이너</option>
 							    <option value="지점장">지점장</option>
 							    <option value="대표">대표</option>
 							</select>
-						</td>
-					</tr>
-					<tr>
-						<th>*재직상태</th>
-						<td>
+					  </div>
+					</div>
+					<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*재직상태</label>
+					  <div class="col-sm-10">
 							<select name="status" id="status">
 							    <option value="재직">재직</option>
 							    <option value="휴직">휴직</option>
 							    <option value="퇴직">퇴직</option>
-							</select>			
-						</td>
-					</tr>
-					<tr>
-						<th>*입사일자</th>
-						<td><input type="date" id="join_year" name="join_year"/></td>
-					</tr>
+							</select>	
+					  </div>
+					</div>
+					<div class="row mb-3">
+					  <label for="name" class="col-sm-2 col-form-label">*입사일자</label>
+					  <div class="col-sm-10">
+					    <input type="date" class="form-control" id="join_year" name="join_year"/>
+					  </div>
+					</div>
+					<div class="empBtn">
 					<input class="btn btn-primary" type="submit" value="등록"/>
-					<button class="btn btn-primary" type="button" onclick="location.href='./empList.go'">목록</button>	
+					<button class="btn btn-primary" type="button" onclick="location.href='./empList.go'">목록</button>
+					</div>	
 				</table>
 				</div>
 		</form>
+	</div>
+	</section>
 	</div>
 </body>
 <script>

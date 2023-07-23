@@ -20,7 +20,7 @@
 <style>
 
 div[class="btn1"]{
-	margin-left: 500px;
+	margin-left: 1300px;
 	margin-bottom: 30px;
 }
 
@@ -28,7 +28,6 @@ form[class="search"]{
 	margin-top: 50px;
 
 }
-
 
 </style>
 <body>
