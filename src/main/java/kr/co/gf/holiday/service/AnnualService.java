@@ -43,19 +43,27 @@ public class AnnualService {
 		return dao.annualList();
 	}
 	
-	public ArrayList<AnnualDTO> annualList(String filter_work_year) {
+	public HashMap<String, Object> annualList(String filter_work_year, int page, int cnt, String sort, String string) {
 		logger.info("{}", filter_work_year);
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 		Date currentDate = new Date(currentTimestamp.getTime());
 		ArrayList<AnnualDTO> list = new ArrayList<AnnualDTO>();
-		if (filter_work_year.equals("1") || filter_work_year.equals("2")) {
-			logger.info("조건 검색 수행");
-			list = dao.annualList2(filter_work_year);
-		}
-		else {
-			list = dao.annualList();
-		}
-		return list;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int offset = cnt*(page-1);
+		
+		logger.info("annualCount");
+		int total = dao.annualTotalCount(filter_work_year,string);
+		int range = total%cnt==0 ? total/cnt: total/cnt+1;
+		
+		page = page > range ? range : page;
+		
+		map.put("currPage", page);
+		map.put("pages", range);
+		logger.info("annualList");
+		list = dao.annualList2(filter_work_year,cnt,offset,sort,string);
+		map.put("list", list);
+		return map;
 	}
 
 	public HashMap<String, Object> annualAdd(ArrayList<String> addList, String annualType, String annualTime) {

@@ -9,13 +9,17 @@
 	</insert>
 	
 	<select id="ticketList" resultType="ticket">
-		select * from ticket natural join branch
-		order by ticket_no desc
+		select * from ticket natural join branch where b_idx = #{param4}
+		order by ticket_no ${param3}
 		limit #{param1} offset #{param2}
 	</select>
 	
 	<select id="ticketTotalCount" resultType="int">
-		SELECT count(ticket_no) from ticket
+		SELECT count(ticket_no) from ticket where b_idx = #{param1}
+	</select>
+	
+	<select id="ticketBranchList" resultType="emp">
+		SELECT * from branch
 	</select>
 	
 	<update id="ticketModify" parameterType="ticket">

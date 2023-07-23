@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>이용권 관리</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="plugins/pagination/jquery.twbsPagination.js" type="text/javascript"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -75,7 +76,8 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary" onclick="annualAdd()">생성</button>
+						<button type="button" class="btn btn-primary"
+							onclick="annualAdd()">생성</button>
 					</div>
 				</form>
 			</div>
@@ -137,17 +139,19 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary" onclick="annualSub()">차감</button>
+						<button type="button" class="btn btn-primary"
+							onclick="annualSub()">차감</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	
-	<div class="modal fade" id="annualDetailModal" data-bs-backdrop="static"
-		data-bs-keyboard="false" tabindex="-1"
+
+	<div class="modal fade" id="annualDetailModal"
+		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="staticBackdropLabel">연차/휴가 상세보기</h5>
@@ -157,23 +161,26 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-4 mb-3">
-							<label for="detail_emp_no">사번</label>
-							<input type="text" class="form-control" id="detail_emp_no" value="12345678" readonly="readonly">
+							<label for="detail_emp_no">사번</label> <input type="text"
+								class="form-control" id="detail_emp_no" value="12345678"
+								readonly="readonly">
 						</div>
 						<div class="col-md-4 mb-3">
-							<label for="detail_name">직원명</label>
-							<input type="text" class="form-control" id="detail_name" value="이근일" readonly="readonly">
+							<label for="detail_name">직원명</label> <input type="text"
+								class="form-control" id="detail_name" value="이근일"
+								readonly="readonly">
 						</div>
 						<div class="col-md-4 mb-3">
-							<label for="detail_position">직급</label>
-							<input type="text" class="form-control" id="detail_position" value="트레이너" readonly="readonly">
+							<label for="detail_position">직급</label> <input type="text"
+								class="form-control" id="detail_position" value="트레이너"
+								readonly="readonly">
 						</div>
 					</div>
-					<select class="form-select" aria-label="Default select example" id="detail_selected">
+					<select class="form-select" aria-label="Default select example"
+						id="detail_selected">
 						<option value="연차">연차</option>
 						<option value="휴가">휴가</option>
-					</select>
-					<br><br>
+					</select> <br> <br>
 					<table class="table">
 						<thead>
 							<tr style="text-align: center;" id="detail_list_header">
@@ -191,7 +198,8 @@
 						</tbody>
 					</table>
 					<br>
-					<div style="text-align: center; font-size: 18px; font-weight: 600">지급/사용 이력</div>
+					<div style="text-align: center; font-size: 18px; font-weight: 600">지급/사용
+						이력</div>
 					<table class="table">
 						<thead>
 							<tr>
@@ -202,15 +210,16 @@
 							</tr>
 						</thead>
 						<tbody id="detail_list">
-							<tr >
+							<tr>
 								<td colspan="4">확인되는 이력이 없습니다.</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					</div>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">닫기</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -223,10 +232,10 @@
 						<h1>직원 연월차 리스트</h1>
 					</div>
 					<div class="col-sm-6">
-						<ol class="breadcrumb float-sm-right">
+						<!-- <ol class="breadcrumb float-sm-right">
 							<li class="breadcrumb-item"><a href="main">메인</a></li>
 							<li class="breadcrumb-item active">직원 연월차 리스트</li>
-						</ol>
+						</ol> -->
 					</div>
 				</div>
 			</div>
@@ -238,12 +247,22 @@
 					<div class="col-12">
 						<div style="height: 50px">
 							<div class="float-left" style="display: flex">
-								<select class="form-select" id="filter_work_year">
-									<option selected>근무 기간</option>
+								<select class="form-select" id="pagePerNum" style="width: 70px">
+									<option value="10">10</option>
+									<option value="20">20</option>
+									<option value="30">30</option>
+								</select>&nbsp; <select class="form-select" id="sorting"
+									style="width: 120px">
+									<option value="desc">내림차순</option>
+									<option value="asc">오름차순</option>
+								</select>&nbsp; <select class="form-select" id="sortingBranch"
+									style="width: auto; display: none">
+								</select>&nbsp; <select class="form-select" id="filter_work_year">
+									<option value="3" selected>전체</option>
 									<option value="1">1년 미만</option>
 									<option value="2">1년 이상</option>
-									<option value="3">전체</option>
-								</select>&nbsp; <!-- <select class="form-select" id="filter_attendance_rate">
+								</select>&nbsp;
+								<!-- <select class="form-select" id="filter_attendance_rate">
 									<option selected>출석률</option>
 									<option value="1">지난달 근태 100%</option>
 									<option value="2">작년 근태 80% 이상</option>
@@ -253,9 +272,11 @@
 
 							<div class="float-right">
 								<a class="btn btn-primary" data-bs-toggle="modal"
-									data-bs-target="#annualAddModal" data-shuffle onclick="annualAddModal(event)"> 연차/휴가 생성 </a>&nbsp;&nbsp;<a
+									data-bs-target="#annualAddModal" data-shuffle
+									onclick="annualAddModal(event)"> 연차/휴가 생성 </a>&nbsp;&nbsp;<a
 									class="btn btn-secondary" data-bs-toggle="modal"
-									data-bs-target="#annualSubModal" data-shuffle onclick="annualSubModal(event)"> 연차/휴가 소진 </a>
+									data-bs-target="#annualSubModal" data-shuffle
+									onclick="annualSubModal(event)"> 연차/휴가 소진 </a>
 							</div>
 						</div>
 						<div class="card card-primary">
@@ -263,68 +284,47 @@
 								<h4 class="card-title">직원 연차/휴가 리스트</h4>
 							</div>
 							<div class="card-body" id="annual-card-body">
-								<c:if test="${annualList.size() > 0}">
-									<table class="table">
-										<thead class="table-light">
-											<tr>
-												<th>#</th>
-												<th>사번</th>
-												<th>직원명</th>
-												<th>직급</th>
-												<th>입사일</th>
-												<th>근속연수</th>
-												<!-- <th>작년근태</th>
-												<th>지난달근태</th> -->
-												<th>발생휴가</th>
-												<th>차감휴가</th>
-												<th>잔여휴가</th>
-												<th>조회<th>
-											</tr>
-										</thead>
-										<tbody id="empAnnualList">
-											<c:forEach items="${annualList}" var="dto" varStatus="status">
-												<tr>
-													<td><input class="form-check-input"
-														style="margin-left: 0" type="checkbox"
-														value="${dto.emp_no}"></td>
-													<td>${dto.emp_no}</td>
-													<td>${dto.name}</td>
-													<td>${dto.position}</td>
-													<td>${dto.join_year}</td>
-													<td><fmt:formatNumber value="${dto.work_year/365}" pattern="0.000"/></td>
-													<!-- <td></td>
-													<td></td> -->
-													<td>
-														<c:if test="${empty dto.annualAdd}">0</c:if>
-														<c:if test="${not empty dto.annualAdd}">${dto.annualAdd}</c:if>
-													</td>
-													<td>
-														<c:if test="${empty dto.annualSub}">0</c:if>
-														<c:if test="${not empty dto.annualSub}">${dto.annualSub}</c:if>
-													</td>
-													<td>${dto.annualAdd - dto.annualSub}</td>
-													<td><button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-																data-bs-target="#annualDetailModal" data-shuffle onclick="annualDetail('${dto.emp_no}', '${dto.name}', '${dto.position}')">조회</button>
-													</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-								</c:if>
-								<c:if test="${empty annualList}">
-									<div style="text-align: center;">검색되는 직원이 없습니다.</div>
-								</c:if>
+								<table class="table">
+									<thead class="table-light">
+										<tr>
+											<th>#</th>
+											<th>사번</th>
+											<th>직원명</th>
+											<th>지점</th>
+											<th>직급</th>
+											<th>입사일</th>
+											<th>근속연수</th>
+											<th>발생휴가</th>
+											<th>차감휴가</th>
+											<th>잔여휴가</th>
+											<th>조회</th>
+										</tr>
+									</thead>
+									<tbody id="empAnnualList">
+										<tr>
+											<th colspan="11"></th>
+										</tr>
+									</tbody>
+								</table>
 							</div>
+						</div>
+						<!-- 	플러그인 사용	(twbsPagination)	-->
+						<div class="container">									
+							<nav aria-label="Page navigation" style="text-align:center; margin:0 auto">
+								<ul class="pagination" id="pagination" style="text-align:center; margin:0 auto; justify-content: center; align-items: center;"></ul>
+							</nav>		
 						</div>
 					</div>
 				</div>
-		</div>
+			</div>
 		</section>
 	</div>
 </body>
 <script type="text/javascript">
+	console.log("annualList Page loaded.")
 	var checkArr = [];
 	var evtCheck = 0;
+	var showPage = 1;
 	const myModalEl = document.getElementById('annualAddModal')
 	const myModalEl2 = document.getElementById('annualSubModal')
 	myModalEl.addEventListener('shown.bs.modal', event => {
@@ -359,76 +359,147 @@
 		annualDetailList();
 	});
 	
+	$('#pagePerNum').change(function() {
+		paging();
+	});
+
+	$('#sorting').change(function() {
+		paging();
+	});
+
+	$('#sortingBranch').change(function() {
+		paging();
+	});
+	
 	$("#filter_work_year").change(function() {
-		//location.href = "/annualList.go?filter_work_year=" + $("#filter_work_year").val();
+		paging();
+	});
+	
+	document.addEventListener("DOMContentLoaded", function() {
+	    console.log("페이지 로딩 완료!");
+	    $.ajax({
+			type:'post',
+			url:'ticketBranchList.ajax',
+			data:{},
+			dataType:'json',
+			success: function (data) {
+				$('#sortingBranch').empty();
+				data.forEach(function(dto,idx){
+					if (dto.b_idx == "${sessionScope.loginEmp.b_idx}"){
+						$('#sortingBranch').append('<option value="'+dto.b_idx+'" selected>'+dto.b_name+'</option>');
+					} else {
+						$('#sortingBranch').append('<option value="'+dto.b_idx+'">'+dto.b_name+'</option>');
+					}
+				});
+				if ("대표" == "${sessionScope.loginEmp.position}"){
+					$('#sortingBranch').css("display", "block");
+				}
+				paging();
+				//listCall(showPage);
+			},
+			error: function (e) {
+				console.log(e);
+			}
+		})
+	  });
+	
+	function paging(){
+		listCall(showPage);
+		$('#pagination').twbsPagination('destroy');
+	}
+	
+	function listCall(page){
 		$.ajax({
 			type : 'post',
 			url : 'annualList.filter',
 			data : {
-				'filter_work_year' : $("#filter_work_year").val(),
-				'filter_attendance_rate' : $("#filter_attendance_rate").val()
+				'page': page,
+				'cnt': $('#pagePerNum').val(),
+				'sort': $('#sorting').val(),
+				'branch': $('#sortingBranch').val(),
+				'filter_work_year' : $("#filter_work_year").val()
 			},
 			dataType : 'json',
 			success : function(data) {
-				var n = data.length;
-				console.log(n);
-				console.log("필터링 성공.");
-				var content = '';
-				if(n > 0){
-					data.forEach(function(dto, index){
-						console.log(index);
-						content += '<tr>' +
-							'<td><input class="form-check-input"' +
-								'style="margin-left: 0" type="checkbox"' +
-								'value="' + dto.emp_no + '"></td>';
-						content += '<td>' + dto.emp_no + '</td>';
-						content += '<td>' + dto.name + '</td>';
-						content += '<td>' + dto.position + '</td>';
-						content += '<td>' + dto.join_year + '</td>';
-						content += '<td>' + (dto.work_year/365).toFixed(3) + '</td>';
-						/* content += '<td></td><td></td>'; */
-						content += '<td>';
-						if(dto.annualAdd == null){
-							content += '0';
-						} else{
-							content += dto.annualAdd;
+				console.log(data);
+				listPrint(data.list);
+				
+				// paging plugin 처리
+				$('#pagination').twbsPagination({
+					startPage: data.currPage,
+					totalPages: data.pages,
+					visiblePages: 5,
+					onPageClick: function(event,page){ // 페이지 클릭 시 동작되는 함수
+						console.log(event, page, showPage);
+						if(page!=showPage){
+							listCall(page);
+							showPage = page;
 						}
-						content += '</td>' +
-							'<td>';
-						if(dto.annualSub == null){
-							content += '0';
-						} else{
-							content += dto.annualSub;
-						}
-						content += '</td><td>';
-						if(dto.annualAdd != null){
-							if(dto.annualSub != null){
-								content += dto.annualAdd - dto.annualSub;
-							} else {
-								content += dto.annualAdd;
-							}
-						} else {
-							content += "0";
-						}
-						content += '</td><td><button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"' +
-										'data-bs-target="#annualDetailModal" data-shuffle onclick="annualDetail(\'' +dto.emp_no + '\', \'' +dto.name + '\', \'' + dto.position + '\')">조회</button>' +
-							'</td>' +
-						'</tr>';
-					});
-					$("#empAnnualList").empty();
-					$("#empAnnualList").append(content);
-				}
-				else {
-					$("#empAnnualList").empty();
-					$("#empAnnualList").html('<tr><td colspan="10" style="text-align:center">검색되는 직원이 없습니다.<td><tr>');
-				}
+					}
+				});
 				
 			},
 			error : function(e) {
 				alert("필터링 작업중 오류가 발생했습니다.");
 			}
 		});
-	});
+	}
+	
+	function listPrint(data){
+		var n = data.length;
+		console.log(n);
+		console.log("필터링 성공.");
+		var content = '';
+		if(n > 0){
+			data.forEach(function(dto, index){
+				console.log(index);
+				content += '<tr>' +
+					'<td><input class="form-check-input"' +
+						'style="margin-left: 0" type="checkbox"' +
+						'value="' + dto.emp_no + '"></td>';
+				content += '<td>' + dto.emp_no + '</td>';
+				content += '<td>' + dto.name + '</td>';
+				content += '<td>' + dto.b_name + '</td>';
+				content += '<td>' + dto.position + '</td>';
+				content += '<td>' + dto.join_year + '</td>';
+				content += '<td>' + (dto.work_year/365).toFixed(3) + '</td>';
+				/* content += '<td></td><td></td>'; */
+				content += '<td>';
+				if(dto.annualAdd == null){
+					content += '0';
+				} else{
+					content += dto.annualAdd;
+				}
+				content += '</td>' +
+					'<td>';
+				if(dto.annualSub == null){
+					content += '0';
+				} else{
+					content += dto.annualSub;
+				}
+				content += '</td><td>';
+				if(dto.annualAdd != null){
+					if(dto.annualSub != null){
+						content += dto.annualAdd - dto.annualSub;
+					} else {
+						content += dto.annualAdd;
+					}
+				} else {
+					content += "0";
+				}
+				content += '</td><td><button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"' +
+								'data-bs-target="#annualDetailModal" data-shuffle onclick="annualDetail(\'' +dto.emp_no + '\', \'' +dto.name + '\', \'' + dto.position + '\')">조회</button>' +
+					'</td>' +
+				'</tr>';
+			});
+			$("#empAnnualList").empty();
+			$("#empAnnualList").append(content);
+		}
+		else {
+			$("#empAnnualList").empty();
+			$("#empAnnualList").html('<tr><td colspan="11" style="text-align:center">검색되는 직원이 없습니다.</td><tr>');
+		}
+	}
 	
 	function annualAddModal(e) {
 		checkArr = [];
@@ -586,4 +657,4 @@
 	}
 </script>
 </html>
-	
+

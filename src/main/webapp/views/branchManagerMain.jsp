@@ -115,7 +115,7 @@
 											<th>처리상태</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody id="alistTbody">
 									</tbody>
 								</table>
 							</div>
@@ -135,6 +135,7 @@
 	var myChart;
 	
 	getrList();
+	getaList();
 	
 	function getrList(){
 		$.ajax({
@@ -149,7 +150,7 @@
 					data.rlist.forEach(function(dto, index){
 						content += `<tr>
 												<th>`+ dto.reg_date +`</th>
-												<th>`+ dto.title +`</th>
+												<th><a href="rdetail.do?r_idx=`+ dto.r_idx +`" id="detail">`+ dto.title +`</th>
 												<th>`+ dto.name +`</th>
 												<th>`+ dto.position +`</th>
 												<th>`+ dto.com_category +`</th>
@@ -157,11 +158,44 @@
 											</tr>`;
 					});
 				} else {
-					content = `<tr><th colspan="6">촐퇴근 변경 요청이 없습니다.</th></tr>`
+					content = `<tr><th colspan="6" style="text-align:center;">출퇴근 변경 요청이 없습니다.</th></tr>` 
 				}
 				$("#rlistTbody").html(content);
 			},
 			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
+	
+	function getaList(){
+		console.log("getaList 실행");
+		$.ajax({
+			type : 'post',
+			url : 'approvalExpectedList.ajax',
+			data : {},
+			dataType : 'json',
+			success : function(data) {
+				console.log("데이터: " + data.alist, data.alist.length);
+				content = ""
+				if(data.alist.length > 0){
+					data.alist.forEach(function(dto, index){
+						content += `<tr>
+												<th>`+ dto.a_idx +`</th>
+												<th>`+ dto.approval +`</th>
+												<th><a href="eventDetail.do?a_idx=`+expected.a_idx+`&approval=`+expected.approval+`">`+ dto.subject +`</th>
+												<th>`+ dto.name +`</th>
+												<th>`+ dto.write_date +`</th>
+												<th>`+ dto.state +`</th>
+											</tr>`;
+					});
+				} else {
+					content = `<tr><th colspan="6" style="text-align:center;">결재 요청이 없습니다.</th></tr>` 
+				}
+				$("#alistTbody").html(content);
+			},
+			error : function(e) {
+				console.log("alist 불러오기 실패");
 				console.log(e);
 			}
 		});

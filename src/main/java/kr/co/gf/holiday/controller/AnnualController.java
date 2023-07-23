@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.gf.emp.dto.EmpDTO;
 import kr.co.gf.holiday.dto.AnnualDTO;
 import kr.co.gf.holiday.service.AnnualService;
 
@@ -24,21 +27,25 @@ public class AnnualController {
 	@Autowired AnnualService service;
 	
 	@GetMapping(value="/annualList.go")
-	public ModelAndView ticketList(String filter_work_year, String filter_attendance_rate) {
-		logger.info("{}", filter_work_year);
+	public ModelAndView ticketList() {
 		ModelAndView mav = new ModelAndView("annualList");
-		if (filter_work_year != null) {
-			mav.addObject("annualList", service.annualList(filter_work_year));
-		} else {
-			mav.addObject("annualList", service.annualList());
-		}
+//		if (filter_work_year != null) {
+//			mav.addObject("annualList", service.annualList(filter_work_year));
+//		} else {
+//			mav.addObject("annualList", service.annualList());
+//		}
 		return mav;
 	}
 	
 	@PostMapping(value="/annualList.filter")
-	public ArrayList<AnnualDTO> ticketList_filter(String filter_work_year, String filter_attendance_rate) {
+	public HashMap<String, Object> ticketList_filter(int page, int cnt, String sort, String branch, HttpSession session, String filter_work_year) {
+		EmpDTO dto = (EmpDTO)session.getAttribute("loginEmp");
+		
 		logger.info("{}", filter_work_year);
-		return service.annualList(filter_work_year);
+		if(dto.getPosition().equals("대표")) {
+			return service.annualList(filter_work_year, page, cnt, sort, branch);
+		}
+		return service.annualList(filter_work_year, page, cnt, sort, dto.getB_idx());
 	}
 	
 	@PostMapping(value = "/annual.add")

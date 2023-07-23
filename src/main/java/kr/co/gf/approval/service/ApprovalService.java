@@ -232,6 +232,10 @@ public void upload(MultipartFile uploadFile,String a_idx) {
 		mav.addObject("list",list);
 		return mav;
 	}
+	
+	public ArrayList<ApprovalDTO> approvalExpectedListAjax(String loginId) {
+		return dao.approvalExpectedList(loginId);
+	}
 
 	public void stayAccept(String a_idx, String approval) {
 		dao.stayAccept(a_idx,approval);

@@ -4,8 +4,8 @@
 
 <mapper namespace="kr.co.gf.holiday.dao.AnnualDAO">
 	<select id="annualList" resultType="annual">
-	 	SELECT e.emp_no, e.name, e.position, e.join_year, DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) AS work_year, a.annualAdd, b.annualSub
-		FROM emp e
+	 	SELECT e.emp_no, bb.b_idx, bb.b_name, e.name, e.position, e.join_year, DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) AS work_year, a.annualAdd, b.annualSub
+		FROM emp e natural join branch bb
 		LEFT JOIN (
 		  SELECT emp_no, SUM(annual_time) AS annualAdd
 		  FROM annual
@@ -21,8 +21,8 @@
 	</select>
 	
 	<select id="annualList2" resultType="annual">
-	 	SELECT e.emp_no, e.name, e.position, e.join_year, DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) AS work_year, a.annualAdd, b.annualSub
-		FROM emp e
+	 	SELECT e.emp_no, bb.b_idx, bb.b_name, e.name, e.position, e.join_year, DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) AS work_year, a.annualAdd, b.annualSub
+		FROM emp e natural join branch bb
 		LEFT JOIN (
 		  SELECT emp_no, SUM(annual_time) AS annualAdd
 		  FROM annual
@@ -36,10 +36,37 @@
 		  GROUP BY emp_no
 		) b ON e.emp_no = b.emp_no
 		<if test = "filter_work_year == 1">
-			where 365 > DATEDIFF(CURRENT_TIMESTAMP(), e.join_year)
+			where 365 > DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) and b_idx = #{param5}
 		</if>
 		<if test = "filter_work_year == 2">
-			where DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) >= 365
+			where DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) >= 365 and b_idx = #{param5}
+		</if>
+		<if test = "filter_work_year == 3">
+			where b_idx = #{param5}
+		</if>
+		order by e.emp_no ${param4} limit #{param2} offset #{param3}
+	</select>
+	
+	<select id="annualTotalCount">
+		SELECT count(*)
+		FROM emp e natural join branch b
+		LEFT JOIN (
+		  SELECT emp_no, SUM(annual_time) AS annualAdd
+		  FROM annual
+		  WHERE YEAR(annual_date) = YEAR(CURDATE()) and annual_modifier = 1
+		  GROUP BY emp_no
+		) a ON e.emp_no = a.emp_no
+		LEFT JOIN (
+		  SELECT emp_no, SUM(annual_time) AS annualSub
+		  FROM annual
+		  WHERE YEAR(annual_date) = YEAR(CURDATE()) and annual_modifier = 2
+		  GROUP BY emp_no
+		) b ON e.emp_no = b.emp_no
+		<if test = "filter_work_year == 1">
+			where 365 > DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) and b_idx = #{param2}
+		</if>
+		<if test = "filter_work_year == 2">
+			where DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) >= 365 and b_idx = #{param2}
 		</if>
 		order by e.emp_no desc
 	</select>
