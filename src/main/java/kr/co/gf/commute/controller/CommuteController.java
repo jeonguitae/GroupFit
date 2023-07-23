@@ -48,7 +48,7 @@ public class CommuteController {
 	 * }
 	 */
 	@RequestMapping(value="/come.do")
-	public String comedo(HttpSession session, Model model) {
+	public String comedo(HttpSession session, Model model, RedirectAttributes rattr) {
 		//세션에 저장된 사내번호 불러오기
 		EmpDTO eDto = (EmpDTO)session.getAttribute("loginEmp"); 
 		String emp_no = eDto.getEmp_no();
@@ -77,10 +77,10 @@ public class CommuteController {
 			int row2=cservice.comedo(emp_no, b_idx);
 			logger.info("12331 : " + emp_no + b_idx);
 			logger.info("3번 로거 출근처리했으면 row2는"+row2);
-			model.addAttribute("msg","출근처리 되었습니다.");
+			rattr.addFlashAttribute("msg","출근처리 되었습니다.");
 
 		}else {
-			model.addAttribute("msg","이미 출근처리 되었습니다.");
+			rattr.addFlashAttribute("msg","이미 출근처리 되었습니다.");
 		}
 		String page = "redirect:/main";
 		return page;
@@ -95,10 +95,10 @@ public class CommuteController {
 		//1. 출근 안 누르고 퇴근 누를 경우 대비
 		LocalDate now = LocalDate.now();
 		int row=cservice.count(emp_no, now);//당일 출/퇴 시간
-		String page="main";
+		String page="redirect:/main";
 		
 		if (row==0) {
-			model.addAttribute("msg","출근이 먼저 이뤄져야 합니다.");			
+			rattr.addFlashAttribute("msg","출근이 먼저 이뤄져야 합니다.");			
 		}else {
 			//2.출근버튼은 누른 경우() 또 눌렀거나 정상 퇴근
 			CommuteDTO dto=cservice.selectAll(emp_no,now);
@@ -109,7 +109,7 @@ public class CommuteController {
 			logger.info("outdo icin out_time은"+out_time);
 			//퇴근 중복 대비
 			if (!come_time.equals(out_time)) {
-				model.addAttribute("msg","이미 퇴근 처리 되었습니다.");
+				rattr.addFlashAttribute("msg","이미 퇴근 처리 되었습니다.");
 				logger.info("outdo 로거 1: 퇴근 중복됨");
 			}//정상 퇴근 위한 퇴근 시간 update
 			else {
