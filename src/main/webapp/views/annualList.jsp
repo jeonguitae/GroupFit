@@ -284,7 +284,7 @@
 								<h4 class="card-title">직원 연차/휴가 리스트</h4>
 							</div>
 							<div class="card-body" id="annual-card-body">
-								<table class="table">
+								<table class="table table-hover">
 									<thead class="table-light">
 										<tr>
 											<th>#</th>

@@ -217,7 +217,7 @@
 								<h4 class="card-title">이용권 리스트</h4>
 							</div>
 							<div class="card-body">
-									<table class="table">
+									<table class="table table-hover">
 										<thead class="table-light">
 											<tr>
 												<th>#</th>

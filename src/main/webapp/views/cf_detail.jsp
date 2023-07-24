@@ -26,14 +26,14 @@
          <div class="container-fluid">
             <div class="row mb-2">
                <div class="col-sm-6">
-
+					<h1>출퇴근 변경 요청서</h1>
                </div>
                <div class="col-sm-6">
-                  <ol class="breadcrumb float-sm-right">
+                  <!-- <ol class="breadcrumb float-sm-right">
                      <li class="breadcrumb-item"><a href="#">메인</a></li>
                      <li class="breadcrumb-item active">뎁스1</li>
                      <li class="breadcrumb-item active">뎁스2</li>
-                  </ol>
+                  </ol> -->
                </div>
             </div>
          </div>
@@ -42,14 +42,14 @@
 <!-- Main content -->
       <section class="content">
          <div class="container-fluid">
-            <h1 class="forcenter">출퇴근 변경 요청서</h1>
     <table class="table second">
         <colgroup>
             <col width="15%"/>
             <col width="20%"/>
             <col width="15%"/>
-            <col width="20%"/>
-            <col width="20%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col width="10%"/>
             <col width="10%"/>
         </colgroup>
         <thead>
@@ -79,7 +79,7 @@
             <%-- </c:forEach> --%>
         </tbody>
        </table>
-       				<table id="table2">
+       				<table id="table2" class="table table-hover" style="text-align:center; margin:0 auto; justify-content: center; align-items: center;">
 					<tr>
 						<th>제목</th>
                         <td style="text-align: center;">${working.title}</td> 
@@ -90,8 +90,7 @@
 					</tr>
 					<tr>
 						<th>희망 변경 일시</th>
-						<td style="text-align: center;">${working.r_date}</td>
-						<td style="text-align: center;">${working.r_time}</td>  		
+						<td style="text-align: center;">${working.r_date} &nbsp; ${working.r_time}</td> 		
 					</tr>		
 					<tr>
 						<th>변경 요청 사유</th>
@@ -113,11 +112,11 @@
 						<td><input type="radio" name="status" value="반려" />반려</td>
 					<tr>
 						<th>처리인</th>
-						<td>지점장</td>
+						<td colspan="2">지점장</td>
 					</tr>
 					<tr>
 						<th>의견</th>
-						<td><textarea id="sa" name="opinion" class="reason" required></textarea></td>
+						<td colspan="2"><textarea id="sa" name="opinion" class="reason" required></textarea></td>
 					</tr>
 				</table>
 				

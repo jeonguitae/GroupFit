@@ -26,14 +26,14 @@
          <div class="container-fluid">
             <div class="row mb-2">
                <div class="col-sm-6">
-
+					<h1>출퇴근 변경 요청서</h1>
                </div>
                <div class="col-sm-6">
-                  <ol class="breadcrumb float-sm-right">
+                  <!-- <ol class="breadcrumb float-sm-right">
                      <li class="breadcrumb-item"><a href="#">메인</a></li>
                      <li class="breadcrumb-item active">뎁스1</li>
                      <li class="breadcrumb-item active">뎁스2</li>
-                  </ol>
+                  </ol> -->
                </div>
             </div>
          </div>
@@ -42,14 +42,14 @@
 <!-- Main content -->
       <section class="content">
          <div class="container-fluid">
-            <h1 class="forcenter">출퇴근 변경 요청서</h1>
     <table class="table second">
         <colgroup>
             <col width="15%"/>
-            <col width="20%"/>
             <col width="15%"/>
-            <col width="20%"/>
-            <col width="20%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col width="15%"/>
+            <col width="15%"/>
             <col width="10%"/>
         </colgroup>
         <thead>
