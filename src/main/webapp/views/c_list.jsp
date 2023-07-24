@@ -60,12 +60,12 @@
         </colgroup>
         <thead>
             <tr>
-                <th>사내번호</th>
-                <th>날짜</th>
-                <th>출근 시간</th>
-                <th>퇴근 시간</th>
-                <th>근무 시간</th>
-                <th>출결 상태</th>
+                <th style="text-align: center;">사내번호</th>
+                <th style="text-align: center;">날짜</th>
+                <th style="text-align: center;">출근 시간</th>
+                <th style="text-align: center;">퇴근 시간</th>
+                <th style="text-align: center;">근무 시간</th>
+                <th style="text-align: center;">출결 상태</th>
             </tr>
         </thead>        
         <tbody>

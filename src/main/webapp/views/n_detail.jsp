@@ -75,13 +75,16 @@
 			</tr>			
 		</table>
 					<input type="button" onclick="location.href='nlist.go'" value="목록"/>
+					<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 					<input type="button" onclick="location.href='nupdate.go?n_idx=${dto.n_idx}'" value="수정"/>
 					<input type="button" onclick="location.href='ndelete.do?n_idx=${dto.n_idx}'" value="삭제"/>
 					<button class="forsave">저장</button>
+					</c:if >
 		</div>
+		<br>
 		<c:if test="${sessionScope.loginEmp.position == '지점장' || sessionScope.loginEmp.position == '대표'}">
 		
-		<h2>읽은 직원 목록</h2>
+		<h3>읽은 직원 목록</h3>
 		<table>
 			<thead>
             <tr>

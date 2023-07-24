@@ -54,13 +54,13 @@
         </colgroup>
         <thead>
             <tr>
-                <th>변경요청일</th>
-                <th>이름</th>
-                <th>직위</th>
-                <th>출근 시간</th>
-                <th>퇴근 시간</th>
-                <th>총 근무 시간</th>
-                <th>출결 상태</th>
+                <th style="text-align: center;">변경요청일</th>
+                <th style="text-align: center;">이름</th>
+                <th style="text-align: center;">직위</th>
+                <th style="text-align: center;">출근 시간</th>
+                <th style="text-align: center;">퇴근 시간</th>
+                <th style="text-align: center;">총 근무 시간</th>
+                <th style="text-align: center;">출결 상태</th>
             </tr>
         </thead>        
         <tbody>
@@ -79,8 +79,10 @@
             <%-- </c:forEach> --%>
         </tbody>
        </table>
-       <h2>출퇴근 변경 처리서</h2>
-       				<table id="table2">
+       <br>
+       <br>
+       <h3  style="text-align: center;">출퇴근 변경 처리서</h3>
+       				<table id="table2" style="text-align:center; margin:0 auto; justify-content: center; align-items: center;">
 					<tr>
 						<th>제목</th>
                         <td style="text-align: center;">${working.title}</td> 
@@ -104,23 +106,24 @@
 				<input type="hidden" name="r_date" value="${working.r_date}">				
 				<input type="hidden" name="r_time" value="${working.r_time}">
 				<input type="hidden" name="emp_no" value="${working.emp_no}">
-	
-				<h2>출퇴근 변경 요청 승인서</h2>
-				<table id="table3">
+	<br>
+	<br>
+				<h3 style="text-align: center;">출퇴근 변경 요청 승인서</h3>
+				<table id="table3" style="text-align:center; margin:0 auto; justify-content: center; align-items: center;">
 					<tr>
-						<th>처리</th>
+						<th style="text-align: center;">처리</th>
 						<td style="text-align: center;">${working.status}</td>						
 					<tr>
-						<th>처리인</th>
-						<td>지점장</td>
+						<th style="text-align: center;">처리인</th>
+						<td style="text-align: center;">지점장</td>
 					</tr>
 					<tr>
-						<th>의견</th>
+						<th style="text-align: center;">의견</th>
 						<td style="text-align: center;">${working.opinion}</td>						
 					</tr>
 				</table>
-				
-				<div id="button_sin_mok">
+				<br>
+				<div id="button_sin_mok" style="text-align:center; margin:0 auto; justify-content: center; align-items: center;">
 					<input type="button" onclick="location.href='/confirmlist.do'" value="이전"/>
 					<input type="submit"/>
 				</div>
