@@ -68,6 +68,9 @@
 		<if test = "filter_work_year == 2">
 			where DATEDIFF(CURRENT_TIMESTAMP(), e.join_year) >= 365 and b_idx = #{param2}
 		</if>
+		<if test = "filter_work_year == 3">
+			where b_idx = #{param2}
+		</if>
 		order by e.emp_no desc
 	</select>
 	

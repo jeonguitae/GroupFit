@@ -247,17 +247,17 @@
 					<div class="col-12">
 						<div style="height: 50px">
 							<div class="float-left" style="display: flex">
-								<select class="form-select" id="pagePerNum" style="width: 70px">
+								<select class="form-select" id="pagePerNum" style="width: 70px; height: 38px">
 									<option value="10">10</option>
 									<option value="20">20</option>
 									<option value="30">30</option>
 								</select>&nbsp; <select class="form-select" id="sorting"
-									style="width: 120px">
+									style="width: 120px; height: 38px">
 									<option value="desc">내림차순</option>
 									<option value="asc">오름차순</option>
 								</select>&nbsp; <select class="form-select" id="sortingBranch"
-									style="width: auto; display: none">
-								</select>&nbsp; <select class="form-select" id="filter_work_year">
+									style="width: auto; display: none; height: 38px">
+								</select>&nbsp; <select class="form-select" id="filter_work_year" style="height: 38px">
 									<option value="3" selected>전체</option>
 									<option value="1">1년 미만</option>
 									<option value="2">1년 이상</option>
